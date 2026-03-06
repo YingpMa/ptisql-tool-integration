@@ -1,0 +1,3789 @@
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+exp_name: ''
+project_name: ${env.name}
+cuda_deterministic: false
+device: cpu
+gamma: 0.9
+seed: 0
+pretrain: null
+num_seed_steps: 1000
+only_expert_states: false
+train:
+  batch: 64
+  use_target: false
+  soft_update: false
+expert:
+  demos: 1
+  subsample_freq: 1
+eval:
+  policy: null
+  threshold: 21
+  use_baselines: false
+  eps: 10
+  transfer: false
+  expert_env: ''
+env:
+  replay_mem: 1000000.0
+  initial_mem: 5000
+  eps_steps: 1000
+  eps_window: 10
+  learn_steps: 100000.0
+  eval_interval: 1000.0
+  from_pixels: false
+  name: nasim:SmallHoneypotPO-v0
+  demo: nasim:SmallHoneypotPO-v0_1000.pkl
+method:
+  type: iq
+  loss: value
+  constrain: false
+  grad_pen: false
+  chi: false
+  tanh: false
+  regularize: false
+  div: null
+  alpha: 0.5
+  lambda_gp: 10
+  mix_coeff: 1
+log_interval: 20
+log_dir: logs/
+save_interval: 5
+hydra_base_dir: /home/kali/Documents/PTautomation/IQ-Learn/iq_learn_mini/outputs/2024-09-05/02-45-46
+eval_only: false
+offline: false
+num_actor_updates: 1
+agent:
+  name: softq
+  class: agent.softq.SoftQ
+  obs_dim: ???
+  action_dim: ???
+  critic_cfg: ${q_net}
+  critic_lr: 0.0001
+  critic_betas:
+  - 0.9
+  - 0.999
+  init_temp: 1
+  critic_target_update_frequency: 4
+  critic_tau: 0.1
+q_net:
+  _target_: agent.softq_models.SimpleQNetwork
+  obs_dim: ${agent.obs_dim}
+  action_dim: ${agent.action_dim}
+
+SmallHoneypotPO-v0_rl
+--> Using Soft-Q agent
+<class 'int'>
+--> Saving logs at: logs/nasim:SmallHoneypotPO-v0/2024-09-05_02-45-57
+epoch: 0
+evaluating...
+| eval           | E: 0 | S: 1 | R: -481.5000 | G: 1
+epoch: 1
+epoch: 2
+epoch: 3
+epoch: 4
+epoch: 5
+epoch: 6
+epoch: 7
+epoch: 8
+epoch: 9
+epoch: 10
+Learn begins!
+| train          | E: 10 | S: 331 | R: -455.0000 | G: 1 | D: 06.5 s | CLOSS: 50.8804
+epoch: 11
+evaluating...
+| eval           | E: 11 | S: 1001 | R: -1170.3000 | G: 0
+| train          | E: 11 | S: 1332 | R: -1162.0000 | G: 0 | D: 38.1 s | CLOSS: 65.7906
+epoch: 12
+evaluating...
+| eval           | E: 12 | S: 2001 | R: -1026.2000 | G: 0
+| train          | E: 12 | S: 2333 | R: -1042.0000 | G: 0 | D: 32.5 s | CLOSS: 53.1929
+epoch: 13
+evaluating...
+| eval           | E: 13 | S: 3001 | R: -881.6000 | G: 0
+| train          | E: 13 | S: 3334 | R: -940.0000 | G: 0 | D: 28.7 s | CLOSS: 36.0306
+epoch: 14
+| train          | E: 14 | S: 3701 | R: -205.0000 | G: 1 | D: 11.8 s | CLOSS: 29.0532
+epoch: 15
+evaluating...
+| eval           | E: 15 | S: 4001 | R: -645.6000 | G: 0
+| train          | E: 15 | S: 4186 | R: -322.0000 | G: 1 | D: 22.9 s | CLOSS: 27.8748
+epoch: 16
+| train          | E: 16 | S: 4911 | R: -578.0000 | G: 1 | D: 11.1 s | CLOSS: 27.6248
+epoch: 17
+evaluating...
+| eval           | E: 17 | S: 5001 | R: -639.8000 | G: 0
+| train          | E: 17 | S: 5204 | R: -109.0000 | G: 1 | D: 15.8 s | CLOSS: 31.5295
+epoch: 18
+evaluating...
+| eval           | E: 18 | S: 6001 | R: -600.1000 | G: 1
+| train          | E: 18 | S: 6205 | R: -978.0000 | G: 0 | D: 26.6 s | CLOSS: 29.0017
+epoch: 19
+evaluating...
+| eval           | E: 19 | S: 7001 | R: -382.8000 | G: 1
+| train          | E: 19 | S: 7021 | R: -764.0000 | G: 1 | D: 19.5 s | CLOSS: 28.3632
+epoch: 20
+| train          | E: 20 | S: 7525 | R: -381.0000 | G: 1 | D: 08.0 s | CLOSS: 29.3591
+epoch: 21
+evaluating...
+| eval           | E: 21 | S: 8001 | R: -517.6000 | G: 0
+| train          | E: 21 | S: 8474 | R: -1003.0000 | G: 1 | D: 22.2 s | CLOSS: 30.3065
+epoch: 22
+| train          | E: 22 | S: 8892 | R: -415.0000 | G: 1 | D: 06.7 s | CLOSS: 28.9496
+epoch: 23
+evaluating...
+| eval           | E: 23 | S: 9001 | R: -632.8000 | G: 0
+| train          | E: 23 | S: 9306 | R: -342.0000 | G: 1 | D: 14.2 s | CLOSS: 28.0147
+epoch: 24
+evaluating...
+| eval           | E: 24 | S: 10001 | R: -566.6000 | G: 0
+| train          | E: 24 | S: 10247 | R: -1025.0000 | G: 1 | D: 24.5 s | CLOSS: 27.6405
+epoch: 25
+| train          | E: 25 | S: 10704 | R: -361.0000 | G: 1 | D: 11.1 s | CLOSS: 34.6492
+epoch: 26
+evaluating...
+| eval           | E: 26 | S: 11001 | R: -564.3000 | G: 0
+| train          | E: 26 | S: 11705 | R: -1205.0000 | G: 0 | D: 24.9 s | CLOSS: 31.2493
+epoch: 27
+evaluating...
+| eval           | E: 27 | S: 12001 | R: -645.8000 | G: 0
+| train          | E: 27 | S: 12071 | R: -257.0000 | G: 1 | D: 15.7 s | CLOSS: 34.6038
+epoch: 28
+| train          | E: 28 | S: 12871 | R: -773.0000 | G: 1 | D: 13.2 s | CLOSS: 29.1972
+epoch: 29
+evaluating...
+| eval           | E: 29 | S: 13001 | R: -379.2000 | G: 0
+| train          | E: 29 | S: 13510 | R: -576.0000 | G: 1 | D: 21.3 s | CLOSS: 33.2957
+epoch: 30
+evaluating...
+| eval           | E: 30 | S: 14001 | R: -702.8000 | G: 0
+| train          | E: 30 | S: 14131 | R: -585.0000 | G: 1 | D: 20.8 s | CLOSS: 29.6745
+epoch: 31
+| train          | E: 31 | S: 14785 | R: -534.0000 | G: 1 | D: 18.7 s | CLOSS: 23.6441
+epoch: 32
+evaluating...
+| eval           | E: 32 | S: 15001 | R: -502.3000 | G: 0
+| train          | E: 32 | S: 15786 | R: -1091.0000 | G: 0 | D: 54.3 s | CLOSS: 22.8551
+epoch: 33
+evaluating...
+| eval           | E: 33 | S: 16001 | R: -600.0000 | G: 0
+| train          | E: 33 | S: 16166 | R: -217.0000 | G: 1 | D: 26.6 s | CLOSS: 22.6582
+epoch: 34
+| train          | E: 34 | S: 16397 | R: -70.0000 | G: 1 | D: 07.0 s | CLOSS: 19.1169
+epoch: 35
+| train          | E: 35 | S: 16753 | R: -196.0000 | G: 1 | D: 05.7 s | CLOSS: 23.5411
+epoch: 36
+evaluating...
+| eval           | E: 36 | S: 17001 | R: -429.4000 | G: 0
+| train          | E: 36 | S: 17543 | R: -659.0000 | G: 1 | D: 22.2 s | CLOSS: 23.0689
+epoch: 37
+evaluating...
+| eval           | E: 37 | S: 18001 | R: -580.5000 | G: 0
+| train          | E: 37 | S: 18461 | R: -786.0000 | G: 1 | D: 27.7 s | CLOSS: 22.7182
+epoch: 38
+evaluating...
+| eval           | E: 38 | S: 19001 | R: -467.4000 | G: 0
+| train          | E: 38 | S: 19101 | R: -524.0000 | G: 1 | D: 29.1 s | CLOSS: 22.4628
+epoch: 39
+| train          | E: 39 | S: 19763 | R: -515.0000 | G: 1 | D: 17.8 s | CLOSS: 21.7870
+epoch: 40
+evaluating...
+| eval           | E: 40 | S: 20001 | R: -167.9000 | G: 1
+| train          | E: 40 | S: 20214 | R: -451.0000 | G: 1 | D: 26.1 s | CLOSS: 21.9715
+epoch: 41
+| train          | E: 41 | S: 20398 | R: -34.0000 | G: 1 | D: 04.1 s | CLOSS: 22.0976
+epoch: 42
+| train          | E: 42 | S: 20771 | R: -207.0000 | G: 1 | D: 09.2 s | CLOSS: 25.6266
+epoch: 43
+evaluating...
+| eval           | E: 43 | S: 21001 | R: -249.6000 | G: 1
+| train          | E: 43 | S: 21050 | R: -114.0000 | G: 1 | D: 11.5 s | CLOSS: 30.4380
+epoch: 44
+| train          | E: 44 | S: 21188 | R: 43.0000 | G: 1 | D: 02.1 s | CLOSS: 18.6997
+epoch: 45
+| train          | E: 45 | S: 21609 | R: -257.0000 | G: 1 | D: 10.0 s | CLOSS: 22.2369
+epoch: 46
+| train          | E: 46 | S: 21922 | R: -147.0000 | G: 1 | D: 08.8 s | CLOSS: 28.7030
+epoch: 47
+evaluating...
+| eval           | E: 47 | S: 22001 | R: -161.0000 | G: 1
+| train          | E: 47 | S: 22678 | R: -666.0000 | G: 1 | D: 26.6 s | CLOSS: 25.4943
+epoch: 48
+| train          | E: 48 | S: 22765 | R: 99.0000 | G: 1 | D: 01.4 s | CLOSS: 14.7199
+epoch: 49
+evaluating...
+| eval           | E: 49 | S: 23001 | R: -274.8000 | G: 1
+| train          | E: 49 | S: 23050 | R: -114.0000 | G: 1 | D: 13.4 s | CLOSS: 22.8720
+epoch: 50
+| train          | E: 50 | S: 23509 | R: -334.0000 | G: 1 | D: 08.1 s | CLOSS: 24.6432
+epoch: 51
+| train          | E: 51 | S: 23715 | R: -54.0000 | G: 1 | D: 03.5 s | CLOSS: 21.8546
+epoch: 52
+| train          | E: 52 | S: 23805 | R: 85.0000 | G: 1 | D: 01.3 s | CLOSS: 21.0343
+epoch: 53
+evaluating...
+| eval           | E: 53 | S: 24001 | R: -237.5000 | G: 1
+| train          | E: 53 | S: 24263 | R: -329.0000 | G: 1 | D: 14.1 s | CLOSS: 27.5094
+epoch: 54
+| train          | E: 54 | S: 24451 | R: -100.0000 | G: 1 | D: 03.2 s | CLOSS: 22.0812
+epoch: 55
+| train          | E: 55 | S: 24583 | R: 42.0000 | G: 1 | D: 02.1 s | CLOSS: 24.2782
+epoch: 56
+| train          | E: 56 | S: 24677 | R: 89.0000 | G: 1 | D: 01.4 s | CLOSS: 28.1845
+epoch: 57
+evaluating...
+| eval           | E: 57 | S: 25001 | R: -138.2000 | G: 1
+| train          | E: 57 | S: 25050 | R: -215.0000 | G: 1 | D: 10.6 s | CLOSS: 22.9228
+epoch: 58
+| train          | E: 58 | S: 25351 | R: -147.0000 | G: 1 | D: 05.1 s | CLOSS: 30.0483
+epoch: 59
+| train          | E: 59 | S: 25428 | R: 116.0000 | G: 1 | D: 01.6 s | CLOSS: 18.9341
+epoch: 60
+| train          | E: 60 | S: 25565 | R: 45.0000 | G: 1 | D: 04.4 s | CLOSS: 26.6896
+epoch: 61
+| train          | E: 61 | S: 25726 | R: -50.0000 | G: 1 | D: 03.7 s | CLOSS: 28.2601
+epoch: 62
+| train          | E: 62 | S: 25863 | R: 31.0000 | G: 1 | D: 02.6 s | CLOSS: 35.9434
+epoch: 63
+evaluating...
+| eval           | E: 63 | S: 26001 | R: -236.4000 | G: 1
+| train          | E: 63 | S: 26175 | R: -296.0000 | G: 1 | D: 13.2 s | CLOSS: 34.4096
+epoch: 64
+| train          | E: 64 | S: 26397 | R: -95.0000 | G: 1 | D: 07.2 s | CLOSS: 29.1200
+epoch: 65
+| train          | E: 65 | S: 26566 | R: -2.0000 | G: 1 | D: 03.9 s | CLOSS: 38.0264
+epoch: 66
+| train          | E: 66 | S: 26672 | R: 67.0000 | G: 1 | D: 01.6 s | CLOSS: 38.2960
+epoch: 67
+| train          | E: 67 | S: 26786 | R: 67.0000 | G: 1 | D: 02.7 s | CLOSS: 41.3777
+epoch: 68
+evaluating...
+| eval           | E: 68 | S: 27001 | R: -178.9000 | G: 0
+| train          | E: 68 | S: 27056 | R: -109.0000 | G: 1 | D: 08.5 s | CLOSS: 29.7264
+epoch: 69
+| train          | E: 69 | S: 27201 | R: 22.0000 | G: 1 | D: 02.4 s | CLOSS: 35.7690
+epoch: 70
+| train          | E: 70 | S: 27273 | R: 113.0000 | G: 1 | D: 01.5 s | CLOSS: 28.6270
+epoch: 71
+evaluating...
+| eval           | E: 71 | S: 28001 | R: 21.9000 | G: 1
+| train          | E: 71 | S: 28048 | R: -1183.0000 | G: 1 | D: 14.3 s | CLOSS: 32.6544
+epoch: 72
+| train          | E: 72 | S: 28364 | R: -204.0000 | G: 1 | D: 05.0 s | CLOSS: 24.3398
+epoch: 73
+| train          | E: 73 | S: 28700 | R: -169.0000 | G: 1 | D: 05.1 s | CLOSS: 25.7222
+epoch: 74
+| train          | E: 74 | S: 28904 | R: -39.0000 | G: 1 | D: 03.6 s | CLOSS: 30.4285
+epoch: 75
+evaluating...
+| eval           | E: 75 | S: 29001 | R: -204.1000 | G: 1
+| train          | E: 75 | S: 29358 | R: -316.0000 | G: 1 | D: 12.6 s | CLOSS: 30.4797
+epoch: 76
+| train          | E: 76 | S: 29606 | R: -114.0000 | G: 1 | D: 03.8 s | CLOSS: 36.1634
+epoch: 77
+evaluating...
+| eval           | E: 77 | S: 30001 | R: -452.9000 | G: 0
+| train          | E: 77 | S: 30057 | R: -348.0000 | G: 1 | D: 18.3 s | CLOSS: 25.3005
+epoch: 78
+| train          | E: 78 | S: 30575 | R: -372.0000 | G: 1 | D: 07.9 s | CLOSS: 30.8585
+epoch: 79
+evaluating...
+| eval           | E: 79 | S: 31001 | R: -341.8000 | G: 1
+| train          | E: 79 | S: 31044 | R: -359.0000 | G: 1 | D: 13.8 s | CLOSS: 27.7524
+epoch: 80
+| train          | E: 80 | S: 31423 | R: -234.0000 | G: 1 | D: 06.1 s | CLOSS: 28.1329
+epoch: 81
+| train          | E: 81 | S: 31763 | R: -229.0000 | G: 1 | D: 07.0 s | CLOSS: 23.0105
+epoch: 82
+evaluating...
+| eval           | E: 82 | S: 32001 | R: -386.1000 | G: 1
+| train          | E: 82 | S: 32105 | R: -175.0000 | G: 1 | D: 12.8 s | CLOSS: 24.8463
+epoch: 83
+| train          | E: 83 | S: 32333 | R: -52.0000 | G: 1 | D: 03.9 s | CLOSS: 24.6726
+epoch: 84
+| train          | E: 84 | S: 32431 | R: 85.0000 | G: 1 | D: 01.4 s | CLOSS: 37.8230
+epoch: 85
+| train          | E: 85 | S: 32657 | R: -64.0000 | G: 1 | D: 07.0 s | CLOSS: 28.2215
+epoch: 86
+evaluating...
+| eval           | E: 86 | S: 33001 | R: -185.1000 | G: 1
+| train          | E: 86 | S: 33303 | R: -531.0000 | G: 1 | D: 20.8 s | CLOSS: 23.4305
+epoch: 87
+| train          | E: 87 | S: 33858 | R: -458.0000 | G: 1 | D: 09.0 s | CLOSS: 27.0143
+epoch: 88
+evaluating...
+| eval           | E: 88 | S: 34001 | R: -240.5000 | G: 1
+| train          | E: 88 | S: 34188 | R: -191.0000 | G: 1 | D: 11.3 s | CLOSS: 32.8217
+epoch: 89
+| train          | E: 89 | S: 34824 | R: -531.0000 | G: 1 | D: 17.1 s | CLOSS: 25.8417
+epoch: 90
+evaluating...
+| eval           | E: 90 | S: 35001 | R: -302.3000 | G: 1
+| train          | E: 90 | S: 35251 | R: -326.0000 | G: 1 | D: 17.9 s | CLOSS: 31.3920
+epoch: 91
+| train          | E: 91 | S: 35637 | R: -316.0000 | G: 1 | D: 09.9 s | CLOSS: 27.6791
+epoch: 92
+| train          | E: 92 | S: 35803 | R: -2.0000 | G: 1 | D: 03.8 s | CLOSS: 33.3938
+epoch: 93
+evaluating...
+| eval           | E: 93 | S: 36001 | R: -190.6000 | G: 0
+| train          | E: 93 | S: 36273 | R: -404.0000 | G: 1 | D: 16.3 s | CLOSS: 30.7274
+epoch: 94
+| train          | E: 94 | S: 36474 | R: -36.0000 | G: 1 | D: 04.1 s | CLOSS: 19.5068
+epoch: 95
+| train          | E: 95 | S: 36863 | R: -222.0000 | G: 1 | D: 06.6 s | CLOSS: 27.1201
+epoch: 96
+evaluating...
+| eval           | E: 96 | S: 37001 | R: -251.9000 | G: 1
+| train          | E: 96 | S: 37079 | R: -77.0000 | G: 1 | D: 13.2 s | CLOSS: 26.1600
+epoch: 97
+| train          | E: 97 | S: 37268 | R: -22.0000 | G: 1 | D: 03.2 s | CLOSS: 25.1325
+epoch: 98
+| train          | E: 98 | S: 37453 | R: -21.0000 | G: 1 | D: 03.7 s | CLOSS: 26.0835
+epoch: 99
+| train          | E: 99 | S: 37669 | R: -60.0000 | G: 1 | D: 08.0 s | CLOSS: 28.3533
+epoch: 100
+| train          | E: 100 | S: 37853 | R: -51.0000 | G: 1 | D: 04.4 s | CLOSS: 31.5767
+epoch: 101
+| train          | E: 101 | S: 37932 | R: 92.0000 | G: 1 | D: 01.7 s | CLOSS: 25.1180
+epoch: 102
+evaluating...
+| eval           | E: 102 | S: 38001 | R: -151.1000 | G: 1
+| train          | E: 102 | S: 38169 | R: -77.0000 | G: 1 | D: 12.3 s | CLOSS: 30.8213
+epoch: 103
+| train          | E: 103 | S: 38347 | R: -20.0000 | G: 1 | D: 05.2 s | CLOSS: 28.4623
+epoch: 104
+| train          | E: 104 | S: 38599 | R: -189.0000 | G: 1 | D: 06.0 s | CLOSS: 23.7200
+epoch: 105
+| train          | E: 105 | S: 38967 | R: -311.0000 | G: 1 | D: 09.5 s | CLOSS: 29.2480
+epoch: 106
+evaluating...
+| eval           | E: 106 | S: 39001 | R: -46.1000 | G: 1
+| train          | E: 106 | S: 39149 | R: -7.0000 | G: 1 | D: 09.8 s | CLOSS: 34.4672
+epoch: 107
+| train          | E: 107 | S: 39308 | R: 19.0000 | G: 1 | D: 02.7 s | CLOSS: 27.4061
+epoch: 108
+| train          | E: 108 | S: 39711 | R: -273.0000 | G: 1 | D: 07.0 s | CLOSS: 33.7787
+epoch: 109
+| train          | E: 109 | S: 39894 | R: -22.0000 | G: 1 | D: 03.1 s | CLOSS: 23.3526
+epoch: 110
+evaluating...
+| eval           | E: 110 | S: 40001 | R: -123.4000 | G: 1
+| train          | E: 110 | S: 40019 | R: 57.0000 | G: 1 | D: 12.8 s | CLOSS: 25.9117
+epoch: 111
+| train          | E: 111 | S: 40476 | R: -304.0000 | G: 1 | D: 39.3 s | CLOSS: 25.5245
+epoch: 112
+| train          | E: 112 | S: 40701 | R: -59.0000 | G: 1 | D: 12.4 s | CLOSS: 32.3954
+epoch: 113
+| train          | E: 113 | S: 40983 | R: -128.0000 | G: 1 | D: 15.9 s | CLOSS: 28.0140
+epoch: 114
+evaluating...
+| eval           | E: 114 | S: 41001 | R: -130.0000 | G: 1
+| train          | E: 114 | S: 41248 | R: -107.0000 | G: 1 | D: 16.1 s | CLOSS: 28.0482
+epoch: 115
+| train          | E: 115 | S: 41618 | R: -233.0000 | G: 1 | D: 08.6 s | CLOSS: 31.3272
+epoch: 116
+| train          | E: 116 | S: 41643 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: 33.2512
+epoch: 117
+| train          | E: 117 | S: 41773 | R: 42.0000 | G: 1 | D: 02.8 s | CLOSS: 31.2582
+epoch: 118
+| train          | E: 118 | S: 41983 | R: -45.0000 | G: 1 | D: 06.7 s | CLOSS: 31.0248
+epoch: 119
+evaluating...
+| eval           | E: 119 | S: 42001 | R: 47.7000 | G: 1
+| train          | E: 119 | S: 42071 | R: 94.0000 | G: 1 | D: 04.8 s | CLOSS: 30.1373
+epoch: 120
+| train          | E: 120 | S: 42163 | R: 86.0000 | G: 1 | D: 02.9 s | CLOSS: 27.9577
+epoch: 121
+| train          | E: 121 | S: 42305 | R: 31.0000 | G: 1 | D: 06.3 s | CLOSS: 35.1850
+epoch: 122
+| train          | E: 122 | S: 42379 | R: 96.0000 | G: 1 | D: 02.0 s | CLOSS: 27.3029
+epoch: 123
+| train          | E: 123 | S: 42501 | R: 30.0000 | G: 1 | D: 02.3 s | CLOSS: 36.2028
+epoch: 124
+| train          | E: 124 | S: 42604 | R: 67.0000 | G: 1 | D: 02.7 s | CLOSS: 28.7668
+epoch: 125
+| train          | E: 125 | S: 42738 | R: 32.0000 | G: 1 | D: 02.7 s | CLOSS: 28.6115
+epoch: 126
+evaluating...
+| eval           | E: 126 | S: 43001 | R: 15.9000 | G: 1
+| train          | E: 126 | S: 43233 | R: -400.0000 | G: 1 | D: 13.6 s | CLOSS: 34.7544
+epoch: 127
+| train          | E: 127 | S: 43597 | R: -240.0000 | G: 1 | D: 10.1 s | CLOSS: 29.8061
+epoch: 128
+| train          | E: 128 | S: 43773 | R: -19.0000 | G: 1 | D: 05.1 s | CLOSS: 35.0812
+epoch: 129
+| train          | E: 129 | S: 43867 | R: 61.0000 | G: 1 | D: 02.1 s | CLOSS: 37.1615
+epoch: 130
+evaluating...
+| eval           | E: 130 | S: 44001 | R: 36.2000 | G: 1
+| train          | E: 130 | S: 44023 | R: -28.0000 | G: 1 | D: 09.7 s | CLOSS: 30.3036
+epoch: 131
+| train          | E: 131 | S: 44163 | R: 28.0000 | G: 1 | D: 03.6 s | CLOSS: 29.4297
+epoch: 132
+| train          | E: 132 | S: 44357 | R: -26.0000 | G: 1 | D: 05.5 s | CLOSS: 35.2974
+epoch: 133
+| train          | E: 133 | S: 44446 | R: 73.0000 | G: 1 | D: 02.1 s | CLOSS: 36.4851
+epoch: 134
+| train          | E: 134 | S: 44561 | R: 47.0000 | G: 1 | D: 02.1 s | CLOSS: 39.8201
+epoch: 135
+| train          | E: 135 | S: 44618 | R: 112.0000 | G: 1 | D: 01.2 s | CLOSS: 30.5127
+epoch: 136
+| train          | E: 136 | S: 44672 | R: 125.0000 | G: 1 | D: 01.0 s | CLOSS: 41.4959
+epoch: 137
+| train          | E: 137 | S: 44767 | R: 65.0000 | G: 1 | D: 01.9 s | CLOSS: 35.2571
+epoch: 138
+| train          | E: 138 | S: 44814 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: 31.0858
+epoch: 139
+| train          | E: 139 | S: 44883 | R: 106.0000 | G: 1 | D: 01.4 s | CLOSS: 28.7271
+epoch: 140
+evaluating...
+| eval           | E: 140 | S: 45001 | R: 84.5000 | G: 1
+| train          | E: 140 | S: 45041 | R: -13.0000 | G: 1 | D: 04.9 s | CLOSS: 42.3258
+epoch: 141
+| train          | E: 141 | S: 45146 | R: 54.0000 | G: 1 | D: 02.7 s | CLOSS: 36.1108
+epoch: 142
+| train          | E: 142 | S: 45214 | R: 115.0000 | G: 1 | D: 01.3 s | CLOSS: 47.5838
+epoch: 143
+| train          | E: 143 | S: 45500 | R: -164.0000 | G: 1 | D: 05.4 s | CLOSS: 39.6521
+epoch: 144
+| train          | E: 144 | S: 45532 | R: 149.0000 | G: 1 | D: 00.7 s | CLOSS: 59.7433
+epoch: 145
+| train          | E: 145 | S: 45749 | R: -131.0000 | G: 1 | D: 04.7 s | CLOSS: 38.9197
+epoch: 146
+| train          | E: 146 | S: 45819 | R: 97.0000 | G: 1 | D: 01.4 s | CLOSS: 35.7446
+epoch: 147
+| train          | E: 147 | S: 45881 | R: 117.0000 | G: 1 | D: 01.2 s | CLOSS: 40.9107
+epoch: 148
+evaluating...
+| eval           | E: 148 | S: 46001 | R: -53.3000 | G: 1
+| train          | E: 148 | S: 46120 | R: -103.0000 | G: 1 | D: 07.8 s | CLOSS: 43.4413
+epoch: 149
+| train          | E: 149 | S: 46240 | R: 37.0000 | G: 1 | D: 02.3 s | CLOSS: 43.5446
+epoch: 150
+| train          | E: 150 | S: 46291 | R: 127.0000 | G: 1 | D: 01.0 s | CLOSS: 31.3427
+epoch: 151
+| train          | E: 151 | S: 46341 | R: 135.0000 | G: 1 | D: 00.8 s | CLOSS: 39.0000
+epoch: 152
+| train          | E: 152 | S: 46372 | R: 160.0000 | G: 1 | D: 00.7 s | CLOSS: 29.9144
+epoch: 153
+| train          | E: 153 | S: 46421 | R: 139.0000 | G: 1 | D: 01.0 s | CLOSS: 40.4112
+epoch: 154
+| train          | E: 154 | S: 46579 | R: -16.0000 | G: 1 | D: 02.6 s | CLOSS: 37.2879
+epoch: 155
+| train          | E: 155 | S: 46879 | R: -189.0000 | G: 1 | D: 06.0 s | CLOSS: 41.6163
+epoch: 156
+| train          | E: 156 | S: 46964 | R: 82.0000 | G: 1 | D: 01.3 s | CLOSS: 35.6893
+epoch: 157
+evaluating...
+| eval           | E: 157 | S: 47001 | R: 60.3000 | G: 1
+| train          | E: 157 | S: 47041 | R: 99.0000 | G: 1 | D: 03.5 s | CLOSS: 30.5686
+epoch: 158
+| train          | E: 158 | S: 47090 | R: 134.0000 | G: 1 | D: 00.8 s | CLOSS: 28.9272
+epoch: 159
+| train          | E: 159 | S: 47153 | R: 111.0000 | G: 1 | D: 01.2 s | CLOSS: 43.2687
+epoch: 160
+| train          | E: 160 | S: 47215 | R: 114.0000 | G: 1 | D: 01.2 s | CLOSS: 35.2010
+epoch: 161
+| train          | E: 161 | S: 47334 | R: 23.0000 | G: 1 | D: 02.2 s | CLOSS: 36.0000
+epoch: 162
+| train          | E: 162 | S: 47434 | R: 53.0000 | G: 1 | D: 01.9 s | CLOSS: 43.2827
+epoch: 163
+| train          | E: 163 | S: 47582 | R: 11.0000 | G: 1 | D: 02.7 s | CLOSS: 35.0560
+epoch: 164
+| train          | E: 164 | S: 47752 | R: -27.0000 | G: 1 | D: 03.1 s | CLOSS: 39.9826
+epoch: 165
+| train          | E: 165 | S: 47832 | R: 79.0000 | G: 1 | D: 01.4 s | CLOSS: 53.5270
+epoch: 166
+| train          | E: 166 | S: 47962 | R: -4.0000 | G: 1 | D: 02.6 s | CLOSS: 41.0663
+epoch: 167
+evaluating...
+| eval           | E: 167 | S: 48001 | R: -35.0000 | G: 1
+| train          | E: 167 | S: 48100 | R: -21.0000 | G: 1 | D: 04.7 s | CLOSS: 36.0477
+epoch: 168
+| train          | E: 168 | S: 48182 | R: 81.0000 | G: 1 | D: 01.9 s | CLOSS: 43.2129
+epoch: 169
+| train          | E: 169 | S: 48270 | R: 85.0000 | G: 1 | D: 01.6 s | CLOSS: 33.7480
+epoch: 170
+| train          | E: 170 | S: 48296 | R: 163.0000 | G: 1 | D: 00.4 s | CLOSS: 30.7887
+epoch: 171
+| train          | E: 171 | S: 48491 | R: -55.0000 | G: 1 | D: 04.0 s | CLOSS: 34.9130
+epoch: 172
+| train          | E: 172 | S: 48612 | R: 36.0000 | G: 1 | D: 02.4 s | CLOSS: 49.2141
+epoch: 173
+| train          | E: 173 | S: 48758 | R: -5.0000 | G: 1 | D: 02.7 s | CLOSS: 41.0416
+epoch: 174
+| train          | E: 174 | S: 48866 | R: 61.0000 | G: 1 | D: 02.1 s | CLOSS: 42.0318
+epoch: 175
+evaluating...
+| eval           | E: 175 | S: 49001 | R: 18.9000 | G: 1
+| train          | E: 175 | S: 49260 | R: -334.0000 | G: 1 | D: 09.7 s | CLOSS: 40.8939
+epoch: 176
+| train          | E: 176 | S: 49386 | R: 19.0000 | G: 1 | D: 02.3 s | CLOSS: 44.5333
+epoch: 177
+| train          | E: 177 | S: 49745 | R: -291.0000 | G: 1 | D: 07.0 s | CLOSS: 42.5989
+epoch: 178
+| train          | E: 178 | S: 49774 | R: 160.0000 | G: 1 | D: 00.4 s | CLOSS: 39.5822
+epoch: 179
+| train          | E: 179 | S: 49857 | R: 89.0000 | G: 1 | D: 01.9 s | CLOSS: 40.8377
+epoch: 180
+evaluating...
+| eval           | E: 180 | S: 50001 | R: 79.8000 | G: 1
+| train          | E: 180 | S: 50038 | R: -61.0000 | G: 1 | D: 04.6 s | CLOSS: 50.8549
+epoch: 181
+| train          | E: 181 | S: 50141 | R: 42.0000 | G: 1 | D: 02.0 s | CLOSS: 41.9168
+epoch: 182
+| train          | E: 182 | S: 50284 | R: -1.0000 | G: 1 | D: 02.6 s | CLOSS: 43.1726
+epoch: 183
+| train          | E: 183 | S: 50327 | R: 141.0000 | G: 1 | D: 00.9 s | CLOSS: 49.8947
+epoch: 184
+| train          | E: 184 | S: 50493 | R: -42.0000 | G: 1 | D: 03.0 s | CLOSS: 40.0138
+epoch: 185
+| train          | E: 185 | S: 50535 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: 28.6682
+epoch: 186
+| train          | E: 186 | S: 50674 | R: 34.0000 | G: 1 | D: 02.3 s | CLOSS: 34.7844
+epoch: 187
+| train          | E: 187 | S: 50792 | R: 56.0000 | G: 1 | D: 02.3 s | CLOSS: 45.0583
+epoch: 188
+| train          | E: 188 | S: 50930 | R: 8.0000 | G: 1 | D: 03.0 s | CLOSS: 41.2757
+epoch: 189
+| train          | E: 189 | S: 50954 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 48.0892
+epoch: 190
+evaluating...
+| eval           | E: 190 | S: 51001 | R: 24.0000 | G: 1
+| train          | E: 190 | S: 51003 | R: 132.0000 | G: 1 | D: 02.9 s | CLOSS: 42.3820
+epoch: 191
+| train          | E: 191 | S: 51070 | R: 105.0000 | G: 1 | D: 01.0 s | CLOSS: 46.4340
+epoch: 192
+| train          | E: 192 | S: 51113 | R: 145.0000 | G: 1 | D: 01.1 s | CLOSS: 48.8926
+epoch: 193
+| train          | E: 193 | S: 51235 | R: 19.0000 | G: 1 | D: 02.2 s | CLOSS: 42.0711
+epoch: 194
+| train          | E: 194 | S: 51440 | R: -72.0000 | G: 1 | D: 04.1 s | CLOSS: 42.3777
+epoch: 195
+| train          | E: 195 | S: 51469 | R: 150.0000 | G: 1 | D: 00.4 s | CLOSS: 42.7528
+epoch: 196
+| train          | E: 196 | S: 51539 | R: 99.0000 | G: 1 | D: 01.5 s | CLOSS: 47.2708
+epoch: 197
+| train          | E: 197 | S: 51570 | R: 150.0000 | G: 1 | D: 00.5 s | CLOSS: 42.4118
+epoch: 198
+| train          | E: 198 | S: 51637 | R: 89.0000 | G: 1 | D: 01.2 s | CLOSS: 50.2113
+epoch: 199
+| train          | E: 199 | S: 51812 | R: -59.0000 | G: 1 | D: 03.4 s | CLOSS: 41.9064
+epoch: 200
+evaluating...
+| eval           | E: 200 | S: 52001 | R: 44.5000 | G: 1
+| train          | E: 200 | S: 52136 | R: -265.0000 | G: 1 | D: 09.2 s | CLOSS: 47.1640
+epoch: 201
+| train          | E: 201 | S: 52202 | R: 110.0000 | G: 1 | D: 01.3 s | CLOSS: 40.8133
+epoch: 202
+| train          | E: 202 | S: 52285 | R: 91.0000 | G: 1 | D: 01.6 s | CLOSS: 54.8899
+epoch: 203
+| train          | E: 203 | S: 52441 | R: 4.0000 | G: 1 | D: 03.1 s | CLOSS: 45.2515
+epoch: 204
+| train          | E: 204 | S: 52836 | R: -284.0000 | G: 1 | D: 07.9 s | CLOSS: 46.2852
+epoch: 205
+| train          | E: 205 | S: 52856 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 52.0916
+epoch: 206
+| train          | E: 206 | S: 52873 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 36.1050
+epoch: 207
+| train          | E: 207 | S: 52902 | R: 159.0000 | G: 1 | D: 00.4 s | CLOSS: 47.8997
+epoch: 208
+| train          | E: 208 | S: 52993 | R: 71.0000 | G: 1 | D: 01.9 s | CLOSS: 44.4067
+epoch: 209
+evaluating...
+| eval           | E: 209 | S: 53001 | R: 115.8000 | G: 1
+| train          | E: 209 | S: 53076 | R: 80.0000 | G: 1 | D: 02.6 s | CLOSS: 43.0669
+epoch: 210
+| train          | E: 210 | S: 53711 | R: -676.0000 | G: 1 | D: 12.2 s | CLOSS: 52.0892
+epoch: 211
+| train          | E: 211 | S: 53863 | R: -18.0000 | G: 1 | D: 06.1 s | CLOSS: 56.2417
+epoch: 212
+evaluating...
+| eval           | E: 212 | S: 54001 | R: 31.7000 | G: 1
+| train          | E: 212 | S: 54019 | R: -11.0000 | G: 1 | D: 12.1 s | CLOSS: 42.1298
+epoch: 213
+| train          | E: 213 | S: 54399 | R: -320.0000 | G: 1 | D: 18.6 s | CLOSS: 55.7353
+epoch: 214
+| train          | E: 214 | S: 54502 | R: -24.0000 | G: 1 | D: 03.6 s | CLOSS: 57.2575
+epoch: 215
+| train          | E: 215 | S: 54928 | R: -368.0000 | G: 1 | D: 17.1 s | CLOSS: 49.9183
+epoch: 216
+evaluating...
+| eval           | E: 216 | S: 55001 | R: 43.2000 | G: 1
+| train          | E: 216 | S: 55064 | R: 23.0000 | G: 1 | D: 15.4 s | CLOSS: 54.8462
+epoch: 217
+| train          | E: 217 | S: 55084 | R: 170.0000 | G: 1 | D: 00.6 s | CLOSS: 77.2348
+epoch: 218
+| train          | E: 218 | S: 55320 | R: -88.0000 | G: 1 | D: 04.8 s | CLOSS: 52.2633
+epoch: 219
+| train          | E: 219 | S: 55404 | R: 84.0000 | G: 1 | D: 01.2 s | CLOSS: 54.4499
+epoch: 220
+| train          | E: 220 | S: 55438 | R: 157.0000 | G: 1 | D: 00.4 s | CLOSS: 61.9611
+epoch: 221
+| train          | E: 221 | S: 55578 | R: -22.0000 | G: 1 | D: 02.6 s | CLOSS: 59.8986
+epoch: 222
+| train          | E: 222 | S: 55930 | R: -428.0000 | G: 1 | D: 07.1 s | CLOSS: 62.6173
+epoch: 223
+| train          | E: 223 | S: 55995 | R: 110.0000 | G: 1 | D: 01.2 s | CLOSS: 56.6165
+epoch: 224
+evaluating...
+| eval           | E: 224 | S: 56001 | R: 112.9000 | G: 1
+| train          | E: 224 | S: 56163 | R: 5.0000 | G: 1 | D: 03.9 s | CLOSS: 52.6252
+epoch: 225
+| train          | E: 225 | S: 56229 | R: 118.0000 | G: 1 | D: 01.1 s | CLOSS: 51.8505
+epoch: 226
+| train          | E: 226 | S: 56245 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 26.5580
+epoch: 227
+| train          | E: 227 | S: 56385 | R: 33.0000 | G: 1 | D: 02.9 s | CLOSS: 49.7758
+epoch: 228
+| train          | E: 228 | S: 56539 | R: 17.0000 | G: 1 | D: 03.5 s | CLOSS: 53.8016
+epoch: 229
+| train          | E: 229 | S: 56768 | R: -66.0000 | G: 1 | D: 06.5 s | CLOSS: 61.0212
+epoch: 230
+| train          | E: 230 | S: 56925 | R: 19.0000 | G: 1 | D: 03.0 s | CLOSS: 51.7800
+epoch: 231
+| train          | E: 231 | S: 56965 | R: 147.0000 | G: 1 | D: 00.9 s | CLOSS: 37.8640
+epoch: 232
+evaluating...
+| eval           | E: 232 | S: 57001 | R: 55.7000 | G: 1
+| train          | E: 232 | S: 57047 | R: 99.0000 | G: 1 | D: 03.5 s | CLOSS: 48.8965
+epoch: 233
+| train          | E: 233 | S: 57176 | R: 41.0000 | G: 1 | D: 02.3 s | CLOSS: 54.3224
+epoch: 234
+| train          | E: 234 | S: 57198 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: 58.9486
+epoch: 235
+| train          | E: 235 | S: 57255 | R: 119.0000 | G: 1 | D: 01.0 s | CLOSS: 59.3425
+epoch: 236
+| train          | E: 236 | S: 57454 | R: -32.0000 | G: 1 | D: 03.6 s | CLOSS: 54.4786
+epoch: 237
+| train          | E: 237 | S: 57515 | R: 119.0000 | G: 1 | D: 00.8 s | CLOSS: 58.9605
+epoch: 238
+| train          | E: 238 | S: 57709 | R: -40.0000 | G: 1 | D: 04.4 s | CLOSS: 63.2457
+epoch: 239
+| train          | E: 239 | S: 57893 | R: -17.0000 | G: 1 | D: 03.3 s | CLOSS: 61.1628
+epoch: 240
+| train          | E: 240 | S: 57931 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: 74.8719
+epoch: 241
+evaluating...
+| eval           | E: 241 | S: 58001 | R: 4.9000 | G: 1
+| train          | E: 241 | S: 58017 | R: 65.0000 | G: 1 | D: 04.1 s | CLOSS: 69.3722
+epoch: 242
+| train          | E: 242 | S: 58103 | R: 36.0000 | G: 1 | D: 01.3 s | CLOSS: 74.7537
+epoch: 243
+| train          | E: 243 | S: 58145 | R: 124.0000 | G: 1 | D: 00.9 s | CLOSS: 60.0140
+epoch: 244
+| train          | E: 244 | S: 58852 | R: -1174.0000 | G: 1 | D: 31.9 s | CLOSS: 65.6190
+epoch: 245
+| train          | E: 245 | S: 58914 | R: 108.0000 | G: 1 | D: 02.6 s | CLOSS: 56.8771
+epoch: 246
+evaluating...
+| eval           | E: 246 | S: 59001 | R: 9.9000 | G: 1
+| train          | E: 246 | S: 59066 | R: -14.0000 | G: 1 | D: 13.1 s | CLOSS: 50.7516
+epoch: 247
+| train          | E: 247 | S: 59115 | R: 120.0000 | G: 1 | D: 02.6 s | CLOSS: 51.2526
+epoch: 248
+| train          | E: 248 | S: 59148 | R: 155.0000 | G: 1 | D: 01.4 s | CLOSS: 65.6669
+epoch: 249
+| train          | E: 249 | S: 59422 | R: -147.0000 | G: 1 | D: 15.6 s | CLOSS: 58.3999
+epoch: 250
+| train          | E: 250 | S: 59524 | R: 70.0000 | G: 1 | D: 06.2 s | CLOSS: 62.7944
+epoch: 251
+| train          | E: 251 | S: 59640 | R: 45.0000 | G: 1 | D: 05.3 s | CLOSS: 58.2103
+epoch: 252
+| train          | E: 252 | S: 59684 | R: 142.0000 | G: 1 | D: 02.6 s | CLOSS: 76.3450
+epoch: 253
+| train          | E: 253 | S: 59827 | R: 15.0000 | G: 1 | D: 09.4 s | CLOSS: 65.6244
+epoch: 254
+| train          | E: 254 | S: 59877 | R: 132.0000 | G: 1 | D: 01.4 s | CLOSS: 63.2341
+epoch: 255
+| train          | E: 255 | S: 59910 | R: 154.0000 | G: 1 | D: 01.6 s | CLOSS: 64.4345
+epoch: 256
+| train          | E: 256 | S: 59998 | R: 84.0000 | G: 1 | D: 01.7 s | CLOSS: 71.3800
+epoch: 257
+evaluating...
+| eval           | E: 257 | S: 60001 | R: 123.3000 | G: 1
+| train          | E: 257 | S: 60041 | R: 130.0000 | G: 1 | D: 01.9 s | CLOSS: 66.9822
+epoch: 258
+| train          | E: 258 | S: 60074 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: 48.9468
+epoch: 259
+| train          | E: 259 | S: 60096 | R: 165.0000 | G: 1 | D: 01.9 s | CLOSS: 60.3808
+epoch: 260
+| train          | E: 260 | S: 60142 | R: 127.0000 | G: 1 | D: 01.3 s | CLOSS: 55.1467
+epoch: 261
+| train          | E: 261 | S: 60223 | R: 92.0000 | G: 1 | D: 02.0 s | CLOSS: 46.8651
+epoch: 262
+| train          | E: 262 | S: 60291 | R: 107.0000 | G: 1 | D: 01.4 s | CLOSS: 57.7956
+epoch: 263
+| train          | E: 263 | S: 60319 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 44.1568
+epoch: 264
+| train          | E: 264 | S: 60445 | R: 12.0000 | G: 1 | D: 02.7 s | CLOSS: 84.8753
+epoch: 265
+| train          | E: 265 | S: 60602 | R: -24.0000 | G: 1 | D: 03.9 s | CLOSS: 60.8949
+epoch: 266
+| train          | E: 266 | S: 60626 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: 57.1828
+epoch: 267
+| train          | E: 267 | S: 60665 | R: 142.0000 | G: 1 | D: 00.9 s | CLOSS: 83.1818
+epoch: 268
+| train          | E: 268 | S: 60715 | R: 125.0000 | G: 1 | D: 00.9 s | CLOSS: 42.6804
+epoch: 269
+| train          | E: 269 | S: 60749 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: 53.6757
+epoch: 270
+| train          | E: 270 | S: 60903 | R: -32.0000 | G: 1 | D: 05.6 s | CLOSS: 69.0391
+epoch: 271
+| train          | E: 271 | S: 60959 | R: 109.0000 | G: 1 | D: 01.6 s | CLOSS: 72.1427
+epoch: 272
+evaluating...
+| eval           | E: 272 | S: 61001 | R: 73.3000 | G: 1
+| train          | E: 272 | S: 61021 | R: 101.0000 | G: 1 | D: 03.2 s | CLOSS: 56.8673
+epoch: 273
+| train          | E: 273 | S: 61091 | R: 98.0000 | G: 1 | D: 02.2 s | CLOSS: 59.0992
+epoch: 274
+| train          | E: 274 | S: 61195 | R: 43.0000 | G: 1 | D: 02.6 s | CLOSS: 67.2981
+epoch: 275
+| train          | E: 275 | S: 61224 | R: 153.0000 | G: 1 | D: 00.4 s | CLOSS: 71.4407
+epoch: 276
+| train          | E: 276 | S: 61255 | R: 153.0000 | G: 1 | D: 00.8 s | CLOSS: 70.0669
+epoch: 277
+| train          | E: 277 | S: 61344 | R: 75.0000 | G: 1 | D: 02.1 s | CLOSS: 54.7635
+epoch: 278
+| train          | E: 278 | S: 61368 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: 49.7335
+epoch: 279
+| train          | E: 279 | S: 61405 | R: 146.0000 | G: 1 | D: 00.8 s | CLOSS: 72.6280
+epoch: 280
+| train          | E: 280 | S: 61498 | R: 85.0000 | G: 1 | D: 03.0 s | CLOSS: 58.8524
+epoch: 281
+| train          | E: 281 | S: 61545 | R: 141.0000 | G: 1 | D: 02.0 s | CLOSS: 56.9055
+epoch: 282
+| train          | E: 282 | S: 61684 | R: 23.0000 | G: 1 | D: 03.7 s | CLOSS: 56.3230
+epoch: 283
+| train          | E: 283 | S: 61721 | R: 142.0000 | G: 1 | D: 01.7 s | CLOSS: 72.1421
+epoch: 284
+| train          | E: 284 | S: 61753 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: 43.0164
+epoch: 285
+| train          | E: 285 | S: 61834 | R: 93.0000 | G: 1 | D: 02.4 s | CLOSS: 53.3297
+epoch: 286
+| train          | E: 286 | S: 61892 | R: 120.0000 | G: 1 | D: 01.2 s | CLOSS: 60.4015
+epoch: 287
+| train          | E: 287 | S: 61911 | R: 173.0000 | G: 1 | D: 00.5 s | CLOSS: 45.5930
+epoch: 288
+evaluating...
+| eval           | E: 288 | S: 62001 | R: 127.0000 | G: 1
+| train          | E: 288 | S: 62221 | R: -167.0000 | G: 1 | D: 09.7 s | CLOSS: 65.6547
+epoch: 289
+| train          | E: 289 | S: 62309 | R: 84.0000 | G: 1 | D: 02.2 s | CLOSS: 60.5212
+epoch: 290
+| train          | E: 290 | S: 62443 | R: 19.0000 | G: 1 | D: 06.0 s | CLOSS: 75.6544
+epoch: 291
+| train          | E: 291 | S: 62691 | R: -134.0000 | G: 1 | D: 08.7 s | CLOSS: 66.7075
+epoch: 292
+| train          | E: 292 | S: 62726 | R: 136.0000 | G: 1 | D: 01.1 s | CLOSS: 66.0445
+epoch: 293
+| train          | E: 293 | S: 62745 | R: 171.0000 | G: 1 | D: 00.6 s | CLOSS: 55.9730
+epoch: 294
+| train          | E: 294 | S: 62798 | R: 120.0000 | G: 1 | D: 01.6 s | CLOSS: 65.0917
+epoch: 295
+| train          | E: 295 | S: 62814 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 60.3953
+epoch: 296
+| train          | E: 296 | S: 62883 | R: 114.0000 | G: 1 | D: 01.8 s | CLOSS: 80.0292
+epoch: 297
+| train          | E: 297 | S: 62894 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 64.0763
+epoch: 298
+| train          | E: 298 | S: 62928 | R: 158.0000 | G: 1 | D: 00.8 s | CLOSS: 49.4542
+epoch: 299
+| train          | E: 299 | S: 62979 | R: 131.0000 | G: 1 | D: 01.2 s | CLOSS: 65.7662
+epoch: 300
+evaluating...
+| eval           | E: 300 | S: 63001 | R: 127.1000 | G: 1
+| train          | E: 300 | S: 63108 | R: 34.0000 | G: 1 | D: 10.5 s | CLOSS: 73.3606
+epoch: 301
+| train          | E: 301 | S: 63144 | R: 148.0000 | G: 1 | D: 01.1 s | CLOSS: 83.3912
+epoch: 302
+| train          | E: 302 | S: 63230 | R: 67.0000 | G: 1 | D: 04.1 s | CLOSS: 70.4931
+epoch: 303
+| train          | E: 303 | S: 63252 | R: 164.0000 | G: 1 | D: 02.5 s | CLOSS: 79.3569
+epoch: 304
+| train          | E: 304 | S: 63283 | R: 150.0000 | G: 1 | D: 01.5 s | CLOSS: 72.1732
+epoch: 305
+| train          | E: 305 | S: 63333 | R: 132.0000 | G: 1 | D: 01.9 s | CLOSS: 58.4074
+epoch: 306
+| train          | E: 306 | S: 63351 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: 37.7620
+epoch: 307
+| train          | E: 307 | S: 63406 | R: 115.0000 | G: 1 | D: 02.3 s | CLOSS: 60.5392
+epoch: 308
+| train          | E: 308 | S: 63431 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 67.4748
+epoch: 309
+| train          | E: 309 | S: 63477 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 63.4060
+epoch: 310
+| train          | E: 310 | S: 63561 | R: 95.0000 | G: 1 | D: 03.6 s | CLOSS: 50.2510
+epoch: 311
+| train          | E: 311 | S: 63582 | R: 169.0000 | G: 1 | D: 00.6 s | CLOSS: 63.5121
+epoch: 312
+| train          | E: 312 | S: 63606 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 65.2151
+epoch: 313
+| train          | E: 313 | S: 63626 | R: 160.0000 | G: 1 | D: 00.7 s | CLOSS: 84.4236
+epoch: 314
+| train          | E: 314 | S: 63647 | R: 168.0000 | G: 1 | D: 01.3 s | CLOSS: 92.3412
+epoch: 315
+| train          | E: 315 | S: 63671 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 76.3622
+epoch: 316
+| train          | E: 316 | S: 63686 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 45.2261
+epoch: 317
+| train          | E: 317 | S: 63705 | R: 164.0000 | G: 1 | D: 00.6 s | CLOSS: 92.0665
+epoch: 318
+| train          | E: 318 | S: 63737 | R: 157.0000 | G: 1 | D: 01.0 s | CLOSS: 73.0117
+epoch: 319
+| train          | E: 319 | S: 63803 | R: 118.0000 | G: 1 | D: 02.2 s | CLOSS: 66.2011
+epoch: 320
+| train          | E: 320 | S: 63841 | R: 140.0000 | G: 1 | D: 00.9 s | CLOSS: 78.8752
+epoch: 321
+| train          | E: 321 | S: 63884 | R: 134.0000 | G: 1 | D: 01.1 s | CLOSS: 72.5382
+epoch: 322
+| train          | E: 322 | S: 63915 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: 61.2025
+epoch: 323
+| train          | E: 323 | S: 63996 | R: 89.0000 | G: 1 | D: 01.6 s | CLOSS: 58.9269
+epoch: 324
+evaluating...
+| eval           | E: 324 | S: 64001 | R: 120.3000 | G: 1
+| train          | E: 324 | S: 64027 | R: 158.0000 | G: 1 | D: 01.6 s | CLOSS: 58.1319
+epoch: 325
+| train          | E: 325 | S: 64066 | R: 140.0000 | G: 1 | D: 00.7 s | CLOSS: 68.8485
+epoch: 326
+| train          | E: 326 | S: 64096 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: 73.3586
+epoch: 327
+| train          | E: 327 | S: 64147 | R: 120.0000 | G: 1 | D: 01.2 s | CLOSS: 60.3132
+epoch: 328
+| train          | E: 328 | S: 64312 | R: 3.0000 | G: 1 | D: 03.9 s | CLOSS: 54.9276
+epoch: 329
+| train          | E: 329 | S: 64344 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: 83.9905
+epoch: 330
+| train          | E: 330 | S: 64382 | R: 152.0000 | G: 1 | D: 00.9 s | CLOSS: 57.2037
+epoch: 331
+| train          | E: 331 | S: 64434 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: 78.5108
+epoch: 332
+| train          | E: 332 | S: 64471 | R: 149.0000 | G: 1 | D: 00.6 s | CLOSS: 56.9608
+epoch: 333
+| train          | E: 333 | S: 64503 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: 57.5035
+epoch: 334
+| train          | E: 334 | S: 64577 | R: 117.0000 | G: 1 | D: 01.9 s | CLOSS: 57.3424
+epoch: 335
+| train          | E: 335 | S: 64685 | R: 67.0000 | G: 1 | D: 02.4 s | CLOSS: 63.5431
+epoch: 336
+| train          | E: 336 | S: 64834 | R: 16.0000 | G: 1 | D: 03.1 s | CLOSS: 71.8498
+epoch: 337
+| train          | E: 337 | S: 64851 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 64.5701
+epoch: 338
+| train          | E: 338 | S: 64966 | R: 51.0000 | G: 1 | D: 02.5 s | CLOSS: 57.9133
+epoch: 339
+evaluating...
+| eval           | E: 339 | S: 65001 | R: 89.5000 | G: 1
+| train          | E: 339 | S: 65142 | R: -6.0000 | G: 1 | D: 06.0 s | CLOSS: 68.3485
+epoch: 340
+| train          | E: 340 | S: 65184 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: 70.2412
+epoch: 341
+| train          | E: 341 | S: 65220 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: 71.2400
+epoch: 342
+| train          | E: 342 | S: 65293 | R: 78.0000 | G: 1 | D: 01.7 s | CLOSS: 76.2402
+epoch: 343
+| train          | E: 343 | S: 65337 | R: 141.0000 | G: 1 | D: 01.0 s | CLOSS: 75.5970
+epoch: 344
+| train          | E: 344 | S: 65454 | R: 49.0000 | G: 1 | D: 02.4 s | CLOSS: 66.5372
+epoch: 345
+| train          | E: 345 | S: 65558 | R: 49.0000 | G: 1 | D: 02.3 s | CLOSS: 70.8207
+epoch: 346
+| train          | E: 346 | S: 65583 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: 56.1384
+epoch: 347
+| train          | E: 347 | S: 65610 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 74.3143
+epoch: 348
+| train          | E: 348 | S: 65650 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: 56.3819
+epoch: 349
+| train          | E: 349 | S: 65930 | R: -317.0000 | G: 1 | D: 09.1 s | CLOSS: 63.8650
+epoch: 350
+evaluating...
+| eval           | E: 350 | S: 66001 | R: 117.4000 | G: 1
+| train          | E: 350 | S: 66021 | R: 74.0000 | G: 1 | D: 04.9 s | CLOSS: 74.7746
+epoch: 351
+| train          | E: 351 | S: 66053 | R: 150.0000 | G: 1 | D: 00.6 s | CLOSS: 47.3459
+epoch: 352
+| train          | E: 352 | S: 66186 | R: -54.0000 | G: 1 | D: 03.2 s | CLOSS: 73.0876
+epoch: 353
+| train          | E: 353 | S: 66225 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: 84.0892
+epoch: 354
+| train          | E: 354 | S: 66259 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 71.3642
+epoch: 355
+| train          | E: 355 | S: 66318 | R: 113.0000 | G: 1 | D: 02.2 s | CLOSS: 69.5002
+epoch: 356
+| train          | E: 356 | S: 66427 | R: 58.0000 | G: 1 | D: 03.2 s | CLOSS: 70.1359
+epoch: 357
+| train          | E: 357 | S: 66566 | R: -59.0000 | G: 1 | D: 05.1 s | CLOSS: 62.3465
+epoch: 358
+| train          | E: 358 | S: 66643 | R: 52.0000 | G: 1 | D: 02.5 s | CLOSS: 64.0834
+epoch: 359
+| train          | E: 359 | S: 66664 | R: 165.0000 | G: 1 | D: 01.1 s | CLOSS: 62.7295
+epoch: 360
+| train          | E: 360 | S: 66700 | R: 149.0000 | G: 1 | D: 00.7 s | CLOSS: 60.7539
+epoch: 361
+| train          | E: 361 | S: 66718 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: 27.1880
+epoch: 362
+| train          | E: 362 | S: 66955 | R: -79.0000 | G: 1 | D: 05.9 s | CLOSS: 68.6260
+epoch: 363
+evaluating...
+| eval           | E: 363 | S: 67001 | R: 69.7000 | G: 1
+| train          | E: 363 | S: 67144 | R: -25.0000 | G: 1 | D: 15.4 s | CLOSS: 68.6124
+epoch: 364
+| train          | E: 364 | S: 67237 | R: 91.0000 | G: 1 | D: 05.8 s | CLOSS: 62.8938
+epoch: 365
+| train          | E: 365 | S: 67279 | R: 141.0000 | G: 1 | D: 01.6 s | CLOSS: 66.2122
+epoch: 366
+| train          | E: 366 | S: 67320 | R: 144.0000 | G: 1 | D: 00.7 s | CLOSS: 53.6473
+epoch: 367
+| train          | E: 367 | S: 67370 | R: 141.0000 | G: 1 | D: 00.7 s | CLOSS: 50.5254
+epoch: 368
+| train          | E: 368 | S: 67592 | R: -57.0000 | G: 1 | D: 05.3 s | CLOSS: 62.8813
+epoch: 369
+| train          | E: 369 | S: 67650 | R: 134.0000 | G: 1 | D: 01.5 s | CLOSS: 52.6186
+epoch: 370
+| train          | E: 370 | S: 67904 | R: -96.0000 | G: 1 | D: 04.1 s | CLOSS: 66.2994
+epoch: 371
+| train          | E: 371 | S: 67970 | R: 118.0000 | G: 1 | D: 01.3 s | CLOSS: 70.3147
+epoch: 372
+evaluating...
+| eval           | E: 372 | S: 68001 | R: 72.5000 | G: 1
+| train          | E: 372 | S: 68152 | R: -22.0000 | G: 1 | D: 04.8 s | CLOSS: 68.9599
+epoch: 373
+| train          | E: 373 | S: 68243 | R: 89.0000 | G: 1 | D: 01.2 s | CLOSS: 75.4289
+epoch: 374
+| train          | E: 374 | S: 68273 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 66.6545
+epoch: 375
+| train          | E: 375 | S: 68315 | R: 151.0000 | G: 1 | D: 01.0 s | CLOSS: 49.9918
+epoch: 376
+| train          | E: 376 | S: 68352 | R: 153.0000 | G: 1 | D: 00.5 s | CLOSS: 74.3103
+epoch: 377
+| train          | E: 377 | S: 68385 | R: 155.0000 | G: 1 | D: 00.4 s | CLOSS: 58.9933
+epoch: 378
+| train          | E: 378 | S: 68416 | R: 154.0000 | G: 1 | D: 00.9 s | CLOSS: 61.9753
+epoch: 379
+| train          | E: 379 | S: 68449 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 61.2589
+epoch: 380
+| train          | E: 380 | S: 68522 | R: 107.0000 | G: 1 | D: 01.2 s | CLOSS: 59.3430
+epoch: 381
+| train          | E: 381 | S: 68539 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 70.3289
+epoch: 382
+| train          | E: 382 | S: 68551 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 52.6733
+epoch: 383
+| train          | E: 383 | S: 68723 | R: 1.0000 | G: 1 | D: 03.4 s | CLOSS: 57.9050
+epoch: 384
+| train          | E: 384 | S: 68746 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 81.4884
+epoch: 385
+| train          | E: 385 | S: 68797 | R: 139.0000 | G: 1 | D: 01.1 s | CLOSS: 62.9870
+epoch: 386
+| train          | E: 386 | S: 68907 | R: 70.0000 | G: 1 | D: 02.1 s | CLOSS: 73.9730
+epoch: 387
+| train          | E: 387 | S: 68984 | R: 107.0000 | G: 1 | D: 01.5 s | CLOSS: 64.9054
+epoch: 388
+| train          | E: 388 | S: 68997 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 72.8737
+epoch: 389
+evaluating...
+| eval           | E: 389 | S: 69001 | R: 123.4000 | G: 1
+| train          | E: 389 | S: 69116 | R: 45.0000 | G: 1 | D: 03.0 s | CLOSS: 74.4734
+epoch: 390
+| train          | E: 390 | S: 69164 | R: 136.0000 | G: 1 | D: 00.8 s | CLOSS: 66.6590
+epoch: 391
+| train          | E: 391 | S: 69323 | R: 4.0000 | G: 1 | D: 02.6 s | CLOSS: 72.1443
+epoch: 392
+| train          | E: 392 | S: 69372 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: 79.0961
+epoch: 393
+| train          | E: 393 | S: 69398 | R: 164.0000 | G: 1 | D: 00.5 s | CLOSS: 62.7172
+epoch: 394
+| train          | E: 394 | S: 69715 | R: -167.0000 | G: 1 | D: 05.0 s | CLOSS: 67.6768
+epoch: 395
+| train          | E: 395 | S: 69767 | R: 131.0000 | G: 1 | D: 00.9 s | CLOSS: 69.0758
+epoch: 396
+| train          | E: 396 | S: 69840 | R: 116.0000 | G: 1 | D: 01.2 s | CLOSS: 65.3182
+epoch: 397
+| train          | E: 397 | S: 69905 | R: 127.0000 | G: 1 | D: 01.1 s | CLOSS: 68.1235
+epoch: 398
+| train          | E: 398 | S: 69994 | R: 97.0000 | G: 1 | D: 01.3 s | CLOSS: 63.0811
+epoch: 399
+evaluating...
+| eval           | E: 399 | S: 70001 | R: 120.1000 | G: 1
+| train          | E: 399 | S: 70249 | R: -108.0000 | G: 1 | D: 05.2 s | CLOSS: 68.4638
+epoch: 400
+| train          | E: 400 | S: 70295 | R: 146.0000 | G: 1 | D: 00.7 s | CLOSS: 71.6718
+epoch: 401
+| train          | E: 401 | S: 70331 | R: 145.0000 | G: 1 | D: 00.4 s | CLOSS: 87.9054
+epoch: 402
+| train          | E: 402 | S: 70342 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 112.3169
+epoch: 403
+| train          | E: 403 | S: 70370 | R: 162.0000 | G: 1 | D: 00.8 s | CLOSS: 65.5609
+epoch: 404
+| train          | E: 404 | S: 70410 | R: 138.0000 | G: 1 | D: 00.5 s | CLOSS: 65.5545
+epoch: 405
+| train          | E: 405 | S: 70460 | R: 133.0000 | G: 1 | D: 00.6 s | CLOSS: 57.7195
+epoch: 406
+| train          | E: 406 | S: 70564 | R: 73.0000 | G: 1 | D: 02.0 s | CLOSS: 71.5595
+epoch: 407
+| train          | E: 407 | S: 70620 | R: 112.0000 | G: 1 | D: 01.0 s | CLOSS: 84.6959
+epoch: 408
+| train          | E: 408 | S: 70638 | R: 167.0000 | G: 1 | D: 00.4 s | CLOSS: 59.1633
+epoch: 409
+| train          | E: 409 | S: 70712 | R: 106.0000 | G: 1 | D: 01.0 s | CLOSS: 59.7935
+epoch: 410
+| train          | E: 410 | S: 70767 | R: 135.0000 | G: 1 | D: 01.2 s | CLOSS: 66.0139
+epoch: 411
+| train          | E: 411 | S: 70891 | R: 57.0000 | G: 1 | D: 02.1 s | CLOSS: 65.2391
+epoch: 412
+evaluating...
+| eval           | E: 412 | S: 71001 | R: 124.4000 | G: 1
+| train          | E: 412 | S: 71004 | R: 70.0000 | G: 1 | D: 03.0 s | CLOSS: 64.5150
+epoch: 413
+| train          | E: 413 | S: 71040 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 60.6663
+epoch: 414
+| train          | E: 414 | S: 71066 | R: 157.0000 | G: 1 | D: 00.3 s | CLOSS: 67.5235
+epoch: 415
+| train          | E: 415 | S: 71142 | R: 100.0000 | G: 1 | D: 01.4 s | CLOSS: 71.9938
+epoch: 416
+| train          | E: 416 | S: 71236 | R: 89.0000 | G: 1 | D: 01.1 s | CLOSS: 65.4096
+epoch: 417
+| train          | E: 417 | S: 71269 | R: 159.0000 | G: 1 | D: 00.7 s | CLOSS: 40.5115
+epoch: 418
+| train          | E: 418 | S: 71293 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 64.3206
+epoch: 419
+| train          | E: 419 | S: 71305 | R: 179.0000 | G: 1 | D: 00.1 s | CLOSS: 105.3958
+epoch: 420
+| train          | E: 420 | S: 71434 | R: 43.0000 | G: 1 | D: 02.2 s | CLOSS: 74.6857
+epoch: 421
+| train          | E: 421 | S: 71494 | R: 124.0000 | G: 1 | D: 00.8 s | CLOSS: 81.1439
+epoch: 422
+| train          | E: 422 | S: 71547 | R: 107.0000 | G: 1 | D: 02.3 s | CLOSS: 63.3245
+epoch: 423
+| train          | E: 423 | S: 71617 | R: 116.0000 | G: 1 | D: 01.6 s | CLOSS: 72.1423
+epoch: 424
+| train          | E: 424 | S: 71635 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 64.8421
+epoch: 425
+| train          | E: 425 | S: 71659 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 91.8788
+epoch: 426
+| train          | E: 426 | S: 71699 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: 84.6854
+epoch: 427
+| train          | E: 427 | S: 71727 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 87.4973
+epoch: 428
+| train          | E: 428 | S: 71847 | R: 48.0000 | G: 1 | D: 01.9 s | CLOSS: 74.4033
+epoch: 429
+| train          | E: 429 | S: 71871 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 51.2241
+epoch: 430
+| train          | E: 430 | S: 71980 | R: 61.0000 | G: 1 | D: 01.8 s | CLOSS: 62.5398
+epoch: 431
+evaluating...
+| eval           | E: 431 | S: 72001 | R: 110.6000 | G: 1
+| train          | E: 431 | S: 72014 | R: 154.0000 | G: 1 | D: 01.6 s | CLOSS: 41.3564
+epoch: 432
+| train          | E: 432 | S: 72074 | R: 129.0000 | G: 1 | D: 01.2 s | CLOSS: 78.0808
+epoch: 433
+| train          | E: 433 | S: 72091 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 52.5808
+epoch: 434
+| train          | E: 434 | S: 72130 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: 58.0330
+epoch: 435
+| train          | E: 435 | S: 72165 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 80.1891
+epoch: 436
+| train          | E: 436 | S: 72210 | R: 134.0000 | G: 1 | D: 00.8 s | CLOSS: 90.3584
+epoch: 437
+| train          | E: 437 | S: 72274 | R: 121.0000 | G: 1 | D: 01.1 s | CLOSS: 89.9199
+epoch: 438
+| train          | E: 438 | S: 72315 | R: 129.0000 | G: 1 | D: 00.8 s | CLOSS: 69.8592
+epoch: 439
+| train          | E: 439 | S: 72345 | R: 155.0000 | G: 1 | D: 00.5 s | CLOSS: 78.0426
+epoch: 440
+| train          | E: 440 | S: 72383 | R: 140.0000 | G: 1 | D: 00.7 s | CLOSS: 45.2429
+epoch: 441
+| train          | E: 441 | S: 72399 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 53.6250
+epoch: 442
+| train          | E: 442 | S: 72414 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 79.0517
+epoch: 443
+| train          | E: 443 | S: 72437 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: 65.1835
+epoch: 444
+| train          | E: 444 | S: 72462 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 84.8174
+epoch: 445
+| train          | E: 445 | S: 72502 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: 72.7019
+epoch: 446
+| train          | E: 446 | S: 72514 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 45.1566
+epoch: 447
+| train          | E: 447 | S: 72526 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 96.6675
+epoch: 448
+| train          | E: 448 | S: 72537 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 78.1313
+epoch: 449
+| train          | E: 449 | S: 72613 | R: 94.0000 | G: 1 | D: 01.3 s | CLOSS: 67.7126
+epoch: 450
+| train          | E: 450 | S: 72629 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 67.9513
+epoch: 451
+| train          | E: 451 | S: 72686 | R: 129.0000 | G: 1 | D: 00.7 s | CLOSS: 61.4318
+epoch: 452
+| train          | E: 452 | S: 72715 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: 81.7827
+epoch: 453
+| train          | E: 453 | S: 72782 | R: 92.0000 | G: 1 | D: 00.9 s | CLOSS: 74.1703
+epoch: 454
+| train          | E: 454 | S: 72829 | R: 137.0000 | G: 1 | D: 01.0 s | CLOSS: 85.3934
+epoch: 455
+| train          | E: 455 | S: 72849 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 79.8349
+epoch: 456
+| train          | E: 456 | S: 72897 | R: 136.0000 | G: 1 | D: 00.6 s | CLOSS: 56.7806
+epoch: 457
+| train          | E: 457 | S: 72920 | R: 161.0000 | G: 1 | D: 00.3 s | CLOSS: 81.1296
+epoch: 458
+| train          | E: 458 | S: 72938 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 72.0366
+epoch: 459
+| train          | E: 459 | S: 72958 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 93.3034
+epoch: 460
+| train          | E: 460 | S: 72984 | R: 159.0000 | G: 1 | D: 00.8 s | CLOSS: 66.3612
+epoch: 461
+evaluating...
+| eval           | E: 461 | S: 73001 | R: 155.3000 | G: 1
+| train          | E: 461 | S: 73039 | R: 129.0000 | G: 1 | D: 01.1 s | CLOSS: 56.6585
+epoch: 462
+| train          | E: 462 | S: 73112 | R: 113.0000 | G: 1 | D: 01.3 s | CLOSS: 80.5259
+epoch: 463
+| train          | E: 463 | S: 73126 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 91.5181
+epoch: 464
+| train          | E: 464 | S: 73139 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 109.5553
+epoch: 465
+| train          | E: 465 | S: 73151 | R: 180.0000 | G: 1 | D: 00.1 s | CLOSS: 105.2578
+epoch: 466
+| train          | E: 466 | S: 73170 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 84.1562
+epoch: 467
+| train          | E: 467 | S: 73198 | R: 149.0000 | G: 1 | D: 00.4 s | CLOSS: 70.6124
+epoch: 468
+| train          | E: 468 | S: 73225 | R: 163.0000 | G: 1 | D: 00.7 s | CLOSS: 87.1620
+epoch: 469
+| train          | E: 469 | S: 73262 | R: 134.0000 | G: 1 | D: 00.7 s | CLOSS: 81.9799
+epoch: 470
+| train          | E: 470 | S: 73307 | R: 128.0000 | G: 1 | D: 01.1 s | CLOSS: 64.1494
+epoch: 471
+| train          | E: 471 | S: 73344 | R: 143.0000 | G: 1 | D: 01.1 s | CLOSS: 58.2368
+epoch: 472
+| train          | E: 472 | S: 73362 | R: 173.0000 | G: 1 | D: 00.7 s | CLOSS: 80.8635
+epoch: 473
+| train          | E: 473 | S: 73384 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 123.6229
+epoch: 474
+| train          | E: 474 | S: 73402 | R: 173.0000 | G: 1 | D: 00.9 s | CLOSS: 81.7151
+epoch: 475
+| train          | E: 475 | S: 73434 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 82.8656
+epoch: 476
+| train          | E: 476 | S: 73475 | R: 134.0000 | G: 1 | D: 01.5 s | CLOSS: 88.9198
+epoch: 477
+| train          | E: 477 | S: 73492 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 86.4233
+epoch: 478
+| train          | E: 478 | S: 73516 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 62.9383
+epoch: 479
+| train          | E: 479 | S: 73703 | R: -170.0000 | G: 1 | D: 04.6 s | CLOSS: 83.8700
+epoch: 480
+| train          | E: 480 | S: 73741 | R: 149.0000 | G: 1 | D: 00.7 s | CLOSS: 78.0663
+epoch: 481
+| train          | E: 481 | S: 73784 | R: 118.0000 | G: 1 | D: 00.8 s | CLOSS: 71.5305
+epoch: 482
+| train          | E: 482 | S: 73802 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 79.5330
+epoch: 483
+| train          | E: 483 | S: 73818 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 71.7285
+epoch: 484
+| train          | E: 484 | S: 73883 | R: 86.0000 | G: 1 | D: 01.1 s | CLOSS: 72.2149
+epoch: 485
+evaluating...
+| eval           | E: 485 | S: 74001 | R: 69.8000 | G: 1
+| train          | E: 485 | S: 74013 | R: -43.0000 | G: 1 | D: 03.2 s | CLOSS: 76.0054
+epoch: 486
+| train          | E: 486 | S: 74033 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: 103.6721
+epoch: 487
+| train          | E: 487 | S: 74078 | R: 132.0000 | G: 1 | D: 00.6 s | CLOSS: 77.7557
+epoch: 488
+| train          | E: 488 | S: 74089 | R: 183.0000 | G: 1 | D: 00.4 s | CLOSS: 89.2940
+epoch: 489
+| train          | E: 489 | S: 74113 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 90.6910
+epoch: 490
+| train          | E: 490 | S: 74132 | R: 167.0000 | G: 1 | D: 00.2 s | CLOSS: 65.7486
+epoch: 491
+| train          | E: 491 | S: 74159 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: 78.9959
+epoch: 492
+| train          | E: 492 | S: 74195 | R: 137.0000 | G: 1 | D: 00.5 s | CLOSS: 66.1693
+epoch: 493
+| train          | E: 493 | S: 74229 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: 57.4875
+epoch: 494
+| train          | E: 494 | S: 74261 | R: 158.0000 | G: 1 | D: 00.4 s | CLOSS: 87.2278
+epoch: 495
+| train          | E: 495 | S: 74333 | R: 69.0000 | G: 1 | D: 01.4 s | CLOSS: 68.6911
+epoch: 496
+| train          | E: 496 | S: 74375 | R: 135.0000 | G: 1 | D: 00.7 s | CLOSS: 71.9698
+epoch: 497
+| train          | E: 497 | S: 74402 | R: 157.0000 | G: 1 | D: 00.5 s | CLOSS: 83.4719
+epoch: 498
+| train          | E: 498 | S: 74428 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 87.9985
+epoch: 499
+| train          | E: 499 | S: 74450 | R: 160.0000 | G: 1 | D: 00.3 s | CLOSS: 100.1591
+epoch: 500
+| train          | E: 500 | S: 74562 | R: 2.0000 | G: 1 | D: 02.0 s | CLOSS: 82.5961
+epoch: 501
+| train          | E: 501 | S: 74582 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 100.2049
+epoch: 502
+| train          | E: 502 | S: 74645 | R: 94.0000 | G: 1 | D: 01.0 s | CLOSS: 80.2178
+epoch: 503
+| train          | E: 503 | S: 74675 | R: 151.0000 | G: 1 | D: 00.9 s | CLOSS: 72.2960
+epoch: 504
+| train          | E: 504 | S: 74759 | R: 99.0000 | G: 1 | D: 01.4 s | CLOSS: 61.2514
+epoch: 505
+| train          | E: 505 | S: 74818 | R: 125.0000 | G: 1 | D: 00.9 s | CLOSS: 86.1464
+epoch: 506
+| train          | E: 506 | S: 74845 | R: 161.0000 | G: 1 | D: 00.6 s | CLOSS: 71.9857
+epoch: 507
+| train          | E: 507 | S: 74872 | R: 158.0000 | G: 1 | D: 00.3 s | CLOSS: 72.6455
+epoch: 508
+| train          | E: 508 | S: 74884 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 62.3010
+epoch: 509
+| train          | E: 509 | S: 74922 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: 62.5332
+epoch: 510
+| train          | E: 510 | S: 74942 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 60.8981
+epoch: 511
+| train          | E: 511 | S: 74985 | R: 132.0000 | G: 1 | D: 00.7 s | CLOSS: 70.3227
+epoch: 512
+evaluating...
+| eval           | E: 512 | S: 75001 | R: 153.4000 | G: 1
+| train          | E: 512 | S: 75006 | R: 172.0000 | G: 1 | D: 00.8 s | CLOSS: 76.8054
+epoch: 513
+| train          | E: 513 | S: 75069 | R: 123.0000 | G: 1 | D: 01.1 s | CLOSS: 63.9016
+epoch: 514
+| train          | E: 514 | S: 75085 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 87.4183
+epoch: 515
+| train          | E: 515 | S: 75165 | R: 99.0000 | G: 1 | D: 01.3 s | CLOSS: 78.3835
+epoch: 516
+| train          | E: 516 | S: 75186 | R: 167.0000 | G: 1 | D: 00.4 s | CLOSS: 92.7545
+epoch: 517
+| train          | E: 517 | S: 75201 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 103.1517
+epoch: 518
+| train          | E: 518 | S: 75230 | R: 159.0000 | G: 1 | D: 00.9 s | CLOSS: 98.0655
+epoch: 519
+| train          | E: 519 | S: 75264 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: 65.0668
+epoch: 520
+| train          | E: 520 | S: 75276 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 67.4908
+epoch: 521
+| train          | E: 521 | S: 75298 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: 101.4160
+epoch: 522
+| train          | E: 522 | S: 75333 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 94.8510
+epoch: 523
+| train          | E: 523 | S: 75350 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: 88.4914
+epoch: 524
+| train          | E: 524 | S: 75383 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 81.7838
+epoch: 525
+| train          | E: 525 | S: 75395 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 79.4605
+epoch: 526
+| train          | E: 526 | S: 75621 | R: -213.0000 | G: 1 | D: 03.9 s | CLOSS: 88.3888
+epoch: 527
+| train          | E: 527 | S: 75686 | R: 81.0000 | G: 1 | D: 01.1 s | CLOSS: 70.4117
+epoch: 528
+| train          | E: 528 | S: 75702 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 58.5946
+epoch: 529
+| train          | E: 529 | S: 75737 | R: 140.0000 | G: 1 | D: 00.6 s | CLOSS: 94.6503
+epoch: 530
+| train          | E: 530 | S: 75779 | R: 134.0000 | G: 1 | D: 00.6 s | CLOSS: 73.5482
+epoch: 531
+| train          | E: 531 | S: 75793 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 65.7505
+epoch: 532
+| train          | E: 532 | S: 75815 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 47.8971
+epoch: 533
+| train          | E: 533 | S: 75864 | R: 132.0000 | G: 1 | D: 00.7 s | CLOSS: 82.7568
+epoch: 534
+| train          | E: 534 | S: 75893 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: 77.3236
+epoch: 535
+| train          | E: 535 | S: 75917 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 80.9544
+epoch: 536
+| train          | E: 536 | S: 75934 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 96.4036
+epoch: 537
+| train          | E: 537 | S: 75948 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 98.4202
+epoch: 538
+evaluating...
+| eval           | E: 538 | S: 76001 | R: 119.8000 | G: 1
+| train          | E: 538 | S: 76010 | R: 126.0000 | G: 1 | D: 01.9 s | CLOSS: 77.5410
+epoch: 539
+| train          | E: 539 | S: 76039 | R: 158.0000 | G: 1 | D: 00.4 s | CLOSS: 88.8572
+epoch: 540
+| train          | E: 540 | S: 76069 | R: 153.0000 | G: 1 | D: 00.4 s | CLOSS: 52.0609
+epoch: 541
+| train          | E: 541 | S: 76128 | R: 123.0000 | G: 1 | D: 01.2 s | CLOSS: 75.4468
+epoch: 542
+| train          | E: 542 | S: 76138 | R: 184.0000 | G: 1 | D: 00.1 s | CLOSS: 85.8997
+epoch: 543
+| train          | E: 543 | S: 76156 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 62.8475
+epoch: 544
+| train          | E: 544 | S: 76196 | R: 139.0000 | G: 1 | D: 00.5 s | CLOSS: 82.6985
+epoch: 545
+| train          | E: 545 | S: 76225 | R: 156.0000 | G: 1 | D: 00.8 s | CLOSS: 77.9024
+epoch: 546
+| train          | E: 546 | S: 76280 | R: 129.0000 | G: 1 | D: 00.9 s | CLOSS: 83.8430
+epoch: 547
+| train          | E: 547 | S: 76301 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 88.6710
+epoch: 548
+| train          | E: 548 | S: 76312 | R: 183.0000 | G: 1 | D: 00.2 s | CLOSS: 35.2014
+epoch: 549
+| train          | E: 549 | S: 76321 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 62.6192
+epoch: 550
+| train          | E: 550 | S: 76369 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 68.7180
+epoch: 551
+| train          | E: 551 | S: 76453 | R: 97.0000 | G: 1 | D: 01.6 s | CLOSS: 80.7611
+epoch: 552
+| train          | E: 552 | S: 76525 | R: 110.0000 | G: 1 | D: 01.2 s | CLOSS: 64.3950
+epoch: 553
+| train          | E: 553 | S: 76556 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: 67.7375
+epoch: 554
+| train          | E: 554 | S: 76587 | R: 158.0000 | G: 1 | D: 00.6 s | CLOSS: 82.7871
+epoch: 555
+| train          | E: 555 | S: 76609 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 76.8511
+epoch: 556
+| train          | E: 556 | S: 76627 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 93.6816
+epoch: 557
+| train          | E: 557 | S: 76643 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 80.0890
+epoch: 558
+| train          | E: 558 | S: 76666 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 84.6305
+epoch: 559
+| train          | E: 559 | S: 76692 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 68.7826
+epoch: 560
+| train          | E: 560 | S: 76707 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 110.8568
+epoch: 561
+| train          | E: 561 | S: 76727 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 59.9785
+epoch: 562
+| train          | E: 562 | S: 76776 | R: 136.0000 | G: 1 | D: 00.6 s | CLOSS: 84.4298
+epoch: 563
+| train          | E: 563 | S: 76801 | R: 153.0000 | G: 1 | D: 00.5 s | CLOSS: 97.5075
+epoch: 564
+| train          | E: 564 | S: 76850 | R: 117.0000 | G: 1 | D: 00.6 s | CLOSS: 73.6351
+epoch: 565
+| train          | E: 565 | S: 76866 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: 79.1852
+epoch: 566
+| train          | E: 566 | S: 76884 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 74.3033
+epoch: 567
+| train          | E: 567 | S: 76912 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 94.8629
+epoch: 568
+| train          | E: 568 | S: 76935 | R: 164.0000 | G: 1 | D: 00.7 s | CLOSS: 79.3116
+epoch: 569
+| train          | E: 569 | S: 76949 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 65.4283
+epoch: 570
+| train          | E: 570 | S: 76964 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 62.9420
+epoch: 571
+| train          | E: 571 | S: 76986 | R: 160.0000 | G: 1 | D: 00.3 s | CLOSS: 74.8192
+epoch: 572
+| train          | E: 572 | S: 77000 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 108.4359
+epoch: 573
+evaluating...
+| eval           | E: 573 | S: 77001 | R: 151.2000 | G: 1
+| train          | E: 573 | S: 77214 | R: -220.0000 | G: 1 | D: 04.2 s | CLOSS: 85.3455
+epoch: 574
+| train          | E: 574 | S: 77245 | R: 151.0000 | G: 1 | D: 00.4 s | CLOSS: 77.4140
+epoch: 575
+| train          | E: 575 | S: 77292 | R: 143.0000 | G: 1 | D: 00.8 s | CLOSS: 66.0570
+epoch: 576
+| train          | E: 576 | S: 77305 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 70.8945
+epoch: 577
+| train          | E: 577 | S: 77317 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 59.7983
+epoch: 578
+| train          | E: 578 | S: 77374 | R: 123.0000 | G: 1 | D: 01.0 s | CLOSS: 72.1895
+epoch: 579
+| train          | E: 579 | S: 77416 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: 81.7550
+epoch: 580
+| train          | E: 580 | S: 77444 | R: 160.0000 | G: 1 | D: 00.4 s | CLOSS: 81.9850
+epoch: 581
+| train          | E: 581 | S: 77492 | R: 137.0000 | G: 1 | D: 00.9 s | CLOSS: 58.7184
+epoch: 582
+| train          | E: 582 | S: 77524 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 76.5017
+epoch: 583
+| train          | E: 583 | S: 77548 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 94.6369
+epoch: 584
+| train          | E: 584 | S: 77575 | R: 163.0000 | G: 1 | D: 00.4 s | CLOSS: 71.7203
+epoch: 585
+| train          | E: 585 | S: 77593 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 85.0295
+epoch: 586
+| train          | E: 586 | S: 77608 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 68.3155
+epoch: 587
+| train          | E: 587 | S: 77625 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 71.6742
+epoch: 588
+| train          | E: 588 | S: 77634 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 83.3406
+epoch: 589
+| train          | E: 589 | S: 77651 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: 61.5939
+epoch: 590
+| train          | E: 590 | S: 77667 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 72.5153
+epoch: 591
+| train          | E: 591 | S: 77710 | R: 135.0000 | G: 1 | D: 00.7 s | CLOSS: 87.5873
+epoch: 592
+| train          | E: 592 | S: 77729 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: 80.7289
+epoch: 593
+| train          | E: 593 | S: 77770 | R: 139.0000 | G: 1 | D: 00.6 s | CLOSS: 71.9745
+epoch: 594
+| train          | E: 594 | S: 77783 | R: 179.0000 | G: 1 | D: 00.5 s | CLOSS: 71.6083
+epoch: 595
+| train          | E: 595 | S: 77795 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 76.9970
+epoch: 596
+| train          | E: 596 | S: 77820 | R: 154.0000 | G: 1 | D: 00.3 s | CLOSS: 74.9182
+epoch: 597
+| train          | E: 597 | S: 77833 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 102.7107
+epoch: 598
+| train          | E: 598 | S: 77851 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: 71.6914
+epoch: 599
+| train          | E: 599 | S: 77878 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 86.2742
+epoch: 600
+| train          | E: 600 | S: 77919 | R: 145.0000 | G: 1 | D: 00.7 s | CLOSS: 86.8361
+epoch: 601
+| train          | E: 601 | S: 77964 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 89.8176
+epoch: 602
+| train          | E: 602 | S: 77976 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 73.2851
+epoch: 603
+| train          | E: 603 | S: 77994 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 100.5851
+epoch: 604
+evaluating...
+| eval           | E: 604 | S: 78001 | R: 160.5000 | G: 1
+| train          | E: 604 | S: 78020 | R: 165.0000 | G: 1 | D: 01.0 s | CLOSS: 77.6815
+epoch: 605
+| train          | E: 605 | S: 78032 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 67.7067
+epoch: 606
+| train          | E: 606 | S: 78062 | R: 157.0000 | G: 1 | D: 00.7 s | CLOSS: 74.5510
+epoch: 607
+| train          | E: 607 | S: 78095 | R: 153.0000 | G: 1 | D: 00.4 s | CLOSS: 84.0954
+epoch: 608
+| train          | E: 608 | S: 78116 | R: 171.0000 | G: 1 | D: 00.6 s | CLOSS: 67.3168
+epoch: 609
+| train          | E: 609 | S: 78131 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 78.2873
+epoch: 610
+| train          | E: 610 | S: 78171 | R: 146.0000 | G: 1 | D: 00.6 s | CLOSS: 56.8063
+epoch: 611
+| train          | E: 611 | S: 78184 | R: 179.0000 | G: 1 | D: 00.5 s | CLOSS: 81.2713
+epoch: 612
+| train          | E: 612 | S: 78245 | R: 117.0000 | G: 1 | D: 01.0 s | CLOSS: 75.0533
+epoch: 613
+| train          | E: 613 | S: 78280 | R: 156.0000 | G: 1 | D: 00.5 s | CLOSS: 80.7335
+epoch: 614
+| train          | E: 614 | S: 78330 | R: 135.0000 | G: 1 | D: 00.8 s | CLOSS: 84.3056
+epoch: 615
+| train          | E: 615 | S: 78340 | R: 184.0000 | G: 1 | D: 00.1 s | CLOSS: 76.7394
+epoch: 616
+| train          | E: 616 | S: 78358 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: 83.7796
+epoch: 617
+| train          | E: 617 | S: 78370 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 86.5581
+epoch: 618
+| train          | E: 618 | S: 78381 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 51.3375
+epoch: 619
+| train          | E: 619 | S: 78394 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 72.2840
+epoch: 620
+| train          | E: 620 | S: 78414 | R: 174.0000 | G: 1 | D: 00.5 s | CLOSS: 89.6945
+epoch: 621
+| train          | E: 621 | S: 78438 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 116.5535
+epoch: 622
+| train          | E: 622 | S: 78446 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 60.1204
+epoch: 623
+| train          | E: 623 | S: 78467 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 69.7451
+epoch: 624
+| train          | E: 624 | S: 78481 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 114.8741
+epoch: 625
+| train          | E: 625 | S: 78500 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 106.8928
+epoch: 626
+| train          | E: 626 | S: 78517 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 74.7729
+epoch: 627
+| train          | E: 627 | S: 78530 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 105.5853
+epoch: 628
+| train          | E: 628 | S: 78546 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 85.1429
+epoch: 629
+| train          | E: 629 | S: 78571 | R: 153.0000 | G: 1 | D: 00.4 s | CLOSS: 78.3627
+epoch: 630
+| train          | E: 630 | S: 78586 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 86.5675
+epoch: 631
+| train          | E: 631 | S: 78618 | R: 159.0000 | G: 1 | D: 01.0 s | CLOSS: 72.8314
+epoch: 632
+| train          | E: 632 | S: 78645 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 60.1341
+epoch: 633
+| train          | E: 633 | S: 78664 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 79.9279
+epoch: 634
+| train          | E: 634 | S: 78689 | R: 159.0000 | G: 1 | D: 00.4 s | CLOSS: 83.5960
+epoch: 635
+| train          | E: 635 | S: 78735 | R: 135.0000 | G: 1 | D: 00.8 s | CLOSS: 94.4627
+epoch: 636
+| train          | E: 636 | S: 78769 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 96.4921
+epoch: 637
+| train          | E: 637 | S: 78781 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 81.5288
+epoch: 638
+| train          | E: 638 | S: 78797 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 63.5728
+epoch: 639
+| train          | E: 639 | S: 78830 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 109.2737
+epoch: 640
+| train          | E: 640 | S: 78852 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: 100.2659
+epoch: 641
+| train          | E: 641 | S: 78890 | R: 141.0000 | G: 1 | D: 00.7 s | CLOSS: 84.0017
+epoch: 642
+| train          | E: 642 | S: 78922 | R: 140.0000 | G: 1 | D: 00.5 s | CLOSS: 75.4209
+epoch: 643
+| train          | E: 643 | S: 78959 | R: 128.0000 | G: 1 | D: 00.7 s | CLOSS: 59.7018
+epoch: 644
+| train          | E: 644 | S: 78970 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 95.4031
+epoch: 645
+| train          | E: 645 | S: 78983 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 87.3651
+epoch: 646
+evaluating...
+| eval           | E: 646 | S: 79001 | R: 176.3000 | G: 1
+| train          | E: 646 | S: 79018 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: 74.7295
+epoch: 647
+| train          | E: 647 | S: 79041 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 62.0245
+epoch: 648
+| train          | E: 648 | S: 79061 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 62.9796
+epoch: 649
+| train          | E: 649 | S: 79073 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 71.1801
+epoch: 650
+| train          | E: 650 | S: 79090 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 83.2671
+epoch: 651
+| train          | E: 651 | S: 79098 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 108.3054
+epoch: 652
+| train          | E: 652 | S: 79121 | R: 167.0000 | G: 1 | D: 00.4 s | CLOSS: 71.9255
+epoch: 653
+| train          | E: 653 | S: 79130 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 121.2389
+epoch: 654
+| train          | E: 654 | S: 79143 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 99.1302
+epoch: 655
+| train          | E: 655 | S: 79160 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 69.5576
+epoch: 656
+| train          | E: 656 | S: 79188 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: 79.4881
+epoch: 657
+| train          | E: 657 | S: 79203 | R: 175.0000 | G: 1 | D: 00.5 s | CLOSS: 84.2862
+epoch: 658
+| train          | E: 658 | S: 79219 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 99.6475
+epoch: 659
+| train          | E: 659 | S: 79242 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 80.7074
+epoch: 660
+| train          | E: 660 | S: 79273 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 72.2068
+epoch: 661
+| train          | E: 661 | S: 79293 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 65.6036
+epoch: 662
+| train          | E: 662 | S: 79318 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: 74.9138
+epoch: 663
+| train          | E: 663 | S: 79333 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 89.9143
+epoch: 664
+| train          | E: 664 | S: 79346 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 65.4053
+epoch: 665
+| train          | E: 665 | S: 79366 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: 84.0928
+epoch: 666
+| train          | E: 666 | S: 79383 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 66.0439
+epoch: 667
+| train          | E: 667 | S: 79407 | R: 159.0000 | G: 1 | D: 00.3 s | CLOSS: 73.3321
+epoch: 668
+| train          | E: 668 | S: 79440 | R: 139.0000 | G: 1 | D: 00.7 s | CLOSS: 63.2988
+epoch: 669
+| train          | E: 669 | S: 79468 | R: 154.0000 | G: 1 | D: 00.4 s | CLOSS: 66.7915
+epoch: 670
+| train          | E: 670 | S: 79486 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 73.9118
+epoch: 671
+| train          | E: 671 | S: 79508 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: 92.7614
+epoch: 672
+| train          | E: 672 | S: 79532 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 114.7410
+epoch: 673
+| train          | E: 673 | S: 79552 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 84.7542
+epoch: 674
+| train          | E: 674 | S: 79590 | R: 141.0000 | G: 1 | D: 00.7 s | CLOSS: 67.9494
+epoch: 675
+| train          | E: 675 | S: 79628 | R: 146.0000 | G: 1 | D: 00.7 s | CLOSS: 83.1299
+epoch: 676
+| train          | E: 676 | S: 79652 | R: 159.0000 | G: 1 | D: 00.3 s | CLOSS: 89.6829
+epoch: 677
+| train          | E: 677 | S: 79669 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 76.0949
+epoch: 678
+| train          | E: 678 | S: 79700 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 60.8430
+epoch: 679
+| train          | E: 679 | S: 79727 | R: 153.0000 | G: 1 | D: 00.3 s | CLOSS: 84.9879
+epoch: 680
+| train          | E: 680 | S: 79740 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 93.0551
+epoch: 681
+| train          | E: 681 | S: 79753 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 35.9438
+epoch: 682
+| train          | E: 682 | S: 79780 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 83.0612
+epoch: 683
+| train          | E: 683 | S: 79801 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 48.9892
+epoch: 684
+| train          | E: 684 | S: 79812 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 73.5350
+epoch: 685
+| train          | E: 685 | S: 79825 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: 82.0210
+epoch: 686
+| train          | E: 686 | S: 79840 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 93.1514
+epoch: 687
+| train          | E: 687 | S: 79853 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 97.4141
+epoch: 688
+| train          | E: 688 | S: 79874 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 73.9972
+epoch: 689
+| train          | E: 689 | S: 79886 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 64.5934
+epoch: 690
+| train          | E: 690 | S: 79897 | R: 183.0000 | G: 1 | D: 00.1 s | CLOSS: 112.7676
+epoch: 691
+| train          | E: 691 | S: 79906 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 98.8598
+epoch: 692
+| train          | E: 692 | S: 79917 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 110.3996
+epoch: 693
+| train          | E: 693 | S: 79926 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 57.8555
+epoch: 694
+| train          | E: 694 | S: 79939 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 75.6579
+epoch: 695
+| train          | E: 695 | S: 79957 | R: 169.0000 | G: 1 | D: 00.6 s | CLOSS: 77.5688
+epoch: 696
+| train          | E: 696 | S: 79970 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 77.4563
+epoch: 697
+| train          | E: 697 | S: 79991 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 115.7650
+epoch: 698
+evaluating...
+| eval           | E: 698 | S: 80001 | R: 162.8000 | G: 1
+| train          | E: 698 | S: 80017 | R: 162.0000 | G: 1 | D: 00.9 s | CLOSS: 63.6661
+epoch: 699
+| train          | E: 699 | S: 80031 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 94.1307
+epoch: 700
+| train          | E: 700 | S: 80043 | R: 182.0000 | G: 1 | D: 00.4 s | CLOSS: 108.5746
+epoch: 701
+| train          | E: 701 | S: 80059 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 81.8965
+epoch: 702
+| train          | E: 702 | S: 80076 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 114.0609
+epoch: 703
+| train          | E: 703 | S: 80088 | R: 180.0000 | G: 1 | D: 00.1 s | CLOSS: 115.5878
+epoch: 704
+| train          | E: 704 | S: 80134 | R: 108.0000 | G: 1 | D: 00.7 s | CLOSS: 77.8714
+epoch: 705
+| train          | E: 705 | S: 80142 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 53.5176
+epoch: 706
+| train          | E: 706 | S: 80175 | R: 137.0000 | G: 1 | D: 00.4 s | CLOSS: 76.2324
+epoch: 707
+| train          | E: 707 | S: 80204 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: 89.3976
+epoch: 708
+| train          | E: 708 | S: 80213 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 92.0048
+epoch: 709
+| train          | E: 709 | S: 80235 | R: 159.0000 | G: 1 | D: 00.3 s | CLOSS: 95.4506
+epoch: 710
+| train          | E: 710 | S: 80467 | R: -257.0000 | G: 1 | D: 04.2 s | CLOSS: 86.4263
+epoch: 711
+| train          | E: 711 | S: 80504 | R: 139.0000 | G: 1 | D: 00.7 s | CLOSS: 81.6225
+epoch: 712
+| train          | E: 712 | S: 80531 | R: 163.0000 | G: 1 | D: 00.4 s | CLOSS: 63.9444
+epoch: 713
+| train          | E: 713 | S: 80560 | R: 151.0000 | G: 1 | D: 00.6 s | CLOSS: 112.5111
+epoch: 714
+| train          | E: 714 | S: 80577 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 97.8566
+epoch: 715
+| train          | E: 715 | S: 80609 | R: 148.0000 | G: 1 | D: 00.5 s | CLOSS: 73.8215
+epoch: 716
+| train          | E: 716 | S: 80629 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: 94.5155
+epoch: 717
+| train          | E: 717 | S: 80661 | R: 140.0000 | G: 1 | D: 00.4 s | CLOSS: 98.5690
+epoch: 718
+| train          | E: 718 | S: 80682 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: 86.5001
+epoch: 719
+| train          | E: 719 | S: 80753 | R: 70.0000 | G: 1 | D: 01.2 s | CLOSS: 71.9278
+epoch: 720
+| train          | E: 720 | S: 80774 | R: 161.0000 | G: 1 | D: 00.3 s | CLOSS: 65.5159
+epoch: 721
+| train          | E: 721 | S: 80825 | R: 101.0000 | G: 1 | D: 00.8 s | CLOSS: 76.4122
+epoch: 722
+| train          | E: 722 | S: 80845 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 65.2419
+epoch: 723
+| train          | E: 723 | S: 80865 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 41.8072
+epoch: 724
+| train          | E: 724 | S: 80882 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 84.1253
+epoch: 725
+| train          | E: 725 | S: 80901 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 99.5110
+epoch: 726
+| train          | E: 726 | S: 80927 | R: 162.0000 | G: 1 | D: 00.4 s | CLOSS: 84.4135
+epoch: 727
+| train          | E: 727 | S: 80936 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 83.0421
+epoch: 728
+| train          | E: 728 | S: 80946 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 98.3858
+epoch: 729
+| train          | E: 729 | S: 80976 | R: 162.0000 | G: 1 | D: 00.4 s | CLOSS: 62.7063
+epoch: 730
+| train          | E: 730 | S: 80997 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 101.0659
+epoch: 731
+evaluating...
+| eval           | E: 731 | S: 81001 | R: 168.8000 | G: 1
+| train          | E: 731 | S: 81011 | R: 181.0000 | G: 1 | D: 00.7 s | CLOSS: 95.0553
+epoch: 732
+| train          | E: 732 | S: 81025 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 61.4946
+epoch: 733
+| train          | E: 733 | S: 81049 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 88.4277
+epoch: 734
+| train          | E: 734 | S: 81066 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 92.5816
+epoch: 735
+| train          | E: 735 | S: 81085 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 74.4782
+epoch: 736
+| train          | E: 736 | S: 81099 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 140.3957
+epoch: 737
+| train          | E: 737 | S: 81123 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 75.1962
+epoch: 738
+| train          | E: 738 | S: 81147 | R: 158.0000 | G: 1 | D: 00.3 s | CLOSS: 105.4206
+epoch: 739
+| train          | E: 739 | S: 81161 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 85.3332
+epoch: 740
+| train          | E: 740 | S: 81202 | R: 123.0000 | G: 1 | D: 00.8 s | CLOSS: 75.1428
+epoch: 741
+| train          | E: 741 | S: 81221 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 65.1294
+epoch: 742
+| train          | E: 742 | S: 81246 | R: 153.0000 | G: 1 | D: 00.5 s | CLOSS: 106.4340
+epoch: 743
+| train          | E: 743 | S: 81255 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 49.3539
+epoch: 744
+| train          | E: 744 | S: 81265 | R: 184.0000 | G: 1 | D: 00.1 s | CLOSS: 59.2613
+epoch: 745
+| train          | E: 745 | S: 81275 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 71.4028
+epoch: 746
+| train          | E: 746 | S: 81286 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 62.0763
+epoch: 747
+| train          | E: 747 | S: 81295 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 121.4340
+epoch: 748
+| train          | E: 748 | S: 81311 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 78.0455
+epoch: 749
+| train          | E: 749 | S: 81327 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 86.1534
+epoch: 750
+| train          | E: 750 | S: 81340 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 127.8206
+epoch: 751
+| train          | E: 751 | S: 81357 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: 73.2819
+epoch: 752
+| train          | E: 752 | S: 81367 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 76.2727
+epoch: 753
+| train          | E: 753 | S: 81380 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 65.6598
+epoch: 754
+| train          | E: 754 | S: 81392 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 90.4497
+epoch: 755
+| train          | E: 755 | S: 81402 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 55.8814
+epoch: 756
+| train          | E: 756 | S: 81416 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 67.6899
+epoch: 757
+| train          | E: 757 | S: 81431 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 64.8358
+epoch: 758
+| train          | E: 758 | S: 81444 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 53.0337
+epoch: 759
+| train          | E: 759 | S: 81456 | R: 180.0000 | G: 1 | D: 00.1 s | CLOSS: 67.6832
+epoch: 760
+| train          | E: 760 | S: 81468 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 141.1881
+epoch: 761
+| train          | E: 761 | S: 81483 | R: 173.0000 | G: 1 | D: 00.5 s | CLOSS: 82.2280
+epoch: 762
+| train          | E: 762 | S: 81495 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 124.9726
+epoch: 763
+| train          | E: 763 | S: 81508 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 86.3731
+epoch: 764
+| train          | E: 764 | S: 81517 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 103.3110
+epoch: 765
+| train          | E: 765 | S: 81530 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 78.1809
+epoch: 766
+| train          | E: 766 | S: 81544 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 86.6911
+epoch: 767
+| train          | E: 767 | S: 81556 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 130.8284
+epoch: 768
+| train          | E: 768 | S: 81566 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 68.1737
+epoch: 769
+| train          | E: 769 | S: 81581 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 102.9906
+epoch: 770
+| train          | E: 770 | S: 81597 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: 62.7285
+epoch: 771
+| train          | E: 771 | S: 81613 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 77.6011
+epoch: 772
+| train          | E: 772 | S: 81624 | R: 183.0000 | G: 1 | D: 00.2 s | CLOSS: 50.4320
+epoch: 773
+| train          | E: 773 | S: 81670 | R: 112.0000 | G: 1 | D: 00.8 s | CLOSS: 71.5627
+epoch: 774
+| train          | E: 774 | S: 81678 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 56.0260
+epoch: 775
+| train          | E: 775 | S: 81694 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 78.3273
+epoch: 776
+| train          | E: 776 | S: 81704 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 75.4903
+epoch: 777
+| train          | E: 777 | S: 81713 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 73.9094
+epoch: 778
+| train          | E: 778 | S: 81729 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 78.8722
+epoch: 779
+| train          | E: 779 | S: 81745 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 62.0545
+epoch: 780
+| train          | E: 780 | S: 81757 | R: 180.0000 | G: 1 | D: 00.1 s | CLOSS: 76.0526
+epoch: 781
+| train          | E: 781 | S: 81771 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 93.9909
+epoch: 782
+| train          | E: 782 | S: 81780 | R: 185.0000 | G: 1 | D: 00.3 s | CLOSS: 73.8117
+epoch: 783
+| train          | E: 783 | S: 81794 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 99.5814
+epoch: 784
+| train          | E: 784 | S: 81809 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 75.9859
+epoch: 785
+| train          | E: 785 | S: 81836 | R: 151.0000 | G: 1 | D: 00.4 s | CLOSS: 93.7779
+epoch: 786
+| train          | E: 786 | S: 81853 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: 85.7915
+epoch: 787
+| train          | E: 787 | S: 81866 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 109.6705
+epoch: 788
+| train          | E: 788 | S: 81875 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 88.9289
+epoch: 789
+| train          | E: 789 | S: 81884 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 49.2788
+epoch: 790
+| train          | E: 790 | S: 81903 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 77.2262
+epoch: 791
+| train          | E: 791 | S: 81912 | R: 185.0000 | G: 1 | D: 00.3 s | CLOSS: 64.3762
+epoch: 792
+| train          | E: 792 | S: 81922 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 117.7999
+epoch: 793
+| train          | E: 793 | S: 81939 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 68.7222
+epoch: 794
+| train          | E: 794 | S: 81963 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 108.2251
+epoch: 795
+| train          | E: 795 | S: 81971 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: 58.1493
+epoch: 796
+| train          | E: 796 | S: 81984 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 112.8803
+epoch: 797
+evaluating...
+| eval           | E: 797 | S: 82001 | R: 154.7000 | G: 1
+| train          | E: 797 | S: 82034 | R: 108.0000 | G: 1 | D: 01.3 s | CLOSS: 100.2919
+epoch: 798
+| train          | E: 798 | S: 82208 | R: -146.0000 | G: 1 | D: 03.1 s | CLOSS: 92.8945
+epoch: 799
+| train          | E: 799 | S: 82261 | R: 96.0000 | G: 1 | D: 01.0 s | CLOSS: 81.7042
+epoch: 800
+| train          | E: 800 | S: 82277 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 99.6409
+epoch: 801
+| train          | E: 801 | S: 82361 | R: 42.0000 | G: 1 | D: 01.4 s | CLOSS: 93.7201
+epoch: 802
+| train          | E: 802 | S: 82395 | R: 134.0000 | G: 1 | D: 00.7 s | CLOSS: 98.2202
+epoch: 803
+| train          | E: 803 | S: 82424 | R: 145.0000 | G: 1 | D: 00.4 s | CLOSS: 83.7073
+epoch: 804
+| train          | E: 804 | S: 82438 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 69.8470
+epoch: 805
+| train          | E: 805 | S: 82480 | R: 118.0000 | G: 1 | D: 00.7 s | CLOSS: 85.2862
+epoch: 806
+| train          | E: 806 | S: 82496 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 88.6951
+epoch: 807
+| train          | E: 807 | S: 82506 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 77.9886
+epoch: 808
+| train          | E: 808 | S: 82516 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 128.3613
+epoch: 809
+| train          | E: 809 | S: 82532 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 101.0577
+epoch: 810
+| train          | E: 810 | S: 82546 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 48.2871
+epoch: 811
+| train          | E: 811 | S: 82570 | R: 159.0000 | G: 1 | D: 00.4 s | CLOSS: 107.1835
+epoch: 812
+| train          | E: 812 | S: 82593 | R: 157.0000 | G: 1 | D: 00.4 s | CLOSS: 85.5465
+epoch: 813
+| train          | E: 813 | S: 82615 | R: 161.0000 | G: 1 | D: 00.3 s | CLOSS: 88.0625
+epoch: 814
+| train          | E: 814 | S: 82675 | R: 86.0000 | G: 1 | D: 01.0 s | CLOSS: 96.0208
+epoch: 815
+| train          | E: 815 | S: 82741 | R: 72.0000 | G: 1 | D: 01.1 s | CLOSS: 78.5323
+epoch: 816
+| train          | E: 816 | S: 82786 | R: 113.0000 | G: 1 | D: 00.9 s | CLOSS: 75.7957
+epoch: 817
+| train          | E: 817 | S: 82795 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 142.0429
+epoch: 818
+| train          | E: 818 | S: 82828 | R: 137.0000 | G: 1 | D: 00.7 s | CLOSS: 84.2821
+epoch: 819
+| train          | E: 819 | S: 82840 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 63.7045
+epoch: 820
+| train          | E: 820 | S: 82892 | R: 98.0000 | G: 1 | D: 00.8 s | CLOSS: 89.5114
+epoch: 821
+| train          | E: 821 | S: 82912 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 83.7993
+epoch: 822
+| train          | E: 822 | S: 82924 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 71.2661
+epoch: 823
+| train          | E: 823 | S: 82936 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 142.1839
+epoch: 824
+| train          | E: 824 | S: 82947 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 104.7281
+epoch: 825
+| train          | E: 825 | S: 82960 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: 98.8375
+epoch: 826
+| train          | E: 826 | S: 82971 | R: 183.0000 | G: 1 | D: 00.1 s | CLOSS: 68.0495
+epoch: 827
+| train          | E: 827 | S: 82984 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 79.2800
+epoch: 828
+evaluating...
+| eval           | E: 828 | S: 83001 | R: 172.6000 | G: 1
+| train          | E: 828 | S: 83009 | R: 166.0000 | G: 1 | D: 00.8 s | CLOSS: 75.4915
+epoch: 829
+| train          | E: 829 | S: 83023 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 93.2783
+epoch: 830
+| train          | E: 830 | S: 83033 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 55.8888
+epoch: 831
+| train          | E: 831 | S: 83051 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 99.9428
+epoch: 832
+| train          | E: 832 | S: 83070 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 88.2500
+epoch: 833
+| train          | E: 833 | S: 83103 | R: 145.0000 | G: 1 | D: 00.4 s | CLOSS: 83.5895
+epoch: 834
+| train          | E: 834 | S: 83115 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 86.6496
+epoch: 835
+| train          | E: 835 | S: 83127 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 74.4324
+epoch: 836
+| train          | E: 836 | S: 83168 | R: 127.0000 | G: 1 | D: 00.6 s | CLOSS: 79.2478
+epoch: 837
+| train          | E: 837 | S: 83184 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 87.8747
+epoch: 838
+| train          | E: 838 | S: 83207 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 114.5946
+epoch: 839
+| train          | E: 839 | S: 83228 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 113.2722
+epoch: 840
+| train          | E: 840 | S: 83241 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 121.8618
+epoch: 841
+| train          | E: 841 | S: 83256 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 93.1729
+epoch: 842
+| train          | E: 842 | S: 83267 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 104.3712
+epoch: 843
+| train          | E: 843 | S: 83276 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 83.4243
+epoch: 844
+| train          | E: 844 | S: 83293 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 98.8595
+epoch: 845
+| train          | E: 845 | S: 83307 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 90.1763
+epoch: 846
+| train          | E: 846 | S: 83321 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 76.5470
+epoch: 847
+| train          | E: 847 | S: 83344 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 132.7526
+epoch: 848
+| train          | E: 848 | S: 83353 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 94.6727
+epoch: 849
+| train          | E: 849 | S: 83365 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 110.4792
+epoch: 850
+| train          | E: 850 | S: 83378 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 96.5194
+epoch: 851
+| train          | E: 851 | S: 83393 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 127.2331
+epoch: 852
+| train          | E: 852 | S: 83420 | R: 149.0000 | G: 1 | D: 00.4 s | CLOSS: 105.6814
+epoch: 853
+| train          | E: 853 | S: 83480 | R: 82.0000 | G: 1 | D: 01.2 s | CLOSS: 80.4822
+epoch: 854
+| train          | E: 854 | S: 83582 | R: -2.0000 | G: 1 | D: 02.1 s | CLOSS: 79.3863
+epoch: 855
+| train          | E: 855 | S: 83600 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 87.8724
+epoch: 856
+| train          | E: 856 | S: 83636 | R: 131.0000 | G: 1 | D: 00.7 s | CLOSS: 68.5642
+epoch: 857
+| train          | E: 857 | S: 83654 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 85.0919
+epoch: 858
+| train          | E: 858 | S: 83666 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 76.6935
+epoch: 859
+| train          | E: 859 | S: 83684 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 107.3804
+epoch: 860
+| train          | E: 860 | S: 83703 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 83.3398
+epoch: 861
+| train          | E: 861 | S: 83725 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: 107.8548
+epoch: 862
+| train          | E: 862 | S: 83743 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 75.5253
+epoch: 863
+| train          | E: 863 | S: 83772 | R: 146.0000 | G: 1 | D: 00.6 s | CLOSS: 96.2202
+epoch: 864
+| train          | E: 864 | S: 83785 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 103.8649
+epoch: 865
+| train          | E: 865 | S: 83795 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 78.4146
+epoch: 866
+| train          | E: 866 | S: 83804 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 64.2524
+epoch: 867
+| train          | E: 867 | S: 83818 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 98.7416
+epoch: 868
+| train          | E: 868 | S: 83832 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 75.2682
+epoch: 869
+| train          | E: 869 | S: 83846 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 81.4391
+epoch: 870
+| train          | E: 870 | S: 83863 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 95.0369
+epoch: 871
+| train          | E: 871 | S: 83876 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 80.7191
+epoch: 872
+| train          | E: 872 | S: 83890 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 82.0014
+epoch: 873
+| train          | E: 873 | S: 83910 | R: 163.0000 | G: 1 | D: 00.4 s | CLOSS: 75.0191
+epoch: 874
+| train          | E: 874 | S: 83926 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 76.4160
+epoch: 875
+| train          | E: 875 | S: 83938 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 80.1003
+epoch: 876
+| train          | E: 876 | S: 83952 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 53.8008
+epoch: 877
+| train          | E: 877 | S: 83965 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 114.8023
+epoch: 878
+| train          | E: 878 | S: 83982 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 71.8310
+epoch: 879
+evaluating...
+| eval           | E: 879 | S: 84001 | R: 177.1000 | G: 1
+| train          | E: 879 | S: 84004 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 109.0276
+epoch: 880
+| train          | E: 880 | S: 84015 | R: 183.0000 | G: 1 | D: 00.2 s | CLOSS: 89.2342
+epoch: 881
+| train          | E: 881 | S: 84036 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 94.7044
+epoch: 882
+| train          | E: 882 | S: 84047 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 98.5952
+epoch: 883
+| train          | E: 883 | S: 84060 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 69.8104
+epoch: 884
+| train          | E: 884 | S: 84073 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 91.5720
+epoch: 885
+| train          | E: 885 | S: 84089 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 55.4380
+epoch: 886
+| train          | E: 886 | S: 84105 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 85.8916
+epoch: 887
+| train          | E: 887 | S: 84123 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 120.3721
+epoch: 888
+| train          | E: 888 | S: 84135 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 98.9804
+epoch: 889
+| train          | E: 889 | S: 84155 | R: 172.0000 | G: 1 | D: 00.6 s | CLOSS: 91.8634
+epoch: 890
+| train          | E: 890 | S: 84176 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 81.8061
+epoch: 891
+| train          | E: 891 | S: 84195 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 134.9473
+epoch: 892
+| train          | E: 892 | S: 84212 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 70.6753
+epoch: 893
+| train          | E: 893 | S: 84226 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 56.0960
+epoch: 894
+| train          | E: 894 | S: 84240 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 97.7859
+epoch: 895
+| train          | E: 895 | S: 84259 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 111.1546
+epoch: 896
+| train          | E: 896 | S: 84272 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 96.7420
+epoch: 897
+| train          | E: 897 | S: 84289 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 94.7756
+epoch: 898
+| train          | E: 898 | S: 84338 | R: 106.0000 | G: 1 | D: 00.8 s | CLOSS: 105.3997
+epoch: 899
+| train          | E: 899 | S: 84400 | R: 78.0000 | G: 1 | D: 01.0 s | CLOSS: 88.1486
+epoch: 900
+| train          | E: 900 | S: 84546 | R: -88.0000 | G: 1 | D: 02.4 s | CLOSS: 90.1254
+epoch: 901
+| train          | E: 901 | S: 84573 | R: 151.0000 | G: 1 | D: 00.4 s | CLOSS: 98.6354
+epoch: 902
+| train          | E: 902 | S: 84601 | R: 146.0000 | G: 1 | D: 00.4 s | CLOSS: 63.0402
+epoch: 903
+| train          | E: 903 | S: 84616 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 75.1618
+epoch: 904
+| train          | E: 904 | S: 84636 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 86.9281
+epoch: 905
+| train          | E: 905 | S: 84651 | R: 178.0000 | G: 1 | D: 00.5 s | CLOSS: 106.3236
+epoch: 906
+| train          | E: 906 | S: 84666 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 90.5130
+epoch: 907
+| train          | E: 907 | S: 84696 | R: 143.0000 | G: 1 | D: 00.5 s | CLOSS: 71.6714
+epoch: 908
+| train          | E: 908 | S: 84712 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 90.1137
+epoch: 909
+| train          | E: 909 | S: 84728 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 88.1707
+epoch: 910
+| train          | E: 910 | S: 84738 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 45.7618
+epoch: 911
+| train          | E: 911 | S: 84752 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 80.4764
+epoch: 912
+| train          | E: 912 | S: 84765 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 92.8360
+epoch: 913
+| train          | E: 913 | S: 84783 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 76.0177
+epoch: 914
+| train          | E: 914 | S: 84796 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 99.6736
+epoch: 915
+| train          | E: 915 | S: 84817 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 119.6356
+epoch: 916
+| train          | E: 916 | S: 84827 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 116.6647
+epoch: 917
+| train          | E: 917 | S: 84860 | R: 139.0000 | G: 1 | D: 00.6 s | CLOSS: 102.0740
+epoch: 918
+| train          | E: 918 | S: 84880 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 85.8807
+epoch: 919
+| train          | E: 919 | S: 84896 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 76.9139
+epoch: 920
+| train          | E: 920 | S: 84914 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 95.4915
+epoch: 921
+| train          | E: 921 | S: 84970 | R: 94.0000 | G: 1 | D: 00.9 s | CLOSS: 89.6130
+epoch: 922
+| train          | E: 922 | S: 84983 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 74.5613
+epoch: 923
+| train          | E: 923 | S: 84998 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 106.7277
+epoch: 924
+evaluating...
+| eval           | E: 924 | S: 85001 | R: 176.5000 | G: 1
+| train          | E: 924 | S: 85010 | R: 181.0000 | G: 1 | D: 00.5 s | CLOSS: 90.3466
+epoch: 925
+| train          | E: 925 | S: 85022 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 88.9426
+epoch: 926
+| train          | E: 926 | S: 85048 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 86.3082
+epoch: 927
+| train          | E: 927 | S: 85066 | R: 167.0000 | G: 1 | D: 00.2 s | CLOSS: 90.8801
+epoch: 928
+| train          | E: 928 | S: 85082 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: 99.6882
+epoch: 929
+| train          | E: 929 | S: 85097 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 57.9463
+epoch: 930
+| train          | E: 930 | S: 85112 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 79.4962
+epoch: 931
+| train          | E: 931 | S: 85128 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 92.1109
+epoch: 932
+| train          | E: 932 | S: 85140 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 52.0861
+epoch: 933
+| train          | E: 933 | S: 85153 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 99.1238
+epoch: 934
+| train          | E: 934 | S: 85165 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 76.9416
+epoch: 935
+| train          | E: 935 | S: 85182 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 81.6974
+epoch: 936
+| train          | E: 936 | S: 85194 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 111.4383
+epoch: 937
+| train          | E: 937 | S: 85206 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 66.3904
+epoch: 938
+| train          | E: 938 | S: 85218 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 101.8877
+epoch: 939
+| train          | E: 939 | S: 85236 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 85.1912
+epoch: 940
+| train          | E: 940 | S: 85253 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 111.9147
+epoch: 941
+| train          | E: 941 | S: 85267 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 93.2575
+epoch: 942
+| train          | E: 942 | S: 85277 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 107.2044
+epoch: 943
+| train          | E: 943 | S: 85290 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 129.8418
+epoch: 944
+| train          | E: 944 | S: 85300 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 122.9377
+epoch: 945
+| train          | E: 945 | S: 85310 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 103.5222
+epoch: 946
+| train          | E: 946 | S: 85329 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 135.5792
+epoch: 947
+| train          | E: 947 | S: 85340 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 91.7766
+epoch: 948
+| train          | E: 948 | S: 85414 | R: 55.0000 | G: 1 | D: 01.4 s | CLOSS: 96.7684
+epoch: 949
+| train          | E: 949 | S: 85799 | R: -567.0000 | G: 1 | D: 06.4 s | CLOSS: 98.8088
+epoch: 950
+| train          | E: 950 | S: 85837 | R: 126.0000 | G: 1 | D: 00.9 s | CLOSS: 81.4275
+epoch: 951
+| train          | E: 951 | S: 85857 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 98.6260
+epoch: 952
+| train          | E: 952 | S: 85876 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 103.0258
+epoch: 953
+| train          | E: 953 | S: 85888 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 131.0318
+epoch: 954
+| train          | E: 954 | S: 85917 | R: 148.0000 | G: 1 | D: 00.4 s | CLOSS: 117.6763
+epoch: 955
+| train          | E: 955 | S: 85957 | R: 125.0000 | G: 1 | D: 00.7 s | CLOSS: 81.7068
+epoch: 956
+| train          | E: 956 | S: 85971 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 124.5412
+epoch: 957
+| train          | E: 957 | S: 85992 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 127.6479
+epoch: 958
+evaluating...
+| eval           | E: 958 | S: 86001 | R: 170.8000 | G: 1
+| train          | E: 958 | S: 86015 | R: 166.0000 | G: 1 | D: 00.9 s | CLOSS: 102.1569
+epoch: 959
+| train          | E: 959 | S: 86024 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 90.7284
+epoch: 960
+| train          | E: 960 | S: 86038 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 89.9783
+epoch: 961
+| train          | E: 961 | S: 86062 | R: 160.0000 | G: 1 | D: 00.4 s | CLOSS: 114.6524
+epoch: 962
+| train          | E: 962 | S: 86078 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 89.3755
+epoch: 963
+| train          | E: 963 | S: 86095 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 100.1703
+epoch: 964
+| train          | E: 964 | S: 86113 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 90.9710
+epoch: 965
+| train          | E: 965 | S: 86123 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 126.8781
+epoch: 966
+| train          | E: 966 | S: 86142 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 64.4295
+epoch: 967
+| train          | E: 967 | S: 86159 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 65.4670
+epoch: 968
+| train          | E: 968 | S: 86169 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 103.3402
+epoch: 969
+| train          | E: 969 | S: 86179 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 79.4781
+epoch: 970
+| train          | E: 970 | S: 86190 | R: 181.0000 | G: 1 | D: 00.4 s | CLOSS: 79.4333
+epoch: 971
+| train          | E: 971 | S: 86209 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 89.6255
+epoch: 972
+| train          | E: 972 | S: 86219 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 145.5760
+epoch: 973
+| train          | E: 973 | S: 86232 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 99.4908
+epoch: 974
+| train          | E: 974 | S: 86244 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 90.5839
+epoch: 975
+| train          | E: 975 | S: 86254 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 65.1006
+epoch: 976
+| train          | E: 976 | S: 86270 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 66.7445
+epoch: 977
+| train          | E: 977 | S: 86279 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 100.1126
+epoch: 978
+| train          | E: 978 | S: 86290 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 80.8595
+epoch: 979
+| train          | E: 979 | S: 86303 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 46.4757
+epoch: 980
+| train          | E: 980 | S: 86316 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: 84.0789
+epoch: 981
+| train          | E: 981 | S: 86329 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 85.6031
+epoch: 982
+| train          | E: 982 | S: 86341 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 97.6070
+epoch: 983
+| train          | E: 983 | S: 86353 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 51.3221
+epoch: 984
+| train          | E: 984 | S: 86369 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 69.2294
+epoch: 985
+| train          | E: 985 | S: 86384 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 134.7378
+epoch: 986
+| train          | E: 986 | S: 86410 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 86.8883
+epoch: 987
+| train          | E: 987 | S: 86420 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 95.1669
+epoch: 988
+| train          | E: 988 | S: 86433 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 104.6681
+epoch: 989
+| train          | E: 989 | S: 86457 | R: 161.0000 | G: 1 | D: 00.7 s | CLOSS: 101.6549
+epoch: 990
+| train          | E: 990 | S: 86466 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 106.0743
+epoch: 991
+| train          | E: 991 | S: 86477 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 79.3739
+epoch: 992
+| train          | E: 992 | S: 86488 | R: 181.0000 | G: 1 | D: 00.4 s | CLOSS: 115.9073
+epoch: 993
+| train          | E: 993 | S: 86500 | R: 180.0000 | G: 1 | D: 00.1 s | CLOSS: 65.6664
+epoch: 994
+| train          | E: 994 | S: 86512 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 68.7090
+epoch: 995
+| train          | E: 995 | S: 86526 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 105.7645
+epoch: 996
+| train          | E: 996 | S: 86540 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 85.1740
+epoch: 997
+| train          | E: 997 | S: 86552 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 119.5484
+epoch: 998
+| train          | E: 998 | S: 86562 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 68.6691
+epoch: 999
+| train          | E: 999 | S: 86574 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 119.0753
+epoch: 1000
+| train          | E: 1000 | S: 86588 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 83.6618
+epoch: 1001
+| train          | E: 1001 | S: 86602 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 64.6572
+epoch: 1002
+| train          | E: 1002 | S: 86618 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 92.5892
+epoch: 1003
+| train          | E: 1003 | S: 86628 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 85.9855
+epoch: 1004
+| train          | E: 1004 | S: 86643 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 72.4998
+epoch: 1005
+| train          | E: 1005 | S: 86655 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 84.0175
+epoch: 1006
+| train          | E: 1006 | S: 86669 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 88.5517
+epoch: 1007
+| train          | E: 1007 | S: 86681 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 82.8259
+epoch: 1008
+| train          | E: 1008 | S: 86696 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 96.4724
+epoch: 1009
+| train          | E: 1009 | S: 86708 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 96.4464
+epoch: 1010
+| train          | E: 1010 | S: 86722 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 97.3742
+epoch: 1011
+| train          | E: 1011 | S: 86731 | R: 185.0000 | G: 1 | D: 00.3 s | CLOSS: 105.7628
+epoch: 1012
+| train          | E: 1012 | S: 86740 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 109.7467
+epoch: 1013
+| train          | E: 1013 | S: 86762 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 106.5615
+epoch: 1014
+| train          | E: 1014 | S: 86780 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 114.9221
+epoch: 1015
+| train          | E: 1015 | S: 86792 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 126.4896
+epoch: 1016
+| train          | E: 1016 | S: 86808 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 102.3088
+epoch: 1017
+| train          | E: 1017 | S: 86819 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 94.4842
+epoch: 1018
+| train          | E: 1018 | S: 86841 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 85.4704
+epoch: 1019
+| train          | E: 1019 | S: 86859 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: 106.0894
+epoch: 1020
+| train          | E: 1020 | S: 86879 | R: 168.0000 | G: 1 | D: 00.6 s | CLOSS: 63.6721
+epoch: 1021
+| train          | E: 1021 | S: 86889 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 99.0892
+epoch: 1022
+| train          | E: 1022 | S: 86901 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 73.2097
+epoch: 1023
+| train          | E: 1023 | S: 86915 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 108.1781
+epoch: 1024
+| train          | E: 1024 | S: 86930 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 96.9686
+epoch: 1025
+| train          | E: 1025 | S: 86961 | R: 143.0000 | G: 1 | D: 00.4 s | CLOSS: 100.7987
+epoch: 1026
+| train          | E: 1026 | S: 86976 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 125.3558
+epoch: 1027
+| train          | E: 1027 | S: 86999 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: 81.8288
+epoch: 1028
+evaluating...
+| eval           | E: 1028 | S: 87001 | R: 167.3000 | G: 1
+| train          | E: 1028 | S: 87018 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 70.5426
+epoch: 1029
+| train          | E: 1029 | S: 87026 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 104.3805
+epoch: 1030
+| train          | E: 1030 | S: 87058 | R: 138.0000 | G: 1 | D: 00.5 s | CLOSS: 89.4438
+epoch: 1031
+| train          | E: 1031 | S: 87071 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 75.9609
+epoch: 1032
+| train          | E: 1032 | S: 87086 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 87.2808
+epoch: 1033
+| train          | E: 1033 | S: 87103 | R: 170.0000 | G: 1 | D: 00.7 s | CLOSS: 72.5247
+epoch: 1034
+| train          | E: 1034 | S: 87113 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 91.0168
+epoch: 1035
+| train          | E: 1035 | S: 87127 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 63.6879
+epoch: 1036
+| train          | E: 1036 | S: 87137 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 106.0743
+epoch: 1037
+| train          | E: 1037 | S: 87149 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 112.9829
+epoch: 1038
+| train          | E: 1038 | S: 87159 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 132.4408
+epoch: 1039
+| train          | E: 1039 | S: 87169 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 93.9668
+epoch: 1040
+| train          | E: 1040 | S: 87181 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 90.8830
+epoch: 1041
+| train          | E: 1041 | S: 87209 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: 84.6896
+epoch: 1042
+| train          | E: 1042 | S: 87223 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 110.3973
+epoch: 1043
+| train          | E: 1043 | S: 87241 | R: 166.0000 | G: 1 | D: 00.2 s | CLOSS: 133.2318
+epoch: 1044
+| train          | E: 1044 | S: 87258 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 87.5677
+epoch: 1045
+| train          | E: 1045 | S: 87266 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 81.6850
+epoch: 1046
+| train          | E: 1046 | S: 87309 | R: 117.0000 | G: 1 | D: 00.6 s | CLOSS: 84.4995
+epoch: 1047
+| train          | E: 1047 | S: 87329 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 107.3316
+epoch: 1048
+| train          | E: 1048 | S: 87345 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 75.5726
+epoch: 1049
+| train          | E: 1049 | S: 87360 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 139.4025
+epoch: 1050
+| train          | E: 1050 | S: 87378 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: 105.0070
+epoch: 1051
+| train          | E: 1051 | S: 87389 | R: 181.0000 | G: 1 | D: 00.3 s | CLOSS: 98.9533
+epoch: 1052
+| train          | E: 1052 | S: 87398 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 81.3374
+epoch: 1053
+| train          | E: 1053 | S: 87406 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 91.5103
+epoch: 1054
+| train          | E: 1054 | S: 87415 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 102.6237
+epoch: 1055
+| train          | E: 1055 | S: 87425 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 90.4929
+epoch: 1056
+| train          | E: 1056 | S: 87437 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 89.2390
+epoch: 1057
+| train          | E: 1057 | S: 87447 | R: 184.0000 | G: 1 | D: 00.3 s | CLOSS: 64.0418
+epoch: 1058
+| train          | E: 1058 | S: 87462 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 79.9800
+epoch: 1059
+| train          | E: 1059 | S: 87475 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 141.6446
+epoch: 1060
+| train          | E: 1060 | S: 87486 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 88.4129
+epoch: 1061
+| train          | E: 1061 | S: 87499 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 80.9351
+epoch: 1062
+| train          | E: 1062 | S: 87511 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 95.0197
+epoch: 1063
+| train          | E: 1063 | S: 87526 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 93.2527
+epoch: 1064
+| train          | E: 1064 | S: 87542 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 97.7068
+epoch: 1065
+| train          | E: 1065 | S: 87552 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 54.2534
+epoch: 1066
+| train          | E: 1066 | S: 87562 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 141.5731
+epoch: 1067
+| train          | E: 1067 | S: 87577 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 75.8092
+epoch: 1068
+| train          | E: 1068 | S: 87589 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 123.3591
+epoch: 1069
+| train          | E: 1069 | S: 87604 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 101.5322
+epoch: 1070
+| train          | E: 1070 | S: 87623 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 101.8773
+epoch: 1071
+| train          | E: 1071 | S: 87633 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 84.8604
+epoch: 1072
+| train          | E: 1072 | S: 87646 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 93.7287
+epoch: 1073
+| train          | E: 1073 | S: 87660 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 152.7837
+epoch: 1074
+| train          | E: 1074 | S: 87677 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 82.7633
+epoch: 1075
+| train          | E: 1075 | S: 87690 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 67.0947
+epoch: 1076
+| train          | E: 1076 | S: 87702 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 79.1602
+epoch: 1077
+| train          | E: 1077 | S: 87717 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 94.9709
+epoch: 1078
+| train          | E: 1078 | S: 87727 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 104.3798
+epoch: 1079
+| train          | E: 1079 | S: 87744 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 107.9137
+epoch: 1080
+| train          | E: 1080 | S: 87754 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 58.5849
+epoch: 1081
+| train          | E: 1081 | S: 87765 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 74.2362
+epoch: 1082
+| train          | E: 1082 | S: 87782 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 49.8056
+epoch: 1083
+| train          | E: 1083 | S: 87793 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 102.5519
+epoch: 1084
+| train          | E: 1084 | S: 87807 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 106.8491
+epoch: 1085
+| train          | E: 1085 | S: 87817 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 141.4608
+epoch: 1086
+| train          | E: 1086 | S: 87841 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: 88.9555
+epoch: 1087
+| train          | E: 1087 | S: 87851 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 101.9084
+epoch: 1088
+| train          | E: 1088 | S: 87861 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 181.9107
+epoch: 1089
+| train          | E: 1089 | S: 87876 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 102.6473
+epoch: 1090
+| train          | E: 1090 | S: 87895 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 94.0360
+epoch: 1091
+| train          | E: 1091 | S: 87907 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 74.6170
+epoch: 1092
+| train          | E: 1092 | S: 87928 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 119.3040
+epoch: 1093
+| train          | E: 1093 | S: 87944 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 73.3975
+epoch: 1094
+| train          | E: 1094 | S: 87968 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 84.1889
+epoch: 1095
+| train          | E: 1095 | S: 87983 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 96.5794
+epoch: 1096
+evaluating...
+| eval           | E: 1096 | S: 88001 | R: 172.8000 | G: 1
+| train          | E: 1096 | S: 88003 | R: 167.0000 | G: 1 | D: 00.7 s | CLOSS: 128.3632
+epoch: 1097
+| train          | E: 1097 | S: 88016 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 120.6616
+epoch: 1098
+| train          | E: 1098 | S: 88028 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 116.5922
+epoch: 1099
+| train          | E: 1099 | S: 88210 | R: -162.0000 | G: 1 | D: 03.0 s | CLOSS: 93.9169
+epoch: 1100
+| train          | E: 1100 | S: 88222 | R: 178.0000 | G: 1 | D: 00.1 s | CLOSS: 106.7375
+epoch: 1101
+| train          | E: 1101 | S: 88300 | R: 48.0000 | G: 1 | D: 01.3 s | CLOSS: 80.5130
+epoch: 1102
+| train          | E: 1102 | S: 88312 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 106.9433
+epoch: 1103
+| train          | E: 1103 | S: 88324 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 59.3032
+epoch: 1104
+| train          | E: 1104 | S: 88341 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 91.7118
+epoch: 1105
+| train          | E: 1105 | S: 88353 | R: 178.0000 | G: 1 | D: 00.1 s | CLOSS: 83.4041
+epoch: 1106
+| train          | E: 1106 | S: 88376 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: 98.4378
+epoch: 1107
+| train          | E: 1107 | S: 88386 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 101.2901
+epoch: 1108
+| train          | E: 1108 | S: 88406 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 86.4423
+epoch: 1109
+| train          | E: 1109 | S: 88424 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 107.0229
+epoch: 1110
+| train          | E: 1110 | S: 88438 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 124.3026
+epoch: 1111
+| train          | E: 1111 | S: 88467 | R: 149.0000 | G: 1 | D: 00.4 s | CLOSS: 103.8523
+epoch: 1112
+| train          | E: 1112 | S: 88483 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 104.9256
+epoch: 1113
+| train          | E: 1113 | S: 88496 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 70.4578
+epoch: 1114
+| train          | E: 1114 | S: 88515 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 97.4200
+epoch: 1115
+| train          | E: 1115 | S: 88543 | R: 146.0000 | G: 1 | D: 00.4 s | CLOSS: 111.8235
+epoch: 1116
+| train          | E: 1116 | S: 88553 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 101.1042
+epoch: 1117
+| train          | E: 1117 | S: 88573 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 76.5437
+epoch: 1118
+| train          | E: 1118 | S: 88616 | R: 116.0000 | G: 1 | D: 00.7 s | CLOSS: 90.7097
+epoch: 1119
+| train          | E: 1119 | S: 88628 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 81.2413
+epoch: 1120
+| train          | E: 1120 | S: 88641 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 132.6937
+epoch: 1121
+| train          | E: 1121 | S: 88652 | R: 181.0000 | G: 1 | D: 00.4 s | CLOSS: 109.4311
+epoch: 1122
+| train          | E: 1122 | S: 88664 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 95.4293
+epoch: 1123
+| train          | E: 1123 | S: 88677 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 88.7536
+epoch: 1124
+| train          | E: 1124 | S: 88691 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 125.0230
+epoch: 1125
+| train          | E: 1125 | S: 88703 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 117.4503
+epoch: 1126
+| train          | E: 1126 | S: 88723 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 102.0755
+epoch: 1127
+| train          | E: 1127 | S: 88739 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 109.9622
+epoch: 1128
+| train          | E: 1128 | S: 88749 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 166.1089
+epoch: 1129
+| train          | E: 1129 | S: 88892 | R: -83.0000 | G: 1 | D: 02.7 s | CLOSS: 95.9062
+epoch: 1130
+| train          | E: 1130 | S: 88944 | R: 97.0000 | G: 1 | D: 00.7 s | CLOSS: 99.9384
+epoch: 1131
+| train          | E: 1131 | S: 88954 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 98.1358
+epoch: 1132
+| train          | E: 1132 | S: 88966 | R: 178.0000 | G: 1 | D: 00.5 s | CLOSS: 95.1667
+epoch: 1133
+| train          | E: 1133 | S: 88991 | R: 156.0000 | G: 1 | D: 00.4 s | CLOSS: 92.8940
+epoch: 1134
+evaluating...
+| eval           | E: 1134 | S: 89001 | R: 172.2000 | G: 1
+| train          | E: 1134 | S: 89016 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: 82.0278
+epoch: 1135
+| train          | E: 1135 | S: 89027 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 59.0381
+epoch: 1136
+| train          | E: 1136 | S: 89037 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 90.2491
+epoch: 1137
+| train          | E: 1137 | S: 89046 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 107.1021
+epoch: 1138
+| train          | E: 1138 | S: 89058 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 131.8928
+epoch: 1139
+| train          | E: 1139 | S: 89072 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 91.2183
+epoch: 1140
+| train          | E: 1140 | S: 89092 | R: 163.0000 | G: 1 | D: 00.2 s | CLOSS: 87.8222
+epoch: 1141
+| train          | E: 1141 | S: 89107 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 113.4160
+epoch: 1142
+| train          | E: 1142 | S: 89120 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 91.7151
+epoch: 1143
+| train          | E: 1143 | S: 89134 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 90.6885
+epoch: 1144
+| train          | E: 1144 | S: 89156 | R: 161.0000 | G: 1 | D: 00.4 s | CLOSS: 102.1260
+epoch: 1145
+| train          | E: 1145 | S: 89164 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 73.6532
+epoch: 1146
+| train          | E: 1146 | S: 89187 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 100.7223
+epoch: 1147
+| train          | E: 1147 | S: 89197 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 152.4648
+epoch: 1148
+| train          | E: 1148 | S: 89214 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 85.6862
+epoch: 1149
+| train          | E: 1149 | S: 89225 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 110.3230
+epoch: 1150
+| train          | E: 1150 | S: 89238 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 82.0366
+epoch: 1151
+| train          | E: 1151 | S: 89249 | R: 181.0000 | G: 1 | D: 00.4 s | CLOSS: 63.2859
+epoch: 1152
+| train          | E: 1152 | S: 89261 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 105.4192
+epoch: 1153
+| train          | E: 1153 | S: 89277 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 89.0141
+epoch: 1154
+| train          | E: 1154 | S: 89288 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 84.6641
+epoch: 1155
+| train          | E: 1155 | S: 89307 | R: 175.0000 | G: 1 | D: 00.4 s | CLOSS: 92.6376
+epoch: 1156
+| train          | E: 1156 | S: 89324 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 96.2937
+epoch: 1157
+| train          | E: 1157 | S: 89332 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 52.0129
+epoch: 1158
+| train          | E: 1158 | S: 89343 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 103.8337
+epoch: 1159
+| train          | E: 1159 | S: 89353 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 95.3717
+epoch: 1160
+| train          | E: 1160 | S: 89364 | R: 181.0000 | G: 1 | D: 00.3 s | CLOSS: 90.3137
+epoch: 1161
+| train          | E: 1161 | S: 89373 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 89.1104
+epoch: 1162
+| train          | E: 1162 | S: 89381 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 116.4959
+epoch: 1163
+| train          | E: 1163 | S: 89391 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 49.0329
+epoch: 1164
+| train          | E: 1164 | S: 89408 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 105.4807
+epoch: 1165
+| train          | E: 1165 | S: 89420 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 108.2834
+epoch: 1166
+| train          | E: 1166 | S: 89434 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 77.8214
+epoch: 1167
+| train          | E: 1167 | S: 89459 | R: 155.0000 | G: 1 | D: 00.3 s | CLOSS: 82.0391
+epoch: 1168
+| train          | E: 1168 | S: 89469 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 79.6298
+epoch: 1169
+| train          | E: 1169 | S: 89480 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 79.6380
+epoch: 1170
+| train          | E: 1170 | S: 89500 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 95.4281
+epoch: 1171
+| train          | E: 1171 | S: 89512 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 83.5470
+epoch: 1172
+| train          | E: 1172 | S: 89527 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 92.6751
+epoch: 1173
+| train          | E: 1173 | S: 89537 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 66.8345
+epoch: 1174
+| train          | E: 1174 | S: 89555 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: 110.1130
+epoch: 1175
+| train          | E: 1175 | S: 89567 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 94.3759
+epoch: 1176
+| train          | E: 1176 | S: 89580 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 101.6631
+epoch: 1177
+| train          | E: 1177 | S: 89590 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 152.8722
+epoch: 1178
+| train          | E: 1178 | S: 89604 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 87.1466
+epoch: 1179
+| train          | E: 1179 | S: 89614 | R: 182.0000 | G: 1 | D: 00.4 s | CLOSS: 93.0031
+epoch: 1180
+| train          | E: 1180 | S: 89631 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 59.0538
+epoch: 1181
+| train          | E: 1181 | S: 89640 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 92.6560
+epoch: 1182
+| train          | E: 1182 | S: 89648 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 165.5696
+epoch: 1183
+| train          | E: 1183 | S: 89658 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 102.6413
+epoch: 1184
+| train          | E: 1184 | S: 89672 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 84.7258
+epoch: 1185
+| train          | E: 1185 | S: 89683 | R: 181.0000 | G: 1 | D: 00.3 s | CLOSS: 89.4041
+epoch: 1186
+| train          | E: 1186 | S: 89694 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 70.3056
+epoch: 1187
+| train          | E: 1187 | S: 89711 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 104.5221
+epoch: 1188
+| train          | E: 1188 | S: 89722 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 85.0263
+epoch: 1189
+| train          | E: 1189 | S: 89737 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 94.3492
+epoch: 1190
+| train          | E: 1190 | S: 89747 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 122.6452
+epoch: 1191
+| train          | E: 1191 | S: 89767 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 96.7841
+epoch: 1192
+| train          | E: 1192 | S: 89778 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 102.8942
+epoch: 1193
+| train          | E: 1193 | S: 89799 | R: 161.0000 | G: 1 | D: 00.3 s | CLOSS: 88.9960
+epoch: 1194
+| train          | E: 1194 | S: 89824 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: 75.6690
+epoch: 1195
+| train          | E: 1195 | S: 89839 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 105.9083
+epoch: 1196
+| train          | E: 1196 | S: 89858 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 92.5000
+epoch: 1197
+| train          | E: 1197 | S: 89871 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 110.4938
+epoch: 1198
+| train          | E: 1198 | S: 89883 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 127.1525
+epoch: 1199
+| train          | E: 1199 | S: 89894 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 89.0216
+epoch: 1200
+| train          | E: 1200 | S: 89905 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 95.2245
+epoch: 1201
+| train          | E: 1201 | S: 89918 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 80.8400
+epoch: 1202
+| train          | E: 1202 | S: 89932 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 97.9993
+epoch: 1203
+| train          | E: 1203 | S: 89940 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 124.6288
+epoch: 1204
+| train          | E: 1204 | S: 89954 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 77.0022
+epoch: 1205
+| train          | E: 1205 | S: 89968 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 124.8579
+epoch: 1206
+| train          | E: 1206 | S: 89979 | R: 183.0000 | G: 1 | D: 00.3 s | CLOSS: 103.4810
+epoch: 1207
+| train          | E: 1207 | S: 89989 | R: 184.0000 | G: 1 | D: 00.4 s | CLOSS: 71.3958
+epoch: 1208
+| train          | E: 1208 | S: 89997 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 99.1158
+epoch: 1209
+evaluating...
+| eval           | E: 1209 | S: 90001 | R: 179.5000 | G: 1
+| train          | E: 1209 | S: 90010 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 109.5887
+epoch: 1210
+| train          | E: 1210 | S: 90027 | R: 167.0000 | G: 1 | D: 00.2 s | CLOSS: 96.7226
+epoch: 1211
+| train          | E: 1211 | S: 90039 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 91.4638
+epoch: 1212
+| train          | E: 1212 | S: 90049 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 84.4565
+epoch: 1213
+| train          | E: 1213 | S: 90059 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 48.1916
+epoch: 1214
+| train          | E: 1214 | S: 90073 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 102.8019
+epoch: 1215
+| train          | E: 1215 | S: 90086 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 105.5253
+epoch: 1216
+| train          | E: 1216 | S: 90102 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: 120.1188
+epoch: 1217
+| train          | E: 1217 | S: 90115 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 80.5115
+epoch: 1218
+| train          | E: 1218 | S: 90130 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 81.1340
+epoch: 1219
+| train          | E: 1219 | S: 90149 | R: 167.0000 | G: 1 | D: 00.4 s | CLOSS: 56.3786
+epoch: 1220
+| train          | E: 1220 | S: 90166 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 80.5554
+epoch: 1221
+| train          | E: 1221 | S: 90189 | R: 161.0000 | G: 1 | D: 00.3 s | CLOSS: 85.1657
+epoch: 1222
+| train          | E: 1222 | S: 90200 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 126.9205
+epoch: 1223
+| train          | E: 1223 | S: 90210 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 73.1036
+epoch: 1224
+| train          | E: 1224 | S: 90222 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 72.8159
+epoch: 1225
+| train          | E: 1225 | S: 90230 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 87.6491
+epoch: 1226
+| train          | E: 1226 | S: 90242 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 79.9239
+epoch: 1227
+| train          | E: 1227 | S: 90255 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 99.8582
+epoch: 1228
+| train          | E: 1228 | S: 90265 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 91.9297
+epoch: 1229
+| train          | E: 1229 | S: 90288 | R: 157.0000 | G: 1 | D: 00.5 s | CLOSS: 87.4346
+epoch: 1230
+| train          | E: 1230 | S: 90298 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 113.2408
+epoch: 1231
+| train          | E: 1231 | S: 90308 | R: 184.0000 | G: 1 | D: 00.1 s | CLOSS: 91.8551
+epoch: 1232
+| train          | E: 1232 | S: 90316 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 132.2444
+epoch: 1233
+| train          | E: 1233 | S: 90328 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 121.8888
+epoch: 1234
+| train          | E: 1234 | S: 90341 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 112.5536
+epoch: 1235
+| train          | E: 1235 | S: 90354 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 115.0837
+epoch: 1236
+| train          | E: 1236 | S: 90366 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 104.8366
+epoch: 1237
+| train          | E: 1237 | S: 90381 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 105.6076
+epoch: 1238
+| train          | E: 1238 | S: 90398 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 102.8614
+epoch: 1239
+| train          | E: 1239 | S: 90442 | R: 114.0000 | G: 1 | D: 01.3 s | CLOSS: 122.8270
+epoch: 1240
+| train          | E: 1240 | S: 90456 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 82.8328
+epoch: 1241
+| train          | E: 1241 | S: 90480 | R: 154.0000 | G: 1 | D: 00.3 s | CLOSS: 99.4511
+epoch: 1242
+| train          | E: 1242 | S: 90496 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 94.5728
+epoch: 1243
+| train          | E: 1243 | S: 90510 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 117.9628
+epoch: 1244
+| train          | E: 1244 | S: 90520 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 99.9708
+epoch: 1245
+| train          | E: 1245 | S: 90542 | R: 158.0000 | G: 1 | D: 00.3 s | CLOSS: 90.6686
+epoch: 1246
+| train          | E: 1246 | S: 90812 | R: -338.0000 | G: 1 | D: 04.8 s | CLOSS: 108.6264
+epoch: 1247
+| train          | E: 1247 | S: 90847 | R: 135.0000 | G: 1 | D: 00.7 s | CLOSS: 81.2141
+epoch: 1248
+| train          | E: 1248 | S: 90877 | R: 143.0000 | G: 1 | D: 00.4 s | CLOSS: 101.1752
+epoch: 1249
+| train          | E: 1249 | S: 90896 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: 97.8814
+epoch: 1250
+| train          | E: 1250 | S: 90916 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 121.7793
+epoch: 1251
+| train          | E: 1251 | S: 90952 | R: 136.0000 | G: 1 | D: 00.7 s | CLOSS: 88.6493
+epoch: 1252
+| train          | E: 1252 | S: 90962 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: 147.3438
+epoch: 1253
+| train          | E: 1253 | S: 90972 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 75.9292
+epoch: 1254
+| train          | E: 1254 | S: 90995 | R: 157.0000 | G: 1 | D: 00.4 s | CLOSS: 133.1061
+epoch: 1255
+evaluating...
+| eval           | E: 1255 | S: 91001 | R: 171.3000 | G: 1
+| train          | E: 1255 | S: 91022 | R: 153.0000 | G: 1 | D: 00.8 s | CLOSS: 119.7084
+epoch: 1256
+| train          | E: 1256 | S: 91034 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 118.9133
+epoch: 1257
+| train          | E: 1257 | S: 91046 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 79.6670
+epoch: 1258
+| train          | E: 1258 | S: 91054 | R: 186.0000 | G: 1 | D: 00.3 s | CLOSS: 79.6126
+epoch: 1259
+| train          | E: 1259 | S: 91070 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 127.3011
+epoch: 1260
+| train          | E: 1260 | S: 91078 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 73.6736
+epoch: 1261
+| train          | E: 1261 | S: 91110 | R: 138.0000 | G: 1 | D: 00.5 s | CLOSS: 82.3437
+epoch: 1262
+| train          | E: 1262 | S: 91128 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 107.2282
+epoch: 1263
+| train          | E: 1263 | S: 91153 | R: 153.0000 | G: 1 | D: 00.3 s | CLOSS: 108.6770
+epoch: 1264
+| train          | E: 1264 | S: 91165 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 104.6803
+epoch: 1265
+| train          | E: 1265 | S: 91187 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 63.3074
+epoch: 1266
+| train          | E: 1266 | S: 91197 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 56.8433
+epoch: 1267
+| train          | E: 1267 | S: 91211 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 90.9653
+epoch: 1268
+| train          | E: 1268 | S: 91225 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 112.3372
+epoch: 1269
+| train          | E: 1269 | S: 91241 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 98.4572
+epoch: 1270
+| train          | E: 1270 | S: 91253 | R: 178.0000 | G: 1 | D: 00.5 s | CLOSS: 75.2490
+epoch: 1271
+| train          | E: 1271 | S: 91266 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 101.9349
+epoch: 1272
+| train          | E: 1272 | S: 91279 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 108.8215
+epoch: 1273
+| train          | E: 1273 | S: 91290 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 98.3899
+epoch: 1274
+| train          | E: 1274 | S: 91301 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 91.3815
+epoch: 1275
+| train          | E: 1275 | S: 91316 | R: 175.0000 | G: 1 | D: 00.4 s | CLOSS: 72.3781
+epoch: 1276
+| train          | E: 1276 | S: 91330 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 104.3388
+epoch: 1277
+| train          | E: 1277 | S: 91343 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 62.9933
+epoch: 1278
+| train          | E: 1278 | S: 91361 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 102.9563
+epoch: 1279
+| train          | E: 1279 | S: 91373 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 89.6239
+epoch: 1280
+| train          | E: 1280 | S: 91383 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 137.0724
+epoch: 1281
+| train          | E: 1281 | S: 91395 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 90.0867
+epoch: 1282
+| train          | E: 1282 | S: 91417 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: 100.5934
+epoch: 1283
+| train          | E: 1283 | S: 91432 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 89.7349
+epoch: 1284
+| train          | E: 1284 | S: 91444 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 109.3697
+epoch: 1285
+| train          | E: 1285 | S: 91457 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 114.6345
+epoch: 1286
+| train          | E: 1286 | S: 91474 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 121.5917
+epoch: 1287
+| train          | E: 1287 | S: 91486 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 86.8504
+epoch: 1288
+| train          | E: 1288 | S: 91505 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 108.2517
+epoch: 1289
+| train          | E: 1289 | S: 91533 | R: 145.0000 | G: 1 | D: 00.6 s | CLOSS: 104.4675
+epoch: 1290
+| train          | E: 1290 | S: 91549 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 87.3549
+epoch: 1291
+| train          | E: 1291 | S: 91558 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 82.5584
+epoch: 1292
+| train          | E: 1292 | S: 91567 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 149.4540
+epoch: 1293
+| train          | E: 1293 | S: 91591 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 82.6444
+epoch: 1294
+| train          | E: 1294 | S: 91608 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 81.9658
+epoch: 1295
+| train          | E: 1295 | S: 91629 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 129.6009
+epoch: 1296
+| train          | E: 1296 | S: 91653 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 103.8256
+epoch: 1297
+| train          | E: 1297 | S: 91667 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 143.8289
+epoch: 1298
+| train          | E: 1298 | S: 91691 | R: 155.0000 | G: 1 | D: 00.3 s | CLOSS: 123.8136
+epoch: 1299
+| train          | E: 1299 | S: 91706 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 100.8149
+epoch: 1300
+| train          | E: 1300 | S: 91725 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: 73.4079
+epoch: 1301
+| train          | E: 1301 | S: 91736 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 84.2367
+epoch: 1302
+| train          | E: 1302 | S: 91746 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 121.6026
+epoch: 1303
+| train          | E: 1303 | S: 91754 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: 111.5481
+epoch: 1304
+| train          | E: 1304 | S: 91768 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 110.7737
+epoch: 1305
+| train          | E: 1305 | S: 91797 | R: 145.0000 | G: 1 | D: 00.6 s | CLOSS: 103.3959
+epoch: 1306
+| train          | E: 1306 | S: 91822 | R: 153.0000 | G: 1 | D: 00.4 s | CLOSS: 111.1701
+epoch: 1307
+| train          | E: 1307 | S: 91854 | R: 140.0000 | G: 1 | D: 00.6 s | CLOSS: 96.2384
+epoch: 1308
+| train          | E: 1308 | S: 91874 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 88.1987
+epoch: 1309
+| train          | E: 1309 | S: 91934 | R: 83.0000 | G: 1 | D: 01.0 s | CLOSS: 98.9065
+epoch: 1310
+| train          | E: 1310 | S: 91954 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 94.2604
+epoch: 1311
+| train          | E: 1311 | S: 91975 | R: 161.0000 | G: 1 | D: 00.3 s | CLOSS: 91.0714
+epoch: 1312
+| train          | E: 1312 | S: 91998 | R: 155.0000 | G: 1 | D: 00.3 s | CLOSS: 129.7909
+epoch: 1313
+evaluating...
+| eval           | E: 1313 | S: 92001 | R: 165.4000 | G: 1
+| train          | E: 1313 | S: 92045 | R: 112.0000 | G: 1 | D: 01.7 s | CLOSS: 84.4444
+epoch: 1314
+| train          | E: 1314 | S: 92074 | R: 145.0000 | G: 1 | D: 00.4 s | CLOSS: 126.0321
+epoch: 1315
+| train          | E: 1315 | S: 92088 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 92.6456
+epoch: 1316
+| train          | E: 1316 | S: 92099 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 109.1451
+epoch: 1317
+| train          | E: 1317 | S: 92107 | R: 186.0000 | G: 1 | D: 00.3 s | CLOSS: 78.3383
+epoch: 1318
+| train          | E: 1318 | S: 92115 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 61.1844
+epoch: 1319
+| train          | E: 1319 | S: 92127 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 101.6923
+epoch: 1320
+| train          | E: 1320 | S: 92137 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 87.7090
+epoch: 1321
+| train          | E: 1321 | S: 92146 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 93.0631
+epoch: 1322
+| train          | E: 1322 | S: 92157 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 94.7249
+epoch: 1323
+| train          | E: 1323 | S: 92169 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 105.2325
+epoch: 1324
+| train          | E: 1324 | S: 92181 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 131.3370
+epoch: 1325
+| train          | E: 1325 | S: 92190 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 59.4514
+epoch: 1326
+| train          | E: 1326 | S: 92200 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 98.8149
+epoch: 1327
+| train          | E: 1327 | S: 92221 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 130.4836
+epoch: 1328
+| train          | E: 1328 | S: 92236 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 95.4054
+epoch: 1329
+| train          | E: 1329 | S: 92254 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 109.3179
+epoch: 1330
+| train          | E: 1330 | S: 92268 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 95.4537
+epoch: 1331
+| train          | E: 1331 | S: 92288 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 95.8881
+epoch: 1332
+| train          | E: 1332 | S: 92302 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 69.9700
+epoch: 1333
+| train          | E: 1333 | S: 92313 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 102.9981
+epoch: 1334
+| train          | E: 1334 | S: 92329 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 73.9415
+epoch: 1335
+| train          | E: 1335 | S: 92342 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 91.5566
+epoch: 1336
+| train          | E: 1336 | S: 92357 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 141.0975
+epoch: 1337
+| train          | E: 1337 | S: 92370 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 89.9824
+epoch: 1338
+| train          | E: 1338 | S: 92384 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 98.7996
+epoch: 1339
+| train          | E: 1339 | S: 92399 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 110.1884
+epoch: 1340
+| train          | E: 1340 | S: 92410 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 115.7140
+epoch: 1341
+| train          | E: 1341 | S: 92420 | R: 182.0000 | G: 1 | D: 00.5 s | CLOSS: 119.3746
+epoch: 1342
+| train          | E: 1342 | S: 92433 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 93.7532
+epoch: 1343
+| train          | E: 1343 | S: 92482 | R: 107.0000 | G: 1 | D: 00.7 s | CLOSS: 93.6928
+epoch: 1344
+| train          | E: 1344 | S: 92505 | R: 157.0000 | G: 1 | D: 00.3 s | CLOSS: 127.3337
+epoch: 1345
+| train          | E: 1345 | S: 92523 | R: 166.0000 | G: 1 | D: 00.2 s | CLOSS: 101.4275
+epoch: 1346
+| train          | E: 1346 | S: 92554 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: 93.1599
+epoch: 1347
+| train          | E: 1347 | S: 92566 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 87.5048
+epoch: 1348
+| train          | E: 1348 | S: 92576 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: 111.6315
+epoch: 1349
+| train          | E: 1349 | S: 92603 | R: 148.0000 | G: 1 | D: 00.6 s | CLOSS: 99.2862
+epoch: 1350
+| train          | E: 1350 | S: 92615 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 96.1474
+epoch: 1351
+| train          | E: 1351 | S: 92645 | R: 144.0000 | G: 1 | D: 00.4 s | CLOSS: 88.9243
+epoch: 1352
+| train          | E: 1352 | S: 92660 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 96.1781
+epoch: 1353
+| train          | E: 1353 | S: 92686 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 90.8061
+epoch: 1354
+| train          | E: 1354 | S: 92705 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 107.9209
+epoch: 1355
+| train          | E: 1355 | S: 92722 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: 117.0822
+epoch: 1356
+| train          | E: 1356 | S: 92769 | R: 108.0000 | G: 1 | D: 00.6 s | CLOSS: 86.9668
+epoch: 1357
+| train          | E: 1357 | S: 92804 | R: 135.0000 | G: 1 | D: 00.7 s | CLOSS: 92.0986
+epoch: 1358
+| train          | E: 1358 | S: 92823 | R: 165.0000 | G: 1 | D: 00.3 s | CLOSS: 128.1642
+epoch: 1359
+| train          | E: 1359 | S: 92839 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 116.0539
+epoch: 1360
+| train          | E: 1360 | S: 92851 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 145.0430
+epoch: 1361
+| train          | E: 1361 | S: 92864 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 111.1536
+epoch: 1362
+| train          | E: 1362 | S: 92882 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 79.3567
+epoch: 1363
+| train          | E: 1363 | S: 92892 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 117.9865
+epoch: 1364
+| train          | E: 1364 | S: 92904 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 89.8743
+epoch: 1365
+| train          | E: 1365 | S: 92918 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 60.1029
+epoch: 1366
+| train          | E: 1366 | S: 92935 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 79.5133
+epoch: 1367
+| train          | E: 1367 | S: 92957 | R: 158.0000 | G: 1 | D: 00.7 s | CLOSS: 107.3994
+epoch: 1368
+| train          | E: 1368 | S: 92970 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 104.5472
+epoch: 1369
+| train          | E: 1369 | S: 92978 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 63.4093
+epoch: 1370
+| train          | E: 1370 | S: 92994 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 97.5010
+epoch: 1371
+evaluating...
+| eval           | E: 1371 | S: 93001 | R: 171.9000 | G: 1
+| train          | E: 1371 | S: 93009 | R: 175.0000 | G: 1 | D: 00.7 s | CLOSS: 124.8508
+epoch: 1372
+| train          | E: 1372 | S: 93024 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 104.1391
+epoch: 1373
+| train          | E: 1373 | S: 93032 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 101.9912
+epoch: 1374
+| train          | E: 1374 | S: 93048 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 77.9656
+epoch: 1375
+| train          | E: 1375 | S: 93074 | R: 152.0000 | G: 1 | D: 00.4 s | CLOSS: 77.4705
+epoch: 1376
+| train          | E: 1376 | S: 93087 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 87.0130
+epoch: 1377
+| train          | E: 1377 | S: 93103 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 150.6179
+epoch: 1378
+| train          | E: 1378 | S: 93113 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 102.9830
+epoch: 1379
+| train          | E: 1379 | S: 93123 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 112.1843
+epoch: 1380
+| train          | E: 1380 | S: 93132 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 116.2521
+epoch: 1381
+| train          | E: 1381 | S: 93144 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 103.2168
+epoch: 1382
+| train          | E: 1382 | S: 93162 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 133.6102
+epoch: 1383
+| train          | E: 1383 | S: 93189 | R: 149.0000 | G: 1 | D: 00.5 s | CLOSS: 117.1110
+epoch: 1384
+| train          | E: 1384 | S: 93200 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 70.5792
+epoch: 1385
+| train          | E: 1385 | S: 93212 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 73.8541
+epoch: 1386
+| train          | E: 1386 | S: 93222 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 119.9794
+epoch: 1387
+| train          | E: 1387 | S: 93232 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 156.9102
+epoch: 1388
+| train          | E: 1388 | S: 93258 | R: 150.0000 | G: 1 | D: 00.3 s | CLOSS: 120.4020
+epoch: 1389
+| train          | E: 1389 | S: 93294 | R: 130.0000 | G: 1 | D: 00.6 s | CLOSS: 104.5711
+epoch: 1390
+| train          | E: 1390 | S: 93311 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 101.6473
+epoch: 1391
+| train          | E: 1391 | S: 93325 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 105.3019
+epoch: 1392
+| train          | E: 1392 | S: 93348 | R: 158.0000 | G: 1 | D: 00.3 s | CLOSS: 96.2618
+epoch: 1393
+| train          | E: 1393 | S: 93368 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: 123.0058
+epoch: 1394
+| train          | E: 1394 | S: 93382 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 109.9526
+epoch: 1395
+| train          | E: 1395 | S: 93393 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 113.4082
+epoch: 1396
+| train          | E: 1396 | S: 93415 | R: 160.0000 | G: 1 | D: 00.3 s | CLOSS: 112.0276
+epoch: 1397
+| train          | E: 1397 | S: 93428 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 99.7741
+epoch: 1398
+| train          | E: 1398 | S: 93440 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 93.2939
+epoch: 1399
+| train          | E: 1399 | S: 93455 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 130.3377
+epoch: 1400
+| train          | E: 1400 | S: 93465 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 136.7300
+epoch: 1401
+| train          | E: 1401 | S: 93473 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 125.5931
+epoch: 1402
+| train          | E: 1402 | S: 93484 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 115.6738
+epoch: 1403
+| train          | E: 1403 | S: 93516 | R: 139.0000 | G: 1 | D: 00.7 s | CLOSS: 134.1749
+epoch: 1404
+| train          | E: 1404 | S: 93533 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 97.8678
+epoch: 1405
+| train          | E: 1405 | S: 93558 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 110.9657
+epoch: 1406
+| train          | E: 1406 | S: 93730 | R: -140.0000 | G: 1 | D: 02.9 s | CLOSS: 107.2049
+epoch: 1407
+| train          | E: 1407 | S: 93818 | R: 26.0000 | G: 1 | D: 01.4 s | CLOSS: 110.5314
+epoch: 1408
+| train          | E: 1408 | S: 93875 | R: 90.0000 | G: 1 | D: 01.0 s | CLOSS: 99.9557
+epoch: 1409
+| train          | E: 1409 | S: 93895 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 143.3735
+epoch: 1410
+| train          | E: 1410 | S: 93952 | R: 89.0000 | G: 1 | D: 01.0 s | CLOSS: 103.8036
+epoch: 1411
+| train          | E: 1411 | S: 93984 | R: 139.0000 | G: 1 | D: 00.5 s | CLOSS: 115.6027
+epoch: 1412
+| train          | E: 1412 | S: 93999 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 119.7772
+epoch: 1413
+evaluating...
+| eval           | E: 1413 | S: 94001 | R: 174.2000 | G: 1
+| train          | E: 1413 | S: 94012 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 73.3739
+epoch: 1414
+| train          | E: 1414 | S: 94024 | R: 179.0000 | G: 1 | D: 00.1 s | CLOSS: 92.5867
+epoch: 1415
+| train          | E: 1415 | S: 94037 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: 114.0915
+epoch: 1416
+| train          | E: 1416 | S: 94061 | R: 155.0000 | G: 1 | D: 00.3 s | CLOSS: 98.3258
+epoch: 1417
+| train          | E: 1417 | S: 94071 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 137.3859
+epoch: 1418
+| train          | E: 1418 | S: 94100 | R: 144.0000 | G: 1 | D: 00.5 s | CLOSS: 110.0510
+epoch: 1419
+| train          | E: 1419 | S: 94111 | R: 181.0000 | G: 1 | D: 00.4 s | CLOSS: 141.4062
+epoch: 1420
+| train          | E: 1420 | S: 94140 | R: 145.0000 | G: 1 | D: 00.5 s | CLOSS: 98.8125
+epoch: 1421
+| train          | E: 1421 | S: 94154 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 130.1738
+epoch: 1422
+| train          | E: 1422 | S: 94179 | R: 156.0000 | G: 1 | D: 00.3 s | CLOSS: 123.8359
+epoch: 1423
+| train          | E: 1423 | S: 94202 | R: 155.0000 | G: 1 | D: 00.3 s | CLOSS: 118.9697
+epoch: 1424
+| train          | E: 1424 | S: 94223 | R: 160.0000 | G: 1 | D: 00.4 s | CLOSS: 77.0069
+epoch: 1425
+| train          | E: 1425 | S: 94255 | R: 138.0000 | G: 1 | D: 00.7 s | CLOSS: 112.2965
+epoch: 1426
+| train          | E: 1426 | S: 94269 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 123.3145
+epoch: 1427
+| train          | E: 1427 | S: 94331 | R: 78.0000 | G: 1 | D: 01.1 s | CLOSS: 106.4856
+epoch: 1428
+| train          | E: 1428 | S: 94351 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 96.0114
+epoch: 1429
+| train          | E: 1429 | S: 94363 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 105.7880
+epoch: 1430
+| train          | E: 1430 | S: 94382 | R: 165.0000 | G: 1 | D: 00.2 s | CLOSS: 100.4798
+epoch: 1431
+| train          | E: 1431 | S: 94395 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 90.1625
+epoch: 1432
+| train          | E: 1432 | S: 94416 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: 92.5082
+epoch: 1433
+| train          | E: 1433 | S: 94426 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 119.9020
+epoch: 1434
+| train          | E: 1434 | S: 94440 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 124.6598
+epoch: 1435
+| train          | E: 1435 | S: 94465 | R: 152.0000 | G: 1 | D: 00.5 s | CLOSS: 97.9866
+epoch: 1436
+| train          | E: 1436 | S: 94480 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 110.8269
+epoch: 1437
+| train          | E: 1437 | S: 94492 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 152.3633
+epoch: 1438
+| train          | E: 1438 | S: 94510 | R: 167.0000 | G: 1 | D: 00.2 s | CLOSS: 133.4178
+epoch: 1439
+| train          | E: 1439 | S: 94521 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 109.5153
+epoch: 1440
+| train          | E: 1440 | S: 94541 | R: 162.0000 | G: 1 | D: 00.4 s | CLOSS: 97.6104
+epoch: 1441
+| train          | E: 1441 | S: 94585 | R: 114.0000 | G: 1 | D: 00.7 s | CLOSS: 118.1979
+epoch: 1442
+| train          | E: 1442 | S: 94621 | R: 130.0000 | G: 1 | D: 00.7 s | CLOSS: 106.2590
+epoch: 1443
+| train          | E: 1443 | S: 94631 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 85.9611
+epoch: 1444
+| train          | E: 1444 | S: 94649 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 115.6105
+epoch: 1445
+| train          | E: 1445 | S: 94663 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 103.0909
+epoch: 1446
+| train          | E: 1446 | S: 94684 | R: 160.0000 | G: 1 | D: 00.3 s | CLOSS: 95.0919
+epoch: 1447
+| train          | E: 1447 | S: 94725 | R: 121.0000 | G: 1 | D: 00.9 s | CLOSS: 93.7408
+epoch: 1448
+| train          | E: 1448 | S: 94736 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 100.5677
+epoch: 1449
+| train          | E: 1449 | S: 94755 | R: 164.0000 | G: 1 | D: 00.6 s | CLOSS: 82.3618
+epoch: 1450
+| train          | E: 1450 | S: 94764 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 100.9756
+epoch: 1451
+| train          | E: 1451 | S: 94801 | R: 128.0000 | G: 1 | D: 00.7 s | CLOSS: 99.1604
+epoch: 1452
+| train          | E: 1452 | S: 94819 | R: 166.0000 | G: 1 | D: 00.2 s | CLOSS: 116.4361
+epoch: 1453
+| train          | E: 1453 | S: 94829 | R: 184.0000 | G: 1 | D: 00.1 s | CLOSS: 89.2442
+epoch: 1454
+| train          | E: 1454 | S: 94839 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: 111.6901
+epoch: 1455
+| train          | E: 1455 | S: 94851 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 106.7153
+epoch: 1456
+| train          | E: 1456 | S: 94862 | R: 181.0000 | G: 1 | D: 00.4 s | CLOSS: 65.1913
+epoch: 1457
+| train          | E: 1457 | S: 94883 | R: 164.0000 | G: 1 | D: 00.3 s | CLOSS: 120.3721
+epoch: 1458
+| train          | E: 1458 | S: 94899 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 138.7487
+epoch: 1459
+| train          | E: 1459 | S: 94909 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 150.7558
+epoch: 1460
+| train          | E: 1460 | S: 94919 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 125.6087
+epoch: 1461
+| train          | E: 1461 | S: 94935 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 134.4627
+epoch: 1462
+| train          | E: 1462 | S: 94943 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 94.5732
+epoch: 1463
+| train          | E: 1463 | S: 94954 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 98.9373
+epoch: 1464
+| train          | E: 1464 | S: 94974 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 84.6478
+epoch: 1465
+| train          | E: 1465 | S: 94994 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 122.3618
+epoch: 1466
+evaluating...
+| eval           | E: 1466 | S: 95001 | R: 159.9000 | G: 1
+| train          | E: 1466 | S: 95005 | R: 182.0000 | G: 1 | D: 00.5 s | CLOSS: 117.3275
+epoch: 1467
+| train          | E: 1467 | S: 95020 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 94.7810
+epoch: 1468
+| train          | E: 1468 | S: 95053 | R: 137.0000 | G: 1 | D: 00.6 s | CLOSS: 92.5247
+epoch: 1469
+| train          | E: 1469 | S: 95071 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 136.1345
+epoch: 1470
+| train          | E: 1470 | S: 95082 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 77.8374
+epoch: 1471
+| train          | E: 1471 | S: 95099 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: 74.5491
+epoch: 1472
+| train          | E: 1472 | S: 95109 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 187.2619
+epoch: 1473
+| train          | E: 1473 | S: 95122 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 95.5103
+epoch: 1474
+| train          | E: 1474 | S: 95141 | R: 165.0000 | G: 1 | D: 00.2 s | CLOSS: 139.6439
+epoch: 1475
+| train          | E: 1475 | S: 95153 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 116.2050
+epoch: 1476
+| train          | E: 1476 | S: 95164 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 128.1263
+epoch: 1477
+| train          | E: 1477 | S: 95174 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 141.5878
+epoch: 1478
+| train          | E: 1478 | S: 95190 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 107.9414
+epoch: 1479
+| train          | E: 1479 | S: 95206 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 134.5346
+epoch: 1480
+| train          | E: 1480 | S: 95220 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 89.7373
+epoch: 1481
+| train          | E: 1481 | S: 95234 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 107.2686
+epoch: 1482
+| train          | E: 1482 | S: 95324 | R: 22.0000 | G: 1 | D: 01.5 s | CLOSS: 113.1477
+epoch: 1483
+| train          | E: 1483 | S: 95421 | R: 11.0000 | G: 1 | D: 02.1 s | CLOSS: 90.9188
+epoch: 1484
+| train          | E: 1484 | S: 95433 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 127.0123
+epoch: 1485
+| train          | E: 1485 | S: 95458 | R: 154.0000 | G: 1 | D: 00.3 s | CLOSS: 98.6046
+epoch: 1486
+| train          | E: 1486 | S: 95468 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 73.6113
+epoch: 1487
+| train          | E: 1487 | S: 95482 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 160.8420
+epoch: 1488
+| train          | E: 1488 | S: 95497 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 109.3663
+epoch: 1489
+| train          | E: 1489 | S: 95511 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 146.5960
+epoch: 1490
+| train          | E: 1490 | S: 95521 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 84.6318
+epoch: 1491
+| train          | E: 1491 | S: 95533 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 112.9764
+epoch: 1492
+| train          | E: 1492 | S: 95553 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: 95.2298
+epoch: 1493
+| train          | E: 1493 | S: 95570 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 137.8171
+epoch: 1494
+| train          | E: 1494 | S: 95583 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 137.7311
+epoch: 1495
+| train          | E: 1495 | S: 95645 | R: 99.0000 | G: 1 | D: 01.1 s | CLOSS: 114.1860
+epoch: 1496
+| train          | E: 1496 | S: 95665 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 119.0024
+epoch: 1497
+| train          | E: 1497 | S: 95699 | R: 136.0000 | G: 1 | D: 00.5 s | CLOSS: 99.7758
+epoch: 1498
+| train          | E: 1498 | S: 95711 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 104.5704
+epoch: 1499
+| train          | E: 1499 | S: 95725 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 131.1184
+epoch: 1500
+| train          | E: 1500 | S: 95737 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 71.8736
+epoch: 1501
+| train          | E: 1501 | S: 95748 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 129.4920
+epoch: 1502
+| train          | E: 1502 | S: 95757 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 120.4002
+epoch: 1503
+| train          | E: 1503 | S: 95767 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 113.5240
+epoch: 1504
+| train          | E: 1504 | S: 95780 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: 75.9949
+epoch: 1505
+| train          | E: 1505 | S: 95788 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: 111.1809
+epoch: 1506
+| train          | E: 1506 | S: 95798 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 76.3012
+epoch: 1507
+| train          | E: 1507 | S: 95806 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 101.5804
+epoch: 1508
+| train          | E: 1508 | S: 95814 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 76.5542
+epoch: 1509
+| train          | E: 1509 | S: 95826 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 130.5135
+epoch: 1510
+| train          | E: 1510 | S: 95834 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 116.1837
+epoch: 1511
+| train          | E: 1511 | S: 95849 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 111.3194
+epoch: 1512
+| train          | E: 1512 | S: 95861 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 95.7038
+epoch: 1513
+| train          | E: 1513 | S: 95879 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 107.9338
+epoch: 1514
+| train          | E: 1514 | S: 95889 | R: 184.0000 | G: 1 | D: 00.1 s | CLOSS: 114.3006
+epoch: 1515
+| train          | E: 1515 | S: 95902 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 119.3807
+epoch: 1516
+| train          | E: 1516 | S: 95913 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 118.1169
+epoch: 1517
+| train          | E: 1517 | S: 95921 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 85.5880
+epoch: 1518
+| train          | E: 1518 | S: 95930 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 157.9796
+epoch: 1519
+| train          | E: 1519 | S: 95945 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 118.2830
+epoch: 1520
+| train          | E: 1520 | S: 95953 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 107.7167
+epoch: 1521
+| train          | E: 1521 | S: 95966 | R: 177.0000 | G: 1 | D: 00.6 s | CLOSS: 80.3443
+epoch: 1522
+| train          | E: 1522 | S: 95986 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 115.5730
+epoch: 1523
+| train          | E: 1523 | S: 95995 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 92.1219
+epoch: 1524
+evaluating...
+| eval           | E: 1524 | S: 96001 | R: 172.7000 | G: 1
+| train          | E: 1524 | S: 96019 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: 82.5059
+epoch: 1525
+| train          | E: 1525 | S: 96035 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 91.9073
+epoch: 1526
+| train          | E: 1526 | S: 96043 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 109.3997
+epoch: 1527
+| train          | E: 1527 | S: 96068 | R: 153.0000 | G: 1 | D: 00.4 s | CLOSS: 104.9011
+epoch: 1528
+| train          | E: 1528 | S: 96079 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 91.7821
+epoch: 1529
+| train          | E: 1529 | S: 96092 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 83.4776
+epoch: 1530
+| train          | E: 1530 | S: 96105 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 166.9201
+epoch: 1531
+| train          | E: 1531 | S: 96116 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 131.4519
+epoch: 1532
+| train          | E: 1532 | S: 96128 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 119.9718
+epoch: 1533
+| train          | E: 1533 | S: 96157 | R: 153.0000 | G: 1 | D: 00.6 s | CLOSS: 84.3032
+epoch: 1534
+| train          | E: 1534 | S: 96173 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 120.8430
+epoch: 1535
+| train          | E: 1535 | S: 96185 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 124.0680
+epoch: 1536
+| train          | E: 1536 | S: 96195 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 123.1090
+epoch: 1537
+| train          | E: 1537 | S: 96206 | R: 181.0000 | G: 1 | D: 00.3 s | CLOSS: 121.5838
+epoch: 1538
+| train          | E: 1538 | S: 96224 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 107.3518
+epoch: 1539
+| train          | E: 1539 | S: 96237 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 84.6848
+epoch: 1540
+| train          | E: 1540 | S: 96254 | R: 172.0000 | G: 1 | D: 00.2 s | CLOSS: 104.9749
+epoch: 1541
+| train          | E: 1541 | S: 96264 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 110.8347
+epoch: 1542
+| train          | E: 1542 | S: 96276 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 108.4426
+epoch: 1543
+| train          | E: 1543 | S: 96287 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 100.7556
+epoch: 1544
+| train          | E: 1544 | S: 96302 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 149.8979
+epoch: 1545
+| train          | E: 1545 | S: 96310 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 80.0116
+epoch: 1546
+| train          | E: 1546 | S: 96331 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: 91.8363
+epoch: 1547
+| train          | E: 1547 | S: 96343 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 146.2663
+epoch: 1548
+| train          | E: 1548 | S: 96353 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 145.6828
+epoch: 1549
+| train          | E: 1549 | S: 96363 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 125.2132
+epoch: 1550
+| train          | E: 1550 | S: 96373 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 105.2586
+epoch: 1551
+| train          | E: 1551 | S: 96383 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 140.7646
+epoch: 1552
+| train          | E: 1552 | S: 96401 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 113.5879
+epoch: 1553
+| train          | E: 1553 | S: 96417 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 102.1807
+epoch: 1554
+| train          | E: 1554 | S: 96449 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: 133.1696
+epoch: 1555
+| train          | E: 1555 | S: 96459 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 92.9232
+epoch: 1556
+| train          | E: 1556 | S: 96489 | R: 142.0000 | G: 1 | D: 00.4 s | CLOSS: 119.5200
+epoch: 1557
+| train          | E: 1557 | S: 96513 | R: 155.0000 | G: 1 | D: 00.4 s | CLOSS: 96.5788
+epoch: 1558
+| train          | E: 1558 | S: 96530 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 111.9724
+epoch: 1559
+| train          | E: 1559 | S: 96541 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 108.4191
+epoch: 1560
+| train          | E: 1560 | S: 96553 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 101.4434
+epoch: 1561
+| train          | E: 1561 | S: 96563 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 103.1914
+epoch: 1562
+| train          | E: 1562 | S: 96575 | R: 178.0000 | G: 1 | D: 00.6 s | CLOSS: 96.1700
+epoch: 1563
+| train          | E: 1563 | S: 96583 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 95.0648
+epoch: 1564
+| train          | E: 1564 | S: 96594 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 146.1432
+epoch: 1565
+| train          | E: 1565 | S: 96609 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 111.4105
+epoch: 1566
+| train          | E: 1566 | S: 96625 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: 150.9382
+epoch: 1567
+| train          | E: 1567 | S: 96641 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 119.8924
+epoch: 1568
+| train          | E: 1568 | S: 96658 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 100.0789
+epoch: 1569
+| train          | E: 1569 | S: 96683 | R: 151.0000 | G: 1 | D: 00.6 s | CLOSS: 123.6659
+epoch: 1570
+| train          | E: 1570 | S: 96722 | R: 124.0000 | G: 1 | D: 00.6 s | CLOSS: 134.1186
+epoch: 1571
+| train          | E: 1571 | S: 96740 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 111.2676
+epoch: 1572
+| train          | E: 1572 | S: 96755 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 108.6011
+epoch: 1573
+| train          | E: 1573 | S: 96768 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 92.8143
+epoch: 1574
+| train          | E: 1574 | S: 96776 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: 92.3851
+epoch: 1575
+| train          | E: 1575 | S: 96784 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 124.4647
+epoch: 1576
+| train          | E: 1576 | S: 96797 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 118.4404
+epoch: 1577
+| train          | E: 1577 | S: 96807 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 105.1482
+epoch: 1578
+| train          | E: 1578 | S: 96819 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 154.7979
+epoch: 1579
+| train          | E: 1579 | S: 96831 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 111.0066
+epoch: 1580
+| train          | E: 1580 | S: 96845 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 153.8164
+epoch: 1581
+| train          | E: 1581 | S: 96855 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 127.0208
+epoch: 1582
+| train          | E: 1582 | S: 96873 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 74.5543
+epoch: 1583
+| train          | E: 1583 | S: 96883 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 133.7145
+epoch: 1584
+| train          | E: 1584 | S: 96893 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 117.4162
+epoch: 1585
+| train          | E: 1585 | S: 96901 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 143.8702
+epoch: 1586
+| train          | E: 1586 | S: 96923 | R: 158.0000 | G: 1 | D: 00.3 s | CLOSS: 143.0133
+epoch: 1587
+| train          | E: 1587 | S: 96950 | R: 149.0000 | G: 1 | D: 00.5 s | CLOSS: 129.6777
+epoch: 1588
+| train          | E: 1588 | S: 96959 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 167.8009
+epoch: 1589
+| train          | E: 1589 | S: 96970 | R: 181.0000 | G: 1 | D: 00.1 s | CLOSS: 96.4453
+epoch: 1590
+| train          | E: 1590 | S: 96992 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: 93.9216
+epoch: 1591
+evaluating...
+| eval           | E: 1591 | S: 97001 | R: 173.3000 | G: 1
+| train          | E: 1591 | S: 97007 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 104.5599
+epoch: 1592
+| train          | E: 1592 | S: 97016 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 168.5339
+epoch: 1593
+| train          | E: 1593 | S: 97090 | R: 54.0000 | G: 1 | D: 01.2 s | CLOSS: 112.8278
+epoch: 1594
+| train          | E: 1594 | S: 97147 | R: 89.0000 | G: 1 | D: 01.0 s | CLOSS: 114.2583
+epoch: 1595
+| train          | E: 1595 | S: 97165 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 110.2755
+epoch: 1596
+| train          | E: 1596 | S: 97173 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: 97.8272
+epoch: 1597
+| train          | E: 1597 | S: 97189 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 115.1527
+epoch: 1598
+| train          | E: 1598 | S: 97197 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 98.1061
+epoch: 1599
+| train          | E: 1599 | S: 97209 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 138.5180
+epoch: 1600
+| train          | E: 1600 | S: 97221 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 138.2926
+epoch: 1601
+| train          | E: 1601 | S: 97250 | R: 151.0000 | G: 1 | D: 00.5 s | CLOSS: 140.5375
+epoch: 1602
+| train          | E: 1602 | S: 97270 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 102.3404
+epoch: 1603
+| train          | E: 1603 | S: 97299 | R: 145.0000 | G: 1 | D: 00.5 s | CLOSS: 94.6340
+epoch: 1604
+| train          | E: 1604 | S: 97319 | R: 162.0000 | G: 1 | D: 00.3 s | CLOSS: 122.1980
+epoch: 1605
+| train          | E: 1605 | S: 97333 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 121.6009
+epoch: 1606
+| train          | E: 1606 | S: 97347 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 120.3853
+epoch: 1607
+| train          | E: 1607 | S: 97371 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 109.9976
+epoch: 1608
+| train          | E: 1608 | S: 97382 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 123.2357
+epoch: 1609
+| train          | E: 1609 | S: 97395 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 102.6805
+epoch: 1610
+| train          | E: 1610 | S: 97423 | R: 146.0000 | G: 1 | D: 00.4 s | CLOSS: 131.4322
+epoch: 1611
+| train          | E: 1611 | S: 97455 | R: 138.0000 | G: 1 | D: 00.5 s | CLOSS: 93.5842
+epoch: 1612
+| train          | E: 1612 | S: 97481 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: 108.5069
+epoch: 1613
+| train          | E: 1613 | S: 97491 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 106.9483
+epoch: 1614
+| train          | E: 1614 | S: 97510 | R: 164.0000 | G: 1 | D: 00.2 s | CLOSS: 113.0208
+epoch: 1615
+| train          | E: 1615 | S: 97522 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 77.5054
+epoch: 1616
+| train          | E: 1616 | S: 97536 | R: 175.0000 | G: 1 | D: 00.2 s | CLOSS: 116.1159
+epoch: 1617
+| train          | E: 1617 | S: 97549 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 95.6672
+epoch: 1618
+| train          | E: 1618 | S: 97560 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 113.2124
+epoch: 1619
+| train          | E: 1619 | S: 97573 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 96.4656
+epoch: 1620
+| train          | E: 1620 | S: 97584 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 69.2369
+epoch: 1621
+| train          | E: 1621 | S: 97599 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 129.6024
+epoch: 1622
+| train          | E: 1622 | S: 97614 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 106.1385
+epoch: 1623
+| train          | E: 1623 | S: 97632 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 101.9579
+epoch: 1624
+| train          | E: 1624 | S: 97649 | R: 173.0000 | G: 1 | D: 00.5 s | CLOSS: 118.6781
+epoch: 1625
+| train          | E: 1625 | S: 97661 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 110.6560
+epoch: 1626
+| train          | E: 1626 | S: 97671 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 47.5745
+epoch: 1627
+| train          | E: 1627 | S: 97687 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 128.7791
+epoch: 1628
+| train          | E: 1628 | S: 97697 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 145.4549
+epoch: 1629
+| train          | E: 1629 | S: 97705 | R: 186.0000 | G: 1 | D: 00.3 s | CLOSS: 132.3199
+epoch: 1630
+| train          | E: 1630 | S: 97720 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 101.3700
+epoch: 1631
+| train          | E: 1631 | S: 97733 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 98.7105
+epoch: 1632
+| train          | E: 1632 | S: 97749 | R: 173.0000 | G: 1 | D: 00.2 s | CLOSS: 119.4772
+epoch: 1633
+| train          | E: 1633 | S: 97761 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 107.4554
+epoch: 1634
+| train          | E: 1634 | S: 97771 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 133.1007
+epoch: 1635
+| train          | E: 1635 | S: 97783 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 92.5135
+epoch: 1636
+| train          | E: 1636 | S: 97800 | R: 168.0000 | G: 1 | D: 00.2 s | CLOSS: 164.7631
+epoch: 1637
+| train          | E: 1637 | S: 97811 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 107.2146
+epoch: 1638
+| train          | E: 1638 | S: 97821 | R: 184.0000 | G: 1 | D: 00.4 s | CLOSS: 122.1582
+epoch: 1639
+| train          | E: 1639 | S: 97831 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 77.4099
+epoch: 1640
+| train          | E: 1640 | S: 97839 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 111.0619
+epoch: 1641
+| train          | E: 1641 | S: 97852 | R: 176.0000 | G: 1 | D: 00.2 s | CLOSS: 187.5539
+epoch: 1642
+| train          | E: 1642 | S: 97868 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: 164.5865
+epoch: 1643
+| train          | E: 1643 | S: 97891 | R: 156.0000 | G: 1 | D: 00.5 s | CLOSS: 111.3637
+epoch: 1644
+| train          | E: 1644 | S: 97945 | R: 94.0000 | G: 1 | D: 01.3 s | CLOSS: 102.7817
+epoch: 1645
+evaluating...
+| eval           | E: 1645 | S: 98001 | R: -48.2000 | G: 1
+| train          | E: 1645 | S: 98032 | R: 30.0000 | G: 1 | D: 03.5 s | CLOSS: 118.0393
+epoch: 1646
+| train          | E: 1646 | S: 98067 | R: 131.0000 | G: 1 | D: 00.6 s | CLOSS: 101.3022
+epoch: 1647
+| train          | E: 1647 | S: 98107 | R: 122.0000 | G: 1 | D: 00.8 s | CLOSS: 109.0749
+epoch: 1648
+| train          | E: 1648 | S: 98116 | R: 185.0000 | G: 1 | D: 00.1 s | CLOSS: 139.6588
+epoch: 1649
+| train          | E: 1649 | S: 98142 | R: 150.0000 | G: 1 | D: 00.3 s | CLOSS: 114.1146
+epoch: 1650
+| train          | E: 1650 | S: 98157 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 128.9838
+epoch: 1651
+| train          | E: 1651 | S: 98169 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 116.9768
+epoch: 1652
+| train          | E: 1652 | S: 98193 | R: 155.0000 | G: 1 | D: 00.3 s | CLOSS: 106.4598
+epoch: 1653
+| train          | E: 1653 | S: 98224 | R: 141.0000 | G: 1 | D: 00.6 s | CLOSS: 97.4540
+epoch: 1654
+| train          | E: 1654 | S: 98232 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 174.4296
+epoch: 1655
+| train          | E: 1655 | S: 98249 | R: 169.0000 | G: 1 | D: 00.2 s | CLOSS: 122.2014
+epoch: 1656
+| train          | E: 1656 | S: 98263 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 139.6994
+epoch: 1657
+| train          | E: 1657 | S: 98293 | R: 142.0000 | G: 1 | D: 00.6 s | CLOSS: 125.6648
+epoch: 1658
+| train          | E: 1658 | S: 98301 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 98.1866
+epoch: 1659
+| train          | E: 1659 | S: 98354 | R: 97.0000 | G: 1 | D: 00.9 s | CLOSS: 107.5868
+epoch: 1660
+| train          | E: 1660 | S: 98375 | R: 160.0000 | G: 1 | D: 00.3 s | CLOSS: 103.2291
+epoch: 1661
+| train          | E: 1661 | S: 98425 | R: 102.0000 | G: 1 | D: 00.9 s | CLOSS: 115.4712
+epoch: 1662
+| train          | E: 1662 | S: 98438 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 101.7585
+epoch: 1663
+| train          | E: 1663 | S: 98448 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 105.1140
+epoch: 1664
+| train          | E: 1664 | S: 98468 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: 153.5199
+epoch: 1665
+| train          | E: 1665 | S: 98509 | R: 120.0000 | G: 1 | D: 01.0 s | CLOSS: 111.9684
+epoch: 1666
+| train          | E: 1666 | S: 98529 | R: 163.0000 | G: 1 | D: 00.3 s | CLOSS: 104.8559
+epoch: 1667
+| train          | E: 1667 | S: 98537 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 79.0964
+epoch: 1668
+| train          | E: 1668 | S: 98613 | R: 51.0000 | G: 1 | D: 01.3 s | CLOSS: 107.8578
+epoch: 1669
+| train          | E: 1669 | S: 98651 | R: 126.0000 | G: 1 | D: 00.9 s | CLOSS: 120.9503
+epoch: 1670
+| train          | E: 1670 | S: 98682 | R: 140.0000 | G: 1 | D: 00.5 s | CLOSS: 120.4832
+epoch: 1671
+| train          | E: 1671 | S: 98730 | R: 109.0000 | G: 1 | D: 01.0 s | CLOSS: 115.0103
+epoch: 1672
+| train          | E: 1672 | S: 98752 | R: 158.0000 | G: 1 | D: 00.8 s | CLOSS: 140.9012
+epoch: 1673
+| train          | E: 1673 | S: 98835 | R: 37.0000 | G: 1 | D: 01.4 s | CLOSS: 107.0849
+epoch: 1674
+| train          | E: 1674 | S: 98844 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 88.8972
+epoch: 1675
+| train          | E: 1675 | S: 98864 | R: 162.0000 | G: 1 | D: 00.4 s | CLOSS: 115.7988
+epoch: 1676
+| train          | E: 1676 | S: 98890 | R: 150.0000 | G: 1 | D: 00.4 s | CLOSS: 134.3259
+epoch: 1677
+| train          | E: 1677 | S: 98906 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 126.0929
+epoch: 1678
+| train          | E: 1678 | S: 98920 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 139.2002
+epoch: 1679
+| train          | E: 1679 | S: 98932 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 114.4248
+epoch: 1680
+| train          | E: 1680 | S: 98962 | R: 143.0000 | G: 1 | D: 00.7 s | CLOSS: 112.3037
+epoch: 1681
+| train          | E: 1681 | S: 98980 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 118.9207
+epoch: 1682
+| train          | E: 1682 | S: 98998 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 154.5305
+epoch: 1683
+evaluating...
+| eval           | E: 1683 | S: 99001 | R: 165.8000 | G: 1
+| train          | E: 1683 | S: 99008 | R: 185.0000 | G: 1 | D: 00.7 s | CLOSS: 104.3132
+epoch: 1684
+| train          | E: 1684 | S: 99043 | R: 133.0000 | G: 1 | D: 00.8 s | CLOSS: 108.2840
+epoch: 1685
+| train          | E: 1685 | S: 99059 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 120.1319
+epoch: 1686
+| train          | E: 1686 | S: 99071 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 124.0762
+epoch: 1687
+| train          | E: 1687 | S: 99082 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 91.6534
+epoch: 1688
+| train          | E: 1688 | S: 99095 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 110.5317
+epoch: 1689
+| train          | E: 1689 | S: 99114 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: 106.1622
+epoch: 1690
+| train          | E: 1690 | S: 99122 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 104.2849
+epoch: 1691
+| train          | E: 1691 | S: 99134 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 122.5273
+epoch: 1692
+| train          | E: 1692 | S: 99145 | R: 181.0000 | G: 1 | D: 00.3 s | CLOSS: 94.0312
+epoch: 1693
+| train          | E: 1693 | S: 99155 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 94.1495
+epoch: 1694
+| train          | E: 1694 | S: 99166 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 126.0328
+epoch: 1695
+| train          | E: 1695 | S: 99182 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 150.4473
+epoch: 1696
+| train          | E: 1696 | S: 99194 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 117.5228
+epoch: 1697
+| train          | E: 1697 | S: 99229 | R: 132.0000 | G: 1 | D: 00.7 s | CLOSS: 113.8686
+epoch: 1698
+| train          | E: 1698 | S: 99245 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: 107.0924
+epoch: 1699
+| train          | E: 1699 | S: 99266 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 109.2364
+epoch: 1700
+| train          | E: 1700 | S: 99300 | R: 134.0000 | G: 1 | D: 00.5 s | CLOSS: 93.1710
+epoch: 1701
+| train          | E: 1701 | S: 99316 | R: 171.0000 | G: 1 | D: 00.2 s | CLOSS: 88.3476
+epoch: 1702
+| train          | E: 1702 | S: 99324 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 136.7371
+epoch: 1703
+| train          | E: 1703 | S: 99334 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 124.0845
+epoch: 1704
+| train          | E: 1704 | S: 99347 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 132.8908
+epoch: 1705
+| train          | E: 1705 | S: 99357 | R: 182.0000 | G: 1 | D: 00.7 s | CLOSS: 117.7915
+epoch: 1706
+| train          | E: 1706 | S: 99366 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 88.2688
+epoch: 1707
+| train          | E: 1707 | S: 99374 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: 172.6938
+epoch: 1708
+| train          | E: 1708 | S: 99387 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 131.3264
+epoch: 1709
+| train          | E: 1709 | S: 99400 | R: 176.0000 | G: 1 | D: 00.5 s | CLOSS: 88.8246
+epoch: 1710
+| train          | E: 1710 | S: 99413 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 65.4454
+epoch: 1711
+| train          | E: 1711 | S: 99425 | R: 179.0000 | G: 1 | D: 00.2 s | CLOSS: 111.0040
+epoch: 1712
+| train          | E: 1712 | S: 99442 | R: 170.0000 | G: 1 | D: 00.7 s | CLOSS: 120.7324
+epoch: 1713
+| train          | E: 1713 | S: 99457 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 86.5265
+epoch: 1714
+| train          | E: 1714 | S: 99470 | R: 177.0000 | G: 1 | D: 00.7 s | CLOSS: 142.7435
+epoch: 1715
+| train          | E: 1715 | S: 99479 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 105.1682
+epoch: 1716
+| train          | E: 1716 | S: 99487 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 116.1248
+epoch: 1717
+| train          | E: 1717 | S: 99495 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 151.8348
+epoch: 1718
+| train          | E: 1718 | S: 99504 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 131.4471
+epoch: 1719
+| train          | E: 1719 | S: 99514 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 131.2618
+epoch: 1720
+| train          | E: 1720 | S: 99531 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 100.6857
+epoch: 1721
+| train          | E: 1721 | S: 99539 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 85.6061
+epoch: 1722
+| train          | E: 1722 | S: 99550 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 108.1770
+epoch: 1723
+| train          | E: 1723 | S: 99564 | R: 174.0000 | G: 1 | D: 00.2 s | CLOSS: 125.1059
+epoch: 1724
+| train          | E: 1724 | S: 99578 | R: 174.0000 | G: 1 | D: 00.6 s | CLOSS: 86.2736
+epoch: 1725
+| train          | E: 1725 | S: 99588 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 136.1966
+epoch: 1726
+| train          | E: 1726 | S: 99601 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 74.1365
+epoch: 1727
+| train          | E: 1727 | S: 99614 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: 102.1662
+epoch: 1728
+| train          | E: 1728 | S: 99637 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: 109.8603
+epoch: 1729
+| train          | E: 1729 | S: 99647 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 93.9339
+epoch: 1730
+| train          | E: 1730 | S: 99657 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 98.3582
+epoch: 1731
+| train          | E: 1731 | S: 99667 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 91.3999
+epoch: 1732
+| train          | E: 1732 | S: 99677 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 87.7437
+epoch: 1733
+| train          | E: 1733 | S: 99691 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 160.9513
+epoch: 1734
+| train          | E: 1734 | S: 99699 | R: 186.0000 | G: 1 | D: 00.1 s | CLOSS: 119.6870
+epoch: 1735
+| train          | E: 1735 | S: 99709 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: 132.9674
+epoch: 1736
+| train          | E: 1736 | S: 99719 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 113.1036
+epoch: 1737
+| train          | E: 1737 | S: 99733 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 98.0289
+epoch: 1738
+| train          | E: 1738 | S: 99745 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 84.2926
+epoch: 1739
+| train          | E: 1739 | S: 99755 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 107.7745
+epoch: 1740
+| train          | E: 1740 | S: 99764 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 84.8111
+epoch: 1741
+| train          | E: 1741 | S: 99774 | R: 182.0000 | G: 1 | D: 00.7 s | CLOSS: 145.5070
+epoch: 1742
+| train          | E: 1742 | S: 99793 | R: 164.0000 | G: 1 | D: 00.5 s | CLOSS: 115.9713
+epoch: 1743
+| train          | E: 1743 | S: 99831 | R: 126.0000 | G: 1 | D: 01.0 s | CLOSS: 121.8220
+epoch: 1744
+| train          | E: 1744 | S: 99841 | R: 182.0000 | G: 1 | D: 00.6 s | CLOSS: 119.2628
+epoch: 1745
+| train          | E: 1745 | S: 99858 | R: 169.0000 | G: 1 | D: 00.8 s | CLOSS: 173.5038
+epoch: 1746
+| train          | E: 1746 | S: 99869 | R: 180.0000 | G: 1 | D: 00.2 s | CLOSS: 106.4331
+epoch: 1747
+| train          | E: 1747 | S: 99879 | R: 182.0000 | G: 1 | D: 00.1 s | CLOSS: 88.9269
+epoch: 1748
+| train          | E: 1748 | S: 99891 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 119.5206
+epoch: 1749
+| train          | E: 1749 | S: 99907 | R: 170.0000 | G: 1 | D: 00.2 s | CLOSS: 81.2636
+epoch: 1750
+| train          | E: 1750 | S: 99923 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 144.1914
+epoch: 1751
+| train          | E: 1751 | S: 99945 | R: 158.0000 | G: 1 | D: 00.6 s | CLOSS: 112.8863
+epoch: 1752
+| train          | E: 1752 | S: 99985 | R: 122.0000 | G: 1 | D: 00.6 s | CLOSS: 132.0445
+epoch: 1753
+Finished!

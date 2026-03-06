@@ -1,0 +1,2075 @@
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+ANTLR runtime and generated code versions disagree: 4.9.3!=4.8
+exp_name: ''
+project_name: ${env.name}
+cuda_deterministic: false
+device: cpu
+gamma: 0.9
+seed: 0
+pretrain: null
+num_seed_steps: 1000
+only_expert_states: false
+train:
+  batch: 64
+  use_target: false
+  soft_update: false
+expert:
+  demos: 50
+  subsample_freq: 1
+eval:
+  policy: null
+  threshold: 21
+  use_baselines: false
+  eps: 10
+  transfer: false
+  expert_env: ''
+env:
+  replay_mem: 1000000.0
+  initial_mem: 5000
+  eps_steps: 1000
+  eps_window: 10
+  learn_steps: 100000.0
+  eval_interval: 1000.0
+  from_pixels: false
+  name: nasim:SmallHoneypotPO-v0
+  demo: nasim:SmallHoneypotPO-v0_1000.pkl
+method:
+  type: iq
+  loss: value
+  constrain: false
+  grad_pen: false
+  chi: false
+  tanh: false
+  regularize: false
+  div: null
+  alpha: 0.5
+  lambda_gp: 10
+  mix_coeff: 1
+log_interval: 20
+log_dir: logs/
+save_interval: 5
+hydra_base_dir: /home/kali/Documents/PTautomation/IQ-Learn/iq_learn_mini/outputs/2024-09-05/03-42-11
+eval_only: false
+offline: false
+num_actor_updates: 1
+agent:
+  name: softq
+  class: agent.softq.SoftQ
+  obs_dim: ???
+  action_dim: ???
+  critic_cfg: ${q_net}
+  critic_lr: 0.0001
+  critic_betas:
+  - 0.9
+  - 0.999
+  init_temp: 1
+  critic_target_update_frequency: 4
+  critic_tau: 0.1
+q_net:
+  _target_: agent.softq_models.SimpleQNetwork
+  obs_dim: ${agent.obs_dim}
+  action_dim: ${agent.action_dim}
+
+--> Using Soft-Q agent
+<class 'int'>
+--> Expert memory size: 2257
+--> Saving logs at: logs/nasim:SmallHoneypotPO-v0/2024-09-05_03-42-24
+evaluating...
+| eval           | E: 0 | S: 1 | R: -461.8000 | G: 1
+Learn begins!
+| train          | E: 10 | S: 154 | R: -109.0000 | G: 1 | D: 03.7 s | CLOSS: 3.8301
+| train          | E: 11 | S: 420 | R: -186.0000 | G: 1 | D: 05.4 s | CLOSS: 3.3144
+| train          | E: 12 | S: 555 | R: 5.0000 | G: 1 | D: 02.7 s | CLOSS: 2.9968
+| train          | E: 13 | S: 679 | R: 20.0000 | G: 1 | D: 02.7 s | CLOSS: 2.9146
+| train          | E: 14 | S: 737 | R: 121.0000 | G: 1 | D: 01.2 s | CLOSS: 2.8570
+| train          | E: 15 | S: 784 | R: 128.0000 | G: 1 | D: 00.8 s | CLOSS: 2.7528
+| train          | E: 16 | S: 880 | R: 74.0000 | G: 1 | D: 02.3 s | CLOSS: 2.9377
+| train          | E: 17 | S: 931 | R: 129.0000 | G: 1 | D: 00.9 s | CLOSS: 2.8699
+| train          | E: 18 | S: 968 | R: 148.0000 | G: 1 | D: 01.2 s | CLOSS: 2.8385
+evaluating...
+| eval           | E: 19 | S: 1001 | R: 94.8000 | G: 1
+| train          | E: 19 | S: 1012 | R: 142.0000 | G: 1 | D: 02.0 s | CLOSS: 2.7755
+| train          | E: 20 | S: 1052 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: 2.6570
+| train          | E: 21 | S: 1098 | R: 139.0000 | G: 1 | D: 01.1 s | CLOSS: 2.7891
+| train          | E: 22 | S: 1151 | R: 121.0000 | G: 1 | D: 01.7 s | CLOSS: 2.7156
+| train          | E: 23 | S: 1196 | R: 143.0000 | G: 1 | D: 01.4 s | CLOSS: 2.6821
+| train          | E: 24 | S: 1245 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: 2.6807
+| train          | E: 25 | S: 1354 | R: 64.0000 | G: 1 | D: 02.5 s | CLOSS: 2.7060
+| train          | E: 26 | S: 1442 | R: 96.0000 | G: 1 | D: 01.8 s | CLOSS: 2.8512
+| train          | E: 27 | S: 1549 | R: 67.0000 | G: 1 | D: 02.4 s | CLOSS: 2.4994
+| train          | E: 28 | S: 1605 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: 2.9895
+| train          | E: 29 | S: 1644 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: 2.7336
+| train          | E: 30 | S: 1672 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: 2.5668
+| train          | E: 31 | S: 1701 | R: 163.0000 | G: 1 | D: 00.9 s | CLOSS: 2.7856
+| train          | E: 32 | S: 1751 | R: 137.0000 | G: 1 | D: 01.1 s | CLOSS: 2.5924
+| train          | E: 33 | S: 1840 | R: 68.0000 | G: 1 | D: 02.2 s | CLOSS: 2.7401
+| train          | E: 34 | S: 1882 | R: 136.0000 | G: 1 | D: 01.1 s | CLOSS: 2.5515
+| train          | E: 35 | S: 1933 | R: 136.0000 | G: 1 | D: 01.4 s | CLOSS: 2.7143
+| train          | E: 36 | S: 1978 | R: 141.0000 | G: 1 | D: 01.6 s | CLOSS: 2.6365
+evaluating...
+| eval           | E: 37 | S: 2001 | R: 118.4000 | G: 1
+| train          | E: 37 | S: 2008 | R: 155.0000 | G: 1 | D: 02.1 s | CLOSS: 2.1410
+| train          | E: 38 | S: 2053 | R: 128.0000 | G: 1 | D: 01.1 s | CLOSS: 2.8902
+| train          | E: 39 | S: 2252 | R: -62.0000 | G: 1 | D: 05.3 s | CLOSS: 2.8173
+| train          | E: 40 | S: 2298 | R: 127.0000 | G: 1 | D: 01.1 s | CLOSS: 2.7535
+| train          | E: 41 | S: 2370 | R: 108.0000 | G: 1 | D: 01.7 s | CLOSS: 2.6119
+| train          | E: 42 | S: 2394 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 2.3408
+| train          | E: 43 | S: 2441 | R: 142.0000 | G: 1 | D: 01.5 s | CLOSS: 2.1820
+| train          | E: 44 | S: 2562 | R: 65.0000 | G: 1 | D: 02.9 s | CLOSS: 2.5967
+| train          | E: 45 | S: 2573 | R: 183.0000 | G: 1 | D: 00.2 s | CLOSS: 3.8514
+| train          | E: 46 | S: 2595 | R: 160.0000 | G: 1 | D: 00.7 s | CLOSS: 2.5952
+| train          | E: 47 | S: 2623 | R: 157.0000 | G: 1 | D: 00.7 s | CLOSS: 2.5494
+| train          | E: 48 | S: 2649 | R: 161.0000 | G: 1 | D: 00.9 s | CLOSS: 2.8313
+| train          | E: 49 | S: 2685 | R: 147.0000 | G: 1 | D: 01.1 s | CLOSS: 2.6579
+| train          | E: 50 | S: 2745 | R: 119.0000 | G: 1 | D: 01.7 s | CLOSS: 2.7484
+| train          | E: 51 | S: 2806 | R: 129.0000 | G: 1 | D: 01.7 s | CLOSS: 2.7974
+| train          | E: 52 | S: 2929 | R: 53.0000 | G: 1 | D: 03.1 s | CLOSS: 2.7680
+| train          | E: 53 | S: 2964 | R: 149.0000 | G: 1 | D: 00.7 s | CLOSS: 2.7865
+evaluating...
+| eval           | E: 54 | S: 3001 | R: 120.8000 | G: 1
+| train          | E: 54 | S: 3008 | R: 136.0000 | G: 1 | D: 01.7 s | CLOSS: 2.6777
+| train          | E: 55 | S: 3067 | R: 113.0000 | G: 1 | D: 01.1 s | CLOSS: 2.6537
+| train          | E: 56 | S: 3101 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 2.9424
+| train          | E: 57 | S: 3184 | R: 95.0000 | G: 1 | D: 02.1 s | CLOSS: 2.2026
+| train          | E: 58 | S: 3253 | R: 111.0000 | G: 1 | D: 01.8 s | CLOSS: 2.9762
+| train          | E: 59 | S: 3324 | R: 114.0000 | G: 1 | D: 01.6 s | CLOSS: 2.9149
+| train          | E: 60 | S: 3432 | R: 70.0000 | G: 1 | D: 02.4 s | CLOSS: 2.5739
+| train          | E: 61 | S: 3491 | R: 97.0000 | G: 1 | D: 01.2 s | CLOSS: 2.4483
+| train          | E: 62 | S: 3520 | R: 156.0000 | G: 1 | D: 00.5 s | CLOSS: 3.1779
+| train          | E: 63 | S: 3543 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 1.8966
+| train          | E: 64 | S: 3587 | R: 141.0000 | G: 1 | D: 00.9 s | CLOSS: 2.3136
+| train          | E: 65 | S: 3630 | R: 150.0000 | G: 1 | D: 00.8 s | CLOSS: 2.7439
+| train          | E: 66 | S: 3653 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: 2.3874
+| train          | E: 67 | S: 3674 | R: 167.0000 | G: 1 | D: 00.3 s | CLOSS: 2.6056
+| train          | E: 68 | S: 3737 | R: 127.0000 | G: 1 | D: 01.4 s | CLOSS: 2.5891
+| train          | E: 69 | S: 3783 | R: 144.0000 | G: 1 | D: 01.1 s | CLOSS: 2.5455
+| train          | E: 70 | S: 3832 | R: 132.0000 | G: 1 | D: 01.1 s | CLOSS: 2.7189
+| train          | E: 71 | S: 3850 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 2.4511
+| train          | E: 72 | S: 3888 | R: 139.0000 | G: 1 | D: 00.7 s | CLOSS: 3.0762
+| train          | E: 73 | S: 3984 | R: 83.0000 | G: 1 | D: 02.2 s | CLOSS: 2.6465
+evaluating...
+| eval           | E: 74 | S: 4001 | R: 123.8000 | G: 1
+| train          | E: 74 | S: 4085 | R: 49.0000 | G: 1 | D: 02.9 s | CLOSS: 2.2587
+| train          | E: 75 | S: 4112 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: 2.2790
+| train          | E: 76 | S: 4174 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: 2.2861
+| train          | E: 77 | S: 4195 | R: 161.0000 | G: 1 | D: 00.4 s | CLOSS: 2.5087
+| train          | E: 78 | S: 4215 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 3.4257
+| train          | E: 79 | S: 4259 | R: 140.0000 | G: 1 | D: 00.8 s | CLOSS: 2.4472
+| train          | E: 80 | S: 4321 | R: 103.0000 | G: 1 | D: 01.3 s | CLOSS: 1.9141
+| train          | E: 81 | S: 4418 | R: 87.0000 | G: 1 | D: 02.3 s | CLOSS: 2.7997
+| train          | E: 82 | S: 4506 | R: 97.0000 | G: 1 | D: 01.9 s | CLOSS: 1.7662
+| train          | E: 83 | S: 4617 | R: 53.0000 | G: 1 | D: 02.4 s | CLOSS: 2.0654
+| train          | E: 84 | S: 4667 | R: 131.0000 | G: 1 | D: 00.9 s | CLOSS: 2.4815
+| train          | E: 85 | S: 4677 | R: 184.0000 | G: 1 | D: 00.3 s | CLOSS: 1.9861
+| train          | E: 86 | S: 4723 | R: 124.0000 | G: 1 | D: 00.9 s | CLOSS: 2.0829
+| train          | E: 87 | S: 4769 | R: 132.0000 | G: 1 | D: 01.0 s | CLOSS: 2.9262
+| train          | E: 88 | S: 4785 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 2.1519
+| train          | E: 89 | S: 4808 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: 3.6016
+| train          | E: 90 | S: 4881 | R: 114.0000 | G: 1 | D: 01.4 s | CLOSS: 2.7766
+evaluating...
+| eval           | E: 91 | S: 5001 | R: 134.4000 | G: 1
+| train          | E: 91 | S: 5036 | R: 12.0000 | G: 1 | D: 03.8 s | CLOSS: 2.5038
+| train          | E: 92 | S: 5106 | R: 108.0000 | G: 1 | D: 01.5 s | CLOSS: 2.3355
+| train          | E: 93 | S: 5199 | R: 74.0000 | G: 1 | D: 02.0 s | CLOSS: 2.2762
+| train          | E: 94 | S: 5239 | R: 138.0000 | G: 1 | D: 00.8 s | CLOSS: 1.9872
+| train          | E: 95 | S: 5276 | R: 141.0000 | G: 1 | D: 00.6 s | CLOSS: 1.7927
+| train          | E: 96 | S: 5313 | R: 155.0000 | G: 1 | D: 01.0 s | CLOSS: 2.7032
+| train          | E: 97 | S: 5405 | R: 78.0000 | G: 1 | D: 01.7 s | CLOSS: 1.5677
+| train          | E: 98 | S: 5439 | R: 156.0000 | G: 1 | D: 00.9 s | CLOSS: 1.8809
+| train          | E: 99 | S: 5498 | R: 99.0000 | G: 1 | D: 01.3 s | CLOSS: 2.7179
+| train          | E: 100 | S: 5520 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 2.6607
+| train          | E: 101 | S: 5603 | R: 80.0000 | G: 1 | D: 01.7 s | CLOSS: 2.1291
+| train          | E: 102 | S: 5671 | R: 115.0000 | G: 1 | D: 01.3 s | CLOSS: 0.9936
+| train          | E: 103 | S: 5703 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: 3.0129
+| train          | E: 104 | S: 5721 | R: 174.0000 | G: 1 | D: 00.5 s | CLOSS: 3.9326
+| train          | E: 105 | S: 5820 | R: 90.0000 | G: 1 | D: 01.8 s | CLOSS: 1.9890
+| train          | E: 106 | S: 5880 | R: 115.0000 | G: 1 | D: 01.2 s | CLOSS: 2.8919
+| train          | E: 107 | S: 5908 | R: 162.0000 | G: 1 | D: 00.7 s | CLOSS: 3.0035
+| train          | E: 108 | S: 5955 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: 3.1823
+evaluating...
+| eval           | E: 109 | S: 6001 | R: 124.8000 | G: 1
+| train          | E: 109 | S: 6024 | R: 115.0000 | G: 1 | D: 02.2 s | CLOSS: 1.4748
+| train          | E: 110 | S: 6111 | R: 87.0000 | G: 1 | D: 02.0 s | CLOSS: 3.3656
+| train          | E: 111 | S: 6134 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: 2.9968
+| train          | E: 112 | S: 6152 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 1.8338
+| train          | E: 113 | S: 6186 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 1.1765
+| train          | E: 114 | S: 6218 | R: 149.0000 | G: 1 | D: 00.6 s | CLOSS: 1.2366
+| train          | E: 115 | S: 6239 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: 4.1674
+| train          | E: 116 | S: 6294 | R: 115.0000 | G: 1 | D: 01.1 s | CLOSS: 2.4078
+| train          | E: 117 | S: 6330 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: 1.9867
+| train          | E: 118 | S: 6392 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: 1.0739
+| train          | E: 119 | S: 6428 | R: 155.0000 | G: 1 | D: 00.9 s | CLOSS: 1.5852
+| train          | E: 120 | S: 6486 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: 2.3679
+| train          | E: 121 | S: 6558 | R: 106.0000 | G: 1 | D: 01.6 s | CLOSS: 2.9899
+| train          | E: 122 | S: 6572 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: 0.5769
+| train          | E: 123 | S: 6617 | R: 126.0000 | G: 1 | D: 00.9 s | CLOSS: 4.4331
+| train          | E: 124 | S: 6660 | R: 145.0000 | G: 1 | D: 00.8 s | CLOSS: 1.8315
+| train          | E: 125 | S: 6684 | R: 165.0000 | G: 1 | D: 00.4 s | CLOSS: 4.2597
+| train          | E: 126 | S: 6725 | R: 142.0000 | G: 1 | D: 01.1 s | CLOSS: 3.3707
+| train          | E: 127 | S: 6769 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 1.5883
+| train          | E: 128 | S: 6795 | R: 158.0000 | G: 1 | D: 00.8 s | CLOSS: 0.3234
+| train          | E: 129 | S: 6857 | R: 116.0000 | G: 1 | D: 01.9 s | CLOSS: 3.1972
+| train          | E: 130 | S: 6882 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 1.9888
+| train          | E: 131 | S: 6987 | R: 75.0000 | G: 1 | D: 02.1 s | CLOSS: 2.0821
+evaluating...
+| eval           | E: 132 | S: 7001 | R: 149.2000 | G: 1
+| train          | E: 132 | S: 7004 | R: 172.0000 | G: 1 | D: 01.1 s | CLOSS: 3.3924
+| train          | E: 133 | S: 7044 | R: 135.0000 | G: 1 | D: 00.8 s | CLOSS: 1.1629
+| train          | E: 134 | S: 7066 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 3.2094
+| train          | E: 135 | S: 7130 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: 0.7507
+| train          | E: 136 | S: 7246 | R: 57.0000 | G: 1 | D: 02.6 s | CLOSS: 2.7519
+| train          | E: 137 | S: 7288 | R: 141.0000 | G: 1 | D: 00.9 s | CLOSS: 1.7748
+| train          | E: 138 | S: 7318 | R: 164.0000 | G: 1 | D: 00.7 s | CLOSS: 3.7628
+| train          | E: 139 | S: 7335 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: -0.7594
+| train          | E: 140 | S: 7359 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: 0.5598
+| train          | E: 141 | S: 7400 | R: 149.0000 | G: 1 | D: 01.0 s | CLOSS: 2.9612
+| train          | E: 142 | S: 7465 | R: 125.0000 | G: 1 | D: 01.5 s | CLOSS: 2.5154
+| train          | E: 143 | S: 7511 | R: 140.0000 | G: 1 | D: 01.0 s | CLOSS: 3.0625
+| train          | E: 144 | S: 7526 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 2.3142
+| train          | E: 145 | S: 7568 | R: 142.0000 | G: 1 | D: 01.1 s | CLOSS: 0.3907
+| train          | E: 146 | S: 7591 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 2.4432
+| train          | E: 147 | S: 7691 | R: 83.0000 | G: 1 | D: 02.1 s | CLOSS: 3.6078
+| train          | E: 148 | S: 7795 | R: 66.0000 | G: 1 | D: 02.6 s | CLOSS: 2.8695
+| train          | E: 149 | S: 7824 | R: 161.0000 | G: 1 | D: 00.6 s | CLOSS: 1.4295
+| train          | E: 150 | S: 7902 | R: 75.0000 | G: 1 | D: 01.7 s | CLOSS: 1.4829
+evaluating...
+| eval           | E: 151 | S: 8001 | R: 123.3000 | G: 1
+| train          | E: 151 | S: 8010 | R: 72.0000 | G: 1 | D: 02.8 s | CLOSS: 2.3768
+| train          | E: 152 | S: 8052 | R: 140.0000 | G: 1 | D: 01.1 s | CLOSS: 1.9426
+| train          | E: 153 | S: 8078 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: 2.4546
+| train          | E: 154 | S: 8155 | R: 109.0000 | G: 1 | D: 01.5 s | CLOSS: 1.7613
+| train          | E: 155 | S: 8198 | R: 138.0000 | G: 1 | D: 01.0 s | CLOSS: 1.2770
+| train          | E: 156 | S: 8294 | R: 82.0000 | G: 1 | D: 02.2 s | CLOSS: 3.0157
+| train          | E: 157 | S: 8303 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: 2.9303
+| train          | E: 158 | S: 8324 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: 5.3692
+| train          | E: 159 | S: 8408 | R: 87.0000 | G: 1 | D: 01.9 s | CLOSS: 4.5350
+| train          | E: 160 | S: 8443 | R: 148.0000 | G: 1 | D: 00.8 s | CLOSS: 1.4320
+| train          | E: 161 | S: 8495 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: 2.7461
+| train          | E: 162 | S: 8538 | R: 143.0000 | G: 1 | D: 01.1 s | CLOSS: -0.7462
+| train          | E: 163 | S: 8603 | R: 111.0000 | G: 1 | D: 01.4 s | CLOSS: 3.0604
+| train          | E: 164 | S: 8674 | R: 113.0000 | G: 1 | D: 01.3 s | CLOSS: 2.6012
+| train          | E: 165 | S: 8716 | R: 139.0000 | G: 1 | D: 00.8 s | CLOSS: 3.5233
+| train          | E: 166 | S: 8742 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: 2.0859
+| train          | E: 167 | S: 8767 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 3.3396
+| train          | E: 168 | S: 8810 | R: 143.0000 | G: 1 | D: 00.9 s | CLOSS: 1.9021
+| train          | E: 169 | S: 8825 | R: 177.0000 | G: 1 | D: 00.5 s | CLOSS: -1.0165
+| train          | E: 170 | S: 8863 | R: 150.0000 | G: 1 | D: 00.8 s | CLOSS: 0.5228
+| train          | E: 171 | S: 8898 | R: 149.0000 | G: 1 | D: 01.0 s | CLOSS: 2.1682
+| train          | E: 172 | S: 8913 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 2.7089
+| train          | E: 173 | S: 8932 | R: 173.0000 | G: 1 | D: 00.5 s | CLOSS: 2.0559
+| train          | E: 174 | S: 8976 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: 4.8195
+evaluating...
+| eval           | E: 175 | S: 9001 | R: 141.0000 | G: 1
+| train          | E: 175 | S: 9022 | R: 138.0000 | G: 1 | D: 02.0 s | CLOSS: 0.2485
+| train          | E: 176 | S: 9074 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: 2.1961
+| train          | E: 177 | S: 9094 | R: 174.0000 | G: 1 | D: 00.5 s | CLOSS: -3.8566
+| train          | E: 178 | S: 9168 | R: 113.0000 | G: 1 | D: 03.6 s | CLOSS: 2.0302
+| train          | E: 179 | S: 9202 | R: 143.0000 | G: 1 | D: 02.3 s | CLOSS: 1.9715
+| train          | E: 180 | S: 9244 | R: 140.0000 | G: 1 | D: 01.9 s | CLOSS: -3.1224
+| train          | E: 181 | S: 9308 | R: 120.0000 | G: 1 | D: 03.2 s | CLOSS: 1.5013
+| train          | E: 182 | S: 9345 | R: 139.0000 | G: 1 | D: 02.3 s | CLOSS: 3.7975
+| train          | E: 183 | S: 9416 | R: 114.0000 | G: 1 | D: 01.7 s | CLOSS: 2.9731
+| train          | E: 184 | S: 9457 | R: 142.0000 | G: 1 | D: 00.7 s | CLOSS: 2.4463
+| train          | E: 185 | S: 9471 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: -2.7860
+| train          | E: 186 | S: 9658 | R: -20.0000 | G: 1 | D: 04.6 s | CLOSS: 2.5482
+| train          | E: 187 | S: 9730 | R: 111.0000 | G: 1 | D: 01.6 s | CLOSS: 3.1975
+| train          | E: 188 | S: 9758 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 0.4438
+| train          | E: 189 | S: 9840 | R: 90.0000 | G: 1 | D: 02.4 s | CLOSS: 4.4711
+| train          | E: 190 | S: 9857 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 5.6252
+| train          | E: 191 | S: 9922 | R: 96.0000 | G: 1 | D: 01.4 s | CLOSS: 1.3022
+| train          | E: 192 | S: 9937 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 6.9684
+| train          | E: 193 | S: 9988 | R: 119.0000 | G: 1 | D: 01.1 s | CLOSS: 7.1852
+evaluating...
+| eval           | E: 194 | S: 10001 | R: 125.6000 | G: 1
+| train          | E: 194 | S: 10040 | R: 141.0000 | G: 1 | D: 02.6 s | CLOSS: -1.5015
+| train          | E: 195 | S: 10084 | R: 132.0000 | G: 1 | D: 01.2 s | CLOSS: -0.1643
+| train          | E: 196 | S: 10114 | R: 161.0000 | G: 1 | D: 00.8 s | CLOSS: -3.0028
+| train          | E: 197 | S: 10171 | R: 127.0000 | G: 1 | D: 01.7 s | CLOSS: 2.4091
+| train          | E: 198 | S: 10214 | R: 140.0000 | G: 1 | D: 01.1 s | CLOSS: 5.1050
+| train          | E: 199 | S: 10280 | R: 116.0000 | G: 1 | D: 01.6 s | CLOSS: 1.3853
+| train          | E: 200 | S: 10290 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: 0.6113
+| train          | E: 201 | S: 10309 | R: 174.0000 | G: 1 | D: 00.5 s | CLOSS: 6.1141
+| train          | E: 202 | S: 10359 | R: 132.0000 | G: 1 | D: 01.0 s | CLOSS: 4.1432
+| train          | E: 203 | S: 10456 | R: 69.0000 | G: 1 | D: 02.3 s | CLOSS: 2.8747
+| train          | E: 204 | S: 10485 | R: 159.0000 | G: 1 | D: 00.7 s | CLOSS: 4.1094
+| train          | E: 205 | S: 10524 | R: 138.0000 | G: 1 | D: 00.8 s | CLOSS: -0.4251
+| train          | E: 206 | S: 10553 | R: 161.0000 | G: 1 | D: 00.7 s | CLOSS: 3.0283
+| train          | E: 207 | S: 10779 | R: -83.0000 | G: 1 | D: 06.7 s | CLOSS: 1.5805
+| train          | E: 208 | S: 10847 | R: 100.0000 | G: 1 | D: 01.7 s | CLOSS: 3.6212
+| train          | E: 209 | S: 10891 | R: 132.0000 | G: 1 | D: 00.9 s | CLOSS: 1.5390
+| train          | E: 210 | S: 10970 | R: 100.0000 | G: 1 | D: 01.6 s | CLOSS: 4.2824
+| train          | E: 211 | S: 10982 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 8.0115
+evaluating...
+| eval           | E: 212 | S: 11001 | R: 96.8000 | G: 1
+| train          | E: 212 | S: 11042 | R: 125.0000 | G: 1 | D: 02.2 s | CLOSS: 1.4430
+| train          | E: 213 | S: 11055 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 6.9958
+| train          | E: 214 | S: 11096 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: 5.9875
+| train          | E: 215 | S: 11129 | R: 150.0000 | G: 1 | D: 00.6 s | CLOSS: -0.8457
+| train          | E: 216 | S: 11168 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: -2.4038
+| train          | E: 217 | S: 11190 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: -0.4145
+| train          | E: 218 | S: 11212 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 5.4346
+| train          | E: 219 | S: 11478 | R: -121.0000 | G: 1 | D: 05.8 s | CLOSS: 0.6857
+| train          | E: 220 | S: 11506 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: -2.7157
+| train          | E: 221 | S: 11574 | R: 108.0000 | G: 1 | D: 01.5 s | CLOSS: 3.2543
+| train          | E: 222 | S: 11598 | R: 157.0000 | G: 1 | D: 00.4 s | CLOSS: 3.2321
+| train          | E: 223 | S: 11628 | R: 150.0000 | G: 1 | D: 00.6 s | CLOSS: 0.9467
+| train          | E: 224 | S: 11686 | R: 126.0000 | G: 1 | D: 01.5 s | CLOSS: 0.8844
+| train          | E: 225 | S: 11733 | R: 130.0000 | G: 1 | D: 01.3 s | CLOSS: -2.8946
+| train          | E: 226 | S: 11764 | R: 156.0000 | G: 1 | D: 00.8 s | CLOSS: 2.9101
+| train          | E: 227 | S: 11779 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: -0.1271
+| train          | E: 228 | S: 11867 | R: 96.0000 | G: 1 | D: 01.8 s | CLOSS: 2.2665
+| train          | E: 229 | S: 11941 | R: 107.0000 | G: 1 | D: 01.6 s | CLOSS: 0.5319
+evaluating...
+| eval           | E: 230 | S: 12001 | R: 150.1000 | G: 1
+| train          | E: 230 | S: 12026 | R: 86.0000 | G: 1 | D: 02.2 s | CLOSS: 2.4549
+| train          | E: 231 | S: 12070 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 4.1931
+| train          | E: 232 | S: 12253 | R: -11.0000 | G: 1 | D: 04.1 s | CLOSS: -0.0982
+| train          | E: 233 | S: 12295 | R: 141.0000 | G: 1 | D: 00.9 s | CLOSS: 1.9484
+| train          | E: 234 | S: 12378 | R: 95.0000 | G: 1 | D: 01.7 s | CLOSS: 0.2499
+| train          | E: 235 | S: 12432 | R: 126.0000 | G: 1 | D: 01.6 s | CLOSS: -1.4193
+| train          | E: 236 | S: 12476 | R: 142.0000 | G: 1 | D: 01.3 s | CLOSS: -2.2393
+| train          | E: 237 | S: 12503 | R: 155.0000 | G: 1 | D: 00.5 s | CLOSS: 5.5989
+| train          | E: 238 | S: 12538 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: 0.3608
+| train          | E: 239 | S: 12552 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 6.0035
+| train          | E: 240 | S: 12589 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: 1.6709
+| train          | E: 241 | S: 12635 | R: 131.0000 | G: 1 | D: 01.4 s | CLOSS: 1.7979
+| train          | E: 242 | S: 12659 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 1.4972
+| train          | E: 243 | S: 12760 | R: 74.0000 | G: 1 | D: 02.4 s | CLOSS: -2.1231
+| train          | E: 244 | S: 12793 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: 5.0038
+| train          | E: 245 | S: 12879 | R: 100.0000 | G: 1 | D: 01.6 s | CLOSS: -1.0318
+| train          | E: 246 | S: 12929 | R: 140.0000 | G: 1 | D: 01.2 s | CLOSS: -0.1622
+evaluating...
+| eval           | E: 247 | S: 13001 | R: 129.6000 | G: 1
+| train          | E: 247 | S: 13012 | R: 106.0000 | G: 1 | D: 02.2 s | CLOSS: 3.2195
+| train          | E: 248 | S: 13067 | R: 130.0000 | G: 1 | D: 01.2 s | CLOSS: 1.2695
+| train          | E: 249 | S: 13120 | R: 132.0000 | G: 1 | D: 01.2 s | CLOSS: 2.3332
+| train          | E: 250 | S: 13173 | R: 121.0000 | G: 1 | D: 01.2 s | CLOSS: 4.4845
+| train          | E: 251 | S: 13223 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: -3.5103
+| train          | E: 252 | S: 13288 | R: 109.0000 | G: 1 | D: 01.3 s | CLOSS: 1.0126
+| train          | E: 253 | S: 13305 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: 1.6432
+| train          | E: 254 | S: 13418 | R: 55.0000 | G: 1 | D: 02.6 s | CLOSS: 1.6556
+| train          | E: 255 | S: 13459 | R: 145.0000 | G: 1 | D: 00.8 s | CLOSS: 2.6560
+| train          | E: 256 | S: 13518 | R: 122.0000 | G: 1 | D: 01.5 s | CLOSS: -0.1434
+| train          | E: 257 | S: 13537 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 5.1585
+| train          | E: 258 | S: 13555 | R: 171.0000 | G: 1 | D: 00.3 s | CLOSS: 8.4980
+| train          | E: 259 | S: 13625 | R: 114.0000 | G: 1 | D: 01.3 s | CLOSS: 3.4062
+| train          | E: 260 | S: 13684 | R: 127.0000 | G: 1 | D: 01.1 s | CLOSS: 2.8876
+| train          | E: 261 | S: 13716 | R: 151.0000 | G: 1 | D: 00.6 s | CLOSS: 8.1487
+| train          | E: 262 | S: 13808 | R: 93.0000 | G: 1 | D: 02.0 s | CLOSS: 3.1487
+| train          | E: 263 | S: 13853 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: -0.0307
+| train          | E: 264 | S: 13887 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: -0.6459
+| train          | E: 265 | S: 14000 | R: 73.0000 | G: 1 | D: 02.4 s | CLOSS: 2.3046
+evaluating...
+| eval           | E: 266 | S: 14001 | R: 112.8000 | G: 1
+| train          | E: 266 | S: 14043 | R: 132.0000 | G: 1 | D: 01.8 s | CLOSS: 2.9418
+| train          | E: 267 | S: 14058 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: -7.0775
+| train          | E: 268 | S: 14143 | R: 96.0000 | G: 1 | D: 01.8 s | CLOSS: 4.4997
+| train          | E: 269 | S: 14163 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 3.5513
+| train          | E: 270 | S: 14188 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: -7.8062
+| train          | E: 271 | S: 14251 | R: 118.0000 | G: 1 | D: 01.2 s | CLOSS: 8.0494
+| train          | E: 272 | S: 14312 | R: 111.0000 | G: 1 | D: 01.2 s | CLOSS: 8.0806
+| train          | E: 273 | S: 14359 | R: 134.0000 | G: 1 | D: 01.0 s | CLOSS: 7.3454
+| train          | E: 274 | S: 14390 | R: 159.0000 | G: 1 | D: 00.7 s | CLOSS: -3.4450
+| train          | E: 275 | S: 14428 | R: 146.0000 | G: 1 | D: 00.7 s | CLOSS: -0.0846
+| train          | E: 276 | S: 14489 | R: 119.0000 | G: 1 | D: 01.4 s | CLOSS: 4.3360
+| train          | E: 277 | S: 14535 | R: 129.0000 | G: 1 | D: 00.9 s | CLOSS: -0.2301
+| train          | E: 278 | S: 14607 | R: 108.0000 | G: 1 | D: 01.3 s | CLOSS: 2.6272
+| train          | E: 279 | S: 14648 | R: 147.0000 | G: 1 | D: 01.0 s | CLOSS: 3.9740
+| train          | E: 280 | S: 14697 | R: 133.0000 | G: 1 | D: 00.9 s | CLOSS: 1.8366
+| train          | E: 281 | S: 14746 | R: 131.0000 | G: 1 | D: 01.0 s | CLOSS: -2.3165
+| train          | E: 282 | S: 14773 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 1.5780
+| train          | E: 283 | S: 14794 | R: 169.0000 | G: 1 | D: 00.6 s | CLOSS: -6.2518
+| train          | E: 284 | S: 14834 | R: 148.0000 | G: 1 | D: 00.8 s | CLOSS: 9.9047
+| train          | E: 285 | S: 14843 | R: 183.0000 | G: 1 | D: 00.2 s | CLOSS: -1.8887
+| train          | E: 286 | S: 14896 | R: 123.0000 | G: 1 | D: 01.2 s | CLOSS: -2.4877
+| train          | E: 287 | S: 14936 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: -0.5442
+evaluating...
+| eval           | E: 288 | S: 15001 | R: 131.5000 | G: 1
+| train          | E: 288 | S: 15030 | R: 79.0000 | G: 1 | D: 02.5 s | CLOSS: -2.8723
+| train          | E: 289 | S: 15060 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: 7.5678
+| train          | E: 290 | S: 15107 | R: 136.0000 | G: 1 | D: 00.9 s | CLOSS: 5.6642
+| train          | E: 291 | S: 15132 | R: 169.0000 | G: 1 | D: 00.7 s | CLOSS: -5.4544
+| train          | E: 292 | S: 15186 | R: 128.0000 | G: 1 | D: 01.0 s | CLOSS: 0.7581
+| train          | E: 293 | S: 15249 | R: 120.0000 | G: 1 | D: 01.2 s | CLOSS: -0.9183
+| train          | E: 294 | S: 15372 | R: 55.0000 | G: 1 | D: 02.5 s | CLOSS: 1.9031
+| train          | E: 295 | S: 15481 | R: 65.0000 | G: 1 | D: 02.4 s | CLOSS: 4.2085
+| train          | E: 296 | S: 15582 | R: 49.0000 | G: 1 | D: 02.3 s | CLOSS: 3.5809
+| train          | E: 297 | S: 15616 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: 0.4230
+| train          | E: 298 | S: 15706 | R: 81.0000 | G: 1 | D: 02.1 s | CLOSS: -1.2804
+| train          | E: 299 | S: 15734 | R: 156.0000 | G: 1 | D: 00.5 s | CLOSS: 4.4529
+| train          | E: 300 | S: 15774 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: 0.1220
+| train          | E: 301 | S: 15812 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: 4.1624
+| train          | E: 302 | S: 15833 | R: 161.0000 | G: 1 | D: 00.4 s | CLOSS: 13.1564
+| train          | E: 303 | S: 15887 | R: 130.0000 | G: 1 | D: 01.0 s | CLOSS: -3.7015
+| train          | E: 304 | S: 15914 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 12.6512
+| train          | E: 305 | S: 15940 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: 0.6330
+| train          | E: 306 | S: 15959 | R: 171.0000 | G: 1 | D: 00.6 s | CLOSS: -1.0267
+| train          | E: 307 | S: 15991 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: 0.9650
+evaluating...
+| eval           | E: 308 | S: 16001 | R: 102.9000 | G: 1
+| train          | E: 308 | S: 16080 | R: 75.0000 | G: 1 | D: 03.1 s | CLOSS: 1.2265
+| train          | E: 309 | S: 16257 | R: -19.0000 | G: 1 | D: 04.4 s | CLOSS: -0.7375
+| train          | E: 310 | S: 16276 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: 9.1227
+| train          | E: 311 | S: 16334 | R: 116.0000 | G: 1 | D: 01.7 s | CLOSS: -0.1280
+| train          | E: 312 | S: 16449 | R: 58.0000 | G: 1 | D: 02.1 s | CLOSS: -4.0563
+| train          | E: 313 | S: 16505 | R: 114.0000 | G: 1 | D: 01.4 s | CLOSS: 5.7941
+| train          | E: 314 | S: 16548 | R: 128.0000 | G: 1 | D: 00.8 s | CLOSS: -1.4057
+| train          | E: 315 | S: 16684 | R: 38.0000 | G: 1 | D: 03.4 s | CLOSS: 2.4777
+| train          | E: 316 | S: 16741 | R: 122.0000 | G: 1 | D: 01.1 s | CLOSS: -2.3799
+| train          | E: 317 | S: 16844 | R: 81.0000 | G: 1 | D: 01.9 s | CLOSS: 1.5576
+| train          | E: 318 | S: 16903 | R: 115.0000 | G: 1 | D: 02.1 s | CLOSS: 5.6049
+| train          | E: 319 | S: 16993 | R: 98.0000 | G: 1 | D: 02.9 s | CLOSS: 6.4362
+evaluating...
+| eval           | E: 320 | S: 17001 | R: 125.3000 | G: 1
+| train          | E: 320 | S: 17017 | R: 166.0000 | G: 1 | D: 01.3 s | CLOSS: 0.9215
+| train          | E: 321 | S: 17071 | R: 136.0000 | G: 1 | D: 01.0 s | CLOSS: -5.9701
+| train          | E: 322 | S: 17288 | R: -42.0000 | G: 1 | D: 05.0 s | CLOSS: 1.7186
+| train          | E: 323 | S: 17315 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: -2.3192
+| train          | E: 324 | S: 17358 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: 3.9663
+| train          | E: 325 | S: 17459 | R: 68.0000 | G: 1 | D: 03.3 s | CLOSS: -3.0327
+| train          | E: 326 | S: 17485 | R: 164.0000 | G: 1 | D: 01.0 s | CLOSS: -3.8809
+| train          | E: 327 | S: 17517 | R: 160.0000 | G: 1 | D: 01.0 s | CLOSS: 3.0758
+| train          | E: 328 | S: 17554 | R: 154.0000 | G: 1 | D: 00.9 s | CLOSS: 6.8963
+| train          | E: 329 | S: 17608 | R: 123.0000 | G: 1 | D: 01.3 s | CLOSS: 0.4615
+| train          | E: 330 | S: 17625 | R: 177.0000 | G: 1 | D: 00.3 s | CLOSS: 4.7707
+| train          | E: 331 | S: 17682 | R: 125.0000 | G: 1 | D: 01.3 s | CLOSS: 3.6451
+| train          | E: 332 | S: 17712 | R: 156.0000 | G: 1 | D: 00.5 s | CLOSS: -3.1122
+| train          | E: 333 | S: 17817 | R: 68.0000 | G: 1 | D: 02.8 s | CLOSS: -0.7372
+| train          | E: 334 | S: 17851 | R: 150.0000 | G: 1 | D: 00.8 s | CLOSS: 2.7206
+| train          | E: 335 | S: 17891 | R: 149.0000 | G: 1 | D: 01.1 s | CLOSS: 8.2406
+| train          | E: 336 | S: 17930 | R: 145.0000 | G: 1 | D: 00.8 s | CLOSS: 19.4606
+evaluating...
+| eval           | E: 337 | S: 18001 | R: 132.1000 | G: 1
+| train          | E: 337 | S: 18020 | R: 90.0000 | G: 1 | D: 03.4 s | CLOSS: 4.4572
+| train          | E: 338 | S: 18064 | R: 136.0000 | G: 1 | D: 00.9 s | CLOSS: -3.1113
+| train          | E: 339 | S: 18131 | R: 110.0000 | G: 1 | D: 01.5 s | CLOSS: -1.8603
+| train          | E: 340 | S: 18193 | R: 119.0000 | G: 1 | D: 01.1 s | CLOSS: -6.3475
+| train          | E: 341 | S: 18223 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: -1.5572
+| train          | E: 342 | S: 18280 | R: 129.0000 | G: 1 | D: 01.4 s | CLOSS: 9.8285
+| train          | E: 343 | S: 18321 | R: 141.0000 | G: 1 | D: 01.2 s | CLOSS: 8.0056
+| train          | E: 344 | S: 18382 | R: 127.0000 | G: 1 | D: 01.3 s | CLOSS: -0.8579
+| train          | E: 345 | S: 18430 | R: 143.0000 | G: 1 | D: 01.0 s | CLOSS: 1.4264
+| train          | E: 346 | S: 18468 | R: 146.0000 | G: 1 | D: 00.9 s | CLOSS: -1.4430
+| train          | E: 347 | S: 18533 | R: 117.0000 | G: 1 | D: 01.7 s | CLOSS: 1.8478
+| train          | E: 348 | S: 18583 | R: 132.0000 | G: 1 | D: 01.2 s | CLOSS: 9.7118
+| train          | E: 349 | S: 18654 | R: 118.0000 | G: 1 | D: 01.6 s | CLOSS: -3.3110
+| train          | E: 350 | S: 18742 | R: 86.0000 | G: 1 | D: 02.1 s | CLOSS: -4.8318
+| train          | E: 351 | S: 18779 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: -1.2547
+| train          | E: 352 | S: 18827 | R: 33.0000 | G: 1 | D: 00.9 s | CLOSS: 2.6808
+| train          | E: 353 | S: 18844 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: -5.4996
+| train          | E: 354 | S: 18862 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 0.8619
+| train          | E: 355 | S: 18986 | R: 53.0000 | G: 1 | D: 02.8 s | CLOSS: 0.6233
+evaluating...
+| eval           | E: 356 | S: 19001 | R: 131.0000 | G: 1
+| train          | E: 356 | S: 19016 | R: 151.0000 | G: 1 | D: 01.2 s | CLOSS: 1.0673
+| train          | E: 357 | S: 19028 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: -9.2588
+| train          | E: 358 | S: 19088 | R: 121.0000 | G: 1 | D: 01.4 s | CLOSS: -4.0129
+| train          | E: 359 | S: 19128 | R: 140.0000 | G: 1 | D: 00.9 s | CLOSS: 9.2201
+| train          | E: 360 | S: 19209 | R: 91.0000 | G: 1 | D: 01.7 s | CLOSS: 4.0339
+| train          | E: 361 | S: 19307 | R: 87.0000 | G: 1 | D: 02.4 s | CLOSS: -6.2039
+| train          | E: 362 | S: 19336 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 5.0479
+| train          | E: 363 | S: 19387 | R: 127.0000 | G: 1 | D: 01.0 s | CLOSS: 3.3801
+| train          | E: 364 | S: 19396 | R: 183.0000 | G: 1 | D: 00.3 s | CLOSS: 3.0701
+| train          | E: 365 | S: 19477 | R: 100.0000 | G: 1 | D: 01.8 s | CLOSS: -1.3403
+| train          | E: 366 | S: 19579 | R: 48.0000 | G: 1 | D: 02.1 s | CLOSS: -8.0630
+| train          | E: 367 | S: 19608 | R: 159.0000 | G: 1 | D: 00.9 s | CLOSS: 3.3486
+| train          | E: 368 | S: 19643 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: -11.0045
+| train          | E: 369 | S: 19693 | R: 128.0000 | G: 1 | D: 01.4 s | CLOSS: 4.1494
+| train          | E: 370 | S: 19717 | R: 158.0000 | G: 1 | D: 00.7 s | CLOSS: 5.5383
+| train          | E: 371 | S: 19766 | R: 133.0000 | G: 1 | D: 01.7 s | CLOSS: 13.4712
+| train          | E: 372 | S: 19837 | R: 104.0000 | G: 1 | D: 02.0 s | CLOSS: 12.2169
+| train          | E: 373 | S: 19881 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: -5.8005
+| train          | E: 374 | S: 19941 | R: 124.0000 | G: 1 | D: 02.2 s | CLOSS: -1.4036
+| train          | E: 375 | S: 19970 | R: 163.0000 | G: 1 | D: 01.0 s | CLOSS: -4.4284
+evaluating...
+| eval           | E: 376 | S: 20001 | R: 127.3000 | G: 1
+| train          | E: 376 | S: 20050 | R: 100.0000 | G: 1 | D: 03.2 s | CLOSS: 2.9138
+| train          | E: 377 | S: 20070 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: -9.4593
+| train          | E: 378 | S: 20149 | R: 96.0000 | G: 1 | D: 02.1 s | CLOSS: 7.7601
+| train          | E: 379 | S: 20167 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: -12.8804
+| train          | E: 380 | S: 20184 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 1.2626
+| train          | E: 381 | S: 20247 | R: 122.0000 | G: 1 | D: 01.3 s | CLOSS: -4.4705
+| train          | E: 382 | S: 20493 | R: -84.0000 | G: 1 | D: 06.2 s | CLOSS: 0.6062
+| train          | E: 383 | S: 20525 | R: 149.0000 | G: 1 | D: 00.6 s | CLOSS: 7.6617
+| train          | E: 384 | S: 20557 | R: 158.0000 | G: 1 | D: 00.9 s | CLOSS: -6.5724
+| train          | E: 385 | S: 20686 | R: 55.0000 | G: 1 | D: 02.9 s | CLOSS: 4.8551
+| train          | E: 386 | S: 20760 | R: 105.0000 | G: 1 | D: 01.7 s | CLOSS: 2.6075
+| train          | E: 387 | S: 20794 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: 9.6167
+| train          | E: 388 | S: 20833 | R: 142.0000 | G: 1 | D: 00.7 s | CLOSS: 2.6623
+| train          | E: 389 | S: 20866 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: 6.4021
+| train          | E: 390 | S: 20901 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: 14.2951
+| train          | E: 391 | S: 20950 | R: 122.0000 | G: 1 | D: 01.0 s | CLOSS: -1.1799
+| train          | E: 392 | S: 20994 | R: 143.0000 | G: 1 | D: 01.2 s | CLOSS: -11.9142
+evaluating...
+| eval           | E: 393 | S: 21001 | R: 80.1000 | G: 1
+| train          | E: 393 | S: 21087 | R: 89.0000 | G: 1 | D: 03.0 s | CLOSS: 0.7107
+| train          | E: 394 | S: 21100 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: -4.7323
+| train          | E: 395 | S: 21152 | R: 129.0000 | G: 1 | D: 01.2 s | CLOSS: -3.8309
+| train          | E: 396 | S: 21178 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: -1.0104
+| train          | E: 397 | S: 21224 | R: 141.0000 | G: 1 | D: 01.1 s | CLOSS: -10.6401
+| train          | E: 398 | S: 21348 | R: 52.0000 | G: 1 | D: 02.9 s | CLOSS: 4.3546
+| train          | E: 399 | S: 21362 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: 3.3288
+| train          | E: 400 | S: 21475 | R: 63.0000 | G: 1 | D: 02.7 s | CLOSS: 1.1898
+| train          | E: 401 | S: 21589 | R: 70.0000 | G: 1 | D: 02.2 s | CLOSS: -3.1560
+| train          | E: 402 | S: 21708 | R: 47.0000 | G: 1 | D: 02.5 s | CLOSS: -4.1569
+| train          | E: 403 | S: 21784 | R: 100.0000 | G: 1 | D: 02.1 s | CLOSS: 9.6898
+| train          | E: 404 | S: 21866 | R: 100.0000 | G: 1 | D: 01.5 s | CLOSS: -3.9308
+| train          | E: 405 | S: 21928 | R: 126.0000 | G: 1 | D: 01.4 s | CLOSS: 4.7599
+| train          | E: 406 | S: 21969 | R: 149.0000 | G: 1 | D: 00.7 s | CLOSS: -14.2809
+evaluating...
+| eval           | E: 407 | S: 22001 | R: 127.0000 | G: 1
+| train          | E: 407 | S: 22011 | R: 146.0000 | G: 1 | D: 01.5 s | CLOSS: -12.3826
+| train          | E: 408 | S: 22043 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: -4.1841
+| train          | E: 409 | S: 22097 | R: 119.0000 | G: 1 | D: 01.2 s | CLOSS: 1.7373
+| train          | E: 410 | S: 22141 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: 8.9194
+| train          | E: 411 | S: 22195 | R: 136.0000 | G: 1 | D: 01.1 s | CLOSS: -2.9067
+| train          | E: 412 | S: 22279 | R: 92.0000 | G: 1 | D: 01.7 s | CLOSS: 10.3568
+| train          | E: 413 | S: 22358 | R: 103.0000 | G: 1 | D: 01.7 s | CLOSS: 2.6170
+| train          | E: 414 | S: 22416 | R: 109.0000 | G: 1 | D: 01.3 s | CLOSS: 1.5826
+| train          | E: 415 | S: 22472 | R: 133.0000 | G: 1 | D: 01.2 s | CLOSS: 9.9173
+| train          | E: 416 | S: 22613 | R: 25.0000 | G: 1 | D: 02.9 s | CLOSS: 0.7616
+| train          | E: 417 | S: 22653 | R: 143.0000 | G: 1 | D: 00.8 s | CLOSS: 10.5738
+| train          | E: 418 | S: 22701 | R: 143.0000 | G: 1 | D: 01.2 s | CLOSS: 6.1038
+| train          | E: 419 | S: 22768 | R: 114.0000 | G: 1 | D: 01.2 s | CLOSS: -10.6592
+| train          | E: 420 | S: 22826 | R: 123.0000 | G: 1 | D: 01.3 s | CLOSS: 6.9689
+| train          | E: 421 | S: 22886 | R: 124.0000 | G: 1 | D: 01.0 s | CLOSS: 3.0810
+| train          | E: 422 | S: 22979 | R: 85.0000 | G: 1 | D: 02.0 s | CLOSS: -4.9310
+evaluating...
+| eval           | E: 423 | S: 23001 | R: 126.1000 | G: 1
+| train          | E: 423 | S: 23049 | R: 111.0000 | G: 1 | D: 02.0 s | CLOSS: 7.1070
+| train          | E: 424 | S: 23128 | R: 83.0000 | G: 1 | D: 01.6 s | CLOSS: -1.1762
+| train          | E: 425 | S: 23162 | R: 159.0000 | G: 1 | D: 01.1 s | CLOSS: 3.1247
+| train          | E: 426 | S: 23182 | R: 170.0000 | G: 1 | D: 00.3 s | CLOSS: -11.0563
+| train          | E: 427 | S: 23237 | R: 121.0000 | G: 1 | D: 01.2 s | CLOSS: 1.9520
+| train          | E: 428 | S: 23401 | R: -7.0000 | G: 1 | D: 03.6 s | CLOSS: 2.4203
+| train          | E: 429 | S: 23474 | R: 108.0000 | G: 1 | D: 01.8 s | CLOSS: -10.0721
+| train          | E: 430 | S: 23526 | R: 133.0000 | G: 1 | D: 01.1 s | CLOSS: 3.2260
+| train          | E: 431 | S: 23545 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 5.8945
+| train          | E: 432 | S: 23577 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: -2.9043
+| train          | E: 433 | S: 23628 | R: 140.0000 | G: 1 | D: 01.3 s | CLOSS: 6.4669
+| train          | E: 434 | S: 23753 | R: 54.0000 | G: 1 | D: 02.9 s | CLOSS: -5.6842
+| train          | E: 435 | S: 23806 | R: 117.0000 | G: 1 | D: 00.9 s | CLOSS: -5.7486
+| train          | E: 436 | S: 23871 | R: 122.0000 | G: 1 | D: 01.4 s | CLOSS: 2.9808
+| train          | E: 437 | S: 23910 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: -8.3051
+| train          | E: 438 | S: 23939 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: 6.8681
+| train          | E: 439 | S: 23958 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: -18.3763
+evaluating...
+| eval           | E: 440 | S: 24001 | R: 123.6000 | G: 1
+| train          | E: 440 | S: 24112 | R: 22.0000 | G: 1 | D: 04.2 s | CLOSS: -1.3995
+| train          | E: 441 | S: 24142 | R: 148.0000 | G: 1 | D: 00.9 s | CLOSS: 7.8155
+| train          | E: 442 | S: 24176 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: -12.9348
+| train          | E: 443 | S: 24184 | R: 186.0000 | G: 1 | D: 00.2 s | CLOSS: -35.2805
+| train          | E: 444 | S: 24212 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: -16.1625
+| train          | E: 445 | S: 24231 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: 4.1477
+| train          | E: 446 | S: 24273 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: -7.0137
+| train          | E: 447 | S: 24309 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: -13.8868
+| train          | E: 448 | S: 24375 | R: 121.0000 | G: 1 | D: 01.6 s | CLOSS: -2.7533
+| train          | E: 449 | S: 24428 | R: 132.0000 | G: 1 | D: 01.2 s | CLOSS: -8.3586
+| train          | E: 450 | S: 24510 | R: 100.0000 | G: 1 | D: 02.1 s | CLOSS: 9.7078
+| train          | E: 451 | S: 24546 | R: 143.0000 | G: 1 | D: 00.9 s | CLOSS: -8.8465
+| train          | E: 452 | S: 24597 | R: 131.0000 | G: 1 | D: 01.2 s | CLOSS: -5.7438
+| train          | E: 453 | S: 24618 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: -10.1751
+| train          | E: 454 | S: 24650 | R: 144.0000 | G: 1 | D: 00.6 s | CLOSS: 11.1651
+| train          | E: 455 | S: 24698 | R: 132.0000 | G: 1 | D: 01.0 s | CLOSS: 3.7397
+| train          | E: 456 | S: 24729 | R: 156.0000 | G: 1 | D: 00.8 s | CLOSS: -13.5588
+| train          | E: 457 | S: 24850 | R: 27.0000 | G: 1 | D: 02.7 s | CLOSS: -2.7162
+| train          | E: 458 | S: 24866 | R: 178.0000 | G: 1 | D: 00.5 s | CLOSS: 3.3859
+| train          | E: 459 | S: 24899 | R: 152.0000 | G: 1 | D: 00.7 s | CLOSS: -16.5037
+| train          | E: 460 | S: 24926 | R: 161.0000 | G: 1 | D: 00.6 s | CLOSS: 5.2743
+| train          | E: 461 | S: 24973 | R: 137.0000 | G: 1 | D: 01.2 s | CLOSS: 21.1519
+evaluating...
+| eval           | E: 462 | S: 25001 | R: 98.0000 | G: 1
+| train          | E: 462 | S: 25025 | R: 130.0000 | G: 1 | D: 02.3 s | CLOSS: 1.3342
+| train          | E: 463 | S: 25055 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: 8.9668
+| train          | E: 464 | S: 25089 | R: 158.0000 | G: 1 | D: 00.8 s | CLOSS: 3.9636
+| train          | E: 465 | S: 25127 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: 31.1490
+| train          | E: 466 | S: 25177 | R: 125.0000 | G: 1 | D: 01.1 s | CLOSS: -4.0568
+| train          | E: 467 | S: 25211 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 17.1723
+| train          | E: 468 | S: 25235 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: -15.8640
+| train          | E: 469 | S: 25312 | R: 101.0000 | G: 1 | D: 01.9 s | CLOSS: 4.7224
+| train          | E: 470 | S: 25447 | R: 35.0000 | G: 1 | D: 03.4 s | CLOSS: 2.4934
+| train          | E: 471 | S: 25518 | R: 83.0000 | G: 1 | D: 01.8 s | CLOSS: 3.9504
+| train          | E: 472 | S: 25563 | R: 135.0000 | G: 1 | D: 01.0 s | CLOSS: 11.9527
+| train          | E: 473 | S: 25606 | R: 143.0000 | G: 1 | D: 01.0 s | CLOSS: -2.5438
+| train          | E: 474 | S: 25633 | R: 161.0000 | G: 1 | D: 01.1 s | CLOSS: 2.9978
+| train          | E: 475 | S: 25643 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: -44.4725
+| train          | E: 476 | S: 25682 | R: 147.0000 | G: 1 | D: 01.6 s | CLOSS: -30.8404
+| train          | E: 477 | S: 25757 | R: 105.0000 | G: 1 | D: 02.3 s | CLOSS: -16.9667
+| train          | E: 478 | S: 25799 | R: 123.0000 | G: 1 | D: 01.8 s | CLOSS: -0.0705
+| train          | E: 479 | S: 25863 | R: 109.0000 | G: 1 | D: 02.4 s | CLOSS: 4.0667
+| train          | E: 480 | S: 25910 | R: 139.0000 | G: 1 | D: 01.5 s | CLOSS: -1.5049
+| train          | E: 481 | S: 25959 | R: 129.0000 | G: 1 | D: 01.8 s | CLOSS: 18.3710
+| train          | E: 482 | S: 25988 | R: 163.0000 | G: 1 | D: 01.2 s | CLOSS: -0.3392
+evaluating...
+| eval           | E: 483 | S: 26001 | R: 125.0000 | G: 1
+| train          | E: 483 | S: 26014 | R: 167.0000 | G: 1 | D: 02.0 s | CLOSS: 9.2090
+| train          | E: 484 | S: 26069 | R: 120.0000 | G: 1 | D: 03.0 s | CLOSS: 5.3358
+| train          | E: 485 | S: 26149 | R: 106.0000 | G: 1 | D: 03.8 s | CLOSS: 9.5165
+| train          | E: 486 | S: 26175 | R: 163.0000 | G: 1 | D: 00.9 s | CLOSS: 4.9135
+| train          | E: 487 | S: 26202 | R: 167.0000 | G: 1 | D: 01.0 s | CLOSS: 13.0445
+| train          | E: 488 | S: 26219 | R: 175.0000 | G: 1 | D: 00.4 s | CLOSS: 33.0467
+| train          | E: 489 | S: 26271 | R: 136.0000 | G: 1 | D: 01.6 s | CLOSS: 2.2824
+| train          | E: 490 | S: 26327 | R: 125.0000 | G: 1 | D: 01.9 s | CLOSS: 4.9402
+| train          | E: 491 | S: 26363 | R: 155.0000 | G: 1 | D: 01.1 s | CLOSS: 9.9446
+| train          | E: 492 | S: 26389 | R: 168.0000 | G: 1 | D: 00.7 s | CLOSS: 18.6215
+| train          | E: 493 | S: 26402 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: 16.6688
+| train          | E: 494 | S: 26476 | R: 92.0000 | G: 1 | D: 02.8 s | CLOSS: -0.0018
+| train          | E: 495 | S: 26567 | R: 78.0000 | G: 1 | D: 03.2 s | CLOSS: 3.5663
+| train          | E: 496 | S: 26644 | R: 104.0000 | G: 1 | D: 02.2 s | CLOSS: -10.9618
+| train          | E: 497 | S: 26682 | R: 140.0000 | G: 1 | D: 01.2 s | CLOSS: 19.0326
+| train          | E: 498 | S: 26733 | R: 125.0000 | G: 1 | D: 01.9 s | CLOSS: -0.8500
+| train          | E: 499 | S: 26782 | R: 139.0000 | G: 1 | D: 01.7 s | CLOSS: -4.1154
+| train          | E: 500 | S: 26905 | R: 50.0000 | G: 1 | D: 04.1 s | CLOSS: -1.2494
+| train          | E: 501 | S: 26950 | R: 140.0000 | G: 1 | D: 01.4 s | CLOSS: 15.8696
+| train          | E: 502 | S: 26971 | R: 173.0000 | G: 1 | D: 00.7 s | CLOSS: 6.8981
+evaluating...
+| eval           | E: 503 | S: 27001 | R: 116.5000 | G: 1
+| train          | E: 503 | S: 27015 | R: 135.0000 | G: 1 | D: 02.2 s | CLOSS: -10.7855
+| train          | E: 504 | S: 27076 | R: 125.0000 | G: 1 | D: 01.9 s | CLOSS: -15.2935
+| train          | E: 505 | S: 27162 | R: 97.0000 | G: 1 | D: 02.7 s | CLOSS: 9.6597
+| train          | E: 506 | S: 27245 | R: 98.0000 | G: 1 | D: 03.1 s | CLOSS: 13.3463
+| train          | E: 507 | S: 27303 | R: 128.0000 | G: 1 | D: 02.0 s | CLOSS: 12.9825
+| train          | E: 508 | S: 27330 | R: 159.0000 | G: 1 | D: 01.2 s | CLOSS: 9.5381
+| train          | E: 509 | S: 27360 | R: 151.0000 | G: 1 | D: 01.2 s | CLOSS: 16.2878
+| train          | E: 510 | S: 27419 | R: 126.0000 | G: 1 | D: 02.4 s | CLOSS: 5.1193
+| train          | E: 511 | S: 27457 | R: 153.0000 | G: 1 | D: 01.1 s | CLOSS: -13.7276
+| train          | E: 512 | S: 27515 | R: 119.0000 | G: 1 | D: 01.5 s | CLOSS: 5.6306
+| train          | E: 513 | S: 27594 | R: 105.0000 | G: 1 | D: 01.9 s | CLOSS: 2.9959
+| train          | E: 514 | S: 27641 | R: 133.0000 | G: 1 | D: 01.2 s | CLOSS: -11.3873
+| train          | E: 515 | S: 27704 | R: 124.0000 | G: 1 | D: 01.5 s | CLOSS: 9.6130
+| train          | E: 516 | S: 27780 | R: 96.0000 | G: 1 | D: 01.7 s | CLOSS: 8.6636
+| train          | E: 517 | S: 27827 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: 20.0183
+| train          | E: 518 | S: 27880 | R: 131.0000 | G: 1 | D: 01.5 s | CLOSS: -7.0280
+| train          | E: 519 | S: 27911 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: -16.1991
+| train          | E: 520 | S: 27953 | R: 143.0000 | G: 1 | D: 00.8 s | CLOSS: 4.0448
+evaluating...
+| eval           | E: 521 | S: 28001 | R: 116.5000 | G: 1
+| train          | E: 521 | S: 28016 | R: 102.0000 | G: 1 | D: 02.1 s | CLOSS: -3.4510
+| train          | E: 522 | S: 28046 | R: 162.0000 | G: 1 | D: 00.8 s | CLOSS: -11.5383
+| train          | E: 523 | S: 28101 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: 19.7312
+| train          | E: 524 | S: 28180 | R: 100.0000 | G: 1 | D: 01.9 s | CLOSS: 5.3062
+| train          | E: 525 | S: 28222 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: 9.7254
+| train          | E: 526 | S: 28267 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: 21.3109
+| train          | E: 527 | S: 28320 | R: 131.0000 | G: 1 | D: 01.3 s | CLOSS: 8.1841
+| train          | E: 528 | S: 28385 | R: 120.0000 | G: 1 | D: 01.5 s | CLOSS: 0.1646
+| train          | E: 529 | S: 28441 | R: 126.0000 | G: 1 | D: 01.1 s | CLOSS: 2.2184
+| train          | E: 530 | S: 28542 | R: 79.0000 | G: 1 | D: 02.3 s | CLOSS: -0.9594
+| train          | E: 531 | S: 28577 | R: 146.0000 | G: 1 | D: 00.8 s | CLOSS: -12.3364
+| train          | E: 532 | S: 28596 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: -3.0669
+| train          | E: 533 | S: 28710 | R: 67.0000 | G: 1 | D: 02.2 s | CLOSS: 1.5544
+| train          | E: 534 | S: 28762 | R: 122.0000 | G: 1 | D: 01.0 s | CLOSS: -7.1478
+| train          | E: 535 | S: 28947 | R: -28.0000 | G: 1 | D: 03.5 s | CLOSS: 6.3163
+| train          | E: 536 | S: 28981 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 3.3748
+evaluating...
+| eval           | E: 537 | S: 29001 | R: 134.2000 | G: 1
+| train          | E: 537 | S: 29021 | R: 146.0000 | G: 1 | D: 01.6 s | CLOSS: -12.9069
+| train          | E: 538 | S: 29079 | R: 119.0000 | G: 1 | D: 01.1 s | CLOSS: -5.0035
+| train          | E: 539 | S: 29165 | R: 98.0000 | G: 1 | D: 01.7 s | CLOSS: 10.9636
+| train          | E: 540 | S: 29241 | R: 107.0000 | G: 1 | D: 01.5 s | CLOSS: 0.1343
+| train          | E: 541 | S: 29407 | R: 6.0000 | G: 1 | D: 03.3 s | CLOSS: -0.5730
+| train          | E: 542 | S: 29436 | R: 161.0000 | G: 1 | D: 00.6 s | CLOSS: -22.9300
+| train          | E: 543 | S: 29485 | R: 122.0000 | G: 1 | D: 01.1 s | CLOSS: 7.3841
+| train          | E: 544 | S: 29529 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: -21.1005
+| train          | E: 545 | S: 29588 | R: 122.0000 | G: 1 | D: 01.1 s | CLOSS: 9.0042
+| train          | E: 546 | S: 29712 | R: 57.0000 | G: 1 | D: 02.6 s | CLOSS: 5.5232
+| train          | E: 547 | S: 29754 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: 26.7465
+| train          | E: 548 | S: 29819 | R: 117.0000 | G: 1 | D: 01.2 s | CLOSS: -1.4623
+| train          | E: 549 | S: 29882 | R: 123.0000 | G: 1 | D: 01.5 s | CLOSS: 3.9953
+| train          | E: 550 | S: 29934 | R: 129.0000 | G: 1 | D: 01.0 s | CLOSS: -4.9488
+| train          | E: 551 | S: 29988 | R: 131.0000 | G: 1 | D: 01.3 s | CLOSS: 3.3659
+evaluating...
+| eval           | E: 552 | S: 30001 | R: 93.5000 | G: 1
+| train          | E: 552 | S: 30052 | R: 117.0000 | G: 1 | D: 02.5 s | CLOSS: 3.2840
+| train          | E: 553 | S: 30105 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: 11.3333
+| train          | E: 554 | S: 30149 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: 12.5418
+| train          | E: 555 | S: 30186 | R: 155.0000 | G: 1 | D: 00.9 s | CLOSS: -2.9253
+| train          | E: 556 | S: 30218 | R: 156.0000 | G: 1 | D: 00.8 s | CLOSS: -1.9451
+| train          | E: 557 | S: 30290 | R: 112.0000 | G: 1 | D: 01.4 s | CLOSS: 2.4698
+| train          | E: 558 | S: 30315 | R: 153.0000 | G: 1 | D: 00.6 s | CLOSS: 7.8560
+| train          | E: 559 | S: 30349 | R: 149.0000 | G: 1 | D: 00.6 s | CLOSS: -1.3720
+| train          | E: 560 | S: 30385 | R: 157.0000 | G: 1 | D: 00.9 s | CLOSS: -2.3043
+| train          | E: 561 | S: 30442 | R: 126.0000 | G: 1 | D: 01.1 s | CLOSS: -3.3531
+| train          | E: 562 | S: 30512 | R: 93.0000 | G: 1 | D: 01.7 s | CLOSS: -7.0621
+| train          | E: 563 | S: 30540 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: -5.9954
+| train          | E: 564 | S: 30604 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: -19.8462
+| train          | E: 565 | S: 30623 | R: 175.0000 | G: 1 | D: 00.5 s | CLOSS: -7.3173
+| train          | E: 566 | S: 30800 | R: -4.0000 | G: 1 | D: 04.5 s | CLOSS: 6.4407
+| train          | E: 567 | S: 30828 | R: 164.0000 | G: 1 | D: 00.6 s | CLOSS: 11.3178
+| train          | E: 568 | S: 30884 | R: 129.0000 | G: 1 | D: 01.3 s | CLOSS: 2.0583
+| train          | E: 569 | S: 30941 | R: 122.0000 | G: 1 | D: 01.5 s | CLOSS: 1.9732
+| train          | E: 570 | S: 30978 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: -11.2235
+evaluating...
+| eval           | E: 571 | S: 31001 | R: 133.5000 | G: 1
+| train          | E: 571 | S: 31023 | R: 146.0000 | G: 1 | D: 01.5 s | CLOSS: 6.0009
+| train          | E: 572 | S: 31040 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 16.4763
+| train          | E: 573 | S: 31132 | R: 81.0000 | G: 1 | D: 01.9 s | CLOSS: -3.2075
+| train          | E: 574 | S: 31182 | R: 120.0000 | G: 1 | D: 01.0 s | CLOSS: -5.3665
+| train          | E: 575 | S: 31249 | R: 120.0000 | G: 1 | D: 01.3 s | CLOSS: 0.0982
+| train          | E: 576 | S: 31282 | R: 150.0000 | G: 1 | D: 00.6 s | CLOSS: 4.7858
+| train          | E: 577 | S: 31364 | R: 72.0000 | G: 1 | D: 01.9 s | CLOSS: -4.1427
+| train          | E: 578 | S: 31399 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: -1.9759
+| train          | E: 579 | S: 31536 | R: 29.0000 | G: 1 | D: 02.9 s | CLOSS: -0.0712
+| train          | E: 580 | S: 31643 | R: 56.0000 | G: 1 | D: 02.6 s | CLOSS: -2.7850
+| train          | E: 581 | S: 31695 | R: 134.0000 | G: 1 | D: 01.0 s | CLOSS: -1.8356
+| train          | E: 582 | S: 31780 | R: 90.0000 | G: 1 | D: 02.1 s | CLOSS: 1.3387
+| train          | E: 583 | S: 31966 | R: -31.0000 | G: 1 | D: 04.1 s | CLOSS: -3.5596
+evaluating...
+| eval           | E: 584 | S: 32001 | R: 113.8000 | G: 1
+| train          | E: 584 | S: 32009 | R: 132.0000 | G: 1 | D: 01.8 s | CLOSS: 6.3876
+| train          | E: 585 | S: 32029 | R: 168.0000 | G: 1 | D: 00.3 s | CLOSS: -17.4835
+| train          | E: 586 | S: 32061 | R: 158.0000 | G: 1 | D: 00.6 s | CLOSS: 6.8012
+| train          | E: 587 | S: 32235 | R: -8.0000 | G: 1 | D: 04.0 s | CLOSS: -1.1360
+| train          | E: 588 | S: 32268 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: -3.9271
+| train          | E: 589 | S: 32281 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: -5.9449
+| train          | E: 590 | S: 32410 | R: 43.0000 | G: 1 | D: 03.1 s | CLOSS: -17.3122
+| train          | E: 591 | S: 32425 | R: 179.0000 | G: 1 | D: 00.4 s | CLOSS: -41.8309
+| train          | E: 592 | S: 32462 | R: 153.0000 | G: 1 | D: 00.8 s | CLOSS: -17.9338
+| train          | E: 593 | S: 32506 | R: 133.0000 | G: 1 | D: 01.2 s | CLOSS: -15.4381
+| train          | E: 594 | S: 32550 | R: 141.0000 | G: 1 | D: 00.9 s | CLOSS: -8.4706
+| train          | E: 595 | S: 32608 | R: 128.0000 | G: 1 | D: 01.4 s | CLOSS: -18.4220
+| train          | E: 596 | S: 32675 | R: 113.0000 | G: 1 | D: 01.5 s | CLOSS: -2.0786
+| train          | E: 597 | S: 32700 | R: 169.0000 | G: 1 | D: 00.6 s | CLOSS: -11.3420
+| train          | E: 598 | S: 32752 | R: 133.0000 | G: 1 | D: 01.3 s | CLOSS: -18.8161
+| train          | E: 599 | S: 32812 | R: 119.0000 | G: 1 | D: 01.5 s | CLOSS: -11.5286
+| train          | E: 600 | S: 32902 | R: 96.0000 | G: 1 | D: 02.3 s | CLOSS: 5.4421
+| train          | E: 601 | S: 32969 | R: 114.0000 | G: 1 | D: 01.4 s | CLOSS: 11.0767
+evaluating...
+| eval           | E: 602 | S: 33001 | R: 116.9000 | G: 1
+| train          | E: 602 | S: 33027 | R: 116.0000 | G: 1 | D: 02.5 s | CLOSS: -26.3774
+| train          | E: 603 | S: 33072 | R: 141.0000 | G: 1 | D: 01.0 s | CLOSS: 4.1764
+| train          | E: 604 | S: 33102 | R: 162.0000 | G: 1 | D: 00.7 s | CLOSS: -9.1895
+| train          | E: 605 | S: 33143 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: -4.5301
+| train          | E: 606 | S: 33218 | R: 91.0000 | G: 1 | D: 01.6 s | CLOSS: 9.7524
+| train          | E: 607 | S: 33272 | R: 131.0000 | G: 1 | D: 01.0 s | CLOSS: 3.3519
+| train          | E: 608 | S: 33356 | R: 97.0000 | G: 1 | D: 02.2 s | CLOSS: 10.8246
+| train          | E: 609 | S: 33392 | R: 142.0000 | G: 1 | D: 01.1 s | CLOSS: 2.0611
+| train          | E: 610 | S: 33432 | R: 137.0000 | G: 1 | D: 01.2 s | CLOSS: -6.7319
+| train          | E: 611 | S: 33487 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: 21.3579
+| train          | E: 612 | S: 33600 | R: 66.0000 | G: 1 | D: 02.6 s | CLOSS: 4.3757
+| train          | E: 613 | S: 33640 | R: 139.0000 | G: 1 | D: 00.8 s | CLOSS: -3.5589
+| train          | E: 614 | S: 33655 | R: 179.0000 | G: 1 | D: 00.5 s | CLOSS: 15.2951
+| train          | E: 615 | S: 33696 | R: 147.0000 | G: 1 | D: 00.9 s | CLOSS: 10.6555
+| train          | E: 616 | S: 33751 | R: 129.0000 | G: 1 | D: 01.3 s | CLOSS: 10.9836
+| train          | E: 617 | S: 33810 | R: 116.0000 | G: 1 | D: 01.2 s | CLOSS: 4.5507
+| train          | E: 618 | S: 33863 | R: 127.0000 | G: 1 | D: 01.8 s | CLOSS: -20.0273
+| train          | E: 619 | S: 33884 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: -3.7522
+| train          | E: 620 | S: 33903 | R: 169.0000 | G: 1 | D: 00.5 s | CLOSS: -21.8336
+| train          | E: 621 | S: 33924 | R: 162.0000 | G: 1 | D: 00.4 s | CLOSS: -38.3581
+evaluating...
+| eval           | E: 622 | S: 34001 | R: 133.7000 | G: 1
+| train          | E: 622 | S: 34113 | R: -23.0000 | G: 1 | D: 05.0 s | CLOSS: -9.9092
+| train          | E: 623 | S: 34157 | R: 148.0000 | G: 1 | D: 00.9 s | CLOSS: 26.2864
+| train          | E: 624 | S: 34189 | R: 160.0000 | G: 1 | D: 00.7 s | CLOSS: -3.1134
+| train          | E: 625 | S: 34283 | R: 53.0000 | G: 1 | D: 01.9 s | CLOSS: 16.8417
+| train          | E: 626 | S: 34365 | R: 90.0000 | G: 1 | D: 01.6 s | CLOSS: -15.3445
+| train          | E: 627 | S: 34436 | R: 106.0000 | G: 1 | D: 01.4 s | CLOSS: 19.6421
+| train          | E: 628 | S: 34475 | R: 146.0000 | G: 1 | D: 00.8 s | CLOSS: -4.7365
+| train          | E: 629 | S: 34504 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: -22.5590
+| train          | E: 630 | S: 34551 | R: 134.0000 | G: 1 | D: 01.0 s | CLOSS: 37.7965
+| train          | E: 631 | S: 34609 | R: 128.0000 | G: 1 | D: 01.3 s | CLOSS: 8.6342
+| train          | E: 632 | S: 34627 | R: 170.0000 | G: 1 | D: 00.6 s | CLOSS: 8.9808
+| train          | E: 633 | S: 34704 | R: 106.0000 | G: 1 | D: 02.1 s | CLOSS: -9.0222
+| train          | E: 634 | S: 34730 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: -26.3389
+| train          | E: 635 | S: 34772 | R: 146.0000 | G: 1 | D: 00.9 s | CLOSS: 3.8815
+| train          | E: 636 | S: 34868 | R: 84.0000 | G: 1 | D: 02.2 s | CLOSS: -14.1444
+| train          | E: 637 | S: 34947 | R: 106.0000 | G: 1 | D: 01.8 s | CLOSS: 9.0568
+evaluating...
+| eval           | E: 638 | S: 35001 | R: 144.0000 | G: 1
+| train          | E: 638 | S: 35012 | R: 112.0000 | G: 1 | D: 02.1 s | CLOSS: -8.6216
+| train          | E: 639 | S: 35103 | R: 93.0000 | G: 1 | D: 01.9 s | CLOSS: 2.7562
+| train          | E: 640 | S: 35124 | R: 172.0000 | G: 1 | D: 00.9 s | CLOSS: -27.3357
+| train          | E: 641 | S: 35174 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: 2.2913
+| train          | E: 642 | S: 35272 | R: 79.0000 | G: 1 | D: 02.3 s | CLOSS: -9.2323
+| train          | E: 643 | S: 35294 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: 5.4343
+| train          | E: 644 | S: 35347 | R: 131.0000 | G: 1 | D: 01.3 s | CLOSS: 2.6386
+| train          | E: 645 | S: 35388 | R: 142.0000 | G: 1 | D: 01.0 s | CLOSS: -1.6274
+| train          | E: 646 | S: 35423 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: -0.6260
+| train          | E: 647 | S: 35480 | R: 134.0000 | G: 1 | D: 01.3 s | CLOSS: 7.8298
+| train          | E: 648 | S: 35508 | R: 163.0000 | G: 1 | D: 00.7 s | CLOSS: -11.2055
+| train          | E: 649 | S: 35543 | R: 151.0000 | G: 1 | D: 00.9 s | CLOSS: 1.1806
+| train          | E: 650 | S: 35582 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: 18.6257
+| train          | E: 651 | S: 35636 | R: 121.0000 | G: 1 | D: 01.1 s | CLOSS: -10.1706
+| train          | E: 652 | S: 35686 | R: 138.0000 | G: 1 | D: 01.2 s | CLOSS: -3.8106
+| train          | E: 653 | S: 35842 | R: -5.0000 | G: 1 | D: 03.4 s | CLOSS: 1.3708
+| train          | E: 654 | S: 35899 | R: 129.0000 | G: 1 | D: 01.3 s | CLOSS: -7.9180
+| train          | E: 655 | S: 35929 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: 7.9450
+| train          | E: 656 | S: 35974 | R: 141.0000 | G: 1 | D: 01.2 s | CLOSS: 4.8103
+evaluating...
+| eval           | E: 657 | S: 36001 | R: 108.0000 | G: 1
+| train          | E: 657 | S: 36028 | R: 127.0000 | G: 1 | D: 01.9 s | CLOSS: -5.9007
+| train          | E: 658 | S: 36088 | R: 123.0000 | G: 1 | D: 01.4 s | CLOSS: 3.6589
+| train          | E: 659 | S: 36144 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: -17.2979
+| train          | E: 660 | S: 36193 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: 6.1861
+| train          | E: 661 | S: 36241 | R: 128.0000 | G: 1 | D: 01.0 s | CLOSS: 4.6846
+| train          | E: 662 | S: 36331 | R: 93.0000 | G: 1 | D: 02.0 s | CLOSS: 12.7069
+| train          | E: 663 | S: 36367 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: 7.7185
+| train          | E: 664 | S: 36418 | R: 121.0000 | G: 1 | D: 01.3 s | CLOSS: -17.9429
+| train          | E: 665 | S: 36447 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: -1.1036
+| train          | E: 666 | S: 36530 | R: 94.0000 | G: 1 | D: 01.8 s | CLOSS: 10.9570
+| train          | E: 667 | S: 36618 | R: 102.0000 | G: 1 | D: 02.0 s | CLOSS: 7.4039
+| train          | E: 668 | S: 36648 | R: 159.0000 | G: 1 | D: 00.7 s | CLOSS: -25.6821
+| train          | E: 669 | S: 36678 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: 3.7294
+| train          | E: 670 | S: 36739 | R: 120.0000 | G: 1 | D: 01.4 s | CLOSS: -11.6752
+| train          | E: 671 | S: 36770 | R: 145.0000 | G: 1 | D: 00.7 s | CLOSS: 4.4180
+| train          | E: 672 | S: 36912 | R: 37.0000 | G: 1 | D: 02.8 s | CLOSS: 3.6981
+| train          | E: 673 | S: 36938 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: -27.2738
+| train          | E: 674 | S: 36976 | R: 139.0000 | G: 1 | D: 00.8 s | CLOSS: -5.3333
+| train          | E: 675 | S: 36996 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -11.1844
+evaluating...
+| eval           | E: 676 | S: 37001 | R: 126.0000 | G: 1
+| train          | E: 676 | S: 37039 | R: 142.0000 | G: 1 | D: 01.7 s | CLOSS: -14.0110
+| train          | E: 677 | S: 37061 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: -19.3130
+| train          | E: 678 | S: 37140 | R: 93.0000 | G: 1 | D: 01.6 s | CLOSS: -13.8321
+| train          | E: 679 | S: 37184 | R: 139.0000 | G: 1 | D: 01.1 s | CLOSS: 0.8612
+| train          | E: 680 | S: 37266 | R: 87.0000 | G: 1 | D: 01.8 s | CLOSS: -4.9369
+| train          | E: 681 | S: 37342 | R: 107.0000 | G: 1 | D: 01.5 s | CLOSS: -1.9992
+| train          | E: 682 | S: 37358 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: -11.8202
+| train          | E: 683 | S: 37396 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: 8.4665
+| train          | E: 684 | S: 37451 | R: 126.0000 | G: 1 | D: 01.0 s | CLOSS: -0.2388
+| train          | E: 685 | S: 37484 | R: 159.0000 | G: 1 | D: 00.8 s | CLOSS: -5.9434
+| train          | E: 686 | S: 37545 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: -6.0891
+| train          | E: 687 | S: 37599 | R: 132.0000 | G: 1 | D: 01.1 s | CLOSS: 13.8018
+| train          | E: 688 | S: 37720 | R: 51.0000 | G: 1 | D: 02.9 s | CLOSS: 21.7076
+| train          | E: 689 | S: 37756 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: 2.0101
+| train          | E: 690 | S: 37804 | R: 126.0000 | G: 1 | D: 01.4 s | CLOSS: -25.0184
+| train          | E: 691 | S: 37843 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: 35.7299
+| train          | E: 692 | S: 37935 | R: 82.0000 | G: 1 | D: 02.2 s | CLOSS: 8.1206
+evaluating...
+| eval           | E: 693 | S: 38001 | R: 121.9000 | G: 1
+| train          | E: 693 | S: 38004 | R: 120.0000 | G: 1 | D: 02.5 s | CLOSS: 12.0938
+| train          | E: 694 | S: 38092 | R: 82.0000 | G: 1 | D: 02.0 s | CLOSS: 0.5415
+| train          | E: 695 | S: 38111 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 1.0438
+| train          | E: 696 | S: 38196 | R: 95.0000 | G: 1 | D: 02.2 s | CLOSS: 0.6838
+| train          | E: 697 | S: 38230 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: 22.8300
+| train          | E: 698 | S: 38300 | R: 105.0000 | G: 1 | D: 01.7 s | CLOSS: 20.1796
+| train          | E: 699 | S: 38334 | R: 150.0000 | G: 1 | D: 00.9 s | CLOSS: -13.5107
+| train          | E: 700 | S: 38370 | R: 154.0000 | G: 1 | D: 00.9 s | CLOSS: -47.6385
+| train          | E: 701 | S: 38446 | R: 93.0000 | G: 1 | D: 01.5 s | CLOSS: 28.3431
+| train          | E: 702 | S: 38499 | R: 139.0000 | G: 1 | D: 01.1 s | CLOSS: 9.6156
+| train          | E: 703 | S: 38670 | R: -11.0000 | G: 1 | D: 03.6 s | CLOSS: 4.1159
+| train          | E: 704 | S: 38715 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: 12.1130
+| train          | E: 705 | S: 38745 | R: 157.0000 | G: 1 | D: 00.7 s | CLOSS: 27.9880
+| train          | E: 706 | S: 38860 | R: 61.0000 | G: 1 | D: 02.5 s | CLOSS: -9.7317
+| train          | E: 707 | S: 38914 | R: 126.0000 | G: 1 | D: 01.1 s | CLOSS: -4.0044
+| train          | E: 708 | S: 38934 | R: 166.0000 | G: 1 | D: 00.3 s | CLOSS: -37.5853
+| train          | E: 709 | S: 38989 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: 5.3349
+evaluating...
+| eval           | E: 710 | S: 39001 | R: 114.7000 | G: 1
+| train          | E: 710 | S: 39044 | R: 131.0000 | G: 1 | D: 01.7 s | CLOSS: 7.7608
+| train          | E: 711 | S: 39102 | R: 107.0000 | G: 1 | D: 01.7 s | CLOSS: 5.3855
+| train          | E: 712 | S: 39275 | R: -10.0000 | G: 1 | D: 03.4 s | CLOSS: 8.4876
+| train          | E: 713 | S: 39393 | R: 46.0000 | G: 1 | D: 02.7 s | CLOSS: -6.3921
+| train          | E: 714 | S: 39421 | R: 154.0000 | G: 1 | D: 00.5 s | CLOSS: 18.6258
+| train          | E: 715 | S: 39448 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: -10.4659
+| train          | E: 716 | S: 39514 | R: 119.0000 | G: 1 | D: 01.4 s | CLOSS: 6.9806
+| train          | E: 717 | S: 39557 | R: 137.0000 | G: 1 | D: 01.0 s | CLOSS: 9.4140
+| train          | E: 718 | S: 39584 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: 8.3742
+| train          | E: 719 | S: 39619 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: -3.6041
+| train          | E: 720 | S: 39660 | R: 148.0000 | G: 1 | D: 01.1 s | CLOSS: 13.2742
+| train          | E: 721 | S: 39710 | R: 122.0000 | G: 1 | D: 01.2 s | CLOSS: -30.2378
+| train          | E: 722 | S: 39818 | R: 58.0000 | G: 1 | D: 02.5 s | CLOSS: -2.2900
+| train          | E: 723 | S: 39846 | R: 162.0000 | G: 1 | D: 00.8 s | CLOSS: -12.6175
+| train          | E: 724 | S: 39869 | R: 163.0000 | G: 1 | D: 00.7 s | CLOSS: 21.9802
+| train          | E: 725 | S: 39914 | R: 132.0000 | G: 1 | D: 01.3 s | CLOSS: 31.4588
+| train          | E: 726 | S: 39951 | R: 146.0000 | G: 1 | D: 00.7 s | CLOSS: -24.5739
+evaluating...
+| eval           | E: 727 | S: 40001 | R: 120.7000 | G: 1
+| train          | E: 727 | S: 40051 | R: 57.0000 | G: 1 | D: 03.0 s | CLOSS: -13.7969
+| train          | E: 728 | S: 40119 | R: 109.0000 | G: 1 | D: 02.1 s | CLOSS: 11.9556
+| train          | E: 729 | S: 40197 | R: 103.0000 | G: 1 | D: 01.6 s | CLOSS: 9.2245
+| train          | E: 730 | S: 40249 | R: 138.0000 | G: 1 | D: 01.3 s | CLOSS: -23.8601
+| train          | E: 731 | S: 40268 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 7.2383
+| train          | E: 732 | S: 40315 | R: 136.0000 | G: 1 | D: 01.0 s | CLOSS: 2.8100
+| train          | E: 733 | S: 40331 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: -32.5540
+| train          | E: 734 | S: 40400 | R: 96.0000 | G: 1 | D: 02.0 s | CLOSS: 10.0124
+| train          | E: 735 | S: 40416 | R: 175.0000 | G: 1 | D: 00.4 s | CLOSS: -27.1731
+| train          | E: 736 | S: 40430 | R: 178.0000 | G: 1 | D: 00.2 s | CLOSS: 39.0083
+| train          | E: 737 | S: 40601 | R: -22.0000 | G: 1 | D: 04.2 s | CLOSS: -3.1141
+| train          | E: 738 | S: 40637 | R: 152.0000 | G: 1 | D: 00.7 s | CLOSS: 9.0870
+| train          | E: 739 | S: 40828 | R: -34.0000 | G: 1 | D: 03.9 s | CLOSS: -2.4719
+| train          | E: 740 | S: 40879 | R: 136.0000 | G: 1 | D: 01.1 s | CLOSS: -4.9200
+| train          | E: 741 | S: 40934 | R: 132.0000 | G: 1 | D: 01.1 s | CLOSS: -0.0782
+| train          | E: 742 | S: 40970 | R: 158.0000 | G: 1 | D: 00.7 s | CLOSS: -9.3819
+| train          | E: 743 | S: 40998 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: -30.2660
+evaluating...
+| eval           | E: 744 | S: 41001 | R: 115.2000 | G: 1
+| train          | E: 744 | S: 41023 | R: 160.0000 | G: 1 | D: 01.3 s | CLOSS: -12.6091
+| train          | E: 745 | S: 41046 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: 3.9006
+| train          | E: 746 | S: 41088 | R: 143.0000 | G: 1 | D: 00.9 s | CLOSS: -6.2243
+| train          | E: 747 | S: 41136 | R: 120.0000 | G: 1 | D: 01.1 s | CLOSS: -5.3995
+| train          | E: 748 | S: 41223 | R: 89.0000 | G: 1 | D: 02.0 s | CLOSS: 11.0679
+| train          | E: 749 | S: 41286 | R: 118.0000 | G: 1 | D: 01.2 s | CLOSS: -4.6699
+| train          | E: 750 | S: 41408 | R: 57.0000 | G: 1 | D: 02.7 s | CLOSS: 6.0612
+| train          | E: 751 | S: 41507 | R: 76.0000 | G: 1 | D: 02.2 s | CLOSS: -2.0234
+| train          | E: 752 | S: 41545 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: -20.6287
+| train          | E: 753 | S: 41574 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: -25.8310
+| train          | E: 754 | S: 41627 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: 3.0230
+| train          | E: 755 | S: 41643 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: -16.4951
+| train          | E: 756 | S: 41741 | R: 70.0000 | G: 1 | D: 02.6 s | CLOSS: 5.1796
+| train          | E: 757 | S: 41792 | R: 135.0000 | G: 1 | D: 01.1 s | CLOSS: -14.2002
+| train          | E: 758 | S: 41850 | R: 130.0000 | G: 1 | D: 02.7 s | CLOSS: -8.8707
+| train          | E: 759 | S: 41892 | R: 146.0000 | G: 1 | D: 04.7 s | CLOSS: 26.1383
+| train          | E: 760 | S: 41923 | R: 155.0000 | G: 1 | D: 01.2 s | CLOSS: -21.7240
+| train          | E: 761 | S: 41947 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: -15.7544
+| train          | E: 762 | S: 41990 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: 10.7803
+evaluating...
+| eval           | E: 763 | S: 42001 | R: 143.8000 | G: 1
+| train          | E: 763 | S: 42012 | R: 170.0000 | G: 1 | D: 01.0 s | CLOSS: 26.0548
+| train          | E: 764 | S: 42037 | R: 155.0000 | G: 1 | D: 00.5 s | CLOSS: 22.4852
+| train          | E: 765 | S: 42066 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 15.3798
+| train          | E: 766 | S: 42180 | R: 68.0000 | G: 1 | D: 03.0 s | CLOSS: 3.9383
+| train          | E: 767 | S: 42243 | R: 124.0000 | G: 1 | D: 01.9 s | CLOSS: -20.0596
+| train          | E: 768 | S: 42299 | R: 128.0000 | G: 1 | D: 01.4 s | CLOSS: 1.6856
+| train          | E: 769 | S: 42325 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: -10.5324
+| train          | E: 770 | S: 42348 | R: 165.0000 | G: 1 | D: 01.0 s | CLOSS: 24.9239
+| train          | E: 771 | S: 42394 | R: 131.0000 | G: 1 | D: 03.5 s | CLOSS: 8.6362
+| train          | E: 772 | S: 42481 | R: 99.0000 | G: 1 | D: 07.7 s | CLOSS: 18.9541
+| train          | E: 773 | S: 42550 | R: 99.0000 | G: 1 | D: 04.4 s | CLOSS: -14.9262
+| train          | E: 774 | S: 42635 | R: 95.0000 | G: 1 | D: 04.6 s | CLOSS: 3.1831
+| train          | E: 775 | S: 42683 | R: 134.0000 | G: 1 | D: 01.2 s | CLOSS: -6.2534
+| train          | E: 776 | S: 42703 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: -9.1945
+| train          | E: 777 | S: 42743 | R: 143.0000 | G: 1 | D: 00.8 s | CLOSS: -41.2305
+| train          | E: 778 | S: 42765 | R: 167.0000 | G: 1 | D: 00.6 s | CLOSS: 22.3970
+| train          | E: 779 | S: 42784 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -1.6674
+| train          | E: 780 | S: 42803 | R: 173.0000 | G: 1 | D: 00.5 s | CLOSS: 23.5416
+| train          | E: 781 | S: 42864 | R: 112.0000 | G: 1 | D: 01.5 s | CLOSS: -0.0723
+| train          | E: 782 | S: 42908 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: -17.7935
+| train          | E: 783 | S: 42964 | R: 112.0000 | G: 1 | D: 01.6 s | CLOSS: -10.3920
+| train          | E: 784 | S: 42976 | R: 180.0000 | G: 1 | D: 00.3 s | CLOSS: -19.0685
+evaluating...
+| eval           | E: 785 | S: 43001 | R: 151.0000 | G: 1
+| train          | E: 785 | S: 43006 | R: 161.0000 | G: 1 | D: 01.6 s | CLOSS: -21.9821
+| train          | E: 786 | S: 43060 | R: 135.0000 | G: 1 | D: 01.6 s | CLOSS: -9.0512
+| train          | E: 787 | S: 43131 | R: 110.0000 | G: 1 | D: 02.7 s | CLOSS: -26.6960
+| train          | E: 788 | S: 43166 | R: 153.0000 | G: 1 | D: 00.8 s | CLOSS: 34.1530
+| train          | E: 789 | S: 43197 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 5.0111
+| train          | E: 790 | S: 43219 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: -12.4301
+| train          | E: 791 | S: 43260 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: -23.7253
+| train          | E: 792 | S: 43311 | R: 134.0000 | G: 1 | D: 01.2 s | CLOSS: -7.8706
+| train          | E: 793 | S: 43369 | R: 130.0000 | G: 1 | D: 01.0 s | CLOSS: 7.1685
+| train          | E: 794 | S: 43396 | R: 164.0000 | G: 1 | D: 00.7 s | CLOSS: -11.4560
+| train          | E: 795 | S: 43453 | R: 123.0000 | G: 1 | D: 01.2 s | CLOSS: 16.7036
+| train          | E: 796 | S: 43474 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 19.3794
+| train          | E: 797 | S: 43514 | R: 131.0000 | G: 1 | D: 01.2 s | CLOSS: -21.1938
+| train          | E: 798 | S: 43756 | R: -79.0000 | G: 1 | D: 10.1 s | CLOSS: -11.8815
+| train          | E: 799 | S: 43779 | R: 163.0000 | G: 1 | D: 01.0 s | CLOSS: 2.3266
+| train          | E: 800 | S: 43818 | R: 142.0000 | G: 1 | D: 01.2 s | CLOSS: 7.2871
+| train          | E: 801 | S: 43835 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 25.1356
+| train          | E: 802 | S: 43866 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: 8.0632
+| train          | E: 803 | S: 43898 | R: 152.0000 | G: 1 | D: 00.8 s | CLOSS: 24.0867
+evaluating...
+| eval           | E: 804 | S: 44001 | R: 149.9000 | G: 1
+| train          | E: 804 | S: 44004 | R: 66.0000 | G: 1 | D: 02.8 s | CLOSS: -0.5327
+| train          | E: 805 | S: 44107 | R: 69.0000 | G: 1 | D: 04.4 s | CLOSS: -12.0506
+| train          | E: 806 | S: 44154 | R: 137.0000 | G: 1 | D: 01.6 s | CLOSS: -7.2474
+| train          | E: 807 | S: 44224 | R: 98.0000 | G: 1 | D: 03.0 s | CLOSS: 16.5060
+| train          | E: 808 | S: 44288 | R: 126.0000 | G: 1 | D: 04.8 s | CLOSS: 11.2433
+| train          | E: 809 | S: 44337 | R: 133.0000 | G: 1 | D: 03.1 s | CLOSS: 14.3265
+| train          | E: 810 | S: 44409 | R: 117.0000 | G: 1 | D: 06.1 s | CLOSS: -13.5230
+| train          | E: 811 | S: 44437 | R: 166.0000 | G: 1 | D: 03.3 s | CLOSS: 46.8218
+| train          | E: 812 | S: 44487 | R: 122.0000 | G: 1 | D: 03.6 s | CLOSS: -2.5429
+| train          | E: 813 | S: 44544 | R: 123.0000 | G: 1 | D: 01.6 s | CLOSS: -9.3022
+| train          | E: 814 | S: 44577 | R: 146.0000 | G: 1 | D: 01.3 s | CLOSS: 22.4120
+| train          | E: 815 | S: 44720 | R: 17.0000 | G: 1 | D: 05.1 s | CLOSS: -13.1213
+| train          | E: 816 | S: 44749 | R: 158.0000 | G: 1 | D: 01.5 s | CLOSS: -20.8684
+| train          | E: 817 | S: 44780 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: 16.2748
+| train          | E: 818 | S: 44813 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: -6.6019
+| train          | E: 819 | S: 44838 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: -9.1879
+| train          | E: 820 | S: 44900 | R: 119.0000 | G: 1 | D: 01.2 s | CLOSS: 2.6153
+| train          | E: 821 | S: 44997 | R: 84.0000 | G: 1 | D: 02.3 s | CLOSS: -5.8797
+evaluating...
+| eval           | E: 822 | S: 45001 | R: 127.5000 | G: 1
+| train          | E: 822 | S: 45019 | R: 169.0000 | G: 1 | D: 01.3 s | CLOSS: -57.5686
+| train          | E: 823 | S: 45097 | R: 101.0000 | G: 1 | D: 01.7 s | CLOSS: -0.6685
+| train          | E: 824 | S: 45137 | R: 150.0000 | G: 1 | D: 00.9 s | CLOSS: 26.5642
+| train          | E: 825 | S: 45166 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: 19.3125
+| train          | E: 826 | S: 45216 | R: 135.0000 | G: 1 | D: 01.0 s | CLOSS: 8.5768
+| train          | E: 827 | S: 45296 | R: 98.0000 | G: 1 | D: 01.6 s | CLOSS: 18.9562
+| train          | E: 828 | S: 45340 | R: 141.0000 | G: 1 | D: 01.0 s | CLOSS: -16.0431
+| train          | E: 829 | S: 45402 | R: 124.0000 | G: 1 | D: 01.4 s | CLOSS: -16.9395
+| train          | E: 830 | S: 45433 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: 1.2944
+| train          | E: 831 | S: 45465 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: -47.3705
+| train          | E: 832 | S: 45475 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: -63.0975
+| train          | E: 833 | S: 45537 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: 30.8303
+| train          | E: 834 | S: 45635 | R: 71.0000 | G: 1 | D: 01.9 s | CLOSS: -3.4804
+| train          | E: 835 | S: 45665 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: -37.9349
+| train          | E: 836 | S: 45677 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: -84.9417
+| train          | E: 837 | S: 45719 | R: 141.0000 | G: 1 | D: 01.3 s | CLOSS: 6.1584
+| train          | E: 838 | S: 45768 | R: 134.0000 | G: 1 | D: 01.1 s | CLOSS: 16.5690
+| train          | E: 839 | S: 45877 | R: 60.0000 | G: 1 | D: 02.6 s | CLOSS: 3.2037
+| train          | E: 840 | S: 45898 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: -13.1374
+| train          | E: 841 | S: 45913 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: -31.6679
+| train          | E: 842 | S: 45959 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: 31.0887
+evaluating...
+| eval           | E: 843 | S: 46001 | R: 123.8000 | G: 1
+| train          | E: 843 | S: 46042 | R: 99.0000 | G: 1 | D: 02.6 s | CLOSS: 7.6024
+| train          | E: 844 | S: 46055 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 58.6288
+| train          | E: 845 | S: 46121 | R: 107.0000 | G: 1 | D: 01.5 s | CLOSS: 22.2325
+| train          | E: 846 | S: 46188 | R: 108.0000 | G: 1 | D: 01.3 s | CLOSS: -13.6100
+| train          | E: 847 | S: 46231 | R: 137.0000 | G: 1 | D: 00.9 s | CLOSS: 15.4883
+| train          | E: 848 | S: 46292 | R: 121.0000 | G: 1 | D: 01.3 s | CLOSS: 12.8490
+| train          | E: 849 | S: 46316 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: -4.5789
+| train          | E: 850 | S: 46358 | R: 142.0000 | G: 1 | D: 00.9 s | CLOSS: -8.6281
+| train          | E: 851 | S: 46433 | R: 91.0000 | G: 1 | D: 01.6 s | CLOSS: -2.3744
+| train          | E: 852 | S: 46454 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 29.7028
+| train          | E: 853 | S: 46496 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: -34.6343
+| train          | E: 854 | S: 46524 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: -61.3160
+| train          | E: 855 | S: 46537 | R: 177.0000 | G: 1 | D: 00.2 s | CLOSS: -29.3505
+| train          | E: 856 | S: 46557 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: 40.0111
+| train          | E: 857 | S: 46601 | R: 147.0000 | G: 1 | D: 01.3 s | CLOSS: -8.9015
+| train          | E: 858 | S: 46636 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: -5.4265
+| train          | E: 859 | S: 46685 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: 17.3364
+| train          | E: 860 | S: 46708 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: 20.7729
+| train          | E: 861 | S: 46745 | R: 143.0000 | G: 1 | D: 01.0 s | CLOSS: 15.3265
+| train          | E: 862 | S: 46808 | R: 114.0000 | G: 1 | D: 01.6 s | CLOSS: 7.0200
+| train          | E: 863 | S: 46868 | R: 123.0000 | G: 1 | D: 01.5 s | CLOSS: -16.0638
+| train          | E: 864 | S: 46909 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: -23.8225
+| train          | E: 865 | S: 46939 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: -0.8213
+| train          | E: 866 | S: 46961 | R: 170.0000 | G: 1 | D: 00.7 s | CLOSS: 2.5224
+evaluating...
+| eval           | E: 867 | S: 47001 | R: 44.0000 | G: 1
+| train          | E: 867 | S: 47025 | R: 124.0000 | G: 1 | D: 02.9 s | CLOSS: -11.7543
+| train          | E: 868 | S: 47107 | R: 97.0000 | G: 1 | D: 01.7 s | CLOSS: -19.3991
+| train          | E: 869 | S: 47125 | R: 170.0000 | G: 1 | D: 00.4 s | CLOSS: -6.5241
+| train          | E: 870 | S: 47173 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: -12.9369
+| train          | E: 871 | S: 47291 | R: 56.0000 | G: 1 | D: 02.8 s | CLOSS: 5.2444
+| train          | E: 872 | S: 47332 | R: 140.0000 | G: 1 | D: 00.8 s | CLOSS: -15.5042
+| train          | E: 873 | S: 47407 | R: 101.0000 | G: 1 | D: 01.6 s | CLOSS: -11.7613
+| train          | E: 874 | S: 47467 | R: 127.0000 | G: 1 | D: 01.3 s | CLOSS: 13.7324
+| train          | E: 875 | S: 47526 | R: 120.0000 | G: 1 | D: 01.3 s | CLOSS: -16.6718
+| train          | E: 876 | S: 47645 | R: 56.0000 | G: 1 | D: 03.0 s | CLOSS: 4.0569
+| train          | E: 877 | S: 47705 | R: 130.0000 | G: 1 | D: 01.2 s | CLOSS: -7.3549
+| train          | E: 878 | S: 47755 | R: 139.0000 | G: 1 | D: 01.3 s | CLOSS: 32.5897
+| train          | E: 879 | S: 47770 | R: 177.0000 | G: 1 | D: 00.4 s | CLOSS: 36.9143
+| train          | E: 880 | S: 47871 | R: 53.0000 | G: 1 | D: 02.3 s | CLOSS: 2.3000
+| train          | E: 881 | S: 47934 | R: 105.0000 | G: 1 | D: 01.3 s | CLOSS: 8.2244
+| train          | E: 882 | S: 47960 | R: 165.0000 | G: 1 | D: 00.7 s | CLOSS: 6.6099
+evaluating...
+| eval           | E: 883 | S: 48001 | R: 128.8000 | G: 1
+| train          | E: 883 | S: 48091 | R: 50.0000 | G: 1 | D: 03.9 s | CLOSS: 23.3159
+| train          | E: 884 | S: 48156 | R: 122.0000 | G: 1 | D: 01.4 s | CLOSS: 7.0817
+| train          | E: 885 | S: 48203 | R: 118.0000 | G: 1 | D: 01.0 s | CLOSS: 20.1424
+| train          | E: 886 | S: 48233 | R: 160.0000 | G: 1 | D: 01.0 s | CLOSS: 19.1960
+| train          | E: 887 | S: 48296 | R: 118.0000 | G: 1 | D: 01.3 s | CLOSS: 10.8519
+| train          | E: 888 | S: 48320 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: 10.5490
+| train          | E: 889 | S: 48342 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: -15.2871
+| train          | E: 890 | S: 48505 | R: 7.0000 | G: 1 | D: 03.7 s | CLOSS: -11.6614
+| train          | E: 891 | S: 48577 | R: 102.0000 | G: 1 | D: 01.6 s | CLOSS: 7.3633
+| train          | E: 892 | S: 48612 | R: 153.0000 | G: 1 | D: 00.6 s | CLOSS: -21.9986
+| train          | E: 893 | S: 48643 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: -26.2438
+| train          | E: 894 | S: 48662 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: 3.9891
+| train          | E: 895 | S: 48692 | R: 157.0000 | G: 1 | D: 00.7 s | CLOSS: -36.4519
+| train          | E: 896 | S: 48708 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: -37.8030
+| train          | E: 897 | S: 48762 | R: 126.0000 | G: 1 | D: 01.4 s | CLOSS: -24.7983
+| train          | E: 898 | S: 48793 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: -25.6910
+| train          | E: 899 | S: 48827 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: -8.8644
+| train          | E: 900 | S: 48862 | R: 157.0000 | G: 1 | D: 01.1 s | CLOSS: 1.0058
+| train          | E: 901 | S: 48904 | R: 142.0000 | G: 1 | D: 01.0 s | CLOSS: -17.7986
+| train          | E: 902 | S: 48985 | R: 86.0000 | G: 1 | D: 01.6 s | CLOSS: -0.1765
+evaluating...
+| eval           | E: 903 | S: 49001 | R: 127.8000 | G: 1
+| train          | E: 903 | S: 49097 | R: 62.0000 | G: 1 | D: 02.8 s | CLOSS: -23.4172
+| train          | E: 904 | S: 49157 | R: 107.0000 | G: 1 | D: 01.5 s | CLOSS: 26.4840
+| train          | E: 905 | S: 49195 | R: 148.0000 | G: 1 | D: 01.1 s | CLOSS: -1.7896
+| train          | E: 906 | S: 49263 | R: 116.0000 | G: 1 | D: 01.2 s | CLOSS: 20.1785
+| train          | E: 907 | S: 49328 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: -29.9853
+| train          | E: 908 | S: 49370 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: 61.1139
+| train          | E: 909 | S: 49411 | R: 146.0000 | G: 1 | D: 00.9 s | CLOSS: 18.3326
+| train          | E: 910 | S: 49458 | R: 142.0000 | G: 1 | D: 01.0 s | CLOSS: 2.9265
+| train          | E: 911 | S: 49567 | R: 70.0000 | G: 1 | D: 04.4 s | CLOSS: -0.2058
+| train          | E: 912 | S: 49647 | R: 96.0000 | G: 1 | D: 02.2 s | CLOSS: -27.1930
+| train          | E: 913 | S: 49710 | R: 121.0000 | G: 1 | D: 02.0 s | CLOSS: -7.5118
+| train          | E: 914 | S: 49728 | R: 174.0000 | G: 1 | D: 01.2 s | CLOSS: 9.0553
+| train          | E: 915 | S: 49755 | R: 167.0000 | G: 1 | D: 00.7 s | CLOSS: -19.9329
+| train          | E: 916 | S: 49790 | R: 153.0000 | G: 1 | D: 03.6 s | CLOSS: 27.7740
+| train          | E: 917 | S: 49841 | R: 132.0000 | G: 1 | D: 03.8 s | CLOSS: 5.8863
+| train          | E: 918 | S: 49877 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 15.1168
+| train          | E: 919 | S: 49912 | R: 156.0000 | G: 1 | D: 00.8 s | CLOSS: 8.9123
+| train          | E: 920 | S: 49961 | R: 135.0000 | G: 1 | D: 03.3 s | CLOSS: 28.9412
+evaluating...
+| eval           | E: 921 | S: 50001 | R: 139.5000 | G: 1
+| train          | E: 921 | S: 50028 | R: 118.0000 | G: 1 | D: 04.8 s | CLOSS: -4.4101
+| train          | E: 922 | S: 50114 | R: 99.0000 | G: 1 | D: 07.0 s | CLOSS: 0.4325
+| train          | E: 923 | S: 50131 | R: 173.0000 | G: 1 | D: 00.6 s | CLOSS: 41.5457
+| train          | E: 924 | S: 50147 | R: 178.0000 | G: 1 | D: 00.3 s | CLOSS: -58.8227
+| train          | E: 925 | S: 50165 | R: 175.0000 | G: 1 | D: 00.6 s | CLOSS: 40.2528
+| train          | E: 926 | S: 50205 | R: 149.0000 | G: 1 | D: 01.1 s | CLOSS: 10.1052
+| train          | E: 927 | S: 50291 | R: 84.0000 | G: 1 | D: 02.6 s | CLOSS: -32.6241
+| train          | E: 928 | S: 50319 | R: 156.0000 | G: 1 | D: 01.1 s | CLOSS: 4.4855
+| train          | E: 929 | S: 50391 | R: 80.0000 | G: 1 | D: 04.5 s | CLOSS: 9.2814
+| train          | E: 930 | S: 50508 | R: 63.0000 | G: 1 | D: 04.2 s | CLOSS: 6.5128
+| train          | E: 931 | S: 50531 | R: 169.0000 | G: 1 | D: 01.3 s | CLOSS: 28.7591
+| train          | E: 932 | S: 50567 | R: 139.0000 | G: 1 | D: 02.6 s | CLOSS: 39.2089
+| train          | E: 933 | S: 50625 | R: 120.0000 | G: 1 | D: 01.1 s | CLOSS: 11.8851
+| train          | E: 934 | S: 50685 | R: 126.0000 | G: 1 | D: 02.6 s | CLOSS: 15.8246
+| train          | E: 935 | S: 50738 | R: 128.0000 | G: 1 | D: 01.7 s | CLOSS: -24.1423
+| train          | E: 936 | S: 50795 | R: 124.0000 | G: 1 | D: 03.4 s | CLOSS: 30.8540
+| train          | E: 937 | S: 50805 | R: 184.0000 | G: 1 | D: 00.9 s | CLOSS: 21.3392
+| train          | E: 938 | S: 50845 | R: 142.0000 | G: 1 | D: 06.4 s | CLOSS: 36.7010
+| train          | E: 939 | S: 50927 | R: 101.0000 | G: 1 | D: 03.1 s | CLOSS: -18.5737
+| train          | E: 940 | S: 50962 | R: 146.0000 | G: 1 | D: 01.4 s | CLOSS: -5.7756
+evaluating...
+| eval           | E: 941 | S: 51001 | R: 91.0000 | G: 1
+| train          | E: 941 | S: 51008 | R: 127.0000 | G: 1 | D: 02.9 s | CLOSS: 2.2767
+| train          | E: 942 | S: 51069 | R: 123.0000 | G: 1 | D: 03.4 s | CLOSS: -14.0448
+| train          | E: 943 | S: 51090 | R: 171.0000 | G: 1 | D: 01.5 s | CLOSS: 27.2541
+| train          | E: 944 | S: 51148 | R: 125.0000 | G: 1 | D: 03.2 s | CLOSS: -20.3324
+| train          | E: 945 | S: 51216 | R: 112.0000 | G: 1 | D: 01.4 s | CLOSS: -2.3285
+| train          | E: 946 | S: 51283 | R: 109.0000 | G: 1 | D: 01.7 s | CLOSS: -15.2743
+| train          | E: 947 | S: 51309 | R: 159.0000 | G: 1 | D: 00.7 s | CLOSS: 2.1929
+| train          | E: 948 | S: 51373 | R: 119.0000 | G: 1 | D: 01.8 s | CLOSS: -3.2274
+| train          | E: 949 | S: 51494 | R: 51.0000 | G: 1 | D: 02.8 s | CLOSS: -16.1348
+| train          | E: 950 | S: 51526 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: -11.0758
+| train          | E: 951 | S: 51559 | R: 152.0000 | G: 1 | D: 00.6 s | CLOSS: -13.1615
+| train          | E: 952 | S: 51598 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: -25.3854
+| train          | E: 953 | S: 51676 | R: 84.0000 | G: 1 | D: 01.7 s | CLOSS: -18.7816
+| train          | E: 954 | S: 51712 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: 26.8551
+| train          | E: 955 | S: 51756 | R: 125.0000 | G: 1 | D: 00.9 s | CLOSS: -52.2656
+| train          | E: 956 | S: 51822 | R: 107.0000 | G: 1 | D: 01.8 s | CLOSS: -11.9506
+| train          | E: 957 | S: 51860 | R: 151.0000 | G: 1 | D: 00.9 s | CLOSS: 18.7027
+| train          | E: 958 | S: 51922 | R: 117.0000 | G: 1 | D: 01.3 s | CLOSS: -12.6726
+| train          | E: 959 | S: 51959 | R: 147.0000 | G: 1 | D: 00.9 s | CLOSS: -2.2892
+| train          | E: 960 | S: 51989 | R: 149.0000 | G: 1 | D: 00.6 s | CLOSS: 41.7885
+evaluating...
+| eval           | E: 961 | S: 52001 | R: 130.0000 | G: 1
+| train          | E: 961 | S: 52072 | R: 105.0000 | G: 1 | D: 03.0 s | CLOSS: 16.0931
+| train          | E: 962 | S: 52128 | R: 128.0000 | G: 1 | D: 01.5 s | CLOSS: -4.3211
+| train          | E: 963 | S: 52224 | R: 78.0000 | G: 1 | D: 04.2 s | CLOSS: 11.9225
+| train          | E: 964 | S: 52302 | R: 97.0000 | G: 1 | D: 01.7 s | CLOSS: 3.6133
+| train          | E: 965 | S: 52327 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: -29.8274
+| train          | E: 966 | S: 52352 | R: 167.0000 | G: 1 | D: 01.0 s | CLOSS: -13.4280
+| train          | E: 967 | S: 52368 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 18.1592
+| train          | E: 968 | S: 52465 | R: 80.0000 | G: 1 | D: 03.1 s | CLOSS: 8.5774
+| train          | E: 969 | S: 52532 | R: 111.0000 | G: 1 | D: 01.8 s | CLOSS: -44.5753
+| train          | E: 970 | S: 52570 | R: 145.0000 | G: 1 | D: 00.7 s | CLOSS: 2.6518
+| train          | E: 971 | S: 52599 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: -8.3407
+| train          | E: 972 | S: 52652 | R: 129.0000 | G: 1 | D: 01.2 s | CLOSS: 0.5239
+| train          | E: 973 | S: 52711 | R: 130.0000 | G: 1 | D: 01.4 s | CLOSS: 2.2339
+| train          | E: 974 | S: 52766 | R: 130.0000 | G: 1 | D: 01.3 s | CLOSS: -4.2527
+| train          | E: 975 | S: 52813 | R: 137.0000 | G: 1 | D: 01.0 s | CLOSS: 8.7681
+| train          | E: 976 | S: 52831 | R: 175.0000 | G: 1 | D: 00.5 s | CLOSS: -4.1610
+| train          | E: 977 | S: 52991 | R: -21.0000 | G: 1 | D: 03.6 s | CLOSS: 12.5356
+evaluating...
+| eval           | E: 978 | S: 53001 | R: 108.5000 | G: 1
+| train          | E: 978 | S: 53037 | R: 134.0000 | G: 1 | D: 02.0 s | CLOSS: -10.4536
+| train          | E: 979 | S: 53090 | R: 130.0000 | G: 1 | D: 01.2 s | CLOSS: 5.5122
+| train          | E: 980 | S: 53197 | R: 75.0000 | G: 1 | D: 02.4 s | CLOSS: 4.7052
+| train          | E: 981 | S: 53274 | R: 94.0000 | G: 1 | D: 01.9 s | CLOSS: 12.7195
+| train          | E: 982 | S: 53313 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: -15.9642
+| train          | E: 983 | S: 53374 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: -35.4862
+| train          | E: 984 | S: 53429 | R: 132.0000 | G: 1 | D: 01.6 s | CLOSS: 1.4766
+| train          | E: 985 | S: 53454 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: -1.2460
+| train          | E: 986 | S: 53569 | R: 68.0000 | G: 1 | D: 02.5 s | CLOSS: 6.4587
+| train          | E: 987 | S: 53627 | R: 129.0000 | G: 1 | D: 01.2 s | CLOSS: -5.7251
+| train          | E: 988 | S: 53665 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: -20.7739
+| train          | E: 989 | S: 53733 | R: 108.0000 | G: 1 | D: 01.4 s | CLOSS: -3.0976
+| train          | E: 990 | S: 53760 | R: 163.0000 | G: 1 | D: 00.9 s | CLOSS: -8.9147
+| train          | E: 991 | S: 53844 | R: 94.0000 | G: 1 | D: 02.2 s | CLOSS: 2.3086
+| train          | E: 992 | S: 53892 | R: 136.0000 | G: 1 | D: 01.0 s | CLOSS: -27.8231
+| train          | E: 993 | S: 53929 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 16.4895
+| train          | E: 994 | S: 53950 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 28.6155
+| train          | E: 995 | S: 53974 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 4.6646
+| train          | E: 996 | S: 54000 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: -7.9229
+evaluating...
+| eval           | E: 997 | S: 54001 | R: 127.9000 | G: 1
+| train          | E: 997 | S: 54084 | R: 97.0000 | G: 1 | D: 02.7 s | CLOSS: -34.3521
+| train          | E: 998 | S: 54111 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: -27.9179
+| train          | E: 999 | S: 54143 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: -44.7750
+| train          | E: 1000 | S: 54205 | R: 113.0000 | G: 1 | D: 01.2 s | CLOSS: 19.5894
+| train          | E: 1001 | S: 54239 | R: 158.0000 | G: 1 | D: 00.7 s | CLOSS: -3.9257
+| train          | E: 1002 | S: 54264 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: -39.7701
+| train          | E: 1003 | S: 54394 | R: 39.0000 | G: 1 | D: 03.1 s | CLOSS: 0.5248
+| train          | E: 1004 | S: 54412 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -13.3518
+| train          | E: 1005 | S: 54451 | R: 150.0000 | G: 1 | D: 00.8 s | CLOSS: 56.1083
+| train          | E: 1006 | S: 54506 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: 28.1591
+| train          | E: 1007 | S: 54570 | R: 120.0000 | G: 1 | D: 01.5 s | CLOSS: -9.6563
+| train          | E: 1008 | S: 54620 | R: 123.0000 | G: 1 | D: 00.9 s | CLOSS: -6.8281
+| train          | E: 1009 | S: 54687 | R: 112.0000 | G: 1 | D: 01.6 s | CLOSS: 8.7185
+| train          | E: 1010 | S: 54777 | R: 95.0000 | G: 1 | D: 02.2 s | CLOSS: -20.7295
+| train          | E: 1011 | S: 54809 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: -35.2069
+| train          | E: 1012 | S: 54879 | R: 115.0000 | G: 1 | D: 01.6 s | CLOSS: 5.6289
+| train          | E: 1013 | S: 54951 | R: 102.0000 | G: 1 | D: 01.6 s | CLOSS: -19.0851
+evaluating...
+| eval           | E: 1014 | S: 55001 | R: 133.3000 | G: 1
+| train          | E: 1014 | S: 55034 | R: 86.0000 | G: 1 | D: 02.6 s | CLOSS: -0.6910
+| train          | E: 1015 | S: 55103 | R: 115.0000 | G: 1 | D: 01.5 s | CLOSS: 15.9126
+| train          | E: 1016 | S: 55136 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 41.5306
+| train          | E: 1017 | S: 55201 | R: 117.0000 | G: 1 | D: 01.3 s | CLOSS: 8.5604
+| train          | E: 1018 | S: 55293 | R: 73.0000 | G: 1 | D: 01.9 s | CLOSS: -20.3157
+| train          | E: 1019 | S: 55336 | R: 151.0000 | G: 1 | D: 00.9 s | CLOSS: 12.1685
+| train          | E: 1020 | S: 55359 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: 4.6216
+| train          | E: 1021 | S: 55401 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: -33.7843
+| train          | E: 1022 | S: 55416 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: -14.3435
+| train          | E: 1023 | S: 55481 | R: 127.0000 | G: 1 | D: 01.3 s | CLOSS: 28.5431
+| train          | E: 1024 | S: 55545 | R: 109.0000 | G: 1 | D: 01.3 s | CLOSS: 37.4659
+| train          | E: 1025 | S: 55622 | R: 96.0000 | G: 1 | D: 02.2 s | CLOSS: 22.2540
+| train          | E: 1026 | S: 55681 | R: 122.0000 | G: 1 | D: 02.3 s | CLOSS: -43.3353
+| train          | E: 1027 | S: 55739 | R: 123.0000 | G: 1 | D: 02.2 s | CLOSS: -5.5323
+| train          | E: 1028 | S: 55831 | R: 70.0000 | G: 1 | D: 03.2 s | CLOSS: -7.2427
+| train          | E: 1029 | S: 55896 | R: 83.0000 | G: 1 | D: 02.2 s | CLOSS: -41.0268
+| train          | E: 1030 | S: 55942 | R: 130.0000 | G: 1 | D: 00.9 s | CLOSS: -16.3805
+evaluating...
+| eval           | E: 1031 | S: 56001 | R: 135.4000 | G: 1
+| train          | E: 1031 | S: 56035 | R: 87.0000 | G: 1 | D: 02.5 s | CLOSS: 12.6868
+| train          | E: 1032 | S: 56096 | R: 114.0000 | G: 1 | D: 01.3 s | CLOSS: -9.2626
+| train          | E: 1033 | S: 56125 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: -15.9717
+| train          | E: 1034 | S: 56171 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: -23.9331
+| train          | E: 1035 | S: 56277 | R: 82.0000 | G: 1 | D: 02.4 s | CLOSS: -11.3287
+| train          | E: 1036 | S: 56471 | R: -49.0000 | G: 1 | D: 04.3 s | CLOSS: -25.7595
+| train          | E: 1037 | S: 56564 | R: 82.0000 | G: 1 | D: 02.0 s | CLOSS: 23.7816
+| train          | E: 1038 | S: 56603 | R: 137.0000 | G: 1 | D: 00.7 s | CLOSS: 33.5035
+| train          | E: 1039 | S: 56663 | R: 119.0000 | G: 1 | D: 01.3 s | CLOSS: -2.6016
+| train          | E: 1040 | S: 56699 | R: 150.0000 | G: 1 | D: 00.9 s | CLOSS: -22.3633
+| train          | E: 1041 | S: 56729 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: -23.4199
+| train          | E: 1042 | S: 56751 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: -13.0193
+| train          | E: 1043 | S: 56799 | R: 135.0000 | G: 1 | D: 01.1 s | CLOSS: -51.0354
+| train          | E: 1044 | S: 56839 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: 23.9764
+| train          | E: 1045 | S: 56868 | R: 165.0000 | G: 1 | D: 00.6 s | CLOSS: -28.7356
+| train          | E: 1046 | S: 56884 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: 47.8382
+| train          | E: 1047 | S: 56967 | R: 89.0000 | G: 1 | D: 02.0 s | CLOSS: 13.4452
+evaluating...
+| eval           | E: 1048 | S: 57001 | R: 136.2000 | G: 1
+| train          | E: 1048 | S: 57042 | R: 101.0000 | G: 1 | D: 02.2 s | CLOSS: 20.9592
+| train          | E: 1049 | S: 57118 | R: 95.0000 | G: 1 | D: 01.8 s | CLOSS: -37.9517
+| train          | E: 1050 | S: 57252 | R: 10.0000 | G: 1 | D: 03.1 s | CLOSS: 12.7580
+| train          | E: 1051 | S: 57307 | R: 129.0000 | G: 1 | D: 01.1 s | CLOSS: -57.7111
+| train          | E: 1052 | S: 57447 | R: 43.0000 | G: 1 | D: 02.9 s | CLOSS: -29.4659
+| train          | E: 1053 | S: 57481 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: 2.0348
+| train          | E: 1054 | S: 57520 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: -26.6760
+| train          | E: 1055 | S: 57567 | R: 128.0000 | G: 1 | D: 00.9 s | CLOSS: 25.9192
+| train          | E: 1056 | S: 57586 | R: 169.0000 | G: 1 | D: 00.3 s | CLOSS: 53.4515
+| train          | E: 1057 | S: 57646 | R: 113.0000 | G: 1 | D: 01.2 s | CLOSS: -36.4645
+| train          | E: 1058 | S: 57656 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: 65.0145
+| train          | E: 1059 | S: 57675 | R: 171.0000 | G: 1 | D: 00.5 s | CLOSS: 100.5699
+| train          | E: 1060 | S: 57788 | R: 46.0000 | G: 1 | D: 02.4 s | CLOSS: 18.1342
+| train          | E: 1061 | S: 57880 | R: 91.0000 | G: 1 | D: 02.0 s | CLOSS: 4.7225
+| train          | E: 1062 | S: 57920 | R: 138.0000 | G: 1 | D: 01.0 s | CLOSS: -11.2445
+| train          | E: 1063 | S: 57968 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: -5.1003
+evaluating...
+| eval           | E: 1064 | S: 58001 | R: 122.9000 | G: 1
+| train          | E: 1064 | S: 58003 | R: 156.0000 | G: 1 | D: 01.5 s | CLOSS: -29.2800
+| train          | E: 1065 | S: 58066 | R: 124.0000 | G: 1 | D: 01.4 s | CLOSS: 44.4030
+| train          | E: 1066 | S: 58088 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: -50.3939
+| train          | E: 1067 | S: 58126 | R: 137.0000 | G: 1 | D: 00.7 s | CLOSS: -32.7494
+| train          | E: 1068 | S: 58321 | R: -37.0000 | G: 1 | D: 04.5 s | CLOSS: -1.3032
+| train          | E: 1069 | S: 58345 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: -14.3095
+| train          | E: 1070 | S: 58415 | R: 108.0000 | G: 1 | D: 01.5 s | CLOSS: 13.0683
+| train          | E: 1071 | S: 58468 | R: 132.0000 | G: 1 | D: 01.1 s | CLOSS: -11.7929
+| train          | E: 1072 | S: 58536 | R: 99.0000 | G: 1 | D: 01.5 s | CLOSS: -21.7115
+| train          | E: 1073 | S: 58575 | R: 148.0000 | G: 1 | D: 01.2 s | CLOSS: 25.4635
+| train          | E: 1074 | S: 58704 | R: 26.0000 | G: 1 | D: 02.7 s | CLOSS: -28.3846
+| train          | E: 1075 | S: 58740 | R: 138.0000 | G: 1 | D: 00.8 s | CLOSS: 49.7923
+| train          | E: 1076 | S: 58778 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: 28.9719
+| train          | E: 1077 | S: 58861 | R: 86.0000 | G: 1 | D: 01.7 s | CLOSS: -14.2873
+| train          | E: 1078 | S: 58897 | R: 148.0000 | G: 1 | D: 00.8 s | CLOSS: 13.7642
+| train          | E: 1079 | S: 58925 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 23.4628
+evaluating...
+| eval           | E: 1080 | S: 59001 | R: 121.2000 | G: 1
+| train          | E: 1080 | S: 59009 | R: 103.0000 | G: 1 | D: 02.6 s | CLOSS: -29.1965
+| train          | E: 1081 | S: 59067 | R: 125.0000 | G: 1 | D: 01.2 s | CLOSS: 37.4610
+| train          | E: 1082 | S: 59123 | R: 112.0000 | G: 1 | D: 01.1 s | CLOSS: 24.5232
+| train          | E: 1083 | S: 59250 | R: 54.0000 | G: 1 | D: 02.7 s | CLOSS: -10.3612
+| train          | E: 1084 | S: 59310 | R: 115.0000 | G: 1 | D: 01.3 s | CLOSS: 11.6958
+| train          | E: 1085 | S: 59401 | R: 80.0000 | G: 1 | D: 02.0 s | CLOSS: -9.8467
+| train          | E: 1086 | S: 59510 | R: 46.0000 | G: 1 | D: 02.8 s | CLOSS: -0.6896
+| train          | E: 1087 | S: 59554 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: -9.7430
+| train          | E: 1088 | S: 59587 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: -26.8305
+| train          | E: 1089 | S: 59696 | R: 67.0000 | G: 1 | D: 02.2 s | CLOSS: -8.4162
+| train          | E: 1090 | S: 59858 | R: 15.0000 | G: 1 | D: 03.6 s | CLOSS: 0.3759
+| train          | E: 1091 | S: 59943 | R: 101.0000 | G: 1 | D: 02.0 s | CLOSS: -17.2248
+| train          | E: 1092 | S: 59992 | R: 120.0000 | G: 1 | D: 01.0 s | CLOSS: -17.4576
+evaluating...
+| eval           | E: 1093 | S: 60001 | R: 135.6000 | G: 1
+| train          | E: 1093 | S: 60055 | R: 113.0000 | G: 1 | D: 02.4 s | CLOSS: -10.5504
+| train          | E: 1094 | S: 60105 | R: 131.0000 | G: 1 | D: 01.0 s | CLOSS: 10.2023
+| train          | E: 1095 | S: 60183 | R: 99.0000 | G: 1 | D: 01.8 s | CLOSS: -36.2659
+| train          | E: 1096 | S: 60229 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: 31.0118
+| train          | E: 1097 | S: 60271 | R: 144.0000 | G: 1 | D: 00.9 s | CLOSS: 41.0875
+| train          | E: 1098 | S: 60347 | R: 104.0000 | G: 1 | D: 01.6 s | CLOSS: 13.1671
+| train          | E: 1099 | S: 60417 | R: 100.0000 | G: 1 | D: 01.5 s | CLOSS: -17.7498
+| train          | E: 1100 | S: 60437 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: 10.1698
+| train          | E: 1101 | S: 60475 | R: 141.0000 | G: 1 | D: 00.7 s | CLOSS: -34.0216
+| train          | E: 1102 | S: 60495 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: -12.1657
+| train          | E: 1103 | S: 60590 | R: 88.0000 | G: 1 | D: 02.0 s | CLOSS: 4.7463
+| train          | E: 1104 | S: 60622 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: -51.4051
+| train          | E: 1105 | S: 60676 | R: 136.0000 | G: 1 | D: 01.2 s | CLOSS: 25.2645
+| train          | E: 1106 | S: 60717 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: -18.4890
+| train          | E: 1107 | S: 60778 | R: 119.0000 | G: 1 | D: 01.3 s | CLOSS: -11.1987
+| train          | E: 1108 | S: 60800 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -5.3205
+| train          | E: 1109 | S: 60859 | R: 121.0000 | G: 1 | D: 01.5 s | CLOSS: 9.4479
+| train          | E: 1110 | S: 60884 | R: 164.0000 | G: 1 | D: 00.5 s | CLOSS: 63.4481
+| train          | E: 1111 | S: 60944 | R: 120.0000 | G: 1 | D: 01.3 s | CLOSS: 1.7121
+evaluating...
+| eval           | E: 1112 | S: 61001 | R: 133.6000 | G: 1
+| train          | E: 1112 | S: 61005 | R: 127.0000 | G: 1 | D: 02.1 s | CLOSS: -46.7053
+| train          | E: 1113 | S: 61048 | R: 138.0000 | G: 1 | D: 00.9 s | CLOSS: 11.0289
+| train          | E: 1114 | S: 61106 | R: 123.0000 | G: 1 | D: 01.2 s | CLOSS: -17.4911
+| train          | E: 1115 | S: 61159 | R: 127.0000 | G: 1 | D: 01.2 s | CLOSS: -25.8381
+| train          | E: 1116 | S: 61192 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: 34.3928
+| train          | E: 1117 | S: 61241 | R: 131.0000 | G: 1 | D: 01.2 s | CLOSS: 2.9301
+| train          | E: 1118 | S: 61324 | R: 103.0000 | G: 1 | D: 01.8 s | CLOSS: 12.6994
+| train          | E: 1119 | S: 61335 | R: 181.0000 | G: 1 | D: 00.2 s | CLOSS: 52.4547
+| train          | E: 1120 | S: 61377 | R: 147.0000 | G: 1 | D: 00.9 s | CLOSS: -57.3975
+| train          | E: 1121 | S: 61403 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 29.4547
+| train          | E: 1122 | S: 61418 | R: 176.0000 | G: 1 | D: 00.5 s | CLOSS: -58.2010
+| train          | E: 1123 | S: 61430 | R: 182.0000 | G: 1 | D: 00.2 s | CLOSS: 19.6093
+| train          | E: 1124 | S: 61457 | R: 161.0000 | G: 1 | D: 00.8 s | CLOSS: -20.0448
+| train          | E: 1125 | S: 61546 | R: 84.0000 | G: 1 | D: 02.0 s | CLOSS: -4.1259
+| train          | E: 1126 | S: 61685 | R: 27.0000 | G: 1 | D: 03.4 s | CLOSS: -4.2272
+| train          | E: 1127 | S: 61707 | R: 167.0000 | G: 1 | D: 00.4 s | CLOSS: 19.4794
+| train          | E: 1128 | S: 61733 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: -35.5297
+| train          | E: 1129 | S: 61759 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: -18.9285
+| train          | E: 1130 | S: 61802 | R: 140.0000 | G: 1 | D: 01.1 s | CLOSS: 3.1573
+| train          | E: 1131 | S: 61851 | R: 131.0000 | G: 1 | D: 01.0 s | CLOSS: 13.8774
+| train          | E: 1132 | S: 61895 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: 36.2017
+evaluating...
+| eval           | E: 1133 | S: 62001 | R: 135.4000 | G: 1
+| train          | E: 1133 | S: 62006 | R: 72.0000 | G: 1 | D: 03.4 s | CLOSS: -21.3082
+| train          | E: 1134 | S: 62031 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: -18.8340
+| train          | E: 1135 | S: 62082 | R: 129.0000 | G: 1 | D: 01.0 s | CLOSS: -7.7211
+| train          | E: 1136 | S: 62117 | R: 149.0000 | G: 1 | D: 00.9 s | CLOSS: -3.2115
+| train          | E: 1137 | S: 62162 | R: 138.0000 | G: 1 | D: 01.0 s | CLOSS: -6.9234
+| train          | E: 1138 | S: 62433 | R: -120.0000 | G: 1 | D: 05.8 s | CLOSS: 32.0559
+| train          | E: 1139 | S: 62503 | R: 95.0000 | G: 1 | D: 01.5 s | CLOSS: -2.9918
+| train          | E: 1140 | S: 62575 | R: 115.0000 | G: 1 | D: 01.5 s | CLOSS: -9.0490
+| train          | E: 1141 | S: 62632 | R: 117.0000 | G: 1 | D: 01.1 s | CLOSS: 25.1518
+| train          | E: 1142 | S: 62650 | R: 174.0000 | G: 1 | D: 00.5 s | CLOSS: 16.3257
+| train          | E: 1143 | S: 62709 | R: 120.0000 | G: 1 | D: 01.4 s | CLOSS: 3.9571
+| train          | E: 1144 | S: 62774 | R: 108.0000 | G: 1 | D: 01.3 s | CLOSS: 3.8166
+| train          | E: 1145 | S: 62836 | R: 118.0000 | G: 1 | D: 01.4 s | CLOSS: -31.7644
+| train          | E: 1146 | S: 62868 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 65.2943
+| train          | E: 1147 | S: 62904 | R: 138.0000 | G: 1 | D: 00.9 s | CLOSS: -20.5759
+| train          | E: 1148 | S: 62928 | R: 160.0000 | G: 1 | D: 00.5 s | CLOSS: -57.4141
+| train          | E: 1149 | S: 62958 | R: 158.0000 | G: 1 | D: 00.6 s | CLOSS: -53.9607
+evaluating...
+| eval           | E: 1150 | S: 63001 | R: 115.0000 | G: 1
+| train          | E: 1150 | S: 63010 | R: 140.0000 | G: 1 | D: 02.1 s | CLOSS: -1.0939
+| train          | E: 1151 | S: 63040 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 17.3569
+| train          | E: 1152 | S: 63166 | R: 24.0000 | G: 1 | D: 02.6 s | CLOSS: 15.4370
+| train          | E: 1153 | S: 63187 | R: 168.0000 | G: 1 | D: 00.4 s | CLOSS: -29.2967
+| train          | E: 1154 | S: 63223 | R: 144.0000 | G: 1 | D: 00.8 s | CLOSS: 28.2229
+| train          | E: 1155 | S: 63267 | R: 143.0000 | G: 1 | D: 00.9 s | CLOSS: -46.0326
+| train          | E: 1156 | S: 63282 | R: 175.0000 | G: 1 | D: 00.3 s | CLOSS: -25.9937
+| train          | E: 1157 | S: 63301 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: -30.6996
+| train          | E: 1158 | S: 63354 | R: 136.0000 | G: 1 | D: 01.3 s | CLOSS: 34.8948
+| train          | E: 1159 | S: 63413 | R: 129.0000 | G: 1 | D: 01.2 s | CLOSS: 0.1378
+| train          | E: 1160 | S: 63468 | R: 132.0000 | G: 1 | D: 01.0 s | CLOSS: -2.7893
+| train          | E: 1161 | S: 63499 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: -1.1074
+| train          | E: 1162 | S: 63538 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: -28.9041
+| train          | E: 1163 | S: 63560 | R: 169.0000 | G: 1 | D: 00.4 s | CLOSS: -0.9456
+| train          | E: 1164 | S: 63697 | R: 41.0000 | G: 1 | D: 02.9 s | CLOSS: -5.2916
+| train          | E: 1165 | S: 63730 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: -12.0433
+| train          | E: 1166 | S: 63784 | R: 123.0000 | G: 1 | D: 01.2 s | CLOSS: 10.7002
+| train          | E: 1167 | S: 63815 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: -27.5855
+| train          | E: 1168 | S: 63845 | R: 159.0000 | G: 1 | D: 00.7 s | CLOSS: 29.5796
+| train          | E: 1169 | S: 63874 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: -60.6454
+| train          | E: 1170 | S: 63929 | R: 127.0000 | G: 1 | D: 01.5 s | CLOSS: 9.9891
+| train          | E: 1171 | S: 63947 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: -22.5286
+evaluating...
+| eval           | E: 1172 | S: 64001 | R: 128.5000 | G: 1
+| train          | E: 1172 | S: 64014 | R: 105.0000 | G: 1 | D: 01.9 s | CLOSS: 0.1936
+| train          | E: 1173 | S: 64075 | R: 102.0000 | G: 1 | D: 01.3 s | CLOSS: 34.8638
+| train          | E: 1174 | S: 64196 | R: 53.0000 | G: 1 | D: 02.8 s | CLOSS: -4.9064
+| train          | E: 1175 | S: 64304 | R: 47.0000 | G: 1 | D: 02.3 s | CLOSS: 9.5204
+| train          | E: 1176 | S: 64336 | R: 145.0000 | G: 1 | D: 00.8 s | CLOSS: -24.1153
+| train          | E: 1177 | S: 64435 | R: 72.0000 | G: 1 | D: 02.2 s | CLOSS: 23.5438
+| train          | E: 1178 | S: 64505 | R: 113.0000 | G: 1 | D: 01.7 s | CLOSS: 12.7106
+| train          | E: 1179 | S: 64566 | R: 122.0000 | G: 1 | D: 01.2 s | CLOSS: -6.9312
+| train          | E: 1180 | S: 64657 | R: 74.0000 | G: 1 | D: 01.9 s | CLOSS: -2.2172
+| train          | E: 1181 | S: 64727 | R: 114.0000 | G: 1 | D: 01.5 s | CLOSS: 13.8449
+| train          | E: 1182 | S: 64738 | R: 183.0000 | G: 1 | D: 00.2 s | CLOSS: 13.1410
+| train          | E: 1183 | S: 64755 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: -22.9894
+| train          | E: 1184 | S: 64764 | R: 185.0000 | G: 1 | D: 00.2 s | CLOSS: -157.8053
+| train          | E: 1185 | S: 64807 | R: 136.0000 | G: 1 | D: 00.9 s | CLOSS: -26.6546
+| train          | E: 1186 | S: 64862 | R: 127.0000 | G: 1 | D: 01.3 s | CLOSS: -7.2479
+evaluating...
+| eval           | E: 1187 | S: 65001 | R: 129.1000 | G: 1
+| train          | E: 1187 | S: 65028 | R: 11.0000 | G: 1 | D: 04.0 s | CLOSS: -14.2105
+| train          | E: 1188 | S: 65072 | R: 128.0000 | G: 1 | D: 00.9 s | CLOSS: -2.3339
+| train          | E: 1189 | S: 65113 | R: 142.0000 | G: 1 | D: 00.8 s | CLOSS: 9.1014
+| train          | E: 1190 | S: 65168 | R: 133.0000 | G: 1 | D: 01.2 s | CLOSS: 31.7227
+| train          | E: 1191 | S: 65186 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 66.8818
+| train          | E: 1192 | S: 65242 | R: 129.0000 | G: 1 | D: 01.3 s | CLOSS: 18.8810
+| train          | E: 1193 | S: 65292 | R: 135.0000 | G: 1 | D: 01.0 s | CLOSS: -31.2373
+| train          | E: 1194 | S: 65313 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: -16.1165
+| train          | E: 1195 | S: 65340 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: 100.8642
+| train          | E: 1196 | S: 65388 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: -15.7368
+| train          | E: 1197 | S: 65421 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: -1.4082
+| train          | E: 1198 | S: 65481 | R: 126.0000 | G: 1 | D: 01.7 s | CLOSS: -6.5595
+| train          | E: 1199 | S: 65519 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: 41.8699
+| train          | E: 1200 | S: 65574 | R: 135.0000 | G: 1 | D: 01.3 s | CLOSS: -14.5119
+| train          | E: 1201 | S: 65780 | R: -41.0000 | G: 1 | D: 04.5 s | CLOSS: 1.3990
+| train          | E: 1202 | S: 65810 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: -53.5314
+| train          | E: 1203 | S: 65829 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: -62.0058
+| train          | E: 1204 | S: 65874 | R: 136.0000 | G: 1 | D: 01.1 s | CLOSS: 17.2991
+| train          | E: 1205 | S: 65949 | R: 101.0000 | G: 1 | D: 02.0 s | CLOSS: 10.8070
+| train          | E: 1206 | S: 65969 | R: 172.0000 | G: 1 | D: 00.5 s | CLOSS: 45.5216
+| train          | E: 1207 | S: 65992 | R: 171.0000 | G: 1 | D: 00.9 s | CLOSS: 69.7832
+evaluating...
+| eval           | E: 1208 | S: 66001 | R: 121.6000 | G: 1
+| train          | E: 1208 | S: 66109 | R: 55.0000 | G: 1 | D: 06.1 s | CLOSS: 6.3351
+| train          | E: 1209 | S: 66223 | R: 61.0000 | G: 1 | D: 03.0 s | CLOSS: 2.4963
+| train          | E: 1210 | S: 66250 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: 20.6205
+| train          | E: 1211 | S: 66311 | R: 109.0000 | G: 1 | D: 01.5 s | CLOSS: 16.3245
+| train          | E: 1212 | S: 66367 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: 16.3426
+| train          | E: 1213 | S: 66417 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: -25.0486
+| train          | E: 1214 | S: 66472 | R: 113.0000 | G: 1 | D: 01.0 s | CLOSS: -34.7108
+| train          | E: 1215 | S: 66495 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: -57.7699
+| train          | E: 1216 | S: 66532 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: -30.2621
+| train          | E: 1217 | S: 66585 | R: 126.0000 | G: 1 | D: 01.1 s | CLOSS: 33.8269
+| train          | E: 1218 | S: 66611 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: 0.0764
+| train          | E: 1219 | S: 66665 | R: 123.0000 | G: 1 | D: 01.2 s | CLOSS: -32.8705
+| train          | E: 1220 | S: 66743 | R: 86.0000 | G: 1 | D: 01.6 s | CLOSS: -1.0179
+| train          | E: 1221 | S: 66798 | R: 119.0000 | G: 1 | D: 01.2 s | CLOSS: 16.9313
+| train          | E: 1222 | S: 66820 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: -14.6082
+| train          | E: 1223 | S: 66857 | R: 140.0000 | G: 1 | D: 00.7 s | CLOSS: -32.4766
+| train          | E: 1224 | S: 66880 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: -8.6553
+| train          | E: 1225 | S: 66924 | R: 140.0000 | G: 1 | D: 01.0 s | CLOSS: 4.4496
+| train          | E: 1226 | S: 66962 | R: 146.0000 | G: 1 | D: 00.9 s | CLOSS: 119.6377
+evaluating...
+| eval           | E: 1227 | S: 67001 | R: 133.0000 | G: 1
+| train          | E: 1227 | S: 67003 | R: 148.0000 | G: 1 | D: 01.6 s | CLOSS: 39.3645
+| train          | E: 1228 | S: 67053 | R: 122.0000 | G: 1 | D: 01.0 s | CLOSS: -40.2792
+| train          | E: 1229 | S: 67091 | R: 143.0000 | G: 1 | D: 00.8 s | CLOSS: -77.1166
+| train          | E: 1230 | S: 67115 | R: 170.0000 | G: 1 | D: 00.7 s | CLOSS: 34.4121
+| train          | E: 1231 | S: 67129 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 19.5417
+| train          | E: 1232 | S: 67223 | R: 71.0000 | G: 1 | D: 01.9 s | CLOSS: -49.4808
+| train          | E: 1233 | S: 67257 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: -0.8116
+| train          | E: 1234 | S: 67281 | R: 166.0000 | G: 1 | D: 00.4 s | CLOSS: 25.7152
+| train          | E: 1235 | S: 67328 | R: 136.0000 | G: 1 | D: 01.0 s | CLOSS: 32.5194
+| train          | E: 1236 | S: 67380 | R: 133.0000 | G: 1 | D: 01.2 s | CLOSS: 21.1968
+| train          | E: 1237 | S: 67451 | R: 96.0000 | G: 1 | D: 01.4 s | CLOSS: -11.0078
+| train          | E: 1238 | S: 67506 | R: 112.0000 | G: 1 | D: 01.1 s | CLOSS: 58.4278
+| train          | E: 1239 | S: 67544 | R: 144.0000 | G: 1 | D: 00.7 s | CLOSS: 44.0572
+| train          | E: 1240 | S: 67611 | R: 103.0000 | G: 1 | D: 01.6 s | CLOSS: -14.1017
+| train          | E: 1241 | S: 67693 | R: 82.0000 | G: 1 | D: 01.9 s | CLOSS: 1.1062
+| train          | E: 1242 | S: 67724 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: -10.9779
+| train          | E: 1243 | S: 67754 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: 92.3771
+| train          | E: 1244 | S: 67825 | R: 112.0000 | G: 1 | D: 01.4 s | CLOSS: 3.3196
+| train          | E: 1245 | S: 67844 | R: 171.0000 | G: 1 | D: 00.6 s | CLOSS: 8.0123
+| train          | E: 1246 | S: 67863 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 36.5142
+| train          | E: 1247 | S: 67912 | R: 126.0000 | G: 1 | D: 01.2 s | CLOSS: -24.9502
+| train          | E: 1248 | S: 67967 | R: 131.0000 | G: 1 | D: 01.2 s | CLOSS: -18.1849
+evaluating...
+| eval           | E: 1249 | S: 68001 | R: 122.8000 | G: 1
+| train          | E: 1249 | S: 68064 | R: 85.0000 | G: 1 | D: 02.8 s | CLOSS: -0.5664
+| train          | E: 1250 | S: 68183 | R: 33.0000 | G: 1 | D: 02.5 s | CLOSS: -5.1751
+| train          | E: 1251 | S: 68232 | R: 137.0000 | G: 1 | D: 01.2 s | CLOSS: 27.0782
+| train          | E: 1252 | S: 68263 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: -71.4325
+| train          | E: 1253 | S: 68286 | R: 163.0000 | G: 1 | D: 00.4 s | CLOSS: -69.0135
+| train          | E: 1254 | S: 68341 | R: 124.0000 | G: 1 | D: 01.2 s | CLOSS: -19.5662
+| train          | E: 1255 | S: 68394 | R: 124.0000 | G: 1 | D: 01.1 s | CLOSS: -57.6163
+| train          | E: 1256 | S: 68448 | R: 130.0000 | G: 1 | D: 01.1 s | CLOSS: 17.0077
+| train          | E: 1257 | S: 68460 | R: 182.0000 | G: 1 | D: 00.3 s | CLOSS: 9.7203
+| train          | E: 1258 | S: 68491 | R: 159.0000 | G: 1 | D: 00.8 s | CLOSS: -21.8094
+| train          | E: 1259 | S: 68549 | R: 126.0000 | G: 1 | D: 01.4 s | CLOSS: -49.9169
+| train          | E: 1260 | S: 68628 | R: 102.0000 | G: 1 | D: 01.8 s | CLOSS: -1.9258
+| train          | E: 1261 | S: 68733 | R: 62.0000 | G: 1 | D: 02.0 s | CLOSS: -2.4197
+| train          | E: 1262 | S: 68801 | R: 110.0000 | G: 1 | D: 01.4 s | CLOSS: -43.0321
+| train          | E: 1263 | S: 68919 | R: 55.0000 | G: 1 | D: 02.6 s | CLOSS: 16.7602
+| train          | E: 1264 | S: 68959 | R: 136.0000 | G: 1 | D: 01.0 s | CLOSS: -71.4958
+| train          | E: 1265 | S: 68978 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 43.9565
+evaluating...
+| eval           | E: 1266 | S: 69001 | R: 113.5000 | G: 1
+| train          | E: 1266 | S: 69097 | R: 7.0000 | G: 1 | D: 03.4 s | CLOSS: 4.5073
+| train          | E: 1267 | S: 69122 | R: 164.0000 | G: 1 | D: 00.6 s | CLOSS: 21.4782
+| train          | E: 1268 | S: 69233 | R: 63.0000 | G: 1 | D: 02.4 s | CLOSS: -28.3679
+| train          | E: 1269 | S: 69262 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: -34.7320
+| train          | E: 1270 | S: 69326 | R: 124.0000 | G: 1 | D: 01.3 s | CLOSS: -15.7002
+| train          | E: 1271 | S: 69376 | R: 140.0000 | G: 1 | D: 01.2 s | CLOSS: -9.1543
+| train          | E: 1272 | S: 69414 | R: 152.0000 | G: 1 | D: 00.7 s | CLOSS: 32.8171
+| train          | E: 1273 | S: 69462 | R: 143.0000 | G: 1 | D: 01.0 s | CLOSS: 29.5576
+| train          | E: 1274 | S: 69492 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 5.9934
+| train          | E: 1275 | S: 69540 | R: 141.0000 | G: 1 | D: 01.2 s | CLOSS: 14.5534
+| train          | E: 1276 | S: 69605 | R: 119.0000 | G: 1 | D: 01.3 s | CLOSS: -27.3578
+| train          | E: 1277 | S: 69840 | R: -65.0000 | G: 1 | D: 05.3 s | CLOSS: -7.4658
+| train          | E: 1278 | S: 69988 | R: 33.0000 | G: 1 | D: 03.2 s | CLOSS: -49.8361
+evaluating...
+| eval           | E: 1279 | S: 70001 | R: 135.0000 | G: 1
+| train          | E: 1279 | S: 70026 | R: 149.0000 | G: 1 | D: 01.4 s | CLOSS: -75.0387
+| train          | E: 1280 | S: 70059 | R: 145.0000 | G: 1 | D: 00.6 s | CLOSS: -7.9936
+| train          | E: 1281 | S: 70086 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: -0.5290
+| train          | E: 1282 | S: 70156 | R: 89.0000 | G: 1 | D: 01.5 s | CLOSS: -1.0178
+| train          | E: 1283 | S: 70242 | R: 95.0000 | G: 1 | D: 01.7 s | CLOSS: -22.1356
+| train          | E: 1284 | S: 70302 | R: 130.0000 | G: 1 | D: 01.3 s | CLOSS: 22.9362
+| train          | E: 1285 | S: 70452 | R: 33.0000 | G: 1 | D: 03.1 s | CLOSS: -35.6887
+| train          | E: 1286 | S: 70480 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: -10.8670
+| train          | E: 1287 | S: 70495 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: -31.3747
+| train          | E: 1288 | S: 70519 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: 82.7602
+| train          | E: 1289 | S: 70641 | R: 51.0000 | G: 1 | D: 02.6 s | CLOSS: 4.6530
+| train          | E: 1290 | S: 70725 | R: 91.0000 | G: 1 | D: 01.8 s | CLOSS: -22.9547
+| train          | E: 1291 | S: 70752 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: -35.8288
+| train          | E: 1292 | S: 70785 | R: 160.0000 | G: 1 | D: 00.7 s | CLOSS: 37.3389
+| train          | E: 1293 | S: 70815 | R: 161.0000 | G: 1 | D: 00.7 s | CLOSS: 31.1913
+| train          | E: 1294 | S: 70845 | R: 155.0000 | G: 1 | D: 00.6 s | CLOSS: -96.9451
+| train          | E: 1295 | S: 70925 | R: 97.0000 | G: 1 | D: 01.8 s | CLOSS: 12.8067
+| train          | E: 1296 | S: 70980 | R: 127.0000 | G: 1 | D: 01.1 s | CLOSS: -22.2199
+evaluating...
+| eval           | E: 1297 | S: 71001 | R: 121.7000 | G: 1
+| train          | E: 1297 | S: 71010 | R: 156.0000 | G: 1 | D: 01.5 s | CLOSS: 33.2910
+| train          | E: 1298 | S: 71086 | R: 103.0000 | G: 1 | D: 01.5 s | CLOSS: -1.1259
+| train          | E: 1299 | S: 71238 | R: 22.0000 | G: 1 | D: 04.3 s | CLOSS: -16.8254
+| train          | E: 1300 | S: 71293 | R: 117.0000 | G: 1 | D: 02.2 s | CLOSS: 20.5006
+| train          | E: 1301 | S: 71418 | R: 58.0000 | G: 1 | D: 04.7 s | CLOSS: -11.4877
+| train          | E: 1302 | S: 71442 | R: 168.0000 | G: 1 | D: 00.8 s | CLOSS: 13.0499
+| train          | E: 1303 | S: 71519 | R: 91.0000 | G: 1 | D: 01.5 s | CLOSS: -27.4363
+| train          | E: 1304 | S: 71578 | R: 116.0000 | G: 1 | D: 01.4 s | CLOSS: 7.7531
+| train          | E: 1305 | S: 71644 | R: 122.0000 | G: 1 | D: 01.5 s | CLOSS: -35.2219
+| train          | E: 1306 | S: 71671 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: 0.9630
+| train          | E: 1307 | S: 71706 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: 39.4637
+| train          | E: 1308 | S: 71734 | R: 164.0000 | G: 1 | D: 00.6 s | CLOSS: -40.9490
+| train          | E: 1309 | S: 71790 | R: 126.0000 | G: 1 | D: 01.3 s | CLOSS: 37.3995
+| train          | E: 1310 | S: 71838 | R: 136.0000 | G: 1 | D: 01.1 s | CLOSS: 28.7118
+| train          | E: 1311 | S: 71873 | R: 143.0000 | G: 1 | D: 00.8 s | CLOSS: 42.7736
+| train          | E: 1312 | S: 71899 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: 23.7945
+| train          | E: 1313 | S: 71926 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: 26.3198
+| train          | E: 1314 | S: 71978 | R: 131.0000 | G: 1 | D: 01.2 s | CLOSS: -10.6279
+evaluating...
+| eval           | E: 1315 | S: 72001 | R: 89.0000 | G: 1
+| train          | E: 1315 | S: 72118 | R: 30.0000 | G: 1 | D: 04.1 s | CLOSS: 44.0014
+| train          | E: 1316 | S: 72177 | R: 124.0000 | G: 1 | D: 01.5 s | CLOSS: -9.8097
+| train          | E: 1317 | S: 72262 | R: 94.0000 | G: 1 | D: 01.8 s | CLOSS: 42.7074
+| train          | E: 1318 | S: 72322 | R: 120.0000 | G: 1 | D: 01.6 s | CLOSS: -28.4330
+| train          | E: 1319 | S: 72401 | R: 104.0000 | G: 1 | D: 01.8 s | CLOSS: -41.8713
+| train          | E: 1320 | S: 72470 | R: 108.0000 | G: 1 | D: 01.7 s | CLOSS: -22.6563
+| train          | E: 1321 | S: 72491 | R: 163.0000 | G: 1 | D: 00.4 s | CLOSS: -38.0330
+| train          | E: 1322 | S: 72532 | R: 149.0000 | G: 1 | D: 01.0 s | CLOSS: 0.2103
+| train          | E: 1323 | S: 72647 | R: 60.0000 | G: 1 | D: 02.7 s | CLOSS: 14.6687
+| train          | E: 1324 | S: 72712 | R: 117.0000 | G: 1 | D: 01.4 s | CLOSS: -16.1648
+| train          | E: 1325 | S: 72735 | R: 164.0000 | G: 1 | D: 00.4 s | CLOSS: -43.6785
+| train          | E: 1326 | S: 72825 | R: 88.0000 | G: 1 | D: 02.1 s | CLOSS: -55.2760
+| train          | E: 1327 | S: 72841 | R: 173.0000 | G: 1 | D: 00.3 s | CLOSS: 7.0992
+| train          | E: 1328 | S: 72882 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: -24.4011
+| train          | E: 1329 | S: 72898 | R: 176.0000 | G: 1 | D: 00.4 s | CLOSS: 49.1183
+evaluating...
+| eval           | E: 1330 | S: 73001 | R: 109.8000 | G: 1
+| train          | E: 1330 | S: 73045 | R: 15.0000 | G: 1 | D: 04.1 s | CLOSS: -17.1301
+| train          | E: 1331 | S: 73140 | R: 82.0000 | G: 1 | D: 02.1 s | CLOSS: -17.1468
+| train          | E: 1332 | S: 73199 | R: 121.0000 | G: 1 | D: 01.4 s | CLOSS: -8.4043
+| train          | E: 1333 | S: 73239 | R: 145.0000 | G: 1 | D: 00.7 s | CLOSS: -24.0877
+| train          | E: 1334 | S: 73275 | R: 152.0000 | G: 1 | D: 00.9 s | CLOSS: -31.1441
+| train          | E: 1335 | S: 73360 | R: 63.0000 | G: 1 | D: 01.7 s | CLOSS: -8.4700
+| train          | E: 1336 | S: 73444 | R: 90.0000 | G: 1 | D: 02.1 s | CLOSS: -57.5417
+| train          | E: 1337 | S: 73525 | R: 99.0000 | G: 1 | D: 02.2 s | CLOSS: -38.5216
+| train          | E: 1338 | S: 73568 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: 10.7149
+| train          | E: 1339 | S: 73616 | R: 134.0000 | G: 1 | D: 01.1 s | CLOSS: -5.6717
+| train          | E: 1340 | S: 73659 | R: 146.0000 | G: 1 | D: 00.8 s | CLOSS: 9.8381
+| train          | E: 1341 | S: 73763 | R: 72.0000 | G: 1 | D: 02.2 s | CLOSS: -1.8593
+| train          | E: 1342 | S: 73787 | R: 167.0000 | G: 1 | D: 00.5 s | CLOSS: -16.5074
+| train          | E: 1343 | S: 73811 | R: 164.0000 | G: 1 | D: 00.5 s | CLOSS: 69.2631
+evaluating...
+| eval           | E: 1344 | S: 74001 | R: 134.0000 | G: 1
+| train          | E: 1344 | S: 74416 | R: -973.0000 | G: 1 | D: 13.9 s | CLOSS: 0.4661
+| train          | E: 1345 | S: 74487 | R: 114.0000 | G: 1 | D: 01.5 s | CLOSS: -16.5141
+| train          | E: 1346 | S: 74539 | R: 121.0000 | G: 1 | D: 01.2 s | CLOSS: -92.9078
+| train          | E: 1347 | S: 74580 | R: 133.0000 | G: 1 | D: 00.9 s | CLOSS: -70.4483
+| train          | E: 1348 | S: 74648 | R: 91.0000 | G: 1 | D: 01.6 s | CLOSS: 51.7191
+| train          | E: 1349 | S: 74725 | R: 103.0000 | G: 1 | D: 01.6 s | CLOSS: 6.5057
+| train          | E: 1350 | S: 74752 | R: 159.0000 | G: 1 | D: 00.6 s | CLOSS: -11.3600
+| train          | E: 1351 | S: 74924 | R: -9.0000 | G: 1 | D: 04.3 s | CLOSS: 19.8978
+| train          | E: 1352 | S: 74957 | R: 152.0000 | G: 1 | D: 00.7 s | CLOSS: 4.5758
+evaluating...
+| eval           | E: 1353 | S: 75001 | R: 139.9000 | G: 1
+| train          | E: 1353 | S: 75004 | R: 136.0000 | G: 1 | D: 01.5 s | CLOSS: 3.0924
+| train          | E: 1354 | S: 75064 | R: 107.0000 | G: 1 | D: 01.2 s | CLOSS: 55.1730
+| train          | E: 1355 | S: 75115 | R: 135.0000 | G: 1 | D: 01.0 s | CLOSS: -43.3438
+| train          | E: 1356 | S: 75139 | R: 170.0000 | G: 1 | D: 00.7 s | CLOSS: -93.8589
+| train          | E: 1357 | S: 75269 | R: 34.0000 | G: 1 | D: 02.7 s | CLOSS: -21.6290
+| train          | E: 1358 | S: 75300 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: -68.6374
+| train          | E: 1359 | S: 75385 | R: 91.0000 | G: 1 | D: 01.8 s | CLOSS: 21.4383
+| train          | E: 1360 | S: 75482 | R: 73.0000 | G: 1 | D: 02.3 s | CLOSS: -37.5297
+| train          | E: 1361 | S: 75516 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 60.7606
+| train          | E: 1362 | S: 75541 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: 19.2944
+| train          | E: 1363 | S: 75622 | R: 98.0000 | G: 1 | D: 01.7 s | CLOSS: -13.2345
+evaluating...
+| eval           | E: 1364 | S: 76001 | R: 137.0000 | G: 1
+| train          | E: 1364 | S: 76097 | R: -638.0000 | G: 1 | D: 11.0 s | CLOSS: -1.7160
+| train          | E: 1365 | S: 76115 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: -14.0534
+| train          | E: 1366 | S: 76141 | R: 164.0000 | G: 1 | D: 00.6 s | CLOSS: -24.9786
+| train          | E: 1367 | S: 76231 | R: 86.0000 | G: 1 | D: 02.1 s | CLOSS: -15.6177
+| train          | E: 1368 | S: 76292 | R: 122.0000 | G: 1 | D: 01.3 s | CLOSS: -11.6542
+| train          | E: 1369 | S: 76431 | R: 32.0000 | G: 1 | D: 02.9 s | CLOSS: -20.9111
+| train          | E: 1370 | S: 76513 | R: 80.0000 | G: 1 | D: 01.9 s | CLOSS: -51.7385
+| train          | E: 1371 | S: 76535 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: 34.4172
+| train          | E: 1372 | S: 76646 | R: 57.0000 | G: 1 | D: 02.5 s | CLOSS: 4.2456
+| train          | E: 1373 | S: 76755 | R: 69.0000 | G: 1 | D: 02.5 s | CLOSS: -38.1571
+| train          | E: 1374 | S: 76874 | R: 48.0000 | G: 1 | D: 02.7 s | CLOSS: -1.3701
+| train          | E: 1375 | S: 76948 | R: 107.0000 | G: 1 | D: 01.6 s | CLOSS: 41.3776
+evaluating...
+| eval           | E: 1376 | S: 77001 | R: 127.1000 | G: 1
+| train          | E: 1376 | S: 77022 | R: 107.0000 | G: 1 | D: 02.4 s | CLOSS: -3.2513
+| train          | E: 1377 | S: 77051 | R: 161.0000 | G: 1 | D: 00.6 s | CLOSS: -72.6722
+| train          | E: 1378 | S: 77193 | R: 23.0000 | G: 1 | D: 03.0 s | CLOSS: -22.4641
+| train          | E: 1379 | S: 77238 | R: 137.0000 | G: 1 | D: 01.1 s | CLOSS: -109.4453
+| train          | E: 1380 | S: 77265 | R: 163.0000 | G: 1 | D: 00.7 s | CLOSS: -120.3174
+| train          | E: 1381 | S: 77302 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: -54.6695
+| train          | E: 1382 | S: 77345 | R: 133.0000 | G: 1 | D: 00.9 s | CLOSS: 15.4596
+| train          | E: 1383 | S: 77360 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 100.0612
+| train          | E: 1384 | S: 77399 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: 9.2898
+| train          | E: 1385 | S: 77467 | R: 98.0000 | G: 1 | D: 01.4 s | CLOSS: 24.2490
+| train          | E: 1386 | S: 77556 | R: 94.0000 | G: 1 | D: 01.8 s | CLOSS: 45.8133
+| train          | E: 1387 | S: 77641 | R: 102.0000 | G: 1 | D: 02.1 s | CLOSS: 5.0372
+| train          | E: 1388 | S: 77705 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: -8.5424
+| train          | E: 1389 | S: 77732 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: -20.8777
+| train          | E: 1390 | S: 77762 | R: 146.0000 | G: 1 | D: 00.7 s | CLOSS: -10.4323
+| train          | E: 1391 | S: 77857 | R: 79.0000 | G: 1 | D: 02.1 s | CLOSS: -34.6252
+| train          | E: 1392 | S: 77999 | R: 16.0000 | G: 1 | D: 03.4 s | CLOSS: -11.4576
+evaluating...
+| eval           | E: 1393 | S: 78001 | R: 126.6000 | G: 1
+| train          | E: 1393 | S: 78042 | R: 127.0000 | G: 1 | D: 01.9 s | CLOSS: -32.5962
+| train          | E: 1394 | S: 78107 | R: 120.0000 | G: 1 | D: 01.4 s | CLOSS: -36.9908
+| train          | E: 1395 | S: 78174 | R: 116.0000 | G: 1 | D: 01.4 s | CLOSS: -15.2302
+| train          | E: 1396 | S: 78222 | R: 134.0000 | G: 1 | D: 01.3 s | CLOSS: -65.6639
+| train          | E: 1397 | S: 78246 | R: 168.0000 | G: 1 | D: 00.5 s | CLOSS: 18.5797
+| train          | E: 1398 | S: 78271 | R: 164.0000 | G: 1 | D: 00.5 s | CLOSS: 30.0490
+| train          | E: 1399 | S: 78298 | R: 158.0000 | G: 1 | D: 00.7 s | CLOSS: -78.4074
+| train          | E: 1400 | S: 78332 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: 22.6273
+| train          | E: 1401 | S: 78383 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: 17.5772
+| train          | E: 1402 | S: 78426 | R: 136.0000 | G: 1 | D: 00.9 s | CLOSS: -49.6321
+| train          | E: 1403 | S: 78468 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: -25.6833
+| train          | E: 1404 | S: 78587 | R: 49.0000 | G: 1 | D: 02.7 s | CLOSS: -11.7695
+| train          | E: 1405 | S: 78639 | R: 135.0000 | G: 1 | D: 01.3 s | CLOSS: 48.5233
+| train          | E: 1406 | S: 78750 | R: 58.0000 | G: 1 | D: 02.5 s | CLOSS: 25.8643
+| train          | E: 1407 | S: 78797 | R: 137.0000 | G: 1 | D: 01.2 s | CLOSS: -3.5327
+| train          | E: 1408 | S: 78871 | R: 115.0000 | G: 1 | D: 01.7 s | CLOSS: -79.0952
+| train          | E: 1409 | S: 78889 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -119.6105
+| train          | E: 1410 | S: 78926 | R: 152.0000 | G: 1 | D: 01.0 s | CLOSS: 84.4703
+| train          | E: 1411 | S: 78970 | R: 134.0000 | G: 1 | D: 01.2 s | CLOSS: 104.1291
+evaluating...
+| eval           | E: 1412 | S: 79001 | R: 111.2000 | G: 1
+| train          | E: 1412 | S: 79009 | R: 149.0000 | G: 1 | D: 01.8 s | CLOSS: 15.5488
+| train          | E: 1413 | S: 79061 | R: 128.0000 | G: 1 | D: 01.1 s | CLOSS: -6.3673
+| train          | E: 1414 | S: 79111 | R: 123.0000 | G: 1 | D: 01.0 s | CLOSS: 33.6220
+| train          | E: 1415 | S: 79139 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: -37.4178
+| train          | E: 1416 | S: 79178 | R: 145.0000 | G: 1 | D: 01.0 s | CLOSS: 61.1539
+| train          | E: 1417 | S: 79199 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: 97.1607
+| train          | E: 1418 | S: 79229 | R: 158.0000 | G: 1 | D: 00.5 s | CLOSS: -48.4111
+| train          | E: 1419 | S: 79275 | R: 134.0000 | G: 1 | D: 01.1 s | CLOSS: 4.1313
+| train          | E: 1420 | S: 79424 | R: 24.0000 | G: 1 | D: 03.4 s | CLOSS: -8.6791
+| train          | E: 1421 | S: 79474 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: 41.1113
+| train          | E: 1422 | S: 79601 | R: 41.0000 | G: 1 | D: 02.8 s | CLOSS: -16.3317
+| train          | E: 1423 | S: 79629 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: 56.9953
+| train          | E: 1424 | S: 79661 | R: 162.0000 | G: 1 | D: 00.9 s | CLOSS: -117.5673
+| train          | E: 1425 | S: 79727 | R: 115.0000 | G: 1 | D: 01.6 s | CLOSS: 0.3225
+| train          | E: 1426 | S: 79748 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -9.3442
+| train          | E: 1427 | S: 79892 | R: 12.0000 | G: 1 | D: 03.3 s | CLOSS: 33.4874
+| train          | E: 1428 | S: 79923 | R: 159.0000 | G: 1 | D: 00.9 s | CLOSS: -104.9123
+| train          | E: 1429 | S: 79939 | R: 172.0000 | G: 1 | D: 00.3 s | CLOSS: -100.2254
+| train          | E: 1430 | S: 79981 | R: 136.0000 | G: 1 | D: 00.9 s | CLOSS: 19.2216
+evaluating...
+| eval           | E: 1431 | S: 80001 | R: 133.7000 | G: 1
+| train          | E: 1431 | S: 80043 | R: 128.0000 | G: 1 | D: 02.1 s | CLOSS: -28.6926
+| train          | E: 1432 | S: 80082 | R: 147.0000 | G: 1 | D: 00.9 s | CLOSS: 21.2390
+| train          | E: 1433 | S: 80152 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: -37.3714
+| train          | E: 1434 | S: 80181 | R: 161.0000 | G: 1 | D: 00.5 s | CLOSS: -32.3431
+| train          | E: 1435 | S: 80240 | R: 119.0000 | G: 1 | D: 01.2 s | CLOSS: -51.6859
+| train          | E: 1436 | S: 80275 | R: 151.0000 | G: 1 | D: 00.8 s | CLOSS: -61.9769
+| train          | E: 1437 | S: 80329 | R: 121.0000 | G: 1 | D: 01.2 s | CLOSS: 19.3012
+| train          | E: 1438 | S: 80385 | R: 130.0000 | G: 1 | D: 01.5 s | CLOSS: 29.9344
+| train          | E: 1439 | S: 80466 | R: 95.0000 | G: 1 | D: 01.9 s | CLOSS: -64.5660
+| train          | E: 1440 | S: 80535 | R: 121.0000 | G: 1 | D: 01.6 s | CLOSS: 88.4924
+| train          | E: 1441 | S: 80589 | R: 116.0000 | G: 1 | D: 01.2 s | CLOSS: 41.7980
+| train          | E: 1442 | S: 80670 | R: 104.0000 | G: 1 | D: 02.0 s | CLOSS: 1.7182
+| train          | E: 1443 | S: 80722 | R: 134.0000 | G: 1 | D: 01.3 s | CLOSS: 55.2018
+| train          | E: 1444 | S: 80751 | R: 154.0000 | G: 1 | D: 00.7 s | CLOSS: 47.9964
+| train          | E: 1445 | S: 80808 | R: 121.0000 | G: 1 | D: 01.4 s | CLOSS: 40.2061
+| train          | E: 1446 | S: 80851 | R: 141.0000 | G: 1 | D: 01.0 s | CLOSS: -115.9447
+| train          | E: 1447 | S: 80944 | R: 87.0000 | G: 1 | D: 02.1 s | CLOSS: 17.3178
+evaluating...
+| eval           | E: 1448 | S: 81001 | R: 95.4000 | G: 1
+| train          | E: 1448 | S: 81019 | R: 99.0000 | G: 1 | D: 02.7 s | CLOSS: -13.0144
+| train          | E: 1449 | S: 81083 | R: 123.0000 | G: 1 | D: 01.3 s | CLOSS: -75.2720
+| train          | E: 1450 | S: 81165 | R: 87.0000 | G: 1 | D: 02.0 s | CLOSS: 8.0930
+| train          | E: 1451 | S: 81217 | R: 135.0000 | G: 1 | D: 01.3 s | CLOSS: 0.2804
+| train          | E: 1452 | S: 81275 | R: 128.0000 | G: 1 | D: 01.4 s | CLOSS: 4.7405
+| train          | E: 1453 | S: 81296 | R: 170.0000 | G: 1 | D: 00.6 s | CLOSS: -64.5096
+| train          | E: 1454 | S: 81330 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: 10.8417
+| train          | E: 1455 | S: 81364 | R: 150.0000 | G: 1 | D: 00.8 s | CLOSS: 57.6227
+| train          | E: 1456 | S: 81408 | R: 136.0000 | G: 1 | D: 01.0 s | CLOSS: -46.5024
+| train          | E: 1457 | S: 81502 | R: 72.0000 | G: 1 | D: 03.6 s | CLOSS: -6.8698
+| train          | E: 1458 | S: 81535 | R: 155.0000 | G: 1 | D: 01.3 s | CLOSS: -52.2417
+| train          | E: 1459 | S: 81601 | R: 124.0000 | G: 1 | D: 02.6 s | CLOSS: 30.8000
+| train          | E: 1460 | S: 81644 | R: 137.0000 | G: 1 | D: 01.2 s | CLOSS: -51.9957
+| train          | E: 1461 | S: 81700 | R: 122.0000 | G: 1 | D: 01.3 s | CLOSS: -5.9173
+| train          | E: 1462 | S: 81721 | R: 166.0000 | G: 1 | D: 00.8 s | CLOSS: -98.9359
+| train          | E: 1463 | S: 81781 | R: 117.0000 | G: 1 | D: 01.2 s | CLOSS: 73.7719
+| train          | E: 1464 | S: 81927 | R: 19.0000 | G: 1 | D: 03.1 s | CLOSS: -98.1047
+| train          | E: 1465 | S: 81976 | R: 141.0000 | G: 1 | D: 01.1 s | CLOSS: -43.9725
+evaluating...
+| eval           | E: 1466 | S: 82001 | R: 106.1000 | G: 1
+| train          | E: 1466 | S: 82052 | R: 101.0000 | G: 1 | D: 02.3 s | CLOSS: -40.0900
+| train          | E: 1467 | S: 82077 | R: 167.0000 | G: 1 | D: 00.6 s | CLOSS: -55.2519
+| train          | E: 1468 | S: 82102 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: -35.8821
+| train          | E: 1469 | S: 82167 | R: 122.0000 | G: 1 | D: 01.4 s | CLOSS: 8.6637
+| train          | E: 1470 | S: 82279 | R: 71.0000 | G: 1 | D: 02.2 s | CLOSS: 20.7164
+| train          | E: 1471 | S: 82336 | R: 128.0000 | G: 1 | D: 01.3 s | CLOSS: -16.0181
+| train          | E: 1472 | S: 82362 | R: 162.0000 | G: 1 | D: 00.7 s | CLOSS: 32.5242
+| train          | E: 1473 | S: 82372 | R: 184.0000 | G: 1 | D: 00.2 s | CLOSS: -99.4384
+| train          | E: 1474 | S: 82406 | R: 154.0000 | G: 1 | D: 01.0 s | CLOSS: -33.6379
+| train          | E: 1475 | S: 82446 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: -46.0156
+| train          | E: 1476 | S: 82488 | R: 134.0000 | G: 1 | D: 00.9 s | CLOSS: -90.6597
+| train          | E: 1477 | S: 82551 | R: 120.0000 | G: 1 | D: 01.6 s | CLOSS: -52.4584
+| train          | E: 1478 | S: 82577 | R: 168.0000 | G: 1 | D: 00.6 s | CLOSS: -42.8021
+| train          | E: 1479 | S: 82594 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: -59.4625
+| train          | E: 1480 | S: 82781 | R: -19.0000 | G: 1 | D: 04.3 s | CLOSS: -8.9685
+| train          | E: 1481 | S: 82811 | R: 149.0000 | G: 1 | D: 00.7 s | CLOSS: 17.3101
+| train          | E: 1482 | S: 82837 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: -20.6267
+| train          | E: 1483 | S: 82909 | R: 114.0000 | G: 1 | D: 01.8 s | CLOSS: -34.4177
+| train          | E: 1484 | S: 82942 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: -16.7892
+| train          | E: 1485 | S: 82965 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 89.4315
+| train          | E: 1486 | S: 82974 | R: 185.0000 | G: 1 | D: 00.3 s | CLOSS: 79.7418
+| train          | E: 1487 | S: 82999 | R: 163.0000 | G: 1 | D: 00.5 s | CLOSS: 41.8675
+evaluating...
+| eval           | E: 1488 | S: 83001 | R: 130.7000 | G: 1
+| train          | E: 1488 | S: 83041 | R: 140.0000 | G: 1 | D: 02.3 s | CLOSS: -15.7301
+| train          | E: 1489 | S: 83077 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: 13.3468
+| train          | E: 1490 | S: 83157 | R: 114.0000 | G: 1 | D: 01.9 s | CLOSS: -48.5334
+| train          | E: 1491 | S: 83171 | R: 178.0000 | G: 1 | D: 00.4 s | CLOSS: 125.9553
+| train          | E: 1492 | S: 83221 | R: 134.0000 | G: 1 | D: 01.2 s | CLOSS: 28.9272
+| train          | E: 1493 | S: 83260 | R: 151.0000 | G: 1 | D: 01.0 s | CLOSS: -54.7203
+| train          | E: 1494 | S: 83347 | R: 77.0000 | G: 1 | D: 01.9 s | CLOSS: -74.7452
+| train          | E: 1495 | S: 83427 | R: 94.0000 | G: 1 | D: 01.6 s | CLOSS: 20.6952
+| train          | E: 1496 | S: 83482 | R: 116.0000 | G: 1 | D: 01.3 s | CLOSS: -36.3652
+| train          | E: 1497 | S: 83510 | R: 165.0000 | G: 1 | D: 00.7 s | CLOSS: -1.4430
+| train          | E: 1498 | S: 83541 | R: 161.0000 | G: 1 | D: 01.2 s | CLOSS: 63.2943
+| train          | E: 1499 | S: 83583 | R: 142.0000 | G: 1 | D: 01.1 s | CLOSS: 39.8212
+| train          | E: 1500 | S: 83645 | R: 126.0000 | G: 1 | D: 01.8 s | CLOSS: -23.1545
+| train          | E: 1501 | S: 83697 | R: 127.0000 | G: 1 | D: 01.2 s | CLOSS: -29.7185
+| train          | E: 1502 | S: 83809 | R: 69.0000 | G: 1 | D: 03.0 s | CLOSS: -69.2892
+| train          | E: 1503 | S: 83878 | R: 111.0000 | G: 1 | D: 01.5 s | CLOSS: -35.2606
+| train          | E: 1504 | S: 83944 | R: 110.0000 | G: 1 | D: 01.8 s | CLOSS: 63.3513
+evaluating...
+| eval           | E: 1505 | S: 84001 | R: 117.9000 | G: 1
+| train          | E: 1505 | S: 84024 | R: 81.0000 | G: 1 | D: 02.8 s | CLOSS: 69.3112
+| train          | E: 1506 | S: 84051 | R: 162.0000 | G: 1 | D: 00.5 s | CLOSS: 4.9629
+| train          | E: 1507 | S: 84105 | R: 132.0000 | G: 1 | D: 01.3 s | CLOSS: -38.1122
+| train          | E: 1508 | S: 84151 | R: 132.0000 | G: 1 | D: 01.5 s | CLOSS: 11.8762
+| train          | E: 1509 | S: 84185 | R: 153.0000 | G: 1 | D: 00.9 s | CLOSS: -10.4814
+| train          | E: 1510 | S: 84218 | R: 148.0000 | G: 1 | D: 00.6 s | CLOSS: 12.8382
+| train          | E: 1511 | S: 84285 | R: 116.0000 | G: 1 | D: 01.4 s | CLOSS: -1.0048
+| train          | E: 1512 | S: 84326 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: -50.6968
+| train          | E: 1513 | S: 84419 | R: 86.0000 | G: 1 | D: 02.3 s | CLOSS: 47.6035
+| train          | E: 1514 | S: 84444 | R: 166.0000 | G: 1 | D: 00.7 s | CLOSS: 98.7374
+| train          | E: 1515 | S: 84472 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 18.0087
+| train          | E: 1516 | S: 84520 | R: 139.0000 | G: 1 | D: 01.1 s | CLOSS: -11.0162
+| train          | E: 1517 | S: 84557 | R: 149.0000 | G: 1 | D: 00.9 s | CLOSS: 14.4784
+| train          | E: 1518 | S: 84626 | R: 116.0000 | G: 1 | D: 01.7 s | CLOSS: -34.2359
+| train          | E: 1519 | S: 84698 | R: 114.0000 | G: 1 | D: 01.8 s | CLOSS: 16.6600
+| train          | E: 1520 | S: 84724 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 6.2878
+| train          | E: 1521 | S: 84790 | R: 112.0000 | G: 1 | D: 02.4 s | CLOSS: 5.8044
+| train          | E: 1522 | S: 84838 | R: 140.0000 | G: 1 | D: 01.4 s | CLOSS: -1.5442
+| train          | E: 1523 | S: 84874 | R: 153.0000 | G: 1 | D: 00.7 s | CLOSS: 10.1824
+| train          | E: 1524 | S: 84894 | R: 172.0000 | G: 1 | D: 00.6 s | CLOSS: 23.1562
+| train          | E: 1525 | S: 84911 | R: 174.0000 | G: 1 | D: 00.4 s | CLOSS: 7.5531
+| train          | E: 1526 | S: 84946 | R: 146.0000 | G: 1 | D: 00.9 s | CLOSS: 16.5059
+| train          | E: 1527 | S: 84980 | R: 154.0000 | G: 1 | D: 01.2 s | CLOSS: 42.9357
+evaluating...
+| eval           | E: 1528 | S: 85001 | R: 97.9000 | G: 1
+| train          | E: 1528 | S: 85021 | R: 150.0000 | G: 1 | D: 01.8 s | CLOSS: -112.8778
+| train          | E: 1529 | S: 85143 | R: 38.0000 | G: 1 | D: 02.8 s | CLOSS: -4.1520
+| train          | E: 1530 | S: 85313 | R: -2.0000 | G: 1 | D: 05.8 s | CLOSS: -22.4474
+| train          | E: 1531 | S: 85434 | R: 53.0000 | G: 1 | D: 03.0 s | CLOSS: 2.2510
+| train          | E: 1532 | S: 85456 | R: 164.0000 | G: 1 | D: 00.7 s | CLOSS: 113.9879
+| train          | E: 1533 | S: 85495 | R: 138.0000 | G: 1 | D: 00.9 s | CLOSS: 23.0371
+| train          | E: 1534 | S: 85527 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: 60.8493
+| train          | E: 1535 | S: 85592 | R: 122.0000 | G: 1 | D: 01.8 s | CLOSS: -26.1792
+| train          | E: 1536 | S: 85625 | R: 157.0000 | G: 1 | D: 00.7 s | CLOSS: 53.5202
+| train          | E: 1537 | S: 85660 | R: 150.0000 | G: 1 | D: 00.7 s | CLOSS: -106.8703
+| train          | E: 1538 | S: 85696 | R: 146.0000 | G: 1 | D: 01.0 s | CLOSS: -86.0010
+| train          | E: 1539 | S: 85805 | R: 77.0000 | G: 1 | D: 02.7 s | CLOSS: -30.2672
+| train          | E: 1540 | S: 85866 | R: 113.0000 | G: 1 | D: 01.6 s | CLOSS: -40.8910
+| train          | E: 1541 | S: 85969 | R: 80.0000 | G: 1 | D: 02.6 s | CLOSS: -21.4114
+evaluating...
+| eval           | E: 1542 | S: 86001 | R: 100.3000 | G: 1
+| train          | E: 1542 | S: 86034 | R: 103.0000 | G: 1 | D: 02.6 s | CLOSS: -48.7939
+| train          | E: 1543 | S: 86059 | R: 164.0000 | G: 1 | D: 01.3 s | CLOSS: 72.3449
+| train          | E: 1544 | S: 86105 | R: 141.0000 | G: 1 | D: 01.9 s | CLOSS: -59.8283
+| train          | E: 1545 | S: 86132 | R: 162.0000 | G: 1 | D: 01.0 s | CLOSS: -7.9203
+| train          | E: 1546 | S: 86230 | R: 74.0000 | G: 1 | D: 04.1 s | CLOSS: 10.6800
+| train          | E: 1547 | S: 86260 | R: 157.0000 | G: 1 | D: 01.4 s | CLOSS: -26.9948
+| train          | E: 1548 | S: 86295 | R: 154.0000 | G: 1 | D: 00.9 s | CLOSS: 61.3219
+| train          | E: 1549 | S: 86321 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 34.1007
+| train          | E: 1550 | S: 86360 | R: 152.0000 | G: 1 | D: 00.9 s | CLOSS: -83.7270
+| train          | E: 1551 | S: 86398 | R: 149.0000 | G: 1 | D: 01.0 s | CLOSS: -11.3052
+| train          | E: 1552 | S: 86421 | R: 167.0000 | G: 1 | D: 00.6 s | CLOSS: -17.5064
+| train          | E: 1553 | S: 86446 | R: 164.0000 | G: 1 | D: 00.5 s | CLOSS: -87.6571
+| train          | E: 1554 | S: 86496 | R: 138.0000 | G: 1 | D: 01.1 s | CLOSS: 23.2689
+| train          | E: 1555 | S: 86537 | R: 131.0000 | G: 1 | D: 00.9 s | CLOSS: -61.1132
+| train          | E: 1556 | S: 86638 | R: 28.0000 | G: 1 | D: 02.1 s | CLOSS: -60.5467
+| train          | E: 1557 | S: 86801 | R: -48.0000 | G: 1 | D: 03.6 s | CLOSS: -0.0931
+| train          | E: 1558 | S: 86849 | R: 132.0000 | G: 1 | D: 01.2 s | CLOSS: -85.4346
+| train          | E: 1559 | S: 86897 | R: 144.0000 | G: 1 | D: 01.1 s | CLOSS: -25.6216
+| train          | E: 1560 | S: 86950 | R: 126.0000 | G: 1 | D: 01.4 s | CLOSS: -11.4047
+| train          | E: 1561 | S: 86986 | R: 152.0000 | G: 1 | D: 01.2 s | CLOSS: -51.7272
+evaluating...
+| eval           | E: 1562 | S: 87001 | R: 116.3000 | G: 1
+| train          | E: 1562 | S: 87019 | R: 158.0000 | G: 1 | D: 02.3 s | CLOSS: -43.8433
+| train          | E: 1563 | S: 87051 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: -101.8447
+| train          | E: 1564 | S: 87167 | R: 41.0000 | G: 1 | D: 03.0 s | CLOSS: -14.6348
+| train          | E: 1565 | S: 87191 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: -45.2836
+| train          | E: 1566 | S: 87220 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: -86.0218
+| train          | E: 1567 | S: 87272 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: 19.6428
+| train          | E: 1568 | S: 87362 | R: 88.0000 | G: 1 | D: 02.0 s | CLOSS: 35.7711
+| train          | E: 1569 | S: 87390 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: -5.6236
+| train          | E: 1570 | S: 87446 | R: 116.0000 | G: 1 | D: 01.8 s | CLOSS: -91.7658
+| train          | E: 1571 | S: 87522 | R: 73.0000 | G: 1 | D: 01.8 s | CLOSS: 43.4637
+| train          | E: 1572 | S: 87535 | R: 179.0000 | G: 1 | D: 00.3 s | CLOSS: 27.1899
+| train          | E: 1573 | S: 87551 | R: 174.0000 | G: 1 | D: 00.3 s | CLOSS: 106.4123
+| train          | E: 1574 | S: 87653 | R: 71.0000 | G: 1 | D: 02.5 s | CLOSS: -113.7548
+| train          | E: 1575 | S: 87752 | R: 82.0000 | G: 1 | D: 02.4 s | CLOSS: 1.8813
+| train          | E: 1576 | S: 87791 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: 116.7722
+| train          | E: 1577 | S: 87824 | R: 149.0000 | G: 1 | D: 00.8 s | CLOSS: -57.8326
+| train          | E: 1578 | S: 87888 | R: 110.0000 | G: 1 | D: 01.6 s | CLOSS: -74.8264
+| train          | E: 1579 | S: 87970 | R: 91.0000 | G: 1 | D: 02.3 s | CLOSS: 28.3366
+| train          | E: 1580 | S: 87996 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: -52.7660
+evaluating...
+| eval           | E: 1581 | S: 88001 | R: 116.4000 | G: 1
+| train          | E: 1581 | S: 88112 | R: 69.0000 | G: 1 | D: 03.8 s | CLOSS: -57.7185
+| train          | E: 1582 | S: 88243 | R: 52.0000 | G: 1 | D: 03.2 s | CLOSS: 28.7637
+| train          | E: 1583 | S: 88262 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 116.1890
+| train          | E: 1584 | S: 88329 | R: 116.0000 | G: 1 | D: 01.7 s | CLOSS: -91.3965
+| train          | E: 1585 | S: 88360 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: -46.8217
+| train          | E: 1586 | S: 88383 | R: 169.0000 | G: 1 | D: 00.6 s | CLOSS: -2.8626
+| train          | E: 1587 | S: 88446 | R: 117.0000 | G: 1 | D: 01.5 s | CLOSS: 16.0460
+| train          | E: 1588 | S: 88464 | R: 166.0000 | G: 1 | D: 00.5 s | CLOSS: 146.3174
+| train          | E: 1589 | S: 88505 | R: 149.0000 | G: 1 | D: 01.1 s | CLOSS: 1.1549
+| train          | E: 1590 | S: 88563 | R: 126.0000 | G: 1 | D: 01.2 s | CLOSS: 17.4672
+| train          | E: 1591 | S: 88582 | R: 173.0000 | G: 1 | D: 00.4 s | CLOSS: -42.0507
+| train          | E: 1592 | S: 88646 | R: 123.0000 | G: 1 | D: 01.7 s | CLOSS: 17.1519
+| train          | E: 1593 | S: 88780 | R: 51.0000 | G: 1 | D: 03.2 s | CLOSS: -49.4638
+| train          | E: 1594 | S: 88812 | R: 158.0000 | G: 1 | D: 00.7 s | CLOSS: 15.1214
+| train          | E: 1595 | S: 88935 | R: 52.0000 | G: 1 | D: 02.8 s | CLOSS: -71.5441
+evaluating...
+| eval           | E: 1596 | S: 89001 | R: 117.8000 | G: 1
+| train          | E: 1596 | S: 89012 | R: 106.0000 | G: 1 | D: 02.7 s | CLOSS: 11.0047
+| train          | E: 1597 | S: 89042 | R: 158.0000 | G: 1 | D: 00.6 s | CLOSS: -25.9048
+| train          | E: 1598 | S: 89123 | R: 103.0000 | G: 1 | D: 02.0 s | CLOSS: -44.7583
+| train          | E: 1599 | S: 89149 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: -99.8930
+| train          | E: 1600 | S: 89224 | R: 105.0000 | G: 1 | D: 01.9 s | CLOSS: -33.9420
+| train          | E: 1601 | S: 89274 | R: 135.0000 | G: 1 | D: 01.0 s | CLOSS: 82.3895
+| train          | E: 1602 | S: 89340 | R: 107.0000 | G: 1 | D: 01.4 s | CLOSS: 69.1183
+| train          | E: 1603 | S: 89369 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 111.8452
+| train          | E: 1604 | S: 89410 | R: 133.0000 | G: 1 | D: 01.0 s | CLOSS: -8.6099
+| train          | E: 1605 | S: 89473 | R: 116.0000 | G: 1 | D: 01.6 s | CLOSS: -37.4632
+| train          | E: 1606 | S: 89529 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: -42.9912
+| train          | E: 1607 | S: 89651 | R: 50.0000 | G: 1 | D: 02.9 s | CLOSS: -57.5533
+| train          | E: 1608 | S: 89709 | R: 130.0000 | G: 1 | D: 01.4 s | CLOSS: 8.6574
+| train          | E: 1609 | S: 89770 | R: 130.0000 | G: 1 | D: 01.3 s | CLOSS: 14.0353
+| train          | E: 1610 | S: 89852 | R: 98.0000 | G: 1 | D: 01.7 s | CLOSS: -19.2781
+| train          | E: 1611 | S: 89909 | R: 99.0000 | G: 1 | D: 01.5 s | CLOSS: 32.3133
+| train          | E: 1612 | S: 89931 | R: 169.0000 | G: 1 | D: 00.6 s | CLOSS: 99.0404
+evaluating...
+| eval           | E: 1613 | S: 90001 | R: 111.7000 | G: 1
+| train          | E: 1613 | S: 90026 | R: 73.0000 | G: 1 | D: 03.1 s | CLOSS: -72.9808
+| train          | E: 1614 | S: 90068 | R: 138.0000 | G: 1 | D: 01.0 s | CLOSS: 26.5234
+| train          | E: 1615 | S: 90098 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: 33.0806
+| train          | E: 1616 | S: 90138 | R: 142.0000 | G: 1 | D: 01.1 s | CLOSS: 44.4517
+| train          | E: 1617 | S: 90234 | R: 87.0000 | G: 1 | D: 02.2 s | CLOSS: -15.0290
+| train          | E: 1618 | S: 90264 | R: 156.0000 | G: 1 | D: 00.7 s | CLOSS: 13.1193
+| train          | E: 1619 | S: 90313 | R: 129.0000 | G: 1 | D: 01.0 s | CLOSS: -118.7986
+| train          | E: 1620 | S: 90348 | R: 155.0000 | G: 1 | D: 00.7 s | CLOSS: 44.4943
+| train          | E: 1621 | S: 90387 | R: 137.0000 | G: 1 | D: 01.0 s | CLOSS: -81.3971
+| train          | E: 1622 | S: 90428 | R: 148.0000 | G: 1 | D: 00.8 s | CLOSS: -11.0215
+| train          | E: 1623 | S: 90499 | R: 111.0000 | G: 1 | D: 01.6 s | CLOSS: -3.8432
+| train          | E: 1624 | S: 90539 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: 5.7866
+| train          | E: 1625 | S: 90575 | R: 151.0000 | G: 1 | D: 00.8 s | CLOSS: -31.1916
+| train          | E: 1626 | S: 90603 | R: 161.0000 | G: 1 | D: 00.8 s | CLOSS: 37.5744
+| train          | E: 1627 | S: 90672 | R: 108.0000 | G: 1 | D: 01.4 s | CLOSS: 20.4901
+| train          | E: 1628 | S: 90754 | R: 94.0000 | G: 1 | D: 01.8 s | CLOSS: 64.8794
+| train          | E: 1629 | S: 90775 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: -29.4473
+| train          | E: 1630 | S: 90793 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: -33.8189
+| train          | E: 1631 | S: 90825 | R: 160.0000 | G: 1 | D: 00.9 s | CLOSS: 25.7082
+| train          | E: 1632 | S: 90858 | R: 156.0000 | G: 1 | D: 01.2 s | CLOSS: -10.4884
+| train          | E: 1633 | S: 90921 | R: 124.0000 | G: 1 | D: 02.2 s | CLOSS: -10.9555
+| train          | E: 1634 | S: 90943 | R: 164.0000 | G: 1 | D: 01.0 s | CLOSS: -92.6906
+evaluating...
+| eval           | E: 1635 | S: 91001 | R: 122.4000 | G: 1
+| train          | E: 1635 | S: 91025 | R: 91.0000 | G: 1 | D: 04.6 s | CLOSS: 22.2372
+| train          | E: 1636 | S: 91070 | R: 137.0000 | G: 1 | D: 01.2 s | CLOSS: 80.7303
+| train          | E: 1637 | S: 91105 | R: 150.0000 | G: 1 | D: 01.0 s | CLOSS: -53.9523
+| train          | E: 1638 | S: 91139 | R: 145.0000 | G: 1 | D: 00.9 s | CLOSS: 42.9120
+| train          | E: 1639 | S: 91275 | R: 41.0000 | G: 1 | D: 03.4 s | CLOSS: -35.7297
+| train          | E: 1640 | S: 91388 | R: 67.0000 | G: 1 | D: 02.7 s | CLOSS: -5.6084
+| train          | E: 1641 | S: 91457 | R: 111.0000 | G: 1 | D: 01.7 s | CLOSS: -25.4151
+| train          | E: 1642 | S: 91527 | R: 110.0000 | G: 1 | D: 01.6 s | CLOSS: -80.4291
+| train          | E: 1643 | S: 91638 | R: 53.0000 | G: 1 | D: 03.2 s | CLOSS: 24.0657
+| train          | E: 1644 | S: 91676 | R: 141.0000 | G: 1 | D: 00.8 s | CLOSS: -0.0538
+| train          | E: 1645 | S: 91699 | R: 167.0000 | G: 1 | D: 00.9 s | CLOSS: -130.0879
+| train          | E: 1646 | S: 91761 | R: 121.0000 | G: 1 | D: 01.5 s | CLOSS: -97.2992
+| train          | E: 1647 | S: 91808 | R: 136.0000 | G: 1 | D: 01.2 s | CLOSS: -22.6326
+| train          | E: 1648 | S: 91842 | R: 147.0000 | G: 1 | D: 00.8 s | CLOSS: 21.9152
+| train          | E: 1649 | S: 91881 | R: 149.0000 | G: 1 | D: 01.1 s | CLOSS: 33.7713
+| train          | E: 1650 | S: 91899 | R: 171.0000 | G: 1 | D: 00.4 s | CLOSS: 11.7497
+| train          | E: 1651 | S: 91947 | R: 134.0000 | G: 1 | D: 01.2 s | CLOSS: -15.2626
+| train          | E: 1652 | S: 91979 | R: 158.0000 | G: 1 | D: 00.8 s | CLOSS: 98.3168
+evaluating...
+| eval           | E: 1653 | S: 92001 | R: 109.2000 | G: 1
+| train          | E: 1653 | S: 92004 | R: 167.0000 | G: 1 | D: 01.6 s | CLOSS: -67.9092
+| train          | E: 1654 | S: 92053 | R: 138.0000 | G: 1 | D: 01.3 s | CLOSS: 13.0194
+| train          | E: 1655 | S: 92119 | R: 106.0000 | G: 1 | D: 01.6 s | CLOSS: 34.9523
+| train          | E: 1656 | S: 92180 | R: 118.0000 | G: 1 | D: 01.9 s | CLOSS: 39.5792
+| train          | E: 1657 | S: 92210 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: 13.3082
+| train          | E: 1658 | S: 92280 | R: 111.0000 | G: 1 | D: 01.6 s | CLOSS: -19.1841
+| train          | E: 1659 | S: 92313 | R: 158.0000 | G: 1 | D: 00.8 s | CLOSS: -176.5472
+| train          | E: 1660 | S: 92341 | R: 151.0000 | G: 1 | D: 00.9 s | CLOSS: -88.0595
+| train          | E: 1661 | S: 92413 | R: 114.0000 | G: 1 | D: 01.9 s | CLOSS: -77.5850
+| train          | E: 1662 | S: 92493 | R: 101.0000 | G: 1 | D: 01.9 s | CLOSS: -52.1129
+| train          | E: 1663 | S: 92557 | R: 115.0000 | G: 1 | D: 01.3 s | CLOSS: -51.9059
+| train          | E: 1664 | S: 92629 | R: 106.0000 | G: 1 | D: 01.8 s | CLOSS: -127.5354
+| train          | E: 1665 | S: 92665 | R: 157.0000 | G: 1 | D: 00.9 s | CLOSS: 27.0855
+| train          | E: 1666 | S: 92715 | R: 127.0000 | G: 1 | D: 01.1 s | CLOSS: -55.8649
+| train          | E: 1667 | S: 92741 | R: 162.0000 | G: 1 | D: 00.6 s | CLOSS: -68.1541
+| train          | E: 1668 | S: 92819 | R: 99.0000 | G: 1 | D: 01.8 s | CLOSS: -43.2323
+| train          | E: 1669 | S: 92865 | R: 143.0000 | G: 1 | D: 01.3 s | CLOSS: 7.7062
+| train          | E: 1670 | S: 92923 | R: 115.0000 | G: 1 | D: 01.4 s | CLOSS: -78.1061
+| train          | E: 1671 | S: 92992 | R: 113.0000 | G: 1 | D: 01.8 s | CLOSS: -102.6106
+evaluating...
+| eval           | E: 1672 | S: 93001 | R: 119.5000 | G: 1
+| train          | E: 1672 | S: 93121 | R: 43.0000 | G: 1 | D: 04.1 s | CLOSS: 3.1855
+| train          | E: 1673 | S: 93174 | R: 131.0000 | G: 1 | D: 01.3 s | CLOSS: 0.9140
+| train          | E: 1674 | S: 93220 | R: 142.0000 | G: 1 | D: 01.0 s | CLOSS: -38.0383
+| train          | E: 1675 | S: 93267 | R: 140.0000 | G: 1 | D: 01.4 s | CLOSS: 6.8903
+| train          | E: 1676 | S: 93312 | R: 137.0000 | G: 1 | D: 01.1 s | CLOSS: -19.4519
+| train          | E: 1677 | S: 93335 | R: 163.0000 | G: 1 | D: 00.6 s | CLOSS: -253.3966
+| train          | E: 1678 | S: 93357 | R: 167.0000 | G: 1 | D: 00.9 s | CLOSS: -47.0665
+| train          | E: 1679 | S: 93379 | R: 160.0000 | G: 1 | D: 00.6 s | CLOSS: -89.1511
+| train          | E: 1680 | S: 93443 | R: 121.0000 | G: 1 | D: 01.5 s | CLOSS: 74.8270
+| train          | E: 1681 | S: 93484 | R: 143.0000 | G: 1 | D: 00.9 s | CLOSS: 9.2428
+| train          | E: 1682 | S: 93532 | R: 143.0000 | G: 1 | D: 01.3 s | CLOSS: -0.4327
+| train          | E: 1683 | S: 93597 | R: 120.0000 | G: 1 | D: 01.5 s | CLOSS: -1.3984
+| train          | E: 1684 | S: 93633 | R: 147.0000 | G: 1 | D: 00.9 s | CLOSS: -95.6944
+| train          | E: 1685 | S: 93674 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: 93.0642
+| train          | E: 1686 | S: 93741 | R: 117.0000 | G: 1 | D: 01.8 s | CLOSS: 30.6457
+| train          | E: 1687 | S: 93772 | R: 163.0000 | G: 1 | D: 00.7 s | CLOSS: 0.7240
+| train          | E: 1688 | S: 93850 | R: 91.0000 | G: 1 | D: 01.9 s | CLOSS: 70.6317
+| train          | E: 1689 | S: 93888 | R: 146.0000 | G: 1 | D: 01.0 s | CLOSS: 44.8517
+| train          | E: 1690 | S: 93907 | R: 172.0000 | G: 1 | D: 00.4 s | CLOSS: -57.2533
+| train          | E: 1691 | S: 93939 | R: 161.0000 | G: 1 | D: 00.7 s | CLOSS: -185.3093
+| train          | E: 1692 | S: 93992 | R: 138.0000 | G: 1 | D: 01.3 s | CLOSS: 62.9264
+evaluating...
+| eval           | E: 1693 | S: 94001 | R: -7.2000 | G: 1
+| train          | E: 1693 | S: 94051 | R: 121.0000 | G: 1 | D: 02.6 s | CLOSS: -62.6499
+| train          | E: 1694 | S: 94096 | R: 134.0000 | G: 1 | D: 01.1 s | CLOSS: 14.8470
+| train          | E: 1695 | S: 94158 | R: 123.0000 | G: 1 | D: 01.3 s | CLOSS: 2.2368
+| train          | E: 1696 | S: 94254 | R: 87.0000 | G: 1 | D: 02.2 s | CLOSS: -12.2637
+| train          | E: 1697 | S: 94315 | R: 122.0000 | G: 1 | D: 01.3 s | CLOSS: -22.9679
+| train          | E: 1698 | S: 94352 | R: 141.0000 | G: 1 | D: 01.0 s | CLOSS: -38.8759
+| train          | E: 1699 | S: 94428 | R: 103.0000 | G: 1 | D: 01.8 s | CLOSS: -96.6407
+| train          | E: 1700 | S: 94473 | R: 140.0000 | G: 1 | D: 01.0 s | CLOSS: 48.1857
+| train          | E: 1701 | S: 94514 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: -3.8547
+| train          | E: 1702 | S: 94554 | R: 145.0000 | G: 1 | D: 01.3 s | CLOSS: -107.0439
+| train          | E: 1703 | S: 94607 | R: 132.0000 | G: 1 | D: 01.5 s | CLOSS: 103.2394
+| train          | E: 1704 | S: 94642 | R: 148.0000 | G: 1 | D: 00.9 s | CLOSS: -6.3779
+| train          | E: 1705 | S: 94723 | R: 84.0000 | G: 1 | D: 01.7 s | CLOSS: -33.3956
+| train          | E: 1706 | S: 94779 | R: 129.0000 | G: 1 | D: 01.2 s | CLOSS: -15.8087
+| train          | E: 1707 | S: 94824 | R: 144.0000 | G: 1 | D: 01.2 s | CLOSS: -97.4413
+| train          | E: 1708 | S: 94907 | R: 96.0000 | G: 1 | D: 02.1 s | CLOSS: -78.2724
+| train          | E: 1709 | S: 94985 | R: 97.0000 | G: 1 | D: 01.6 s | CLOSS: 20.3849
+evaluating...
+| eval           | E: 1710 | S: 95001 | R: 118.6000 | G: 1
+| train          | E: 1710 | S: 95006 | R: 167.0000 | G: 1 | D: 01.3 s | CLOSS: 77.2263
+| train          | E: 1711 | S: 95036 | R: 158.0000 | G: 1 | D: 00.6 s | CLOSS: -20.5949
+| train          | E: 1712 | S: 95065 | R: 154.0000 | G: 1 | D: 00.6 s | CLOSS: -215.6738
+| train          | E: 1713 | S: 95114 | R: 110.0000 | G: 1 | D: 01.0 s | CLOSS: 33.5739
+| train          | E: 1714 | S: 95179 | R: 120.0000 | G: 1 | D: 01.5 s | CLOSS: -68.9295
+| train          | E: 1715 | S: 95245 | R: 117.0000 | G: 1 | D: 01.6 s | CLOSS: 11.2769
+| train          | E: 1716 | S: 95274 | R: 151.0000 | G: 1 | D: 00.7 s | CLOSS: 36.2849
+| train          | E: 1717 | S: 95380 | R: 67.0000 | G: 1 | D: 02.6 s | CLOSS: -38.1366
+| train          | E: 1718 | S: 95410 | R: 162.0000 | G: 1 | D: 00.7 s | CLOSS: -1.9535
+| train          | E: 1719 | S: 95458 | R: 135.0000 | G: 1 | D: 01.3 s | CLOSS: 121.7666
+| train          | E: 1720 | S: 95523 | R: 124.0000 | G: 1 | D: 02.2 s | CLOSS: -6.3838
+| train          | E: 1721 | S: 95585 | R: 111.0000 | G: 1 | D: 02.1 s | CLOSS: -40.9318
+| train          | E: 1722 | S: 95602 | R: 172.0000 | G: 1 | D: 01.0 s | CLOSS: -174.6305
+| train          | E: 1723 | S: 95771 | R: -4.0000 | G: 1 | D: 05.4 s | CLOSS: -19.1317
+| train          | E: 1724 | S: 95850 | R: 108.0000 | G: 1 | D: 01.7 s | CLOSS: 51.1040
+| train          | E: 1725 | S: 95887 | R: 150.0000 | G: 1 | D: 00.8 s | CLOSS: 3.2739
+| train          | E: 1726 | S: 95944 | R: 132.0000 | G: 1 | D: 01.3 s | CLOSS: -4.8091
+| train          | E: 1727 | S: 95998 | R: 130.0000 | G: 1 | D: 01.2 s | CLOSS: -76.3717
+evaluating...
+| eval           | E: 1728 | S: 96001 | R: 141.3000 | G: 1
+| train          | E: 1728 | S: 96102 | R: 75.0000 | G: 1 | D: 03.2 s | CLOSS: 18.7090
+| train          | E: 1729 | S: 96133 | R: 147.0000 | G: 1 | D: 00.7 s | CLOSS: -6.5819
+| train          | E: 1730 | S: 96248 | R: 51.0000 | G: 1 | D: 02.8 s | CLOSS: 6.5135
+| train          | E: 1731 | S: 96268 | R: 170.0000 | G: 1 | D: 00.6 s | CLOSS: 60.7701
+| train          | E: 1732 | S: 96290 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: -48.4508
+| train          | E: 1733 | S: 96348 | R: 122.0000 | G: 1 | D: 01.4 s | CLOSS: 12.3397
+| train          | E: 1734 | S: 96414 | R: 124.0000 | G: 1 | D: 01.4 s | CLOSS: -24.0396
+| train          | E: 1735 | S: 96451 | R: 154.0000 | G: 1 | D: 00.8 s | CLOSS: 6.4750
+| train          | E: 1736 | S: 96487 | R: 144.0000 | G: 1 | D: 01.0 s | CLOSS: -18.0423
+| train          | E: 1737 | S: 96553 | R: 115.0000 | G: 1 | D: 01.6 s | CLOSS: 7.7855
+| train          | E: 1738 | S: 96588 | R: 157.0000 | G: 1 | D: 00.9 s | CLOSS: -38.7141
+| train          | E: 1739 | S: 96675 | R: 99.0000 | G: 1 | D: 02.0 s | CLOSS: -124.0877
+| train          | E: 1740 | S: 96702 | R: 159.0000 | G: 1 | D: 00.5 s | CLOSS: 179.4805
+| train          | E: 1741 | S: 96760 | R: 128.0000 | G: 1 | D: 01.2 s | CLOSS: 21.8142
+| train          | E: 1742 | S: 96843 | R: 91.0000 | G: 1 | D: 02.1 s | CLOSS: -25.8442
+| train          | E: 1743 | S: 96868 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: -115.7613
+| train          | E: 1744 | S: 96905 | R: 139.0000 | G: 1 | D: 00.9 s | CLOSS: -8.0950
+| train          | E: 1745 | S: 96951 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: 51.1837
+| train          | E: 1746 | S: 96989 | R: 148.0000 | G: 1 | D: 00.7 s | CLOSS: 88.7967
+evaluating...
+| eval           | E: 1747 | S: 97001 | R: 112.5000 | G: 1
+| train          | E: 1747 | S: 97025 | R: 154.0000 | G: 1 | D: 01.8 s | CLOSS: 17.7017
+| train          | E: 1748 | S: 97058 | R: 143.0000 | G: 1 | D: 00.7 s | CLOSS: 0.6197
+| train          | E: 1749 | S: 97106 | R: 141.0000 | G: 1 | D: 01.2 s | CLOSS: 69.3541
+| train          | E: 1750 | S: 97161 | R: 119.0000 | G: 1 | D: 01.2 s | CLOSS: 58.4477
+| train          | E: 1751 | S: 97199 | R: 150.0000 | G: 1 | D: 00.9 s | CLOSS: -132.5132
+| train          | E: 1752 | S: 97231 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: 63.5828
+| train          | E: 1753 | S: 97335 | R: 77.0000 | G: 1 | D: 02.2 s | CLOSS: -6.7077
+| train          | E: 1754 | S: 97370 | R: 155.0000 | G: 1 | D: 00.9 s | CLOSS: -85.7236
+| train          | E: 1755 | S: 97381 | R: 183.0000 | G: 1 | D: 00.4 s | CLOSS: 78.1671
+| train          | E: 1756 | S: 97435 | R: 126.0000 | G: 1 | D: 01.2 s | CLOSS: 14.8621
+| train          | E: 1757 | S: 97598 | R: 19.0000 | G: 1 | D: 03.7 s | CLOSS: 16.0486
+| train          | E: 1758 | S: 97664 | R: 119.0000 | G: 1 | D: 01.8 s | CLOSS: -102.7625
+| train          | E: 1759 | S: 97692 | R: 156.0000 | G: 1 | D: 00.6 s | CLOSS: -58.1062
+| train          | E: 1760 | S: 97742 | R: 131.0000 | G: 1 | D: 01.1 s | CLOSS: 55.5296
+| train          | E: 1761 | S: 97784 | R: 138.0000 | G: 1 | D: 00.9 s | CLOSS: 18.7910
+evaluating...
+| eval           | E: 1762 | S: 98001 | R: 116.0000 | G: 1
+| train          | E: 1762 | S: 98094 | R: -393.0000 | G: 1 | D: 07.8 s | CLOSS: -32.4386
+| train          | E: 1763 | S: 98248 | R: -31.0000 | G: 1 | D: 03.7 s | CLOSS: -10.9324
+| train          | E: 1764 | S: 98270 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: -10.1765
+| train          | E: 1765 | S: 98430 | R: -13.0000 | G: 1 | D: 04.2 s | CLOSS: -24.5611
+| train          | E: 1766 | S: 98486 | R: 136.0000 | G: 1 | D: 02.2 s | CLOSS: -65.1836
+| train          | E: 1767 | S: 98558 | R: 107.0000 | G: 1 | D: 03.3 s | CLOSS: 8.2935
+| train          | E: 1768 | S: 98594 | R: 152.0000 | G: 1 | D: 01.3 s | CLOSS: 31.5888
+| train          | E: 1769 | S: 98636 | R: 144.0000 | G: 1 | D: 01.3 s | CLOSS: 105.4048
+| train          | E: 1770 | S: 98676 | R: 148.0000 | G: 1 | D: 00.9 s | CLOSS: 23.1918
+| train          | E: 1771 | S: 98766 | R: 89.0000 | G: 1 | D: 02.2 s | CLOSS: -9.9170
+| train          | E: 1772 | S: 98822 | R: 130.0000 | G: 1 | D: 01.3 s | CLOSS: -35.7799
+| train          | E: 1773 | S: 98844 | R: 165.0000 | G: 1 | D: 00.5 s | CLOSS: -18.9980
+| train          | E: 1774 | S: 98929 | R: 94.0000 | G: 1 | D: 02.0 s | CLOSS: 23.6352
+| train          | E: 1775 | S: 98957 | R: 157.0000 | G: 1 | D: 00.6 s | CLOSS: 61.4539
+| train          | E: 1776 | S: 98971 | R: 180.0000 | G: 1 | D: 00.4 s | CLOSS: 13.3026
+| train          | E: 1777 | S: 98996 | R: 166.0000 | G: 1 | D: 00.6 s | CLOSS: 81.7592
+evaluating...
+| eval           | E: 1778 | S: 99001 | R: 123.1000 | G: 1
+| train          | E: 1778 | S: 99026 | R: 156.0000 | G: 1 | D: 01.5 s | CLOSS: 50.7093
+| train          | E: 1779 | S: 99097 | R: 107.0000 | G: 1 | D: 01.7 s | CLOSS: 10.9475
+| train          | E: 1780 | S: 99125 | R: 160.0000 | G: 1 | D: 00.8 s | CLOSS: 209.9416
+| train          | E: 1781 | S: 99234 | R: 52.0000 | G: 1 | D: 02.4 s | CLOSS: -24.1495
+| train          | E: 1782 | S: 99253 | R: 170.0000 | G: 1 | D: 00.5 s | CLOSS: -76.2399
+| train          | E: 1783 | S: 99295 | R: 149.0000 | G: 1 | D: 00.9 s | CLOSS: -30.2297
+| train          | E: 1784 | S: 99311 | R: 176.0000 | G: 1 | D: 00.3 s | CLOSS: -88.7833
+| train          | E: 1785 | S: 99344 | R: 156.0000 | G: 1 | D: 00.9 s | CLOSS: -13.2148
+| train          | E: 1786 | S: 99407 | R: 117.0000 | G: 1 | D: 01.3 s | CLOSS: -141.1312
+| train          | E: 1787 | S: 99504 | R: 84.0000 | G: 1 | D: 02.3 s | CLOSS: -65.8628
+| train          | E: 1788 | S: 99618 | R: 60.0000 | G: 1 | D: 02.5 s | CLOSS: 2.0988
+| train          | E: 1789 | S: 99711 | R: 71.0000 | G: 1 | D: 02.3 s | CLOSS: -76.0944
+| train          | E: 1790 | S: 99854 | R: 31.0000 | G: 1 | D: 03.6 s | CLOSS: -51.0562
+Finished!

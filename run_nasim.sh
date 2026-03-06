@@ -1,0 +1,3 @@
+#python train_iq.py agent=softq method=iq env=smallhoneypot agent.critic_lr=0.0001 agent.init_temp=1 gamma=0.9
+python train_iq.py agent=softq method=iq env=smallhoneypot_simpleQ agent.critic_lr=0.0001 agent.init_temp=1 gamma=0.9 expert.demos=50 env.eval_interval=1e3 env.learn_steps=1e5
+

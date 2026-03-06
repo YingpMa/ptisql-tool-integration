@@ -1,0 +1,19 @@
+# @package _global_
+
+env:
+  name: nasim:SmallHoneypotPO-v0
+  learn_steps: 1e5
+  eval_interval: 1e3
+  replay_mem: 3e6
+  eps_steps: 1000
+
+expert:
+  demos: 10
+  subsample_freq: 1
+
+eval:
+  policy: 
+  threshold: 500
+
+q_net:
+  _target_: agent.softq_models.SimpleQNetwork
