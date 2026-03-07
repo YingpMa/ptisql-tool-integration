@@ -200,7 +200,7 @@ def main(cfg: DictConfig):
                 break
             state = next_state
         
-        goal_reached = env.goal_reached()
+        goal_reached = env.unwrapped.goal_reached()
 
         rewards_window.append(episode_reward)
         logger.log('train/episode', epoch, learn_steps)

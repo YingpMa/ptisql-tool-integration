@@ -61,7 +61,7 @@ def evaluate(actor, env, seed_eval, num_episodes=10, vis=True):
                     new = 1
         if new == 1:
             total_returns.append(r)
-        g = env.goal_reached()
+        g = env.unwrapped.goal_reached()
         goal_reached.append(g)
         honeypotlist.append(h)
 
