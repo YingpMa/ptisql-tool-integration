@@ -8,7 +8,7 @@ env:
   eps_window: 10
   learn_steps: 5e5
   eval_interval: 5e3
-  demo: nasim:SmallHoneypotPO-v0_1000.pkl
+  demo: real_engagements.pkl
 
 num_seed_steps: 1000
 log_interval: 20
