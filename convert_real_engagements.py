@@ -8,8 +8,7 @@ import numpy as np
 
 
 def build_action_map(env_name="nasim:SmallHoneypotPO-v0"):
-    envs.register_custom_envs()
-    env = gymnasium.make(env_name, render_mode="human")
+    env = gymnasium.make(env_name)
 
     action_map = {}
 
@@ -33,27 +32,20 @@ def build_action_map(env_name="nasim:SmallHoneypotPO-v0"):
             action_name = "ProcessScan"
 
         elif text.startswith("PrivilegeEscalation"):
-
             if "process=tomcat" in text:
                 action_name = "Tomcat-PE"
-
             elif "process=daclsvc" in text:
                 action_name = "Daclsvc-PE"
-
             else:
                 action_name = "PrivilegeEscalation"
 
         elif text.startswith("Exploit"):
-
             if "service=ftp" in text:
                 action_name = "FTP-EXP"
-
             elif "service=http" in text:
                 action_name = "HTTP-EXP"
-
             elif "service=ssh" in text:
                 action_name = "SSH-EXP"
-
             else:
                 raise ValueError(f"Unknown exploit type in action: {text}")
 
@@ -62,12 +54,17 @@ def build_action_map(env_name="nasim:SmallHoneypotPO-v0"):
 
         action_map[(action_name, target)] = i
 
+    env.close()
     return action_map
 
 
-def convert_engagement_jsons(json_files, output_pkl):
-
-    action_map = build_action_map()
+def convert_engagement_jsons(
+    json_files,
+    output_pkl,
+    env_name="nasim:SmallHoneypotPO-v0",
+):
+    envs.register_custom_envs()
+    action_map = build_action_map(env_name)
 
     expert = {
         "states": [],
@@ -79,9 +76,12 @@ def convert_engagement_jsons(json_files, output_pkl):
     }
 
     for json_file in json_files:
-
         with open(json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
+
+        # 每条真实 engagement 单独 reset 一次环境
+        env = gymnasium.make(env_name)
+        obs, _ = env.reset()
 
         traj_states = []
         traj_actions = []
@@ -89,30 +89,42 @@ def convert_engagement_jsons(json_files, output_pkl):
         traj_next_states = []
         traj_dones = []
 
-        for step in data["steps"]:
+        print(f"\nProcessing {json_file} ...")
 
+        for idx, step in enumerate(data["steps"]):
             action_name = step["action"]
             target = step["target_host"].replace(" ", "")
-
             key = (action_name, target)
 
             if key not in action_map:
                 print(f"\n[ERROR] Missing action mapping for {key}")
                 print("Available actions for this target:")
-
                 for k, v in sorted(action_map.items()):
                     if k[1] == target:
                         print("   ", k, "->", v)
-
+                env.close()
                 raise KeyError(f"Action mapping not found for {key}")
 
             action_id = action_map[key]
 
-            traj_states.append(np.array(step["state"], dtype=np.float32))
+            # 用 NASim 环境真实重放动作，生成兼容的 obs / next_obs
+            next_obs, reward, terminated, truncated, _ = env.step(action_id)
+            done = bool(terminated or truncated)
+
+            traj_states.append(np.array(obs, dtype=np.float32))
             traj_actions.append(int(action_id))
-            traj_rewards.append(float(step["reward"]))
-            traj_next_states.append(np.array(step["next_state"], dtype=np.float32))
-            traj_dones.append(bool(step["done"]))
+            traj_rewards.append(float(reward))
+            traj_next_states.append(np.array(next_obs, dtype=np.float32))
+            traj_dones.append(done)
+
+            obs = next_obs
+
+            if done:
+                print(
+                    f"[INFO] {json_file.name}: environment terminated early "
+                    f"at step {idx + 1}"
+                )
+                break
 
         expert["states"].append(traj_states)
         expert["actions"].append(traj_actions)
@@ -121,7 +133,15 @@ def convert_engagement_jsons(json_files, output_pkl):
         expert["dones"].append(traj_dones)
         expert["lengths"].append(len(traj_states))
 
-        print(f"Loaded {json_file} | steps={len(traj_states)}")
+        if len(traj_states) > 0:
+            print(
+                f"Loaded {json_file} | recorded_steps={len(traj_states)} "
+                f"| state_dim={traj_states[0].shape[0]}"
+            )
+        else:
+            print(f"Loaded {json_file} | recorded_steps=0")
+
+        env.close()
 
     with open(output_pkl, "wb") as f:
         pickle.dump(expert, f)
@@ -133,11 +153,8 @@ def convert_engagement_jsons(json_files, output_pkl):
 
 
 if __name__ == "__main__":
-
     input_dir = Path("real_engagements")
-
     json_files = sorted(input_dir.glob("engagement_*.json"))
-
     output_pkl = "experts/real_engagements.pkl"
 
     convert_engagement_jsons(json_files, output_pkl)

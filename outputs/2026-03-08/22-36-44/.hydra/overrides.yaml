@@ -1,0 +1,7 @@
+- agent=softq
+- method=iq
+- env=smallhoneypot_simpleQ
+- gamma=0.9
+- expert.demos=5
+- env.learn_steps=20000
+- seed=1
