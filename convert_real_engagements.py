@@ -75,15 +75,59 @@ def convert_engagement_jsons(
 
     def normalize_action_name(action_name: str):
         action_name = action_name.lower()
-        if "privilege" in action_name:
-            return "privilege_escalation"
-        if "lateral" in action_name or "move" in action_name:
-            return "lateral"
-        if "exploit" in action_name or "exp" in action_name:
-            return "exploit"
-        if "scan" in action_name or "enum" in action_name:
-            return "discover"
+        if "servicescan" in action_name:
+            return "servicescan"
+        if "osscan" in action_name:
+            return "osscan"
+        if "subnetscan" in action_name or "scan" in action_name or "enum" in action_name:
+            return "subnetscan"
+        if "processscan" in action_name:
+            return "processscan"
+        if "http-exp" in action_name:
+            return "http-exp"
+        if "ssh-exp" in action_name:
+            return "ssh-exp"
+        if "ftp-exp" in action_name:
+            return "ftp-exp"
+        if "tomcat-pe" in action_name:
+            return "tomcat-pe"
+        if "daclsvc" in action_name:
+            return "daclsvc"
         return action_name
+
+    def select_best_action(env, action_name, target, obs):
+        normalized_action_name = normalize_action_name(action_name)
+        candidate_action_ids = []
+
+        for aid in range(env.action_space.n):
+            action = env.action_space.get_action(aid)
+            text = str(action).lower()
+
+            if normalized_action_name == "servicescan" and "servicescan" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "osscan" and "osscan" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "subnetscan" and "subnetscan" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "processscan" and "processscan" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "http-exp" and "service=http" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "ssh-exp" and "service=ssh" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "ftp-exp" and "service=ftp" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "tomcat-pe" and "process=tomcat" in text:
+                candidate_action_ids.append(aid)
+            elif normalized_action_name == "daclsvc" and "process=daclsvc" in text:
+                candidate_action_ids.append(aid)
+
+        for action_id in candidate_action_ids:
+            next_obs, _, _, _, _ = env.step(action_id)
+            if not np.array_equal(obs, next_obs):
+                return action_id
+
+        return None
 
     expert = {
         "states": [],
@@ -114,36 +158,12 @@ def convert_engagement_jsons(
             action_name = step["action"]
             target = step["target_host"].replace(" ", "")
             print("JSON_ACTION:", action_name, target)
-            normalized_action_name = normalize_action_name(action_name)
-            candidate_action_ids = action_map.get(normalized_action_name, [])
+            action_id = select_best_action(env, action_name, target, obs)
 
-            if not candidate_action_ids:
-                print(f"\n[ERROR] Missing action mapping for {normalized_action_name}")
+            if action_id is None:
                 continue
 
-            selected = None
-            for action_id in candidate_action_ids:
-                env_copy = gymnasium.make(env_name)
-                env_copy.reset()
-                try:
-                    if len(traj_actions) > 0:
-                        replay_obs, _ = env_copy.reset()
-                        for replay_action_id in traj_actions:
-                            replay_obs, _, replay_terminated, replay_truncated, _ = env_copy.step(replay_action_id)
-                            if replay_terminated or replay_truncated:
-                                break
-                    next_obs_candidate, reward_candidate, terminated_candidate, truncated_candidate, _ = env_copy.step(action_id)
-                    if not np.array_equal(obs, next_obs_candidate):
-                        selected = (action_id, next_obs_candidate, reward_candidate, terminated_candidate, truncated_candidate)
-                        env_copy.close()
-                        break
-                finally:
-                    env_copy.close()
-
-            if selected is None:
-                continue
-
-            action_id, next_obs, reward, terminated, truncated = selected
+            next_obs, reward, terminated, truncated, _ = env.step(action_id)
             done = bool(terminated or truncated)
 
             traj_states.append(np.array(obs, dtype=np.float32))
