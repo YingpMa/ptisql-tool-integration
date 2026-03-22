@@ -1,0 +1,16 @@
+{"time":"2026-03-09T10:21:30.812824237-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-03-09T10:21:31.073389104-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-03-09T10:21:31.077322419-04:00","level":"INFO","msg":"stream: created new stream","id":"ic51agya"}
+{"time":"2026-03-09T10:21:31.080930709-04:00","level":"INFO","msg":"handler: started","stream_id":"ic51agya"}
+{"time":"2026-03-09T10:21:31.082718852-04:00","level":"INFO","msg":"stream: started","id":"ic51agya"}
+{"time":"2026-03-09T10:21:31.093492715-04:00","level":"INFO","msg":"writer: started","stream_id":"ic51agya"}
+{"time":"2026-03-09T10:21:31.095088843-04:00","level":"INFO","msg":"sender: started","stream_id":"ic51agya"}
+{"time":"2026-03-09T10:21:31.130215657-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-03-09T10:21:44.204105297-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-03-09T10:21:44.205493409-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-09/10-21-23/logs/nasim:SmallHoneypotPO-v0/2026-03-09_10-21-34\")","namespace":""}
+{"time":"2026-03-09T10:21:44.239628166-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-09/10-21-23/logs/nasim:SmallHoneypotPO-v0/2026-03-09_10-21-34/events.out.tfevents.1773066094.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-03-09_10-21-34/events.out.tfevents.1773066094.kali"}
+{"time":"2026-03-09T15:52:12.442834726-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-03-09T15:52:12.518377264-04:00","level":"INFO","msg":"stream: closing","id":"ic51agya"}
+{"time":"2026-03-09T15:52:12.518717245-04:00","level":"INFO","msg":"handler: closed","stream_id":"ic51agya"}
+{"time":"2026-03-09T15:52:12.519974364-04:00","level":"INFO","msg":"sender: closed","stream_id":"ic51agya"}
+{"time":"2026-03-09T15:52:12.520331386-04:00","level":"INFO","msg":"stream: closed","id":"ic51agya"}

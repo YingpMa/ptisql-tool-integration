@@ -1,0 +1,16 @@
+{"time":"2026-03-11T06:56:43.441609572-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-03-11T06:56:43.720367906-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-03-11T06:56:43.724130584-04:00","level":"INFO","msg":"stream: created new stream","id":"gbron6a4"}
+{"time":"2026-03-11T06:56:43.726276542-04:00","level":"INFO","msg":"handler: started","stream_id":"gbron6a4"}
+{"time":"2026-03-11T06:56:43.729420944-04:00","level":"INFO","msg":"stream: started","id":"gbron6a4"}
+{"time":"2026-03-11T06:56:43.738346925-04:00","level":"INFO","msg":"writer: started","stream_id":"gbron6a4"}
+{"time":"2026-03-11T06:56:43.739006219-04:00","level":"INFO","msg":"sender: started","stream_id":"gbron6a4"}
+{"time":"2026-03-11T06:56:43.769276721-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-03-11T06:57:00.743630854-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-03-11T06:57:00.748991628-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-11/06-55-53/logs/nasim:SmallHoneypotPO-v0/2026-03-11_06-56-50\")","namespace":""}
+{"time":"2026-03-11T06:57:00.788873828-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-11/06-55-53/logs/nasim:SmallHoneypotPO-v0/2026-03-11_06-56-50/events.out.tfevents.1773226610.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-03-11_06-56-50/events.out.tfevents.1773226610.kali"}
+{"time":"2026-03-11T10:32:58.194419871-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-03-11T10:32:58.398166637-04:00","level":"INFO","msg":"stream: closing","id":"gbron6a4"}
+{"time":"2026-03-11T10:32:58.398547691-04:00","level":"INFO","msg":"handler: closed","stream_id":"gbron6a4"}
+{"time":"2026-03-11T10:32:58.404661585-04:00","level":"INFO","msg":"sender: closed","stream_id":"gbron6a4"}
+{"time":"2026-03-11T10:32:58.410392751-04:00","level":"INFO","msg":"stream: closed","id":"gbron6a4"}

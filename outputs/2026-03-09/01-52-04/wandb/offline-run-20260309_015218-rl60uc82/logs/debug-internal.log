@@ -1,0 +1,11 @@
+{"time":"2026-03-09T01:52:22.905734924-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-03-09T01:52:23.608692958-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-03-09T01:52:23.613182525-04:00","level":"INFO","msg":"stream: created new stream","id":"rl60uc82"}
+{"time":"2026-03-09T01:52:23.616645235-04:00","level":"INFO","msg":"stream: started","id":"rl60uc82"}
+{"time":"2026-03-09T01:52:23.62181388-04:00","level":"INFO","msg":"handler: started","stream_id":"rl60uc82"}
+{"time":"2026-03-09T01:52:23.622249931-04:00","level":"INFO","msg":"writer: started","stream_id":"rl60uc82"}
+{"time":"2026-03-09T01:52:23.623017839-04:00","level":"INFO","msg":"sender: started","stream_id":"rl60uc82"}
+{"time":"2026-03-09T01:52:23.65479985-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-03-09T01:52:38.16956644-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-03-09T01:52:38.170721234-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-09/01-52-04/logs/nasim:SmallHoneypotPO-v0/2026-03-09_01-52-28\")","namespace":""}
+{"time":"2026-03-09T01:52:38.25414604-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-09/01-52-04/logs/nasim:SmallHoneypotPO-v0/2026-03-09_01-52-28/events.out.tfevents.1773035548.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-03-09_01-52-28/events.out.tfevents.1773035548.kali"}
