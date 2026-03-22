@@ -73,6 +73,21 @@ def convert_engagement_jsons(
     envs.register_custom_envs()
     action_map = build_action_map(env_name)
 
+    def audit_goal_reached(env):
+        try:
+            return env.unwrapped.goal_reached()
+        except Exception:
+            return None
+
+    def audit_host_vector(obs):
+        try:
+            arr = np.asarray(obs)
+            if arr.ndim != 1:
+                return None
+            return arr.copy()
+        except Exception:
+            return None
+
     def normalize_action_name(action_name: str):
         action_name = action_name.lower()
         if "servicescan" in action_name:
@@ -156,6 +171,10 @@ def convert_engagement_jsons(
         traj_rewards = []
         traj_next_states = []
         traj_dones = []
+        changed_state_steps = 0
+        any_positive_reward = False
+        any_done = False
+        first_expected_fail_step = None
 
         print(f"\nProcessing {json_file} ...")
 
@@ -163,13 +182,50 @@ def convert_engagement_jsons(
             action_name = step["action"]
             target = step["target_host"].replace(" ", "")
             print("JSON_ACTION:", action_name, target)
+            prev_goal_reached = audit_goal_reached(env)
+            prev_state_vector = audit_host_vector(obs)
             action_id = select_best_action(env, action_name, target, obs)
 
             if action_id is None:
+                if first_expected_fail_step is None and any(x in action_name.lower() for x in ["exp", "exploit", "pe", "privilege", "tomcat", "daclsvc"]):
+                    first_expected_fail_step = idx + 1
+                print("AUDIT_STEP", json_file.name, idx + 1, action_name, target, None, None, False, None, None, prev_goal_reached, None)
                 continue
 
+            selected_action = env.action_space.get_action(action_id)
+            selected_action_str = str(selected_action)
             next_obs, reward, terminated, truncated, _ = env.step(action_id)
             done = bool(terminated or truncated)
+            state_changed = not np.array_equal(obs, next_obs)
+            next_goal_reached = audit_goal_reached(env)
+            next_state_vector = audit_host_vector(next_obs)
+            privilege_related_change = None
+            if prev_state_vector is not None and next_state_vector is not None and prev_state_vector.shape == next_state_vector.shape:
+                privilege_related_change = float(np.abs(next_state_vector - prev_state_vector).sum())
+
+            print(
+                "AUDIT_STEP",
+                json_file.name,
+                idx + 1,
+                action_name,
+                target,
+                action_id,
+                selected_action_str,
+                state_changed,
+                reward,
+                done,
+                None if prev_goal_reached is None or next_goal_reached is None else (prev_goal_reached != next_goal_reached),
+                privilege_related_change,
+            )
+
+            if state_changed:
+                changed_state_steps += 1
+            if reward > 0:
+                any_positive_reward = True
+            if done:
+                any_done = True
+            if first_expected_fail_step is None and any(x in action_name.lower() for x in ["exp", "exploit", "pe", "privilege", "tomcat", "daclsvc"]) and reward <= 0 and not done:
+                first_expected_fail_step = idx + 1
 
             traj_states.append(np.array(obs, dtype=np.float32))
             traj_actions.append(int(action_id))
@@ -185,6 +241,15 @@ def convert_engagement_jsons(
                     f"at step {idx + 1}"
                 )
                 break
+
+        print(
+            "AUDIT_TRAJECTORY_SUMMARY",
+            json_file.name,
+            "changed_state_steps=", changed_state_steps,
+            "positive_reward=", any_positive_reward,
+            "done_true=", any_done,
+            "first_expected_fail_step=", first_expected_fail_step,
+        )
 
         expert["states"].append(traj_states)
         expert["actions"].append(traj_actions)
