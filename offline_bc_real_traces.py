@@ -46,12 +46,15 @@ class MLP(nn.Module):
 
 
 def load_samples(data_dir: Path):
-    xs = []
-    ys = []
+    file_samples = []
     skipped_bad_state = 0
     skipped_unknown_action = 0
 
     for json_file in sorted(data_dir.glob("*.json")):
+        print("reading_file", json_file.name)
+        xs = []
+        ys = []
+
         with open(json_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
@@ -69,11 +72,13 @@ def load_samples(data_dir: Path):
             xs.append(state)
             ys.append(ACTION_TO_IDX[action])
 
-    return xs, ys, skipped_bad_state, skipped_unknown_action
+        file_samples.append((json_file.name, xs, ys))
+
+    return file_samples, skipped_bad_state, skipped_unknown_action
 
 
-def split_dataset(xs, ys, val_ratio=0.2, seed=0):
-    indices = list(range(len(xs)))
+def split_dataset(file_samples, val_ratio=0.2, seed=0):
+    indices = list(range(len(file_samples)))
     rng = random.Random(seed)
     rng.shuffle(indices)
 
@@ -86,8 +91,14 @@ def split_dataset(xs, ys, val_ratio=0.2, seed=0):
         val_idx = val_idx[1:]
 
     def gather(idxs):
-        x = torch.tensor([xs[i] for i in idxs], dtype=torch.float32)
-        y = torch.tensor([ys[i] for i in idxs], dtype=torch.long)
+        xs = []
+        ys = []
+        for i in idxs:
+            _, file_xs, file_ys = file_samples[i]
+            xs.extend(file_xs)
+            ys.extend(file_ys)
+        x = torch.tensor(xs, dtype=torch.float32)
+        y = torch.tensor(ys, dtype=torch.long)
         return x, y
 
     return gather(train_idx), gather(val_idx)
@@ -131,12 +142,19 @@ def main():
     data_dir = Path("real_engagements")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    xs, ys, skipped_bad_state, skipped_unknown_action = load_samples(data_dir)
+    file_samples, skipped_bad_state, skipped_unknown_action = load_samples(data_dir)
+    xs = []
+    ys = []
+    for _, file_xs, file_ys in file_samples:
+        xs.extend(file_xs)
+        ys.extend(file_ys)
+
     if len(xs) == 0:
         print("No valid samples found.")
         return
 
     label_counts = Counter(ys)
+    print("json_file_count", len(file_samples))
     print("dataset_size", len(xs))
     print("skipped_bad_state", skipped_bad_state)
     print("skipped_unknown_action", skipped_unknown_action)
@@ -144,7 +162,7 @@ def main():
     for idx, count in sorted(label_counts.items()):
         print(ACTION_CLASSES[idx], count)
 
-    (x_train, y_train), (x_val, y_val) = split_dataset(xs, ys, val_ratio=0.2, seed=0)
+    (x_train, y_train), (x_val, y_val) = split_dataset(file_samples, val_ratio=0.2, seed=0)
 
     train_ds = TensorDataset(x_train, y_train)
     val_ds = TensorDataset(x_val, y_val)
