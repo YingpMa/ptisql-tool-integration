@@ -111,30 +111,51 @@ def convert_engagement_jsons(
         return action_name
 
     def select_best_action(env, action_name, target, obs):
+        def parse_target_tuple(target_str):
+            target_str = target_str.strip()
+            if target_str.startswith("(") and target_str.endswith(")"):
+                parts = target_str[1:-1].split(",")
+                if len(parts) == 2:
+                    return (int(parts[0].strip()), int(parts[1].strip()))
+            return None
+
+        def parse_action_target(text):
+            marker = "target="
+            if marker not in text:
+                return None
+            target_part = text.split(marker, 1)[1].split(", cost=", 1)[0].strip()
+            return parse_target_tuple(target_part)
+
         normalized_action_name = normalize_action_name(action_name)
+        json_target = parse_target_tuple(target)
         candidate_action_ids = []
 
         for aid in range(env.action_space.n):
             action = env.action_space.get_action(aid)
-            text = str(action).lower()
+            text = str(action)
+            text_lower = text.lower()
+            action_target = parse_action_target(text)
 
-            if normalized_action_name == "servicescan" and "servicescan" in text:
+            if action_target != json_target:
+                continue
+
+            if normalized_action_name == "servicescan" and "servicescan" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "osscan" and "osscan" in text:
+            elif normalized_action_name == "osscan" and "osscan" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "subnetscan" and "subnetscan" in text:
+            elif normalized_action_name == "subnetscan" and "subnetscan" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "processscan" and "processscan" in text:
+            elif normalized_action_name == "processscan" and "processscan" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "http-exp" and "service=http" in text:
+            elif normalized_action_name == "http-exp" and text_lower.startswith("exploit") and "service=http" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "ssh-exp" and "service=ssh" in text:
+            elif normalized_action_name == "ssh-exp" and text_lower.startswith("exploit") and "service=ssh" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "ftp-exp" and "service=ftp" in text:
+            elif normalized_action_name == "ftp-exp" and text_lower.startswith("exploit") and "service=ftp" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "tomcat-pe" and "process=tomcat" in text:
+            elif normalized_action_name == "tomcat-pe" and text_lower.startswith("privilegeescalation") and "process=tomcat" in text_lower:
                 candidate_action_ids.append(aid)
-            elif normalized_action_name == "daclsvc" and "process=daclsvc" in text:
+            elif normalized_action_name == "daclsvc" and text_lower.startswith("privilegeescalation") and "process=daclsvc" in text_lower:
                 candidate_action_ids.append(aid)
 
         for action_id in candidate_action_ids:
