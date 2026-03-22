@@ -123,9 +123,14 @@ def convert_engagement_jsons(
                 candidate_action_ids.append(aid)
 
         for action_id in candidate_action_ids:
-            next_obs, _, _, _, _ = env.step(action_id)
-            if not np.array_equal(obs, next_obs):
-                return action_id
+            env_copy = gymnasium.make(env_name)
+            try:
+                env_copy.reset()
+                next_obs, _, _, _, _ = env_copy.step(action_id)
+                if not np.array_equal(next_obs, obs):
+                    return action_id
+            finally:
+                env_copy.close()
 
         return None
 
