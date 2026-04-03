@@ -50,7 +50,7 @@ def load_samples(data_dir: Path):
     skipped_bad_state = 0
     skipped_unknown_action = 0
 
-    for json_file in sorted(data_dir.glob("*.json")):
+    for json_file in sorted(data_dir.rglob("*.json")):
         print("reading_file", json_file.name)
         xs = []
         ys = []
@@ -139,7 +139,7 @@ def print_confusion_matrix(matrix):
 
 
 def main():
-    data_dir = Path("real_engagements")
+    data_dir = Path("new_log")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     file_samples, skipped_bad_state, skipped_unknown_action = load_samples(data_dir)
