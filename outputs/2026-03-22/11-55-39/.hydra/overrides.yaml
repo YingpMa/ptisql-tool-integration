@@ -1,0 +1,6 @@
+- env=smallhoneypot_more_realistic
+- gamma=0.9
+- env.learn_steps=20000
+- expert.demos=5
+- expert.subsample_freq=1
+- eval.eps=10

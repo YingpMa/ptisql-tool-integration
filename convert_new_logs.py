@@ -1,6 +1,6 @@
 import json
 import pickle
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import gymnasium
@@ -79,31 +79,6 @@ def normalize_action_name(action_name: str):
     return None
 
 
-def semantic_match(normalized_name: str, action_text: str):
-    text = action_text.lower()
-
-    if normalized_name == "subnetscan":
-        return text.startswith("subnetscan")
-    if normalized_name == "osscan":
-        return text.startswith("osscan")
-    if normalized_name == "servicescan":
-        return text.startswith("servicescan")
-    if normalized_name == "processscan":
-        return text.startswith("processscan")
-    if normalized_name == "http-exp":
-        return text.startswith("exploit") and "service=http" in text
-    if normalized_name == "ssh-exp":
-        return text.startswith("exploit") and "service=ssh" in text
-    if normalized_name == "ftp-exp":
-        return text.startswith("exploit") and "service=ftp" in text
-    if normalized_name == "tomcat-pe":
-        return text.startswith("privilegeescalation") and "process=tomcat" in text
-    if normalized_name == "daclsvc-pe":
-        return text.startswith("privilegeescalation") and "process=daclsvc" in text
-
-    return False
-
-
 def build_candidate_index(env_name="nasim:SmallHoneypotPO-v0"):
     env = gymnasium.make(env_name)
     candidates = []
@@ -145,7 +120,7 @@ def build_candidate_index(env_name="nasim:SmallHoneypotPO-v0"):
     return candidates
 
 
-def find_action_id(env, candidates, action_name, target_host):
+def find_action_id(candidates, action_name, target_host):
     norm_name = normalize_action_name(action_name)
     norm_target = normalize_target(target_host)
 
@@ -164,10 +139,8 @@ def find_action_id(env, candidates, action_name, target_host):
         return matched[0]
 
     if len(matched) > 1:
-        # 保守处理：取第一个
         return matched[0]
 
-    # fallback：忽略 target，只按语义找
     for item in candidates:
         if item["key"] == norm_name:
             return item["action_id"]
@@ -175,33 +148,28 @@ def find_action_id(env, candidates, action_name, target_host):
     return None
 
 
-def convert_engagement_jsons(
-        input_root,
-        output_pkl,
-        env_name="nasim:SmallHoneypotPO-v0",
-        limit=None,
+def to_defaultdict_expert():
+    return defaultdict(list)
+
+
+def convert_new_logs_with_env_obs(
+    input_root,
+    output_pkl,
+    env_name="nasim:SmallHoneypotPO-v0",
+    limit=None,
 ):
     envs.register_custom_envs()
     candidates = build_candidate_index(env_name)
 
     input_root = Path(input_root)
     json_files = sorted(input_root.rglob("engagement_*.json"))
-
     if limit is not None:
         json_files = json_files[:limit]
 
     if not json_files:
         raise FileNotFoundError(f"No engagement json files found under: {input_root}")
 
-    expert = {
-        "states": [],
-        "actions": [],
-        "rewards": [],
-        "next_states": [],
-        "dones": [],
-        "lengths": [],
-        "files": [],
-    }
+    expert = to_defaultdict_expert()
 
     stats = {
         "total_files": 0,
@@ -210,10 +178,11 @@ def convert_engagement_jsons(
         "total_steps_seen": 0,
         "total_steps_kept": 0,
         "total_action_unmapped": 0,
-        "total_bad_state": 0,
+        "terminated_early": 0,
     }
 
     action_counter = Counter()
+    obs_dim_counter = Counter()
 
     for json_file in json_files:
         stats["total_files"] += 1
@@ -227,45 +196,24 @@ def convert_engagement_jsons(
             stats["skipped_files"] += 1
             continue
 
+        env = gymnasium.make(env_name)
+        obs, _ = env.reset()
+
         traj_states = []
+        traj_next_states = []
         traj_actions = []
         traj_rewards = []
-        traj_next_states = []
         traj_dones = []
-
-        env = gymnasium.make(env_name)
 
         print(f"\n[PROCESS] {json_file}")
 
         for idx, step in enumerate(steps, start=1):
             stats["total_steps_seen"] += 1
 
-            state = step.get("state")
-            next_state = step.get("next_state")
             action_name = step.get("action")
             target_host = step.get("target_host")
-            reward = step.get("reward", 0.0)
-            done = bool(step.get("done", False))
+            action_id = find_action_id(candidates, action_name, target_host)
 
-            if state is None or next_state is None:
-                stats["total_bad_state"] += 1
-                print(f"[WARN] {json_file.name} step={idx}: missing state/next_state")
-                continue
-
-            try:
-                state_arr = np.asarray(state, dtype=np.float32)
-                next_state_arr = np.asarray(next_state, dtype=np.float32)
-            except Exception:
-                stats["total_bad_state"] += 1
-                print(f"[WARN] {json_file.name} step={idx}: bad state format")
-                continue
-
-            if state_arr.ndim != 1 or next_state_arr.ndim != 1:
-                stats["total_bad_state"] += 1
-                print(f"[WARN] {json_file.name} step={idx}: non-1D state")
-                continue
-
-            action_id = find_action_id(env, candidates, action_name, target_host)
             if action_id is None:
                 stats["total_action_unmapped"] += 1
                 print(
@@ -274,14 +222,27 @@ def convert_engagement_jsons(
                 )
                 continue
 
-            traj_states.append(state_arr)
+            current_obs = np.asarray(obs, dtype=np.float32).copy()
+            next_obs, reward, terminated, truncated, _ = env.step(action_id)
+            next_obs_arr = np.asarray(next_obs, dtype=np.float32).copy()
+            done = bool(terminated or truncated)
+
+            traj_states.append(current_obs)
+            traj_next_states.append(next_obs_arr)
             traj_actions.append(int(action_id))
             traj_rewards.append(float(reward))
-            traj_next_states.append(next_state_arr)
             traj_dones.append(done)
 
             stats["total_steps_kept"] += 1
             action_counter[normalize_action_name(action_name)] += 1
+            obs_dim_counter[current_obs.shape[0]] += 1
+
+            obs = next_obs
+
+            if done:
+                stats["terminated_early"] += 1
+                print(f"[INFO] {json_file.name}: env terminated early at step {idx}")
+                break
 
         env.close()
 
@@ -290,19 +251,19 @@ def convert_engagement_jsons(
             stats["skipped_files"] += 1
             continue
 
-        expert["states"].append(traj_states)
-        expert["actions"].append(traj_actions)
-        expert["rewards"].append(traj_rewards)
-        expert["next_states"].append(traj_next_states)
-        expert["dones"].append(traj_dones)
+        # 和原生 expert 文件尽量对齐：每条 trajectory 用 tuple
+        expert["states"].append(tuple(traj_states))
+        expert["next_states"].append(tuple(traj_next_states))
+        expert["actions"].append(tuple(traj_actions))
+        expert["rewards"].append(tuple(traj_rewards))
+        expert["dones"].append(tuple(traj_dones))
         expert["lengths"].append(len(traj_states))
-        expert["files"].append(str(json_file))
 
         stats["loaded_files"] += 1
 
         print(
             f"[OK] {json_file.name} | kept_steps={len(traj_states)} "
-            f"| state_dim={traj_states[0].shape[0]}"
+            f"| obs_dim={traj_states[0].shape[0]}"
         )
 
     output_pkl = Path(output_pkl)
@@ -319,19 +280,21 @@ def convert_engagement_jsons(
     print("total_steps_seen =", stats["total_steps_seen"])
     print("total_steps_kept =", stats["total_steps_kept"])
     print("total_action_unmapped =", stats["total_action_unmapped"])
-    print("total_bad_state =", stats["total_bad_state"])
+    print("terminated_early =", stats["terminated_early"])
     print("num_trajectories =", len(expert["states"]))
     print("total_kept_steps =", sum(expert["lengths"]))
+    print("obs_dim_distribution =", dict(obs_dim_counter))
     print("action_distribution =", dict(action_counter))
 
 
 if __name__ == "__main__":
-    # 先跑 new_log
-    input_root = Path("new_log")
-    output_pkl = Path("experts/new_log.pkl")
-
-    # 调试时可改成 limit=10
-    convert_engagement_jsons(
+#    input_root = Path("new_log")
+#    output_pkl = Path("experts/new_log_obs.pkl")
+#    input_root = Path("new_log_selected")
+#    output_pkl = Path("experts/new_log_selected.pkl")
+    input_root = Path("new_log_12_only")
+    output_pkl = Path("experts/new_log_12_only.pkl")
+    convert_new_logs_with_env_obs(
         input_root=input_root,
         output_pkl=output_pkl,
         env_name="nasim:SmallHoneypotPO-v0",

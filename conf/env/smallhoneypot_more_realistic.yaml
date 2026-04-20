@@ -1,0 +1,30 @@
+# @package _global_
+
+env:
+  name: nasim:SmallHoneypotMoreRealisticPO-v0
+  replay_mem: 1e6
+  initial_mem: 5000
+  eps_steps: 1000
+  eps_window: 10
+  learn_steps: 5e5
+  eval_interval: 5e3
+  demo: nasim:SmallHoneypotPO-v0_1000.pkl
+
+num_seed_steps: 1000
+log_interval: 20
+
+expert:
+  demos: 1
+  subsample_freq: 1
+
+eval:
+  policy:
+  threshold: 21
+  use_baselines: False
+  eps: 10
+
+train:
+  batch: 64
+
+q_net:
+  _target_: agent.softq_models.SimpleQ2Network

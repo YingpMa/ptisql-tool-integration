@@ -1,0 +1,24 @@
+2026-03-22 11:55:55,557 INFO    MainThread:8065 [wandb_setup.py:_flush():81] Current SDK version is 0.24.2
+2026-03-22 11:55:55,560 INFO    MainThread:8065 [wandb_setup.py:_flush():81] Configure stats pid to 8065
+2026-03-22 11:55:55,561 INFO    MainThread:8065 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-03-22 11:55:55,563 INFO    MainThread:8065 [wandb_init.py:setup_run_log_directory():717] Logging user logs to /home/kali/thesis/ptisql-tool-integration/outputs/2026-03-22/11-55-39/wandb/offline-run-20260322_115555-nhtk1r4q/logs/debug.log
+2026-03-22 11:55:55,564 INFO    MainThread:8065 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to /home/kali/thesis/ptisql-tool-integration/outputs/2026-03-22/11-55-39/wandb/offline-run-20260322_115555-nhtk1r4q/logs/debug-internal.log
+2026-03-22 11:55:55,598 INFO    MainThread:8065 [wandb_init.py:init():844] calling init triggers
+2026-03-22 11:55:55,599 INFO    MainThread:8065 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2026-03-22 11:55:55,600 INFO    MainThread:8065 [wandb_init.py:init():892] starting backend
+2026-03-22 11:55:58,638 INFO    MainThread:8065 [wandb_init.py:init():895] sending inform_init request
+2026-03-22 11:55:59,473 INFO    MainThread:8065 [wandb_init.py:init():903] backend started and connected
+2026-03-22 11:55:59,630 INFO    MainThread:8065 [wandb_init.py:init():973] updated telemetry
+2026-03-22 11:56:00,210 INFO    MainThread:8065 [wandb_init.py:init():997] communicating run to backend with 90.0 second timeout
+2026-03-22 11:56:01,091 INFO    MainThread:8065 [wandb_init.py:init():1042] starting run threads in backend
+2026-03-22 11:56:02,924 INFO    MainThread:8065 [wandb_run.py:_console_start():2529] atexit reg
+2026-03-22 11:56:02,933 INFO    MainThread:8065 [wandb_run.py:_redirect():2377] redirect: wrap_raw
+2026-03-22 11:56:02,939 INFO    MainThread:8065 [wandb_run.py:_redirect():2446] Wrapping output streams.
+2026-03-22 11:56:02,949 INFO    MainThread:8065 [wandb_run.py:_redirect():2469] Redirects installed.
+2026-03-22 11:56:03,087 INFO    MainThread:8065 [wandb_init.py:init():1082] run started, returning control to user process
+2026-03-22 11:56:11,634 INFO    MainThread:8065 [wandb_run.py:_tensorboard_callback():1615] tensorboard callback: logs/nasim:SmallHoneypotPO-v0/2026-03-22_11-56-11, True
+2026-03-22 15:41:25,331 INFO    MainThread:8065 [wandb_run.py:_finish():2295] finishing run lechitu/SmallHoneypotPO-v0/nhtk1r4q
+2026-03-22 15:41:25,371 INFO    MainThread:8065 [wandb_run.py:_atexit_cleanup():2494] got exitcode: 0
+2026-03-22 15:41:25,387 INFO    MainThread:8065 [wandb_run.py:_restore():2476] restore
+2026-03-22 15:41:25,388 INFO    MainThread:8065 [wandb_run.py:_restore():2482] restore done

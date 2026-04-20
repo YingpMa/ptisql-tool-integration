@@ -1,0 +1,16 @@
+{"time":"2026-04-08T23:41:18.072372466-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-04-08T23:41:18.514467414-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-04-08T23:41:18.516889277-04:00","level":"INFO","msg":"stream: created new stream","id":"cjq2j5ie"}
+{"time":"2026-04-08T23:41:18.519509128-04:00","level":"INFO","msg":"stream: started","id":"cjq2j5ie"}
+{"time":"2026-04-08T23:41:18.523792886-04:00","level":"INFO","msg":"handler: started","stream_id":"cjq2j5ie"}
+{"time":"2026-04-08T23:41:18.524102868-04:00","level":"INFO","msg":"writer: started","stream_id":"cjq2j5ie"}
+{"time":"2026-04-08T23:41:18.524451848-04:00","level":"INFO","msg":"sender: started","stream_id":"cjq2j5ie"}
+{"time":"2026-04-08T23:41:18.544986684-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-04-08T23:41:31.700758491-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-04-08T23:41:31.705553293-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/thesis/ptisql-tool-integration/outputs/2026-04-08/23-41-08/logs/nasim:SmallHoneypotPO-v0/2026-04-08_23-41-21\")","namespace":""}
+{"time":"2026-04-08T23:41:31.734419095-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/thesis/ptisql-tool-integration/outputs/2026-04-08/23-41-08/logs/nasim:SmallHoneypotPO-v0/2026-04-08_23-41-21/events.out.tfevents.1775706081.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-04-08_23-41-21/events.out.tfevents.1775706081.kali"}
+{"time":"2026-04-09T13:46:52.121768256-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-04-09T13:46:52.192625828-04:00","level":"INFO","msg":"stream: closing","id":"cjq2j5ie"}
+{"time":"2026-04-09T13:46:52.196444576-04:00","level":"INFO","msg":"handler: closed","stream_id":"cjq2j5ie"}
+{"time":"2026-04-09T13:46:52.199721656-04:00","level":"INFO","msg":"sender: closed","stream_id":"cjq2j5ie"}
+{"time":"2026-04-09T13:46:52.200078166-04:00","level":"INFO","msg":"stream: closed","id":"cjq2j5ie"}

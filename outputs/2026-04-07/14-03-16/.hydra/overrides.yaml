@@ -1,0 +1,13 @@
+- agent=softq
+- method=iq
+- env=smallhoneypot
+- env.demo=new_log_selected.pkl
+- expert.demos=12
+- expert.subsample_freq=1
+- eval.eps=10
+- gamma=0.9
+- train.batch=32
+- env.initial_mem=32
+- num_seed_steps=32
+- env.learn_steps=50000
+- env.eval_interval=1000

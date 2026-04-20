@@ -1,0 +1,16 @@
+{"time":"2026-04-03T02:50:29.562657306-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-04-03T02:50:29.865913758-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-04-03T02:50:29.86710176-04:00","level":"INFO","msg":"stream: created new stream","id":"oap4htmf"}
+{"time":"2026-04-03T02:50:29.869047763-04:00","level":"INFO","msg":"stream: started","id":"oap4htmf"}
+{"time":"2026-04-03T02:50:29.878324777-04:00","level":"INFO","msg":"handler: started","stream_id":"oap4htmf"}
+{"time":"2026-04-03T02:50:29.879568779-04:00","level":"INFO","msg":"writer: started","stream_id":"oap4htmf"}
+{"time":"2026-04-03T02:50:29.87995878-04:00","level":"INFO","msg":"sender: started","stream_id":"oap4htmf"}
+{"time":"2026-04-03T02:50:29.984540935-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-04-03T02:50:43.275339501-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-04-03T02:50:43.276156502-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/thesis/ptisql-tool-integration/outputs/2026-04-03/02-50-24/logs/nasim:SmallHoneypotPO-v0/2026-04-03_02-50-33\")","namespace":""}
+{"time":"2026-04-03T02:50:43.296053534-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/thesis/ptisql-tool-integration/outputs/2026-04-03/02-50-24/logs/nasim:SmallHoneypotPO-v0/2026-04-03_02-50-33/events.out.tfevents.1775199033.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-04-03_02-50-33/events.out.tfevents.1775199033.kali"}
+{"time":"2026-04-03T02:50:46.98133947-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-04-03T02:50:47.042571569-04:00","level":"INFO","msg":"stream: closing","id":"oap4htmf"}
+{"time":"2026-04-03T02:50:47.04277557-04:00","level":"INFO","msg":"handler: closed","stream_id":"oap4htmf"}
+{"time":"2026-04-03T02:50:47.04315557-04:00","level":"INFO","msg":"sender: closed","stream_id":"oap4htmf"}
+{"time":"2026-04-03T02:50:47.043316571-04:00","level":"INFO","msg":"stream: closed","id":"oap4htmf"}

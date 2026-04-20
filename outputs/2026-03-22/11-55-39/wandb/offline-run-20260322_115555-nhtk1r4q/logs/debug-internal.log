@@ -1,0 +1,16 @@
+{"time":"2026-03-22T11:56:00.465664708-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-03-22T11:56:00.853186122-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-03-22T11:56:00.862071913-04:00","level":"INFO","msg":"stream: created new stream","id":"nhtk1r4q"}
+{"time":"2026-03-22T11:56:00.870761796-04:00","level":"INFO","msg":"stream: started","id":"nhtk1r4q"}
+{"time":"2026-03-22T11:56:00.886117521-04:00","level":"INFO","msg":"handler: started","stream_id":"nhtk1r4q"}
+{"time":"2026-03-22T11:56:00.886615285-04:00","level":"INFO","msg":"writer: started","stream_id":"nhtk1r4q"}
+{"time":"2026-03-22T11:56:00.888218526-04:00","level":"INFO","msg":"sender: started","stream_id":"nhtk1r4q"}
+{"time":"2026-03-22T11:56:00.969113202-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-03-22T11:56:21.657768678-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-03-22T11:56:21.658937306-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-22/11-55-39/logs/nasim:SmallHoneypotPO-v0/2026-03-22_11-56-11\")","namespace":""}
+{"time":"2026-03-22T11:56:21.724483424-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/thesis/ptisql-tool-integration/outputs/2026-03-22/11-55-39/logs/nasim:SmallHoneypotPO-v0/2026-03-22_11-56-11/events.out.tfevents.1774194971.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-03-22_11-56-11/events.out.tfevents.1774194971.kali"}
+{"time":"2026-03-22T15:41:25.607732347-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-03-22T15:41:25.889479037-04:00","level":"INFO","msg":"stream: closing","id":"nhtk1r4q"}
+{"time":"2026-03-22T15:41:25.896905518-04:00","level":"INFO","msg":"handler: closed","stream_id":"nhtk1r4q"}
+{"time":"2026-03-22T15:41:25.906913568-04:00","level":"INFO","msg":"sender: closed","stream_id":"nhtk1r4q"}
+{"time":"2026-03-22T15:41:25.909564706-04:00","level":"INFO","msg":"stream: closed","id":"nhtk1r4q"}

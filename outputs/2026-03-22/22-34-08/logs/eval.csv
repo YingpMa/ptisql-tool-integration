@@ -1,0 +1,4 @@
+episode,episode_reward,goal_reached,honeypot,step
+0.0,-1029.2,0.0,0.0,1
+73.0,84.5,1.0,0.0,5001
+148.0,151.2,1.0,0.0,10001

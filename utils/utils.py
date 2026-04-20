@@ -65,7 +65,7 @@ def evaluate(actor, env, seed_eval, num_episodes=10, vis=True):
         goal_reached.append(g)
         honeypotlist.append(h)
 
-    return total_returns, total_timesteps,goal_reached,honeypotlist
+    return total_returns, total_timesteps, goal_reached, honeypotlist
 
 
 def weighted_softmax(x, weights):
@@ -123,10 +123,78 @@ def mlp(input_dim, hidden_dim, output_dim, hidden_depth, output_mod=None):
     return trunk
 
 
+def _ensure_state_batch(tensor):
+    """
+    States / next_states should be [B, obs_dim].
+    """
+    if not isinstance(tensor, torch.Tensor):
+        tensor = torch.as_tensor(tensor)
+
+    if tensor.dim() == 0:
+        return tensor.view(1, 1)
+
+    if tensor.dim() == 1:
+        return tensor.unsqueeze(0)
+
+    return tensor
+
+
+def _ensure_action_batch(tensor):
+    """
+    Actions should be [B, 1] for q.gather(1, action.long()).
+    """
+    if not isinstance(tensor, torch.Tensor):
+        tensor = torch.as_tensor(tensor)
+
+    if tensor.dim() == 0:
+        return tensor.view(1, 1)
+
+    if tensor.dim() == 1:
+        return tensor.unsqueeze(1)
+
+    if tensor.dim() == 2:
+        return tensor
+
+    return tensor.reshape(tensor.shape[0], 1)
+
+
+def _ensure_column_batch(tensor):
+    """
+    Rewards / dones / masks should be [B, 1].
+    """
+    if not isinstance(tensor, torch.Tensor):
+        tensor = torch.as_tensor(tensor)
+
+    if tensor.dim() == 0:
+        return tensor.view(1, 1)
+
+    if tensor.dim() == 1:
+        return tensor.unsqueeze(1)
+
+    if tensor.dim() == 2:
+        return tensor
+
+    return tensor.reshape(tensor.shape[0], 1)
+
+
 def get_concat_samples(policy_batch, expert_batch, args):
     online_batch_state, online_batch_next_state, online_batch_action, online_batch_reward, online_batch_done = policy_batch
-
     expert_batch_state, expert_batch_next_state, expert_batch_action, expert_batch_reward, expert_batch_done = expert_batch
+
+    # Normalize shapes
+    online_batch_state = _ensure_state_batch(online_batch_state)
+    online_batch_next_state = _ensure_state_batch(online_batch_next_state)
+    expert_batch_state = _ensure_state_batch(expert_batch_state)
+    expert_batch_next_state = _ensure_state_batch(expert_batch_next_state)
+
+    online_batch_action = _ensure_action_batch(online_batch_action)
+    expert_batch_action = _ensure_action_batch(expert_batch_action)
+
+    online_batch_reward = _ensure_column_batch(online_batch_reward)
+    expert_batch_reward = _ensure_column_batch(expert_batch_reward)
+
+    online_batch_done = _ensure_column_batch(online_batch_done)
+    expert_batch_done = _ensure_column_batch(expert_batch_done)
 
     if args.method.type == "sqil":
         # convert policy reward to 0
@@ -140,8 +208,14 @@ def get_concat_samples(policy_batch, expert_batch, args):
     batch_action = torch.cat([online_batch_action, expert_batch_action], dim=0)
     batch_reward = torch.cat([online_batch_reward, expert_batch_reward], dim=0)
     batch_done = torch.cat([online_batch_done, expert_batch_done], dim=0)
-    is_expert = torch.cat([torch.zeros_like(online_batch_reward, dtype=torch.bool),
-                           torch.ones_like(expert_batch_reward, dtype=torch.bool)], dim=0)
+
+    is_expert = torch.cat(
+        [
+            torch.zeros((online_batch_reward.shape[0], 1), dtype=torch.bool, device=online_batch_reward.device),
+            torch.ones((expert_batch_reward.shape[0], 1), dtype=torch.bool, device=expert_batch_reward.device)
+        ],
+        dim=0
+    )
 
     return batch_state, batch_next_state, batch_action, batch_reward, batch_done, is_expert
 

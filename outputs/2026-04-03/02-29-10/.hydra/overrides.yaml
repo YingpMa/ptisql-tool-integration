@@ -1,0 +1,8 @@
+- agent=softq
+- method=iq
+- env=smallhoneypot
+- env.demo=new_log.pkl
+- expert.demos=15
+- expert.subsample_freq=1
+- eval.eps=10
+- gamma=0.9
