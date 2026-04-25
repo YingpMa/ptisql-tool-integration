@@ -29,8 +29,7 @@ def load_model(path, model_type, device):
     state_dim = ckpt["state_dim"]
     action_dim = ckpt["action_dim"]
     hidden_dim = ckpt["hidden_dim"]
-    id_to_action = ckpt["id_to_action"]
-    id_to_action = {int(k): v for k, v in id_to_action.items()}
+    id_to_action = {int(k): v for k, v in ckpt["id_to_action"].items()}
 
     model = Net(state_dim, action_dim, hidden_dim).to(device)
 
@@ -71,15 +70,12 @@ def choose_action(model, state_vec, id_to_action, device, state_dict=None):
         service = bool(state_dict.get("service_scanned", False))
 
         for i, action_name in id_to_action.items():
-            if not basic:
-                if action_name == "scan_basic":
-                    allowed.append(i)
-            elif not service:
-                if action_name == "scan_service":
-                    allowed.append(i)
-            else:
-                if not action_name.startswith("scan"):
-                    allowed.append(i)
+            if not basic and action_name == "scan_basic":
+                allowed.append(i)
+            elif basic and not service and action_name == "scan_service":
+                allowed.append(i)
+            elif basic and service and not action_name.startswith("scan"):
+                allowed.append(i)
 
     if not allowed:
         allowed = list(id_to_action.keys())
@@ -97,7 +93,12 @@ def choose_random_action(state_dict):
     if not service:
         return "scan_service"
 
-    return random.choice(["exploit_bindshell", "exploit_vsftpd", "stop"])
+    return random.choice([
+        "exploit_bindshell",
+        "exploit_vsftpd",
+        "exploit_samba",
+        "stop",
+    ])
 
 
 def make_env(args):
@@ -123,7 +124,7 @@ def step_env(env, action_name):
         "exploit_bindshell": 2,
         "exploit_vsftpd": 3,
         "stop": 4,
-        "exploit_samba": 2,
+        "exploit_samba": 5,
         "exploit_unrealircd": 2,
         "exploit_distccd": 2,
     }
@@ -160,12 +161,6 @@ def is_goal_reached(env, info):
 
     if hasattr(env, "state") and env.state.get("has_shell", False):
         return True
-
-    if hasattr(env, "goal_reached"):
-        try:
-            return bool(env.goal_reached())
-        except Exception:
-            return False
 
     return False
 
@@ -235,7 +230,11 @@ def eval_agent(model, id_to_action, state_keys, device, args):
             if next_state.get("has_shell", False):
                 shell_obtained = True
 
-            if isinstance(info, dict) and info.get("backend") == "metasploit" and info.get("sessions"):
+            if (
+                isinstance(info, dict)
+                and info.get("backend") == "metasploit"
+                and info.get("sessions")
+            ):
                 metasploit_session = True
 
             state = next_state
@@ -274,7 +273,7 @@ def main():
 
     parser.add_argument("--model_path", type=str, default="")
     parser.add_argument("--model_type", type=str, choices=["iq", "bc", "random"], required=True)
-    parser.add_argument("--replay_path", type=str, default="outputs/replay_iq_650.json")
+    parser.add_argument("--replay_path", type=str, default="tool_integration/outputs/replay_iq_650.json")
     parser.add_argument("--episodes", type=int, default=10)
     parser.add_argument("--max_steps", type=int, default=10)
     parser.add_argument("--cpu", action="store_true")
