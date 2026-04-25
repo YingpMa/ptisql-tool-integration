@@ -7,19 +7,26 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from tool_integration.executors.metasploit_executor import MetasploitExecutor
+except ImportError:
+    MetasploitExecutor = None
+
 
 class RealPTEnv:
     """
-    一个最小可跑的真实 PT 环境：
-    - reset() -> state_summary
-    - step(action) -> next_state, reward, done, info
+    Minimal real PT environment.
 
-    动作空间：
+    Actions:
     0 = scan_basic
     1 = scan_service
     2 = exploit_bindshell
     3 = exploit_vsftpd
     4 = stop
+
+    Metasploit integration:
+    - By default, use_metasploit=False, so the old socket-based exploit still works.
+    - If use_metasploit=True, exploit_vsftpd uses Metasploit RPC.
     """
 
     ACTIONS = {
@@ -30,10 +37,34 @@ class RealPTEnv:
         4: "stop",
     }
 
-    def __init__(self, target_ip="10.11.202.189", log_dir="real_logs/rl_env_runs"):
+    def __init__(
+        self,
+        target_ip="10.11.202.189",
+        log_dir="tool_integration/dataset/real_logs/rl_env_runs",
+        use_metasploit=False,
+        msf_password="msfpass",
+        msf_host="127.0.0.1",
+        msf_port=55552,
+    ):
         self.target_ip = target_ip
         self.log_dir = Path(log_dir)
         self.log_dir.mkdir(parents=True, exist_ok=True)
+
+        self.use_metasploit = use_metasploit
+        self.msf = None
+
+        if self.use_metasploit:
+            if MetasploitExecutor is None:
+                raise ImportError(
+                    "MetasploitExecutor not found. "
+                    "Create tool_integration/executors/metasploit_executor.py first."
+                )
+            self.msf = MetasploitExecutor(
+                password=msf_password,
+                host=msf_host,
+                port=msf_port,
+                ssl=False,
+            )
 
         self.max_steps = 6
         self.reset()
@@ -83,7 +114,8 @@ class RealPTEnv:
         self.done = False
         self.steps = 0
         self.history = []
-        self.run_id = f"rl_env_{self._now_str()}"
+        backend = "msf" if self.use_metasploit else "script"
+        self.run_id = f"rl_env_{backend}_{self._now_str()}"
         return deepcopy(self.state)
 
     def _run_nmap_basic(self):
@@ -187,6 +219,7 @@ class RealPTEnv:
                 "stdout": stdout,
                 "stderr": result.stderr.strip(),
                 "stochastic_success_rate": 0.7,
+                "backend": "script",
             }
         except Exception as e:
             return {
@@ -195,9 +228,10 @@ class RealPTEnv:
                 "stdout": "",
                 "stderr": str(e),
                 "stochastic_success_rate": 0.7,
+                "backend": "script",
             }
 
-    def _try_vsftpd(self):
+    def _try_vsftpd_script(self):
         try:
             s = socket.socket()
             s.settimeout(5)
@@ -230,6 +264,7 @@ class RealPTEnv:
                 "stderr": "",
                 "banner": banner,
                 "stochastic_success_rate": 0.5,
+                "backend": "script",
             }
         except Exception as e:
             return {
@@ -239,7 +274,14 @@ class RealPTEnv:
                 "stderr": str(e),
                 "banner": "",
                 "stochastic_success_rate": 0.5,
+                "backend": "script",
             }
+
+    def _try_vsftpd(self):
+        if self.use_metasploit and self.msf is not None:
+            return self.msf.exploit_vsftpd_234(self.target_ip)
+
+        return self._try_vsftpd_script()
 
     def _record_step(self, action_name, reward, info):
         self.history.append(
@@ -260,6 +302,7 @@ class RealPTEnv:
                 {
                     "run_id": self.run_id,
                     "target": self.target_ip,
+                    "use_metasploit": self.use_metasploit,
                     "history": self.history,
                 },
                 f,
@@ -281,7 +324,6 @@ class RealPTEnv:
 
         self.steps += 1
 
-        # 0 = scan_basic
         if action_name == "scan_basic":
             output = self._run_nmap_basic()
             ports = self._apply_basic_scan(output)
@@ -291,7 +333,6 @@ class RealPTEnv:
                 "scan_type": "basic",
             }
 
-        # 1 = scan_service
         elif action_name == "scan_service":
             output = self._run_nmap_service()
             ports, service_map = self._apply_service_scan(output)
@@ -302,7 +343,6 @@ class RealPTEnv:
                 "scan_type": "service",
             }
 
-        # 2 = exploit_bindshell
         elif action_name == "exploit_bindshell":
             if not self.state["basic_scanned"]:
                 reward = -1.0
@@ -320,7 +360,6 @@ class RealPTEnv:
                 else:
                     reward = -1.0
 
-        # 3 = exploit_vsftpd
         elif action_name == "exploit_vsftpd":
             if not self.state["service_scanned"]:
                 reward = -1.0
@@ -338,7 +377,6 @@ class RealPTEnv:
                 else:
                     reward = -1.0
 
-        # 4 = stop
         elif action_name == "stop":
             reward = 1.0 if self.state["has_shell"] else -0.5
             self.done = True
