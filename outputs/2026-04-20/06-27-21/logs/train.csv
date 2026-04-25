@@ -1,0 +1,2 @@
+critic_loss,duration,episode,episode_reward,goal_reached,honeypot,step
+0.019268843244649062,8.95356011390686,5.0,-1139.0,0.0,0.0,549

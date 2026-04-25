@@ -1,0 +1,16 @@
+{"time":"2026-04-20T06:31:22.425794542-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-04-20T06:31:22.529815659-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-04-20T06:31:22.529916036-04:00","level":"INFO","msg":"stream: created new stream","id":"3hvsrbid"}
+{"time":"2026-04-20T06:31:22.530025012-04:00","level":"INFO","msg":"handler: started","stream_id":"3hvsrbid"}
+{"time":"2026-04-20T06:31:22.5301719-04:00","level":"INFO","msg":"stream: started","id":"3hvsrbid"}
+{"time":"2026-04-20T06:31:22.530225116-04:00","level":"INFO","msg":"writer: started","stream_id":"3hvsrbid"}
+{"time":"2026-04-20T06:31:22.530240881-04:00","level":"INFO","msg":"sender: started","stream_id":"3hvsrbid"}
+{"time":"2026-04-20T06:31:22.530826978-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-04-20T06:31:32.866434422-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-04-20T06:31:32.86654661-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/ptisql-tool-integration/outputs/2026-04-20/06-31-01/logs/nasim:SmallHoneypotPO-v0/2026-04-20_06-31-22\")","namespace":""}
+{"time":"2026-04-20T06:31:32.867358286-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/ptisql-tool-integration/outputs/2026-04-20/06-31-01/logs/nasim:SmallHoneypotPO-v0/2026-04-20_06-31-22/events.out.tfevents.1776681082.kali","runPath":"logs/nasim:SmallHoneypotPO-v0/2026-04-20_06-31-22/events.out.tfevents.1776681082.kali"}
+{"time":"2026-04-20T06:35:31.301924044-04:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-04-20T06:35:31.314061949-04:00","level":"INFO","msg":"stream: closing","id":"3hvsrbid"}
+{"time":"2026-04-20T06:35:31.314077217-04:00","level":"INFO","msg":"handler: closed","stream_id":"3hvsrbid"}
+{"time":"2026-04-20T06:35:31.314149875-04:00","level":"INFO","msg":"sender: closed","stream_id":"3hvsrbid"}
+{"time":"2026-04-20T06:35:31.314170065-04:00","level":"INFO","msg":"stream: closed","id":"3hvsrbid"}

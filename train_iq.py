@@ -89,11 +89,17 @@ def main(cfg: DictConfig):
 
     # Load expert data
     expert_memory_replay = Memory(REPLAY_MEMORY//2, args.seed)
-    expert_memory_replay.load(hydra.utils.to_absolute_path(f'experts/{args.env.demo}'),
-                              num_trajs=args.expert.demos,
-                              sample_freq=args.expert.subsample_freq,
-                              seed=args.seed + 42)
-    print(f'--> Expert memory size: {expert_memory_replay.size()}')
+
+    if hasattr(args.env, "demo") and args.env.demo:
+        expert_memory_replay.load(
+            hydra.utils.to_absolute_path(f'experts/{args.env.demo}'),
+            num_trajs=args.expert.demos,
+            sample_freq=args.expert.subsample_freq,
+            seed=args.seed + 42
+        )
+        print(f'--> Expert memory size: {expert_memory_replay.size()}')
+    else:
+        print('--> No expert demo provided, skip loading expert memory')
 
     online_memory_replay = Memory(REPLAY_MEMORY//2, args.seed+1)
 

@@ -1,0 +1,244 @@
+{
+  "run_id": "batch_v2iq_138_2026-04-24T05-46-44Z",
+  "target": "10.11.202.189",
+  "policy_name": "explore_noisy_3",
+  "action_plan": [
+    "scan_basic",
+    "scan_basic",
+    "exploit_bindshell",
+    "scan_basic",
+    "exploit_bindshell",
+    "stop"
+  ],
+  "history": [
+    {
+      "step": 1,
+      "action": "scan_basic",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false,
+        "bindshell_attempted": false,
+        "vsftpd_attempted": false,
+        "failed_attempts": 0
+      },
+      "reward": -0.1,
+      "done": false,
+      "info": {
+        "scan_type": "basic",
+        "open_ports": [
+          21,
+          22,
+          23,
+          25,
+          53,
+          80,
+          111,
+          139,
+          445,
+          513,
+          514,
+          2049,
+          2121,
+          3306,
+          5432,
+          5900,
+          6000,
+          8009
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "scan_basic",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false,
+        "bindshell_attempted": false,
+        "vsftpd_attempted": false,
+        "failed_attempts": 0
+      },
+      "reward": -0.1,
+      "done": false,
+      "info": {
+        "scan_type": "basic",
+        "open_ports": [
+          21,
+          22,
+          23,
+          25,
+          53,
+          80,
+          111,
+          139,
+          445,
+          513,
+          514,
+          2049,
+          2121,
+          3306,
+          5432,
+          5900,
+          6000,
+          8009
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false,
+        "bindshell_attempted": true,
+        "vsftpd_attempted": false,
+        "failed_attempts": 1
+      },
+      "reward": -1.2,
+      "done": false,
+      "info": {
+        "error": "bindshell port not visible"
+      }
+    },
+    {
+      "step": 4,
+      "action": "scan_basic",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false,
+        "bindshell_attempted": true,
+        "vsftpd_attempted": false,
+        "failed_attempts": 1
+      },
+      "reward": -0.1,
+      "done": false,
+      "info": {
+        "scan_type": "basic",
+        "open_ports": [
+          21,
+          22,
+          23,
+          25,
+          53,
+          80,
+          111,
+          139,
+          445,
+          513,
+          514,
+          2049,
+          2121,
+          3306,
+          5432,
+          5900,
+          6000,
+          8009
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false,
+        "bindshell_attempted": true,
+        "vsftpd_attempted": false,
+        "failed_attempts": 2
+      },
+      "reward": -1.2,
+      "done": false,
+      "info": {
+        "error": "bindshell port not visible"
+      }
+    },
+    {
+      "step": 6,
+      "action": "stop",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false,
+        "bindshell_attempted": true,
+        "vsftpd_attempted": false,
+        "failed_attempts": 2
+      },
+      "reward": -2.0,
+      "done": true,
+      "info": {
+        "stopped": true,
+        "final_success": false
+      }
+    }
+  ]
+}

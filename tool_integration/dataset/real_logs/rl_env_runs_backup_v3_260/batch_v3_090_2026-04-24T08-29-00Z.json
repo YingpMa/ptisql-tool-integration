@@ -1,0 +1,100 @@
+{
+  "run_id": "batch_v3_090_2026-04-24T08-29-00Z",
+  "target": "10.11.202.189",
+  "policy_type": "fail",
+  "action_plan": [
+    "exploit_vsftpd",
+    "exploit_bindshell",
+    "stop"
+  ],
+  "history": [
+    {
+      "step": 1,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 1,
+        "successful_exploits": 0
+      },
+      "reward": -1.5,
+      "done": false,
+      "info": {
+        "error": "vsftpd before service scan"
+      }
+    },
+    {
+      "step": 2,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 2,
+        "successful_exploits": 0
+      },
+      "reward": -1.5,
+      "done": false,
+      "info": {
+        "error": "bindshell before scan"
+      }
+    },
+    {
+      "step": 3,
+      "action": "stop",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 2,
+        "successful_exploits": 0
+      },
+      "reward": -2.0,
+      "done": true,
+      "info": {
+        "stopped": true,
+        "final_success": false
+      }
+    }
+  ]
+}

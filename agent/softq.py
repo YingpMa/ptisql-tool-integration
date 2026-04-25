@@ -120,10 +120,9 @@ class SoftQ(object):
 
     # Load model parameters
     def load(self, path, suffix=""):
-        critic_path = f'{path}/{self.args.agent.name}{suffix}'
+        critic_path = f'{path}{suffix}'
         print('Loading models from {}'.format(critic_path))
         self.q_net.load_state_dict(torch.load(critic_path, map_location=self.device))
-
     def infer_q(self, state, action):
         if isinstance(state, LazyFrames):
             state = np.array(state) / 255.0

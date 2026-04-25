@@ -1,0 +1,46 @@
+{
+  "bc": {
+    "avg_reward": {
+      "mean": -1.0,
+      "std": 0.0,
+      "n": 2
+    },
+    "goal_reached_rate": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 2
+    },
+    "honeypot_rate": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 2
+    },
+    "avg_steps": {
+      "mean": 3.0,
+      "std": 0.0,
+      "n": 2
+    }
+  },
+  "iq": {
+    "avg_reward": {
+      "mean": 6.993,
+      "std": 0.020999999999999908,
+      "n": 2
+    },
+    "goal_reached_rate": {
+      "mean": 0.991,
+      "std": 0.0010000000000000009,
+      "n": 2
+    },
+    "honeypot_rate": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n": 2
+    },
+    "avg_steps": {
+      "mean": 3.426,
+      "std": 0.01200000000000001,
+      "n": 2
+    }
+  }
+}

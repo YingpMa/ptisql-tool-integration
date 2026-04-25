@@ -1,0 +1,5 @@
+model,seed,episodes,max_steps,avg_reward,std_reward,goal_reached_rate,honeypot_rate,avg_steps,log_path
+iq,1,500,10,6.972,1.3628,0.99,0.0,3.438,outputs/eval_batch/iq_seed1.log
+bc,1,500,10,-1.0,0.0,0.0,0.0,3.0,outputs/eval_batch/bc_seed1.log
+iq,2,500,10,7.014,1.2513,0.992,0.0,3.414,outputs/eval_batch/iq_seed2.log
+bc,2,500,10,-1.0,0.0,0.0,0.0,3.0,outputs/eval_batch/bc_seed2.log

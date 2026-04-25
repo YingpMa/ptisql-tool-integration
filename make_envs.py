@@ -5,6 +5,7 @@ from stable_baselines3.common.monitor import Monitor
 
 from wrappers.atari_wrapper import ScaledFloatFrame, FrameStack, FrameStackEager, PyTorchFrame
 from wrappers.normalize_action_wrapper import check_and_normalize_box_actions
+from real_env_demo import RealPentestEnv
 
 import envs
 import numpy as np
@@ -75,19 +76,21 @@ def is_atari(env_name):
 
 
 def make_env(args, monitor=True):
-    if 'dmc' in args.env.name:
+    if args.env.name == 'real_pentest':
+        env = RealPentestEnv()
+    elif 'dmc' in args.env.name:
         env = make_dcm(args)
     elif 'nasim' in args.env.name:
         env = gymnasium.make(args.env.name, render_mode="human")
     else:
         env = gym.make(args.env.name)
-    
+   
     if monitor:
         env = Monitor(env, "gym")
 
     if is_atari(args.env.name):
         env = make_atari(env)
 
-    # Normalize box actions to [-1, 1]
     env = check_and_normalize_box_actions(env)
     return env
+

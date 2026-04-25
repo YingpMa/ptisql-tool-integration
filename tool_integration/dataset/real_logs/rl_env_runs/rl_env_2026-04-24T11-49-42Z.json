@@ -1,0 +1,157 @@
+{
+  "run_id": "rl_env_2026-04-24T11-49-42Z",
+  "target": "10.11.202.189",
+  "history": [
+    {
+      "step": 1,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "vsftpd attempted before service scan"
+      }
+    },
+    {
+      "step": 2,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "vsftpd attempted before service scan"
+      }
+    },
+    {
+      "step": 3,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "vsftpd attempted before service scan"
+      }
+    },
+    {
+      "step": 4,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "vsftpd attempted before service scan"
+      }
+    },
+    {
+      "step": 5,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "vsftpd attempted before service scan"
+      }
+    },
+    {
+      "step": 6,
+      "action": "exploit_vsftpd",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false
+      },
+      "reward": -1.0,
+      "done": true,
+      "info": {
+        "error": "vsftpd attempted before service scan",
+        "terminated_by_max_steps": true
+      }
+    }
+  ]
+}

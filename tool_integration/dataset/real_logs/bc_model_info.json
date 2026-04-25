@@ -1,0 +1,21 @@
+{
+  "num_samples": 30,
+  "label_distribution": {
+    "connect_1524_bindshell": 3,
+    "exploit_vsftpd": 17,
+    "no_exploit": 10
+  },
+  "feature_order": [
+    "num_open_ports",
+    "has_ftp",
+    "has_ssh",
+    "has_telnet",
+    "has_http",
+    "has_mysql",
+    "has_postgresql",
+    "has_bindshell_1524",
+    "has_samba",
+    "has_tomcat",
+    "has_vsftpd_234"
+  ]
+}

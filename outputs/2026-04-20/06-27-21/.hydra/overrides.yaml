@@ -1,0 +1,6 @@
+- agent=softq
+- method=iq
+- env=smallhoneypot
+- env.demo=new_log_12_only.pkl
+- expert.demos=8
+- env.learn_steps=1000

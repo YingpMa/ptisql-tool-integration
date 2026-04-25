@@ -1,0 +1,15 @@
+{"time":"2026-04-21T02:16:03.28625593-04:00","level":"INFO","msg":"stream: starting","core version":"0.24.2"}
+{"time":"2026-04-21T02:16:03.390758071-04:00","level":"WARN","msg":"featurechecker: GraphQL client is nil, skipping feature loading"}
+{"time":"2026-04-21T02:16:03.390836014-04:00","level":"INFO","msg":"stream: created new stream","id":"4516bofb"}
+{"time":"2026-04-21T02:16:03.390881626-04:00","level":"INFO","msg":"handler: started","stream_id":"4516bofb"}
+{"time":"2026-04-21T02:16:03.390991008-04:00","level":"INFO","msg":"stream: started","id":"4516bofb"}
+{"time":"2026-04-21T02:16:03.391008521-04:00","level":"INFO","msg":"writer: started","stream_id":"4516bofb"}
+{"time":"2026-04-21T02:16:03.391025214-04:00","level":"INFO","msg":"sender: started","stream_id":"4516bofb"}
+{"time":"2026-04-21T02:16:03.468931889-04:00","level":"WARN","msg":"runupserter: server does not expand metric globs but the x_server_side_expand_glob_metrics setting is set; ignoring"}
+{"time":"2026-04-21T02:16:13.63150672-04:00","level":"WARN","msg":"tensorboard: no root directory","error":"timed out after 10s"}
+{"time":"2026-04-21T02:16:13.631641487-04:00","level":"INFO","msg":"tensorboard: tracking new log directory","rootDir":{},"logDir":"LocalOrCloudPath(LocalPath=\"/home/kali/ptisql-tool-integration/outputs/2026-04-21/02-16-00/logs/real_pentest/2026-04-21_02-16-03\")","namespace":""}
+{"time":"2026-04-21T02:16:13.633317016-04:00","level":"INFO","msg":"tensorboard: saving file","fileLocation":"/home/kali/ptisql-tool-integration/outputs/2026-04-21/02-16-00/logs/real_pentest/2026-04-21_02-16-03/events.out.tfevents.1776752163.kali","runPath":"logs/real_pentest/2026-04-21_02-16-03/events.out.tfevents.1776752163.kali"}
+{"time":"2026-04-21T02:16:46.749991098-04:00","level":"INFO","msg":"stream: closing","id":"4516bofb"}
+{"time":"2026-04-21T02:16:46.750891714-04:00","level":"INFO","msg":"handler: closed","stream_id":"4516bofb"}
+{"time":"2026-04-21T02:16:46.750952404-04:00","level":"INFO","msg":"sender: closed","stream_id":"4516bofb"}
+{"time":"2026-04-21T02:16:46.751054339-04:00","level":"INFO","msg":"stream: closed","id":"4516bofb"}

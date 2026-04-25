@@ -1,0 +1,611 @@
+[
+  {
+    "episode": 0,
+    "reward": -1.2,
+    "epsilon": 0.97,
+    "actions": [
+      "scan_basic",
+      "scan_service",
+      "scan_basic",
+      "stop"
+    ]
+  },
+  {
+    "episode": 1,
+    "reward": -1.7,
+    "epsilon": 0.9409,
+    "actions": [
+      "exploit_vsftpd",
+      "scan_basic",
+      "stop"
+    ]
+  },
+  {
+    "episode": 2,
+    "reward": -0.5,
+    "epsilon": 0.912673,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 3,
+    "reward": -0.5,
+    "epsilon": 0.8852928099999999,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 4,
+    "reward": 6.5,
+    "epsilon": 0.8587340256999999,
+    "actions": [
+      "exploit_vsftpd",
+      "scan_basic",
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 5,
+    "reward": -3.7,
+    "epsilon": 0.8329720049289999,
+    "actions": [
+      "exploit_bindshell",
+      "exploit_vsftpd",
+      "exploit_bindshell",
+      "scan_basic",
+      "stop"
+    ]
+  },
+  {
+    "episode": 6,
+    "reward": -2.5,
+    "epsilon": 0.8079828447811299,
+    "actions": [
+      "exploit_vsftpd",
+      "exploit_bindshell",
+      "stop"
+    ]
+  },
+  {
+    "episode": 7,
+    "reward": -0.5,
+    "epsilon": 0.783743359437696,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 8,
+    "reward": -4.5,
+    "epsilon": 0.7602310586545651,
+    "actions": [
+      "scan_service",
+      "scan_basic",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 9,
+    "reward": -4.5,
+    "epsilon": 0.7374241268949281,
+    "actions": [
+      "exploit_vsftpd",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "scan_basic",
+      "scan_service"
+    ]
+  },
+  {
+    "episode": 10,
+    "reward": 5.7,
+    "epsilon": 0.7153014030880802,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 11,
+    "reward": -0.5,
+    "epsilon": 0.6938423609954378,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 12,
+    "reward": -2.4,
+    "epsilon": 0.6730270901655747,
+    "actions": [
+      "scan_service",
+      "scan_basic",
+      "scan_basic",
+      "exploit_bindshell",
+      "scan_basic",
+      "stop"
+    ]
+  },
+  {
+    "episode": 13,
+    "reward": -0.5,
+    "epsilon": 0.6528362774606075,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 14,
+    "reward": -2.8,
+    "epsilon": 0.6332511891367892,
+    "actions": [
+      "exploit_vsftpd",
+      "exploit_vsftpd",
+      "scan_service",
+      "stop"
+    ]
+  },
+  {
+    "episode": 15,
+    "reward": -0.5,
+    "epsilon": 0.6142536534626856,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 16,
+    "reward": -0.5,
+    "epsilon": 0.595826043858805,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 17,
+    "reward": -1.5,
+    "epsilon": 0.5779512625430409,
+    "actions": [
+      "exploit_bindshell",
+      "stop"
+    ]
+  },
+  {
+    "episode": 18,
+    "reward": -4.7,
+    "epsilon": 0.5606127246667496,
+    "actions": [
+      "scan_basic",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "stop"
+    ]
+  },
+  {
+    "episode": 19,
+    "reward": 4.7,
+    "epsilon": 0.5437943429267471,
+    "actions": [
+      "exploit_bindshell",
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 20,
+    "reward": 4.5,
+    "epsilon": 0.5274805126389447,
+    "actions": [
+      "exploit_bindshell",
+      "scan_service",
+      "scan_basic",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 21,
+    "reward": -3.8,
+    "epsilon": 0.5116560972597763,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd",
+      "scan_basic",
+      "exploit_bindshell",
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 22,
+    "reward": -1.1,
+    "epsilon": 0.496306414341983,
+    "actions": [
+      "scan_service",
+      "scan_service",
+      "stop"
+    ]
+  },
+  {
+    "episode": 23,
+    "reward": 4.7,
+    "epsilon": 0.48141722191172354,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 24,
+    "reward": -0.5,
+    "epsilon": 0.4669747052543718,
+    "actions": [
+      "stop"
+    ]
+  },
+  {
+    "episode": 25,
+    "reward": 5.7,
+    "epsilon": 0.4529654640967406,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 26,
+    "reward": -4.6,
+    "epsilon": 0.4393765001738384,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd",
+      "exploit_bindshell",
+      "exploit_vsftpd",
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 27,
+    "reward": -3.0,
+    "epsilon": 0.42619520516862325,
+    "actions": [
+      "scan_service",
+      "scan_basic",
+      "exploit_vsftpd",
+      "scan_basic",
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 28,
+    "reward": -0.8,
+    "epsilon": 0.4134093490135645,
+    "actions": [
+      "scan_service",
+      "stop"
+    ]
+  },
+  {
+    "episode": 29,
+    "reward": 7.7,
+    "epsilon": 0.4010070685431576,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 30,
+    "reward": 4.7,
+    "epsilon": 0.38897685648686287,
+    "actions": [
+      "exploit_bindshell",
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 31,
+    "reward": 6.7,
+    "epsilon": 0.377307550792257,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 32,
+    "reward": 7.7,
+    "epsilon": 0.36598832426848926,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 33,
+    "reward": -3.8999999999999995,
+    "epsilon": 0.35500867454043455,
+    "actions": [
+      "exploit_bindshell",
+      "scan_service",
+      "exploit_vsftpd",
+      "exploit_vsftpd",
+      "scan_service",
+      "scan_service"
+    ]
+  },
+  {
+    "episode": 34,
+    "reward": 6.7,
+    "epsilon": 0.3443584143042215,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 35,
+    "reward": 6.7,
+    "epsilon": 0.3340276618750948,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 36,
+    "reward": 5.7,
+    "epsilon": 0.32400683201884195,
+    "actions": [
+      "exploit_bindshell",
+      "exploit_vsftpd",
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 37,
+    "reward": -2.8,
+    "epsilon": 0.3142866270582767,
+    "actions": [
+      "exploit_vsftpd",
+      "scan_service",
+      "exploit_bindshell",
+      "stop"
+    ]
+  },
+  {
+    "episode": 38,
+    "reward": 7.7,
+    "epsilon": 0.3048580282465284,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 39,
+    "reward": 7.4,
+    "epsilon": 0.2957122873991326,
+    "actions": [
+      "scan_service",
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 40,
+    "reward": 7.7,
+    "epsilon": 0.2868409187771586,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 41,
+    "reward": 7.7,
+    "epsilon": 0.27823569121384384,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 42,
+    "reward": 7.7,
+    "epsilon": 0.2698886204774285,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 43,
+    "reward": 6.7,
+    "epsilon": 0.26179196186310566,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 44,
+    "reward": -4.5,
+    "epsilon": 0.2539382030072125,
+    "actions": [
+      "scan_service",
+      "scan_basic",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 45,
+    "reward": 7.7,
+    "epsilon": 0.2463200569169961,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 46,
+    "reward": 5.7,
+    "epsilon": 0.23893045520948622,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 47,
+    "reward": -4.5,
+    "epsilon": 0.23176254155320164,
+    "actions": [
+      "scan_service",
+      "scan_basic",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 48,
+    "reward": 7.7,
+    "epsilon": 0.2248096653066056,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 49,
+    "reward": 7.7,
+    "epsilon": 0.21806537534740741,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 50,
+    "reward": -1.7,
+    "epsilon": 0.2115234140869852,
+    "actions": [
+      "scan_basic",
+      "exploit_bindshell",
+      "stop"
+    ]
+  },
+  {
+    "episode": 51,
+    "reward": -0.7,
+    "epsilon": 0.20517771166437562,
+    "actions": [
+      "scan_basic",
+      "stop"
+    ]
+  },
+  {
+    "episode": 52,
+    "reward": 7.7,
+    "epsilon": 0.19902238031444436,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 53,
+    "reward": -5.2,
+    "epsilon": 0.19305170890501103,
+    "actions": [
+      "scan_basic",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_vsftpd",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 54,
+    "reward": 7.7,
+    "epsilon": 0.1872601576378607,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 55,
+    "reward": 7.7,
+    "epsilon": 0.18164235290872485,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 56,
+    "reward": -4.5,
+    "epsilon": 0.1761930823214631,
+    "actions": [
+      "exploit_vsftpd",
+      "scan_service",
+      "scan_basic",
+      "exploit_bindshell",
+      "exploit_bindshell",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 57,
+    "reward": 7.7,
+    "epsilon": 0.17090728985181922,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  },
+  {
+    "episode": 58,
+    "reward": 5.7,
+    "epsilon": 0.16578007115626464,
+    "actions": [
+      "scan_service",
+      "exploit_vsftpd"
+    ]
+  },
+  {
+    "episode": 59,
+    "reward": 7.7,
+    "epsilon": 0.1608066690215767,
+    "actions": [
+      "scan_service",
+      "exploit_bindshell"
+    ]
+  }
+]
