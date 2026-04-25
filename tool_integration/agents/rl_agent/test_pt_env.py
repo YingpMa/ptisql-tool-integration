@@ -1,6 +1,9 @@
-from rl_agent.pt_env import RealPTEnv
+from tool_integration.agents.rl_agent.pt_env import RealPTEnv
 
-env = RealPTEnv(target_ip="10.11.202.189")
+env = RealPTEnv(
+    target_ip="10.11.202.189",
+    use_metasploit=True
+)
 
 state = env.reset()
 print("reset:", state)
