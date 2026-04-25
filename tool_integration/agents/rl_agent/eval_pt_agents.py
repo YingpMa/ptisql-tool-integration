@@ -6,7 +6,6 @@ from collections import Counter
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class Net(nn.Module):
@@ -31,8 +30,6 @@ def load_model(path, model_type, device):
     action_dim = ckpt["action_dim"]
     hidden_dim = ckpt["hidden_dim"]
     id_to_action = ckpt["id_to_action"]
-
-    # json 里 key 有时会变成 str
     id_to_action = {int(k): v for k, v in id_to_action.items()}
 
     model = Net(state_dim, action_dim, hidden_dim).to(device)
@@ -63,6 +60,7 @@ def state_to_vector(state, state_keys):
 
 def choose_action(model, state_vec, id_to_action, device, state_dict=None):
     x = torch.tensor(state_vec, dtype=torch.float32, device=device).unsqueeze(0)
+
     with torch.no_grad():
         logits = model(x).squeeze(0).detach().cpu().numpy()
 
@@ -72,20 +70,15 @@ def choose_action(model, state_vec, id_to_action, device, state_dict=None):
         basic = bool(state_dict.get("basic_scanned", False))
         service = bool(state_dict.get("service_scanned", False))
 
-        for i, a in id_to_action.items():
-            # 1️⃣ 没 basic scan → 只能 basic
+        for i, action_name in id_to_action.items():
             if not basic:
-                if a == "scan_basic":
+                if action_name == "scan_basic":
                     allowed.append(i)
-
-            # 2️⃣ basic 有了，但没 service → 只能 service
             elif not service:
-                if a == "scan_service":
+                if action_name == "scan_service":
                     allowed.append(i)
-
-            # 3️⃣ 已经 service_scanned → 禁止再 scan
             else:
-                if not a.startswith("scan"):
+                if not action_name.startswith("scan"):
                     allowed.append(i)
 
     if not allowed:
@@ -95,36 +88,24 @@ def choose_action(model, state_vec, id_to_action, device, state_dict=None):
     return id_to_action[int(best_i)]
 
 
+def choose_random_action(state_dict):
+    basic = bool(state_dict.get("basic_scanned", False))
+    service = bool(state_dict.get("service_scanned", False))
 
-def make_env():
-    from rl_agent.pt_env import RealPTEnv
-    return RealPTEnv()
-    from rl_agent.pt_env import RealPTEnv
-    return RealPTEnv()
-    """
-    这里按你的项目结构自动尝试导入 RealPTEnv。
-    如果报错，把你真实 env 文件名发我，我帮你改 import。
-    """
-    try:
-        from rl_agent.real_pt_env import RealPTEnv
-        return RealPTEnv()
-    except Exception:
-        pass
+    if not basic:
+        return "scan_basic"
+    if not service:
+        return "scan_service"
 
-    try:
-        from rl_agent.env import RealPTEnv
-        return RealPTEnv()
-    except Exception:
-        pass
+    return random.choice(["exploit_bindshell", "exploit_vsftpd", "stop"])
 
-    try:
-        from envs.real_pt_env import RealPTEnv
-        return RealPTEnv()
-    except Exception:
-        pass
 
-    raise ImportError(
-        "Cannot import RealPTEnv. Please tell me where your environment class is."
+def make_env(args):
+    from tool_integration.agents.rl_agent.pt_env import RealPTEnv
+
+    return RealPTEnv(
+        target_ip=args.target_ip,
+        use_metasploit=args.use_metasploit,
     )
 
 
@@ -136,7 +117,7 @@ def reset_env(env):
 
 
 def step_env(env, action_name):
-    ACTION_MAP = {
+    action_map = {
         "scan_basic": 0,
         "scan_service": 1,
         "exploit_bindshell": 2,
@@ -147,11 +128,14 @@ def step_env(env, action_name):
         "exploit_distccd": 2,
     }
 
-    # enforce scan-before-exploit
-    if action_name.startswith("exploit") and hasattr(env, "state") and not env.state.get("service_scanned", False):
+    if (
+        action_name.startswith("exploit")
+        and hasattr(env, "state")
+        and not env.state.get("service_scanned", False)
+    ):
         action_name = "scan_service"
 
-    action_index = ACTION_MAP.get(action_name, 4)
+    action_index = action_map.get(action_name, 4)
     result = env.step(action_index)
 
     if len(result) == 5:
@@ -165,9 +149,17 @@ def step_env(env, action_name):
 
 def is_goal_reached(env, info):
     if isinstance(info, dict):
-        for key in ["goal_reached", "success", "done_success"]:
-            if key in info:
-                return bool(info[key])
+        if bool(info.get("success", False)):
+            return True
+        if bool(info.get("real_success", False)):
+            return True
+        if bool(info.get("goal_reached", False)):
+            return True
+        if bool(info.get("done_success", False)):
+            return True
+
+    if hasattr(env, "state") and env.state.get("has_shell", False):
+        return True
 
     if hasattr(env, "goal_reached"):
         try:
@@ -190,28 +182,40 @@ def is_honeypot(reward, info):
     return False
 
 
-def eval_agent(model, id_to_action, state_keys, device, episodes, max_steps):
-    env = make_env()
+def eval_agent(model, id_to_action, state_keys, device, args):
+    env = make_env(args)
 
     rewards = []
     goals = []
     honeypots = []
     steps_list = []
     action_counter = Counter()
+    shell_counter = 0
+    metasploit_session_counter = 0
 
-    for ep in range(episodes):
+    for ep in range(args.episodes):
         state = reset_env(env)
 
         total_reward = 0.0
         goal = False
         honeypot = False
+        shell_obtained = False
+        metasploit_session = False
 
-        for step in range(max_steps):
-            state_vec = state_to_vector(state, state_keys)
-            action_name = choose_action(model, state_vec, id_to_action, device, state)
+        for step in range(args.max_steps):
+            if args.model_type == "random":
+                action_name = choose_random_action(state)
+            else:
+                state_vec = state_to_vector(state, state_keys)
+                action_name = choose_action(
+                    model=model,
+                    state_vec=state_vec,
+                    id_to_action=id_to_action,
+                    device=device,
+                    state_dict=state,
+                )
 
             action_counter[action_name] += 1
-
             next_state, reward, done, info = step_env(env, action_name)
 
             print(
@@ -228,6 +232,12 @@ def eval_agent(model, id_to_action, state_keys, device, episodes, max_steps):
             if is_goal_reached(env, info):
                 goal = True
 
+            if next_state.get("has_shell", False):
+                shell_obtained = True
+
+            if isinstance(info, dict) and info.get("backend") == "metasploit" and info.get("sessions"):
+                metasploit_session = True
+
             state = next_state
 
             if done:
@@ -237,10 +247,14 @@ def eval_agent(model, id_to_action, state_keys, device, episodes, max_steps):
         goals.append(1.0 if goal else 0.0)
         honeypots.append(1.0 if honeypot else 0.0)
         steps_list.append(step + 1)
+        shell_counter += int(shell_obtained)
+        metasploit_session_counter += int(metasploit_session)
 
         print(
             f"[EP {ep + 1}] reward={total_reward:.3f} "
-            f"goal={int(goal)} honeypot={int(honeypot)} steps={step + 1}"
+            f"goal={int(goal)} shell={int(shell_obtained)} "
+            f"msf_session={int(metasploit_session)} "
+            f"honeypot={int(honeypot)} steps={step + 1}"
         )
 
     return {
@@ -249,6 +263,8 @@ def eval_agent(model, id_to_action, state_keys, device, episodes, max_steps):
         "goal_reached_rate": float(np.mean(goals)),
         "honeypot_rate": float(np.mean(honeypots)),
         "avg_steps": float(np.mean(steps_list)),
+        "shell_obtained_rate": shell_counter / max(args.episodes, 1),
+        "metasploit_session_rate": metasploit_session_counter / max(args.episodes, 1),
         "actions": action_counter,
     }
 
@@ -256,13 +272,15 @@ def eval_agent(model, id_to_action, state_keys, device, episodes, max_steps):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--model_path", type=str, required=True)
-    parser.add_argument("--model_type", type=str, choices=["iq", "bc"], required=True)
+    parser.add_argument("--model_path", type=str, default="")
+    parser.add_argument("--model_type", type=str, choices=["iq", "bc", "random"], required=True)
     parser.add_argument("--replay_path", type=str, default="outputs/replay_iq_650.json")
     parser.add_argument("--episodes", type=int, default=10)
     parser.add_argument("--max_steps", type=int, default=10)
     parser.add_argument("--cpu", action="store_true")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--target_ip", type=str, default="10.11.202.189")
+    parser.add_argument("--use_metasploit", action="store_true")
 
     args = parser.parse_args()
 
@@ -277,13 +295,21 @@ def main():
 
     state_keys = replay["state_keys"]
 
-    model, id_to_action = load_model(args.model_path, args.model_type, device)
+    model = None
+    id_to_action = None
+
+    if args.model_type != "random":
+        if not args.model_path:
+            raise ValueError("--model_path is required for iq/bc.")
+        model, id_to_action = load_model(args.model_path, args.model_type, device)
 
     print("=" * 60)
     print(f"[MODEL] {args.model_type}")
-    print(f"[PATH] {args.model_path}")
+    print(f"[PATH] {args.model_path if args.model_path else 'N/A'}")
     print(f"[EPISODES] {args.episodes}")
     print(f"[MAX_STEPS] {args.max_steps}")
+    print(f"[TARGET] {args.target_ip}")
+    print(f"[USE_METASPLOIT] {args.use_metasploit}")
     print("=" * 60)
 
     metrics = eval_agent(
@@ -291,8 +317,7 @@ def main():
         id_to_action=id_to_action,
         state_keys=state_keys,
         device=device,
-        episodes=args.episodes,
-        max_steps=args.max_steps,
+        args=args,
     )
 
     print("=" * 60)
@@ -300,6 +325,8 @@ def main():
     print(f"avg_reward={metrics['avg_reward']:.4f}")
     print(f"std_reward={metrics['std_reward']:.4f}")
     print(f"goal_reached_rate={metrics['goal_reached_rate']:.4f}")
+    print(f"shell_obtained_rate={metrics['shell_obtained_rate']:.4f}")
+    print(f"metasploit_session_rate={metrics['metasploit_session_rate']:.4f}")
     print(f"honeypot_rate={metrics['honeypot_rate']:.4f}")
     print(f"avg_steps={metrics['avg_steps']:.4f}")
     print(f"actions={metrics['actions']}")
