@@ -57,43 +57,25 @@ def state_to_vector(state, state_keys):
     return np.array(vec, dtype=np.float32)
 
 
-def choose_action(model, state_vec, id_to_action, device, state_dict=None):
+def choose_action(model, state_vec, id_to_action, device):
+    """
+    PT-ISQL-style evaluation:
+    The agent freely selects an action from its learned policy.
+    No evaluator-side scan-order filtering is applied.
+    """
     x = torch.tensor(state_vec, dtype=torch.float32, device=device).unsqueeze(0)
 
     with torch.no_grad():
         logits = model(x).squeeze(0).detach().cpu().numpy()
 
-    allowed = []
-
-    if state_dict is not None:
-        basic = bool(state_dict.get("basic_scanned", False))
-        service = bool(state_dict.get("service_scanned", False))
-
-        for i, action_name in id_to_action.items():
-            if not basic and action_name == "scan_basic":
-                allowed.append(i)
-            elif basic and not service and action_name == "scan_service":
-                allowed.append(i)
-            elif basic and service and not action_name.startswith("scan"):
-                allowed.append(i)
-
-    if not allowed:
-        allowed = list(id_to_action.keys())
-
-    best_i = max(allowed, key=lambda i: logits[i])
-    return id_to_action[int(best_i)]
+    best_i = int(np.argmax(logits))
+    return id_to_action[best_i]
 
 
-def choose_random_action(state_dict):
-    basic = bool(state_dict.get("basic_scanned", False))
-    service = bool(state_dict.get("service_scanned", False))
-
-    if not basic:
-        return "scan_basic"
-    if not service:
-        return "scan_service"
-
+def choose_random_action():
     return random.choice([
+        "scan_basic",
+        "scan_service",
         "exploit_bindshell",
         "exploit_vsftpd",
         "exploit_samba",
@@ -129,13 +111,6 @@ def step_env(env, action_name):
         "exploit_distccd": 2,
     }
 
-    if (
-        action_name.startswith("exploit")
-        and hasattr(env, "state")
-        and not env.state.get("service_scanned", False)
-    ):
-        action_name = "scan_service"
-
     action_index = action_map.get(action_name, 4)
     result = env.step(action_index)
 
@@ -148,7 +123,7 @@ def step_env(env, action_name):
     return next_state, float(reward), bool(done), info
 
 
-def is_goal_reached(env, info):
+def is_goal_reached(env, info, next_state):
     if isinstance(info, dict):
         if bool(info.get("success", False)):
             return True
@@ -158,6 +133,9 @@ def is_goal_reached(env, info):
             return True
         if bool(info.get("done_success", False)):
             return True
+
+    if next_state.get("has_shell", False):
+        return True
 
     if hasattr(env, "state") and env.state.get("has_shell", False):
         return True
@@ -180,7 +158,7 @@ def is_honeypot(reward, info):
 def eval_agent(model, id_to_action, state_keys, device, args):
     env = make_env(args)
 
-    rewards = []
+    episode_rewards = []
     goals = []
     honeypots = []
     steps_list = []
@@ -191,7 +169,7 @@ def eval_agent(model, id_to_action, state_keys, device, args):
     for ep in range(args.episodes):
         state = reset_env(env)
 
-        total_reward = 0.0
+        episode_reward = 0.0
         goal = False
         honeypot = False
         shell_obtained = False
@@ -199,7 +177,7 @@ def eval_agent(model, id_to_action, state_keys, device, args):
 
         for step in range(args.max_steps):
             if args.model_type == "random":
-                action_name = choose_random_action(state)
+                action_name = choose_random_action()
             else:
                 state_vec = state_to_vector(state, state_keys)
                 action_name = choose_action(
@@ -207,24 +185,14 @@ def eval_agent(model, id_to_action, state_keys, device, args):
                     state_vec=state_vec,
                     id_to_action=id_to_action,
                     device=device,
-                    state_dict=state,
                 )
 
             action_counter[action_name] += 1
+
             next_state, reward, done, info = step_env(env, action_name)
+            episode_reward += reward
 
-            print(
-                f"    [STEP {step + 1}] action={action_name} "
-                f"reward={reward:.3f} done={int(done)} "
-                f"state={state} info={info}"
-            )
-
-            total_reward += reward
-
-            if is_honeypot(reward, info):
-                honeypot = True
-
-            if is_goal_reached(env, info):
+            if is_goal_reached(env, info, next_state):
                 goal = True
 
             if next_state.get("has_shell", False):
@@ -237,12 +205,21 @@ def eval_agent(model, id_to_action, state_keys, device, args):
             ):
                 metasploit_session = True
 
+            if is_honeypot(reward, info):
+                honeypot = True
+
+            print(
+                f"    [STEP {step + 1}] action={action_name} "
+                f"reward={reward:.3f} done={int(done)} "
+                f"state={state} info={info}"
+            )
+
             state = next_state
 
             if done:
                 break
 
-        rewards.append(total_reward)
+        episode_rewards.append(episode_reward)
         goals.append(1.0 if goal else 0.0)
         honeypots.append(1.0 if honeypot else 0.0)
         steps_list.append(step + 1)
@@ -250,15 +227,15 @@ def eval_agent(model, id_to_action, state_keys, device, args):
         metasploit_session_counter += int(metasploit_session)
 
         print(
-            f"[EP {ep + 1}] reward={total_reward:.3f} "
+            f"[EP {ep + 1}] reward={episode_reward:.3f} "
             f"goal={int(goal)} shell={int(shell_obtained)} "
             f"msf_session={int(metasploit_session)} "
             f"honeypot={int(honeypot)} steps={step + 1}"
         )
 
     return {
-        "avg_reward": float(np.mean(rewards)),
-        "std_reward": float(np.std(rewards)),
+        "avg_reward": float(np.mean(episode_rewards)),
+        "std_reward": float(np.std(episode_rewards)),
         "goal_reached_rate": float(np.mean(goals)),
         "honeypot_rate": float(np.mean(honeypots)),
         "avg_steps": float(np.mean(steps_list)),
@@ -287,7 +264,9 @@ def main():
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 
-    device = torch.device("cuda" if torch.cuda.is_available() and not args.cpu else "cpu")
+    device = torch.device(
+        "cuda" if torch.cuda.is_available() and not args.cpu else "cpu"
+    )
 
     with open(args.replay_path, "r", encoding="utf-8") as f:
         replay = json.load(f)
