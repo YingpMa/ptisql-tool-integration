@@ -14,27 +14,13 @@ except ImportError:
 
 
 class RealPTEnv:
-    """
-    Minimal real PT environment.
-
-    Actions:
-    0 = scan_basic
-    1 = scan_service
-    2 = exploit_bindshell
-    3 = exploit_vsftpd
-    4 = stop
-
-    Metasploit integration:
-    - By default, use_metasploit=False, so the old socket-based exploit still works.
-    - If use_metasploit=True, exploit_vsftpd uses Metasploit RPC.
-    """
-
     ACTIONS = {
         0: "scan_basic",
         1: "scan_service",
         2: "exploit_bindshell",
         3: "exploit_vsftpd",
         4: "stop",
+        5: "exploit_samba",
     }
 
     def __init__(
@@ -191,7 +177,10 @@ class RealPTEnv:
         self.state["has_postgresql"] = "postgresql" in services
         self.state["has_bindshell_1524"] = 1524 in ports
         self.state["has_samba"] = any(
-            "samba" in v["version"].lower() for v in service_map.values()
+            "samba" in v["version"].lower()
+            or "smbd" in v["version"].lower()
+            or v["service"] in {"netbios-ssn", "microsoft-ds"}
+            for v in service_map.values()
         )
         self.state["has_tomcat"] = any(
             "tomcat" in v["version"].lower() for v in service_map.values()
@@ -283,6 +272,18 @@ class RealPTEnv:
 
         return self._try_vsftpd_script()
 
+    def _try_samba(self):
+        if self.use_metasploit and self.msf is not None:
+            return self.msf.exploit_samba(self.target_ip)
+
+        return {
+            "success": False,
+            "real_success": False,
+            "stdout": "",
+            "stderr": "Samba exploit requires Metasploit backend.",
+            "backend": "script",
+        }
+
     def _record_step(self, action_name, reward, info):
         self.history.append(
             {
@@ -316,7 +317,7 @@ class RealPTEnv:
             raise RuntimeError("Episode already done. Call reset().")
 
         if action not in self.ACTIONS:
-            raise ValueError("Invalid action index.")
+            raise ValueError(f"Invalid action index: {action}")
 
         action_name = self.ACTIONS[action]
         reward = 0.0
@@ -373,6 +374,23 @@ class RealPTEnv:
                 if result["success"]:
                     self.state["has_shell"] = True
                     reward = 6.0
+                    self.done = True
+                else:
+                    reward = -1.0
+
+        elif action_name == "exploit_samba":
+            if not self.state["service_scanned"]:
+                reward = -1.0
+                info = {"error": "samba attempted before service scan"}
+            elif not self.state["has_samba"]:
+                reward = -1.0
+                info = {"error": "samba not identified"}
+            else:
+                result = self._try_samba()
+                info = result
+                if result["success"]:
+                    self.state["has_shell"] = True
+                    reward = 8.0
                     self.done = True
                 else:
                     reward = -1.0
