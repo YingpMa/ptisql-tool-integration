@@ -29,6 +29,21 @@ def set_seed(seed):
     torch.manual_seed(seed)
 
 
+def get_valid_action_names(state):
+    if not state.get("basic_scanned", False):
+        return ["scan_basic"]
+    if not state.get("service_scanned", False):
+        return ["scan_service"]
+    return [
+        "exploit_bindshell",
+        "exploit_vsftpd",
+        "exploit_unrealircd",
+        "exploit_distccd",
+        "exploit_samba",
+        "stop",
+    ]
+
+
 class QNetwork(nn.Module):
     def __init__(self, state_dim, action_dim, hidden_dim):
         super().__init__()
@@ -52,9 +67,9 @@ class ReplayBuffer:
         self.buffer.append(item)
 
     def sample(self, batch_size, device):
-        batch = random.sample(self.buffer, batch_size)
+        n = min(batch_size, len(self.buffer))
+        batch = random.sample(self.buffer, n)
         obs, next_obs, actions, rewards, dones = zip(*batch)
-
         return (
             torch.tensor(np.array(obs), dtype=torch.float32, device=device),
             torch.tensor(np.array(next_obs), dtype=torch.float32, device=device),
@@ -78,7 +93,6 @@ class IQOnlineAgent:
         self.q_net = QNetwork(state_dim, action_dim, args.hidden_dim).to(device)
         self.target_net = QNetwork(state_dim, action_dim, args.hidden_dim).to(device)
         self.target_net.load_state_dict(self.q_net.state_dict())
-
         self.optimizer = torch.optim.Adam(self.q_net.parameters(), lr=args.lr)
 
     @property
@@ -94,25 +108,25 @@ class IQOnlineAgent:
         q = self.q_net(obs)
         return q.gather(1, action.long())
 
-    def choose_action(self, state_vec, sample=True, epsilon=0.1):
+    def choose_action(self, state_vec, valid_ids=None, sample=True, epsilon=0.1):
         state_vec = np.asarray(state_vec, dtype=np.float32).reshape(-1)
 
+        if valid_ids is None or len(valid_ids) == 0:
+            valid_ids = list(range(self.q_net.net[-1].out_features))
+
         if sample and random.random() < epsilon:
-            return random.randrange(self.q_net.net[-1].out_features)
+            return random.choice(valid_ids)
 
         state_t = torch.tensor(state_vec, dtype=torch.float32, device=self.device).unsqueeze(0)
 
         with torch.no_grad():
-            q = self.q_net(state_t)
-            probs = F.softmax(q / self.alpha, dim=1)
-
+            q = self.q_net(state_t).squeeze(0)
+            mask = torch.full_like(q, -1e9)
+            mask[valid_ids] = q[valid_ids]
             if sample:
-                dist = Categorical(probs)
-                action = dist.sample()
-            else:
-                action = torch.argmax(probs, dim=1)
-
-        return int(action.item())
+                probs = F.softmax(mask / self.alpha, dim=0)
+                return int(Categorical(probs).sample().item())
+            return int(torch.argmax(mask).item())
 
     def hard_update_target(self):
         self.target_net.load_state_dict(self.q_net.state_dict())
@@ -130,7 +144,6 @@ def load_expert_replay(path):
     id_to_action = {i: a for a, i in action_to_id.items()}
 
     transitions = []
-
     for traj in trajectories:
         for step in traj:
             transitions.append(
@@ -150,43 +163,41 @@ def state_to_vector(state, state_keys):
     return np.array([float(state.get(k, 0.0)) for k in state_keys], dtype=np.float32)
 
 
-def fill_expert_buffer(buffer, transitions):
-    for t in transitions:
-        buffer.add(t)
-
-
 def make_env(args):
     from tool_integration.agents.rl_agent.pt_env import RealPTEnv
 
-    return RealPTEnv(
-        target_ip=args.target_ip,
-        use_metasploit=args.use_metasploit,
-    )
+    return RealPTEnv(target_ip=args.target_ip, use_metasploit=args.use_metasploit)
 
 
 def env_step_by_action_name(env, action_name):
     env_action = ENV_ACTION_MAP.get(action_name, 7)
     result = env.step(env_action)
-
     if len(result) == 5:
         next_state, reward, terminated, truncated, info = result
         done = terminated or truncated
     else:
         next_state, reward, done, info = result
-
     return next_state, float(reward), bool(done), info
 
 
-def collect_policy_rollout(agent, env, buffer, state_keys, id_to_action, args):
+def fill_expert_buffer(buffer, transitions):
+    for t in transitions:
+        buffer.add(t)
+
+
+def collect_policy_rollout(agent, env, buffer, state_keys, action_to_id, id_to_action, args):
     state = env.reset()
     episode_reward = 0.0
     actions = []
 
     for _ in range(args.max_steps):
         state_vec = state_to_vector(state, state_keys)
+        valid_actions = get_valid_action_names(state)
+        valid_ids = [action_to_id[a] for a in valid_actions if a in action_to_id]
 
         action_id = agent.choose_action(
             state_vec,
+            valid_ids=valid_ids,
             sample=True,
             epsilon=args.epsilon,
         )
@@ -225,28 +236,29 @@ def concat_samples(policy_batch, expert_batch, device):
 
 
 def iq_loss(agent, current_Q, current_V, next_V, batch):
-    args = agent.args
-    gamma = agent.gamma
-
     obs, next_obs, action, env_reward, done, is_expert = batch
 
-    y = (1.0 - done) * gamma * next_V
+    y = (1.0 - done) * agent.gamma * next_V
     reward_iq = current_Q - y
+
     expert_reward = reward_iq[is_expert]
+    policy_reward = reward_iq[~is_expert]
 
     softq_loss = -expert_reward.mean()
 
-    if args.loss_type == "value":
+    if agent.args.loss_type == "value":
         value_loss = (current_V - y).mean()
-    elif args.loss_type == "value_expert":
-        value_loss = (current_V - y)[is_expert].mean()
     else:
-        raise ValueError(f"Unsupported loss_type: {args.loss_type}")
+        value_loss = (current_V - y)[is_expert].mean()
 
     loss = softq_loss + value_loss
 
-    if args.chi:
-        chi2_loss = expert_reward.pow(2).mean() / (4.0 * args.chi_alpha)
+    # stabilize: weak penalty for policy states getting too high reward
+    if agent.args.policy_penalty > 0 and policy_reward.numel() > 0:
+        loss = loss + agent.args.policy_penalty * policy_reward.mean()
+
+    if agent.args.chi:
+        chi2_loss = expert_reward.pow(2).mean() / (4.0 * agent.args.chi_alpha)
         loss = loss + chi2_loss
     else:
         chi2_loss = torch.tensor(0.0, device=agent.device)
@@ -257,6 +269,7 @@ def iq_loss(agent, current_Q, current_V, next_V, batch):
         "value_loss": float(value_loss.item()),
         "chi2_loss": float(chi2_loss.item()),
         "iq_reward_mean": float(expert_reward.mean().item()),
+        "policy_iq_reward_mean": float(policy_reward.mean().item()) if policy_reward.numel() else 0.0,
     }
 
 
@@ -268,12 +281,10 @@ def iq_update(agent, policy_buffer, expert_buffer, step):
     obs, next_obs, action = batch[0], batch[1], batch[2]
 
     current_V = agent.getV(obs, use_target=False)
-
     with torch.no_grad():
         next_V = agent.getV(next_obs, use_target=True)
 
     current_Q = agent.critic(obs, action)
-
     loss, loss_dict = iq_loss(agent, current_Q, current_V, next_V, batch)
 
     agent.optimizer.zero_grad()
@@ -288,7 +299,7 @@ def iq_update(agent, policy_buffer, expert_buffer, step):
 
 
 @torch.no_grad()
-def eval_online(agent, env, state_keys, id_to_action, args):
+def eval_online(agent, env, state_keys, action_to_id, id_to_action, args):
     rewards = []
     goals = []
     action_counter = Counter()
@@ -300,7 +311,15 @@ def eval_online(agent, env, state_keys, id_to_action, args):
 
         for _ in range(args.max_steps):
             state_vec = state_to_vector(state, state_keys)
-            action_id = agent.choose_action(state_vec, sample=False, epsilon=0.0)
+            valid_actions = get_valid_action_names(state)
+            valid_ids = [action_to_id[a] for a in valid_actions if a in action_to_id]
+
+            action_id = agent.choose_action(
+                state_vec,
+                valid_ids=valid_ids,
+                sample=False,
+                epsilon=0.0,
+            )
             action_name = id_to_action[action_id]
             action_counter[action_name] += 1
 
@@ -311,7 +330,6 @@ def eval_online(agent, env, state_keys, id_to_action, args):
                 goal = True
 
             state = next_state
-
             if done:
                 break
 
@@ -350,7 +368,7 @@ def main():
 
     parser.add_argument("--episodes", type=int, default=100)
     parser.add_argument("--max_steps", type=int, default=8)
-    parser.add_argument("--batch_size", type=int, default=64)
+    parser.add_argument("--batch_size", type=int, default=16)
     parser.add_argument("--gamma", type=float, default=0.9)
     parser.add_argument("--lr", type=float, default=0.0001)
     parser.add_argument("--hidden_dim", type=int, default=128)
@@ -362,10 +380,11 @@ def main():
     parser.add_argument("--chi", action="store_true", default=True)
     parser.add_argument("--chi_alpha", type=float, default=0.5)
     parser.add_argument("--grad_clip", type=float, default=10.0)
+    parser.add_argument("--policy_penalty", type=float, default=0.1)
 
-    parser.add_argument("--epsilon", type=float, default=0.2)
-    parser.add_argument("--warmup_rollouts", type=int, default=10)
-    parser.add_argument("--rollouts_per_update", type=int, default=1)
+    parser.add_argument("--epsilon", type=float, default=0.5)
+    parser.add_argument("--warmup_rollouts", type=int, default=30)
+    parser.add_argument("--rollouts_per_update", type=int, default=3)
 
     parser.add_argument("--eval_interval", type=int, default=10)
     parser.add_argument("--eval_eps", type=int, default=5)
@@ -382,33 +401,30 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() and not args.cpu else "cpu")
 
     data, expert_transitions, state_keys, action_to_id, id_to_action = load_expert_replay(args.replay_path)
-
     state_dim = len(expert_transitions[0][0])
     action_dim = len(action_to_id)
 
     env = make_env(args)
     eval_env = make_env(args)
-
     agent = IQOnlineAgent(state_dim, action_dim, args, device)
 
     expert_buffer = ReplayBuffer(args.buffer_capacity)
     policy_buffer = ReplayBuffer(args.buffer_capacity)
-
     fill_expert_buffer(expert_buffer, expert_transitions)
 
     os.makedirs(args.save_dir, exist_ok=True)
 
     print("=" * 60)
-    print("[TRAIN] IQ online real")
+    print("[TRAIN] IQ online real stable")
     print(f"[DATA] expert_transitions={len(expert_transitions)}")
     print(f"[DATA] state_dim={state_dim}, action_dim={action_dim}")
     print(f"[DATA] action_to_id={action_to_id}")
     print(f"[ENV] target={args.target_ip}, metasploit={args.use_metasploit}")
     print("=" * 60)
 
-    print("[WARMUP] collecting initial policy rollouts")
+    print("[WARMUP] collecting initial masked policy rollouts")
     for _ in range(args.warmup_rollouts):
-        collect_policy_rollout(agent, env, policy_buffer, state_keys, id_to_action, args)
+        collect_policy_rollout(agent, env, policy_buffer, state_keys, action_to_id, id_to_action, args)
 
     print(f"[BUFFER] expert={expert_buffer.size()} policy={policy_buffer.size()}")
 
@@ -423,12 +439,7 @@ def main():
 
         for _ in range(args.rollouts_per_update):
             r, actions = collect_policy_rollout(
-                agent,
-                env,
-                policy_buffer,
-                state_keys,
-                id_to_action,
-                args,
+                agent, env, policy_buffer, state_keys, action_to_id, id_to_action, args
             )
             rollout_rewards.append(r)
             rollout_actions.update(actions)
@@ -445,11 +456,12 @@ def main():
                 f"recent_reward={np.mean(recent_rewards):.3f} "
                 f"loss={np.mean(recent_losses):.6f} "
                 f"iq_reward={losses['iq_reward_mean']:.6f} "
+                f"policy_iq={losses['policy_iq_reward_mean']:.6f} "
                 f"actions={dict(rollout_actions)}"
             )
 
         if ep % args.eval_interval == 0:
-            metrics = eval_online(agent, eval_env, state_keys, id_to_action, args)
+            metrics = eval_online(agent, eval_env, state_keys, action_to_id, id_to_action, args)
 
             print("-" * 60)
             print(
@@ -462,10 +474,7 @@ def main():
 
             if (
                 metrics["goal_rate"] > best_goal
-                or (
-                    metrics["goal_rate"] == best_goal
-                    and metrics["avg_reward"] > best_reward
-                )
+                or (metrics["goal_rate"] == best_goal and metrics["avg_reward"] > best_reward)
             ):
                 best_goal = metrics["goal_rate"]
                 best_reward = metrics["avg_reward"]
@@ -482,7 +491,6 @@ def main():
                     args,
                     metrics,
                 )
-
                 print(f"[SAVE] best model saved: {save_path}")
 
     last_path = os.path.join(args.save_dir, "last_iq_online_real.pt")
