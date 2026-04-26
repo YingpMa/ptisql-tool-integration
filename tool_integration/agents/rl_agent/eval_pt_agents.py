@@ -57,25 +57,78 @@ def state_to_vector(state, state_keys):
     return np.array(vec, dtype=np.float32)
 
 
-def choose_action(model, state_vec, id_to_action, device):
-    """
-    PT-ISQL-style evaluation:
-    The agent freely selects an action from its learned policy.
-    No evaluator-side scan-order filtering is applied.
-    """
+def get_valid_action_ids(state, id_to_action):
+    basic = bool(state.get("basic_scanned", False))
+    service = bool(state.get("service_scanned", False))
+
+    valid = []
+
+    for i, action_name in id_to_action.items():
+        if not basic:
+            if action_name == "scan_basic":
+                valid.append(i)
+
+        elif basic and not service:
+            if action_name in ["scan_service", "scan_basic"]:
+                valid.append(i)
+
+        else:
+            if action_name in [
+                "exploit_bindshell",
+                "exploit_vsftpd",
+                "exploit_samba",
+                "stop",
+            ]:
+                valid.append(i)
+
+    return valid or list(id_to_action.keys())
+
+
+def choose_action(
+    model,
+    state_vec,
+    id_to_action,
+    device,
+    state_dict=None,
+    valid_action_mask=False,
+):
     x = torch.tensor(state_vec, dtype=torch.float32, device=device).unsqueeze(0)
 
     with torch.no_grad():
         logits = model(x).squeeze(0).detach().cpu().numpy()
 
-    best_i = int(np.argmax(logits))
-    return id_to_action[best_i]
+    if valid_action_mask and state_dict is not None:
+        valid_ids = get_valid_action_ids(state_dict, id_to_action)
+        best_i = max(valid_ids, key=lambda i: logits[i])
+    else:
+        best_i = int(np.argmax(logits))
+
+    return id_to_action[int(best_i)]
 
 
-def choose_random_action():
-    return random.choice([
+def choose_random_action(state=None, valid_action_mask=False):
+    all_actions = [
         "scan_basic",
         "scan_service",
+        "exploit_bindshell",
+        "exploit_vsftpd",
+        "exploit_samba",
+        "stop",
+    ]
+
+    if not valid_action_mask or state is None:
+        return random.choice(all_actions)
+
+    basic = bool(state.get("basic_scanned", False))
+    service = bool(state.get("service_scanned", False))
+
+    if not basic:
+        return "scan_basic"
+
+    if basic and not service:
+        return random.choice(["scan_basic", "scan_service"])
+
+    return random.choice([
         "exploit_bindshell",
         "exploit_vsftpd",
         "exploit_samba",
@@ -177,7 +230,10 @@ def eval_agent(model, id_to_action, state_keys, device, args):
 
         for step in range(args.max_steps):
             if args.model_type == "random":
-                action_name = choose_random_action()
+                action_name = choose_random_action(
+                    state=state,
+                    valid_action_mask=args.valid_action_mask,
+                )
             else:
                 state_vec = state_to_vector(state, state_keys)
                 action_name = choose_action(
@@ -185,6 +241,8 @@ def eval_agent(model, id_to_action, state_keys, device, args):
                     state_vec=state_vec,
                     id_to_action=id_to_action,
                     device=device,
+                    state_dict=state,
+                    valid_action_mask=args.valid_action_mask,
                 )
 
             action_counter[action_name] += 1
@@ -257,6 +315,7 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--target_ip", type=str, default="10.11.202.189")
     parser.add_argument("--use_metasploit", action="store_true")
+    parser.add_argument("--valid_action_mask", action="store_true")
 
     args = parser.parse_args()
 
@@ -288,6 +347,7 @@ def main():
     print(f"[MAX_STEPS] {args.max_steps}")
     print(f"[TARGET] {args.target_ip}")
     print(f"[USE_METASPLOIT] {args.use_metasploit}")
+    print(f"[VALID_ACTION_MASK] {args.valid_action_mask}")
     print("=" * 60)
 
     metrics = eval_agent(
