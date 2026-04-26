@@ -14,14 +14,51 @@ except ImportError:
 
 
 class RealPTEnv:
+    """
+    Real tool-based PT environment with 18-dim state schema.
+
+    Action schema aligned with replay_iq_650.json / expert_dataset.py:
+    0 scan_basic
+    1 scan_service
+    2 exploit_bindshell
+    3 exploit_vsftpd
+    4 exploit_unrealircd
+    5 exploit_distccd
+    6 exploit_samba
+    7 stop
+    """
+
     ACTIONS = {
         0: "scan_basic",
         1: "scan_service",
         2: "exploit_bindshell",
         3: "exploit_vsftpd",
-        4: "stop",
-        5: "exploit_samba",
+        4: "exploit_unrealircd",
+        5: "exploit_distccd",
+        6: "exploit_samba",
+        7: "stop",
     }
+
+    STATE_KEYS = [
+        "num_open_ports",
+        "has_ftp",
+        "has_ssh",
+        "has_telnet",
+        "has_http",
+        "has_mysql",
+        "has_postgresql",
+        "has_bindshell_1524",
+        "has_samba",
+        "has_tomcat",
+        "has_vsftpd_234",
+        "has_unrealircd",
+        "has_distccd",
+        "has_shell",
+        "basic_scanned",
+        "service_scanned",
+        "failed_attempts",
+        "successful_exploits",
+    ]
 
     def __init__(
         self,
@@ -52,7 +89,7 @@ class RealPTEnv:
                 ssl=False,
             )
 
-        self.max_steps = 6
+        self.max_steps = 8
         self.reset()
 
     def _now_str(self):
@@ -71,28 +108,20 @@ class RealPTEnv:
             "has_samba": False,
             "has_tomcat": False,
             "has_vsftpd_234": False,
+            "has_unrealircd": False,
+            "has_distccd": False,
             "has_shell": False,
             "basic_scanned": False,
             "service_scanned": False,
+            "failed_attempts": 0,
+            "successful_exploits": 0,
         }
 
     def state_to_vector(self, state=None):
         s = state or self.state
         return [
-            float(s.get("num_open_ports", 0)),
-            float(s.get("has_ftp", False)),
-            float(s.get("has_ssh", False)),
-            float(s.get("has_telnet", False)),
-            float(s.get("has_http", False)),
-            float(s.get("has_mysql", False)),
-            float(s.get("has_postgresql", False)),
-            float(s.get("has_bindshell_1524", False)),
-            float(s.get("has_samba", False)),
-            float(s.get("has_tomcat", False)),
-            float(s.get("has_vsftpd_234", False)),
-            float(s.get("has_shell", False)),
-            float(s.get("basic_scanned", False)),
-            float(s.get("service_scanned", False)),
+            float(s.get(key, 0.0))
+            for key in self.STATE_KEYS
         ]
 
     def reset(self):
@@ -135,6 +164,7 @@ class RealPTEnv:
 
     def _parse_service_map(self, nmap_output):
         service_map = {}
+
         for line in nmap_output.splitlines():
             line = line.strip()
             if "/tcp" in line and " open " in line:
@@ -147,17 +177,22 @@ class RealPTEnv:
                         "service": service,
                         "version": version,
                     }
+
         return service_map
 
     def _apply_basic_scan(self, output):
         ports = self._parse_open_ports(output)
+
         self.state["num_open_ports"] = len(ports)
         self.state["basic_scanned"] = True
-        self.state["has_bindshell_1524"] = 1524 in ports
+
         self.state["has_ftp"] = 21 in ports or 2121 in ports
         self.state["has_http"] = 80 in ports or 8180 in ports
         self.state["has_mysql"] = 3306 in ports
         self.state["has_postgresql"] = 5432 in ports
+        self.state["has_bindshell_1524"] = 1524 in ports
+        self.state["has_unrealircd"] = 6667 in ports
+
         return ports
 
     def _apply_service_scan(self, output):
@@ -168,27 +203,39 @@ class RealPTEnv:
         self.state["basic_scanned"] = True
         self.state["service_scanned"] = True
 
-        services = {v["service"] for v in service_map.values()}
+        services = {v["service"].lower() for v in service_map.values()}
+        versions = " ".join(v["version"].lower() for v in service_map.values())
+
         self.state["has_ftp"] = "ftp" in services
         self.state["has_ssh"] = "ssh" in services
         self.state["has_telnet"] = "telnet" in services
         self.state["has_http"] = "http" in services
         self.state["has_mysql"] = "mysql" in services
         self.state["has_postgresql"] = "postgresql" in services
+
         self.state["has_bindshell_1524"] = 1524 in ports
+
         self.state["has_samba"] = any(
             "samba" in v["version"].lower()
             or "smbd" in v["version"].lower()
-            or v["service"] in {"netbios-ssn", "microsoft-ds"}
+            or v["service"].lower() in {"netbios-ssn", "microsoft-ds"}
             for v in service_map.values()
         )
-        self.state["has_tomcat"] = any(
-            "tomcat" in v["version"].lower() for v in service_map.values()
-        )
-        self.state["has_vsftpd_234"] = any(
-            "vsftpd 2.3.4" in v["version"].lower() for v in service_map.values()
-        )
+
+        self.state["has_tomcat"] = "tomcat" in versions
+        self.state["has_vsftpd_234"] = "vsftpd 2.3.4" in versions
+        self.state["has_unrealircd"] = "unrealircd" in versions or 6667 in ports
+        self.state["has_distccd"] = "distccd" in versions or "distccd" in services
+
         return ports, service_map
+
+    def _mark_exploit_result(self, result):
+        if result.get("success", False):
+            self.state["has_shell"] = True
+            self.state["successful_exploits"] += 1
+            self.done = True
+        else:
+            self.state["failed_attempts"] += 1
 
     def _try_bindshell(self):
         try:
@@ -202,6 +249,7 @@ class RealPTEnv:
             stdout = result.stdout.strip()
             real_success = ("root" in stdout) or ("uid=0" in stdout)
             success = real_success and (random.random() < 0.7)
+
             return {
                 "success": success,
                 "real_success": real_success,
@@ -269,7 +317,6 @@ class RealPTEnv:
     def _try_vsftpd(self):
         if self.use_metasploit and self.msf is not None:
             return self.msf.exploit_vsftpd_234(self.target_ip)
-
         return self._try_vsftpd_script()
 
     def _try_samba(self):
@@ -281,6 +328,30 @@ class RealPTEnv:
             "real_success": False,
             "stdout": "",
             "stderr": "Samba exploit requires Metasploit backend.",
+            "backend": "script",
+        }
+
+    def _try_unrealircd(self):
+        if self.use_metasploit and self.msf is not None and hasattr(self.msf, "exploit_unrealircd"):
+            return self.msf.exploit_unrealircd(self.target_ip)
+
+        return {
+            "success": False,
+            "real_success": False,
+            "stdout": "",
+            "stderr": "UnrealIRCd exploit not implemented in executor.",
+            "backend": "script",
+        }
+
+    def _try_distccd(self):
+        if self.use_metasploit and self.msf is not None and hasattr(self.msf, "exploit_distccd"):
+            return self.msf.exploit_distccd(self.target_ip)
+
+        return {
+            "success": False,
+            "real_success": False,
+            "stdout": "",
+            "stderr": "distccd exploit not implemented in executor.",
             "backend": "script",
         }
 
@@ -304,6 +375,8 @@ class RealPTEnv:
                     "run_id": self.run_id,
                     "target": self.target_ip,
                     "use_metasploit": self.use_metasploit,
+                    "state_keys": self.STATE_KEYS,
+                    "actions": self.ACTIONS,
                     "history": self.history,
                 },
                 f,
@@ -328,7 +401,7 @@ class RealPTEnv:
         if action_name == "scan_basic":
             output = self._run_nmap_basic()
             ports = self._apply_basic_scan(output)
-            reward = -0.2
+            reward = -0.05
             info = {
                 "open_ports": ports,
                 "scan_type": "basic",
@@ -337,7 +410,7 @@ class RealPTEnv:
         elif action_name == "scan_service":
             output = self._run_nmap_service()
             ports, service_map = self._apply_service_scan(output)
-            reward = -0.3
+            reward = -0.10
             info = {
                 "open_ports": ports,
                 "service_map": service_map,
@@ -348,52 +421,76 @@ class RealPTEnv:
             if not self.state["basic_scanned"]:
                 reward = -1.0
                 info = {"error": "bindshell attempted before scanning"}
+                self.state["failed_attempts"] += 1
             elif not self.state["has_bindshell_1524"]:
                 reward = -1.0
                 info = {"error": "no visible bindshell port"}
+                self.state["failed_attempts"] += 1
             else:
                 result = self._try_bindshell()
                 info = result
-                if result["success"]:
-                    self.state["has_shell"] = True
-                    reward = 8.0
-                    self.done = True
-                else:
-                    reward = -1.0
+                self._mark_exploit_result(result)
+                reward = 8.0 if result["success"] else -1.0
 
         elif action_name == "exploit_vsftpd":
             if not self.state["service_scanned"]:
                 reward = -1.0
                 info = {"error": "vsftpd attempted before service scan"}
+                self.state["failed_attempts"] += 1
             elif not self.state["has_vsftpd_234"]:
                 reward = -1.0
                 info = {"error": "vsftpd 2.3.4 not identified"}
+                self.state["failed_attempts"] += 1
             else:
                 result = self._try_vsftpd()
                 info = result
-                if result["success"]:
-                    self.state["has_shell"] = True
-                    reward = 6.0
-                    self.done = True
-                else:
-                    reward = -1.0
+                self._mark_exploit_result(result)
+                reward = 6.0 if result["success"] else -1.0
+
+        elif action_name == "exploit_unrealircd":
+            if not self.state["service_scanned"]:
+                reward = -1.0
+                info = {"error": "unrealircd attempted before service scan"}
+                self.state["failed_attempts"] += 1
+            elif not self.state["has_unrealircd"]:
+                reward = -1.0
+                info = {"error": "unrealircd not identified"}
+                self.state["failed_attempts"] += 1
+            else:
+                result = self._try_unrealircd()
+                info = result
+                self._mark_exploit_result(result)
+                reward = 7.0 if result["success"] else -1.0
+
+        elif action_name == "exploit_distccd":
+            if not self.state["service_scanned"]:
+                reward = -1.0
+                info = {"error": "distccd attempted before service scan"}
+                self.state["failed_attempts"] += 1
+            elif not self.state["has_distccd"]:
+                reward = -1.0
+                info = {"error": "distccd not identified"}
+                self.state["failed_attempts"] += 1
+            else:
+                result = self._try_distccd()
+                info = result
+                self._mark_exploit_result(result)
+                reward = 7.0 if result["success"] else -1.0
 
         elif action_name == "exploit_samba":
             if not self.state["service_scanned"]:
                 reward = -1.0
                 info = {"error": "samba attempted before service scan"}
+                self.state["failed_attempts"] += 1
             elif not self.state["has_samba"]:
                 reward = -1.0
                 info = {"error": "samba not identified"}
+                self.state["failed_attempts"] += 1
             else:
                 result = self._try_samba()
                 info = result
-                if result["success"]:
-                    self.state["has_shell"] = True
-                    reward = 8.0
-                    self.done = True
-                else:
-                    reward = -1.0
+                self._mark_exploit_result(result)
+                reward = 8.0 if result["success"] else -1.0
 
         elif action_name == "stop":
             reward = 1.0 if self.state["has_shell"] else -0.5

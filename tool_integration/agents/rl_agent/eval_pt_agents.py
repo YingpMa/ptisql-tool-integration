@@ -8,6 +8,18 @@ import torch
 import torch.nn as nn
 
 
+ALL_ACTIONS = [
+    "scan_basic",
+    "scan_service",
+    "exploit_bindshell",
+    "exploit_vsftpd",
+    "exploit_unrealircd",
+    "exploit_distccd",
+    "exploit_samba",
+    "stop",
+]
+
+
 class Net(nn.Module):
     def __init__(self, state_dim, action_dim, hidden_dim):
         super().__init__()
@@ -45,43 +57,33 @@ def load_model(path, model_type, device):
 
 
 def state_to_vector(state, state_keys):
-    vec = []
-    for key in state_keys:
-        value = state.get(key, 0)
-        if isinstance(value, bool):
-            vec.append(1.0 if value else 0.0)
-        elif isinstance(value, (int, float)):
-            vec.append(float(value))
-        else:
-            vec.append(0.0)
-    return np.array(vec, dtype=np.float32)
+    return np.array(
+        [
+            float(state.get(k, 0.0))
+            for k in state_keys
+        ],
+        dtype=np.float32,
+    )
 
 
-def get_valid_action_ids(state, id_to_action):
+def get_valid_action_names(state):
     basic = bool(state.get("basic_scanned", False))
     service = bool(state.get("service_scanned", False))
 
-    valid = []
+    if not basic:
+        return ["scan_basic"]
 
-    for i, action_name in id_to_action.items():
-        if not basic:
-            if action_name == "scan_basic":
-                valid.append(i)
+    if not service:
+        return ["scan_basic", "scan_service"]
 
-        elif basic and not service:
-            if action_name in ["scan_service", "scan_basic"]:
-                valid.append(i)
-
-        else:
-            if action_name in [
-                "exploit_bindshell",
-                "exploit_vsftpd",
-                "exploit_samba",
-                "stop",
-            ]:
-                valid.append(i)
-
-    return valid or list(id_to_action.keys())
+    return [
+        "exploit_bindshell",
+        "exploit_vsftpd",
+        "exploit_unrealircd",
+        "exploit_distccd",
+        "exploit_samba",
+        "stop",
+    ]
 
 
 def choose_action(
@@ -97,43 +99,27 @@ def choose_action(
     with torch.no_grad():
         logits = model(x).squeeze(0).detach().cpu().numpy()
 
-    if valid_action_mask and state_dict is not None:
-        valid_ids = get_valid_action_ids(state_dict, id_to_action)
-        best_i = max(valid_ids, key=lambda i: logits[i])
-    else:
-        best_i = int(np.argmax(logits))
+    action_scores = {
+        id_to_action[i]: float(logits[i])
+        for i in range(len(logits))
+        if i in id_to_action
+    }
 
-    return id_to_action[int(best_i)]
+    if valid_action_mask and state_dict is not None:
+        valid_actions = get_valid_action_names(state_dict)
+        valid_scores = {
+            action_name: action_scores.get(action_name, -1e9)
+            for action_name in valid_actions
+        }
+        return max(valid_scores, key=valid_scores.get)
+
+    return max(action_scores, key=action_scores.get)
 
 
 def choose_random_action(state=None, valid_action_mask=False):
-    all_actions = [
-        "scan_basic",
-        "scan_service",
-        "exploit_bindshell",
-        "exploit_vsftpd",
-        "exploit_samba",
-        "stop",
-    ]
-
-    if not valid_action_mask or state is None:
-        return random.choice(all_actions)
-
-    basic = bool(state.get("basic_scanned", False))
-    service = bool(state.get("service_scanned", False))
-
-    if not basic:
-        return "scan_basic"
-
-    if basic and not service:
-        return random.choice(["scan_basic", "scan_service"])
-
-    return random.choice([
-        "exploit_bindshell",
-        "exploit_vsftpd",
-        "exploit_samba",
-        "stop",
-    ])
+    if valid_action_mask and state is not None:
+        return random.choice(get_valid_action_names(state))
+    return random.choice(ALL_ACTIONS)
 
 
 def make_env(args):
@@ -158,13 +144,13 @@ def step_env(env, action_name):
         "scan_service": 1,
         "exploit_bindshell": 2,
         "exploit_vsftpd": 3,
-        "stop": 4,
-        "exploit_samba": 5,
-        "exploit_unrealircd": 2,
-        "exploit_distccd": 2,
+        "exploit_unrealircd": 4,
+        "exploit_distccd": 5,
+        "exploit_samba": 6,
+        "stop": 7,
     }
 
-    action_index = action_map.get(action_name, 4)
+    action_index = action_map.get(action_name, 7)
     result = env.step(action_index)
 
     if len(result) == 5:
@@ -178,14 +164,9 @@ def step_env(env, action_name):
 
 def is_goal_reached(env, info, next_state):
     if isinstance(info, dict):
-        if bool(info.get("success", False)):
-            return True
-        if bool(info.get("real_success", False)):
-            return True
-        if bool(info.get("goal_reached", False)):
-            return True
-        if bool(info.get("done_success", False)):
-            return True
+        for key in ["success", "real_success", "goal_reached", "done_success"]:
+            if bool(info.get(key, False)):
+                return True
 
     if next_state.get("has_shell", False):
         return True
@@ -323,9 +304,7 @@ def main():
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 
-    device = torch.device(
-        "cuda" if torch.cuda.is_available() and not args.cpu else "cpu"
-    )
+    device = torch.device("cuda" if torch.cuda.is_available() and not args.cpu else "cpu")
 
     with open(args.replay_path, "r", encoding="utf-8") as f:
         replay = json.load(f)
@@ -348,6 +327,7 @@ def main():
     print(f"[TARGET] {args.target_ip}")
     print(f"[USE_METASPLOIT] {args.use_metasploit}")
     print(f"[VALID_ACTION_MASK] {args.valid_action_mask}")
+    print(f"[ACTION_MAP] {id_to_action if id_to_action is not None else 'random'}")
     print("=" * 60)
 
     metrics = eval_agent(
