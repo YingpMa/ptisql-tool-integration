@@ -74,7 +74,7 @@ def get_valid_action_names(state):
         return ["scan_basic"]
 
     if not service:
-        return ["scan_basic", "scan_service"]
+        return ["scan_service"]
 
     return [
         "exploit_bindshell",
@@ -84,7 +84,6 @@ def get_valid_action_names(state):
         "exploit_samba",
         "stop",
     ]
-
 
 def choose_action(
     model,
