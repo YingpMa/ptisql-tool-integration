@@ -92,10 +92,6 @@ def validate_private_target(target: str):
 
 
 def auto_detect_lhost(target: str) -> str:
-    """
-    Infer the Kali/local IP used to reach the target.
-    UDP connect does not send packets.
-    """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         s.connect((target, 80))
@@ -143,7 +139,6 @@ def run_command(cmd, timeout=120, input_text=None):
             "stdout": result.stdout or "",
             "stderr": result.stderr or "",
         }
-
     except subprocess.TimeoutExpired as e:
         return {
             "cmd": cmd,
@@ -151,7 +146,6 @@ def run_command(cmd, timeout=120, input_text=None):
             "stdout": e.stdout or "",
             "stderr": f"TimeoutExpired after {timeout}s",
         }
-
     except FileNotFoundError as e:
         return {
             "cmd": cmd,
@@ -174,16 +168,13 @@ def run_nmap(target: str, service_scan: bool):
 
 def parse_open_ports(nmap_output: str):
     ports = []
-
     for line in nmap_output.splitlines():
         line = line.strip()
-
         if "/tcp" in line and " open " in line:
             try:
                 ports.append(int(line.split("/")[0]))
             except ValueError:
                 pass
-
     return sorted(set(ports))
 
 
@@ -331,7 +322,6 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
             success = True
             break
 
-    # Avoid false positive when Metasploit explicitly says no session was created.
     if "no session was created" in combined_lower:
         success = False
 
@@ -369,10 +359,6 @@ def available_exploits(state: dict):
 
 
 def choose_stable_exploit(state: dict):
-    """
-    Stable choice for good/recovery trajectories.
-    Prefer reliable shell verification first, then other modules.
-    """
     if state["has_bindshell_1524"]:
         return "exploit_bindshell"
 
@@ -392,22 +378,15 @@ def choose_stable_exploit(state: dict):
 
 
 def choose_random_available_exploit(state: dict):
-    """
-    Random choice for noisy trajectories.
-    This keeps the dataset diverse.
-    """
     candidates = available_exploits(state)
-
     if candidates:
         return random.choice(candidates)
-
     return random.choice(EXPLOITS)
 
 
 def choose_available_exploit(state: dict, mode: str = "stable"):
     if mode == "random":
         return choose_random_available_exploit(state)
-
     return choose_stable_exploit(state)
 
 
@@ -421,8 +400,15 @@ def gen_good():
 
 
 def gen_recover():
+    first_failed_attempts = [
+        "exploit_vsftpd",
+        "exploit_unrealircd",
+        "exploit_distccd",
+        "exploit_samba",
+    ]
+
     return [
-        random.choice(EXPLOITS),
+        random.choice(first_failed_attempts),
         "scan_basic",
         "scan_service",
         "auto_exploit",
@@ -459,9 +445,6 @@ def gen_fail():
 
 
 def build_plan(n_runs: int):
-    """
-    Build a shuffled plan so even small test runs include mixed policy types.
-    """
     policies = (
         ["good"] * 90
         + ["recover"] * 90
@@ -478,6 +461,24 @@ def build_plan(n_runs: int):
     return plan[:n_runs]
 
 
+def skip_redundant_exploit(state: dict, action: str):
+    if state["has_shell"] and action.startswith("exploit_"):
+        return {
+            "should_skip": True,
+            "reward": -0.01,
+            "info": {
+                "success": True,
+                "skipped": True,
+                "reason": "shell_already_obtained",
+                "message": "Exploit action skipped because shell access was already obtained.",
+            },
+        }
+
+    return {
+        "should_skip": False,
+    }
+
+
 def apply_action(action, state, target, lhost, raw_dir, run_id, step):
     done = False
     resolved_action = action
@@ -485,9 +486,20 @@ def apply_action(action, state, target, lhost, raw_dir, run_id, step):
 
     if action == "auto_exploit":
         resolved_action = choose_available_exploit(state, mode="stable")
-
     elif action == "random_exploit":
         resolved_action = choose_available_exploit(state, mode="random")
+
+    skip_result = skip_redundant_exploit(state, resolved_action)
+    if skip_result["should_skip"]:
+        return {
+            "action_requested": action,
+            "action_executed": resolved_action,
+            "state_before": before_state,
+            "state_after": deepcopy(state),
+            "reward": float(skip_result["reward"]),
+            "done": False,
+            "info": skip_result["info"],
+        }
 
     if resolved_action == "scan_basic":
         result = run_nmap(target, service_scan=False)
