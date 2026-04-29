@@ -3,9 +3,9 @@ import glob
 import json
 from collections import Counter
 
-LOG_DIR = "real_logs/rl_env_runs"
+LOG_DIR = "dataset/real_logs/rl_env_runs"
 
-files = sorted(glob.glob(os.path.join(LOG_DIR, "*.json")))
+files = sorted(glob.glob(os.path.join(LOG_DIR, "*.json")))[:650]
 
 total = 0
 success = 0

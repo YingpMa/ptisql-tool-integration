@@ -1,0 +1,270 @@
+{
+  "run_id": "rl_env_script_2026-04-26T10-13-08Z",
+  "target": "10.11.202.189",
+  "use_metasploit": false,
+  "state_keys": [
+    "num_open_ports",
+    "has_ftp",
+    "has_ssh",
+    "has_telnet",
+    "has_http",
+    "has_mysql",
+    "has_postgresql",
+    "has_bindshell_1524",
+    "has_samba",
+    "has_tomcat",
+    "has_vsftpd_234",
+    "has_unrealircd",
+    "has_distccd",
+    "has_shell",
+    "basic_scanned",
+    "service_scanned",
+    "failed_attempts",
+    "successful_exploits"
+  ],
+  "actions": {
+    "0": "scan_basic",
+    "1": "scan_service",
+    "2": "exploit_bindshell",
+    "3": "exploit_vsftpd",
+    "4": "exploit_unrealircd",
+    "5": "exploit_distccd",
+    "6": "exploit_samba",
+    "7": "stop"
+  },
+  "history": [
+    {
+      "step": 1,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 1,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 2,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 2,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 3,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 3,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 4,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 4,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 5,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 5,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 6,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 6,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 7,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 7,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": false,
+      "info": {
+        "error": "bindshell attempted before scanning"
+      }
+    },
+    {
+      "step": 8,
+      "action": "exploit_bindshell",
+      "state": {
+        "num_open_ports": 0,
+        "has_ftp": false,
+        "has_ssh": false,
+        "has_telnet": false,
+        "has_http": false,
+        "has_mysql": false,
+        "has_postgresql": false,
+        "has_bindshell_1524": false,
+        "has_samba": false,
+        "has_tomcat": false,
+        "has_vsftpd_234": false,
+        "has_unrealircd": false,
+        "has_distccd": false,
+        "has_shell": false,
+        "basic_scanned": false,
+        "service_scanned": false,
+        "failed_attempts": 8,
+        "successful_exploits": 0
+      },
+      "reward": -1.0,
+      "done": true,
+      "info": {
+        "error": "bindshell attempted before scanning",
+        "terminated_by_max_steps": true
+      }
+    }
+  ]
+}
