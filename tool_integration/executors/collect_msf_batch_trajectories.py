@@ -13,8 +13,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
+DATASET_VERSION = "msf_tool_v2_high_quality_balanced"
+COLLECTOR_NAME = "collect_msf_batch_trajectories.py"
+
 EXPLOITS = [
     "exploit_bindshell",
+    "exploit_vsftpd",
+    "exploit_unrealircd",
+    "exploit_distccd",
+    "exploit_samba",
+]
+
+NON_BINDSHELL_EXPLOITS = [
     "exploit_vsftpd",
     "exploit_unrealircd",
     "exploit_distccd",
@@ -262,8 +272,8 @@ def try_bindshell(target: str):
     success = (
         "uid=0" in output
         or "uid=0(root)" in output
-        or "root" in output
-        or ("linux" in output and result["returncode"] == 0)
+        or "root@metasploitable" in output
+        or ("linux metasploitable" in output and result["returncode"] == 0)
     )
 
     return {
@@ -325,6 +335,9 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
     if "no session was created" in combined_lower:
         success = False
 
+    if "please specify valid session" in combined_lower:
+        success = False
+
     return {
         "success": success,
         "tool": "metasploit",
@@ -359,6 +372,10 @@ def available_exploits(state: dict):
 
 
 def choose_stable_exploit(state: dict):
+    """
+    Stable exploit for good/recover paths.
+    This is intentionally reliable so that the dataset contains successful trajectories.
+    """
     if state["has_bindshell_1524"]:
         return "exploit_bindshell"
 
@@ -378,52 +395,66 @@ def choose_stable_exploit(state: dict):
 
 
 def choose_random_available_exploit(state: dict):
+    """
+    Balanced random exploit selection.
+    Random/noisy/fail paths prefer non-bindshell actions to avoid overfitting the dataset
+    to the easy 1524 bind shell path.
+    """
     candidates = available_exploits(state)
-    if candidates:
-        return random.choice(candidates)
-    return random.choice(EXPLOITS)
+
+    if not candidates:
+        return random.choice(EXPLOITS)
+
+    non_bindshell = [a for a in candidates if a != "exploit_bindshell"]
+
+    if non_bindshell and random.random() < 0.85:
+        return random.choice(non_bindshell)
+
+    return random.choice(candidates)
 
 
 def choose_available_exploit(state: dict, mode: str = "stable"):
     if mode == "random":
         return choose_random_available_exploit(state)
+
     return choose_stable_exploit(state)
 
 
 def gen_good():
-    return [
-        "scan_basic",
-        "scan_service",
-        "auto_exploit",
-        "stop",
+    good_paths = [
+        ["scan_basic", "scan_service", "auto_exploit", "stop"],
+        ["scan_service", "auto_exploit", "stop"],
+        ["scan_basic", "scan_service", "scan_basic", "auto_exploit", "stop"],
+        ["scan_basic", "scan_service", "auto_exploit", "scan_basic", "stop"],
     ]
+
+    return random.choice(good_paths)
 
 
 def gen_recover():
-    first_failed_attempts = [
-        "exploit_vsftpd",
-        "exploit_unrealircd",
-        "exploit_distccd",
-        "exploit_samba",
+    first_failed_attempts = NON_BINDSHELL_EXPLOITS[:]
+
+    recover_paths = [
+        [random.choice(first_failed_attempts), "scan_basic", "scan_service", "auto_exploit", "stop"],
+        ["scan_basic", random.choice(first_failed_attempts), "scan_service", "auto_exploit", "stop"],
+        ["scan_basic", "scan_service", random.choice(first_failed_attempts), "auto_exploit", "stop"],
+        ["scan_service", random.choice(first_failed_attempts), "auto_exploit", "stop"],
     ]
 
-    return [
-        random.choice(first_failed_attempts),
-        "scan_basic",
-        "scan_service",
-        "auto_exploit",
-        "stop",
-    ]
+    return random.choice(recover_paths)
 
 
 def gen_noisy():
-    return [
-        random.choice(["scan_basic", "scan_service"]),
-        random.choice(["scan_basic", "scan_service"]),
-        "random_exploit",
-        "auto_exploit",
-        "stop",
+    noisy_paths = [
+        ["scan_basic", "random_exploit", "scan_service", "auto_exploit", "stop"],
+        ["scan_service", "random_exploit", "auto_exploit", "stop"],
+        ["scan_basic", "scan_basic", "random_exploit", "auto_exploit", "stop"],
+        ["scan_service", "scan_basic", "random_exploit", "auto_exploit", "stop"],
+        ["scan_basic", "scan_service", "random_exploit", "stop"],
+        ["scan_basic", "random_exploit", "scan_basic", "scan_service", "auto_exploit", "stop"],
     ]
+
+    return random.choice(noisy_paths)
 
 
 def gen_fail():
@@ -435,26 +466,33 @@ def gen_fail():
         ["exploit_unrealircd", "stop"],
         ["exploit_distccd", "stop"],
         ["exploit_samba", "stop"],
+        ["scan_basic", "exploit_vsftpd", "stop"],
         ["scan_basic", "exploit_unrealircd", "stop"],
         ["scan_basic", "exploit_distccd", "stop"],
         ["scan_basic", "exploit_samba", "stop"],
+        ["scan_service", "exploit_vsftpd", "stop"],
+        ["scan_service", "exploit_unrealircd", "stop"],
+        ["scan_service", "exploit_distccd", "stop"],
+        ["scan_service", "exploit_samba", "stop"],
+        ["scan_basic", "scan_service", "stop"],
         ["scan_service", "scan_basic", "stop"],
+        ["scan_basic", "scan_service", "random_exploit", "stop"],
         ["scan_service", "random_exploit", "stop"],
     ]
+
     return random.choice(fail_paths)
 
 
 def build_plan(n_runs: int):
-    policies = (
-        ["good"] * 90
-        + ["recover"] * 90
-        + ["noisy"] * 90
-        + ["fail"] * 80
-    )
-
+    """
+    Balanced policy plan:
+    good/recover/noisy/fail appear in nearly equal amounts.
+    """
+    base = ["good", "recover", "noisy", "fail"]
     plan = []
+
     while len(plan) < n_runs:
-        block = policies[:]
+        block = base[:]
         random.shuffle(block)
         plan.extend(block)
 
@@ -626,6 +664,50 @@ def apply_action(action, state, target, lhost, raw_dir, run_id, step):
     }
 
 
+def build_summary(history: list[dict]):
+    requested_actions = [step.get("action_requested") for step in history if step.get("action_requested")]
+    executed_actions = [step.get("action_executed") for step in history if step.get("action_executed")]
+
+    exploit_steps = [
+        step for step in history
+        if str(step.get("action_executed", "")).startswith("exploit_")
+    ]
+
+    metasploit_steps = [
+        step for step in exploit_steps
+        if step.get("info", {}).get("tool") == "metasploit"
+    ]
+
+    skipped_steps = [
+        step for step in history
+        if step.get("info", {}).get("skipped") is True
+    ]
+
+    successful_exploit_steps = [
+        step for step in exploit_steps
+        if step.get("info", {}).get("success") is True
+        and step.get("info", {}).get("skipped") is not True
+    ]
+
+    final_state = history[-1].get("state_after", {}) if history else {}
+
+    return {
+        "num_steps": len(history),
+        "requested_actions": requested_actions,
+        "executed_actions": executed_actions,
+        "num_scans": sum(1 for a in executed_actions if a in ["scan_basic", "scan_service"]),
+        "num_exploit_attempts": len(exploit_steps),
+        "num_successful_exploits": len(successful_exploit_steps),
+        "num_metasploit_attempts": len(metasploit_steps),
+        "num_skipped_actions": len(skipped_steps),
+        "used_bindshell": "exploit_bindshell" in executed_actions,
+        "used_metasploit": len(metasploit_steps) > 0,
+        "final_has_shell": bool(final_state.get("has_shell", False)),
+        "final_failed_attempts": int(final_state.get("failed_attempts", 0)),
+        "final_successful_exploits": int(final_state.get("successful_exploits", 0)),
+    }
+
+
 def rollout(actions, policy, target, lhost, raw_dir, run_id):
     state = empty_state()
     history = []
@@ -701,11 +783,12 @@ def main():
 
     lhost = args.lhost or auto_detect_lhost(args.target)
 
-    print(f"[*] Target: {args.target}")
-    print(f"[*] LHOST:  {lhost}")
-    print(f"[*] Runs:   {args.runs}")
-    print(f"[*] Out:    {out_dir}")
-    print(f"[*] Raw:    {raw_dir}")
+    print(f"[*] Dataset: {DATASET_VERSION}")
+    print(f"[*] Target:  {args.target}")
+    print(f"[*] LHOST:   {lhost}")
+    print(f"[*] Runs:    {args.runs}")
+    print(f"[*] Out:     {out_dir}")
+    print(f"[*] Raw:     {raw_dir}")
 
     plan = build_plan(args.runs)
 
@@ -733,12 +816,13 @@ def main():
             run_id=run_id,
         )
 
-        final_success = any(
-            step["state_after"].get("has_shell") is True
-            for step in history
-        )
+        summary = build_summary(history)
+        final_success = bool(summary["final_has_shell"])
 
         out = {
+            "dataset_version": DATASET_VERSION,
+            "collector": COLLECTOR_NAME,
+            "authorized_lab": True,
             "run_id": run_id,
             "target": args.target,
             "lhost": lhost,
@@ -746,6 +830,7 @@ def main():
             "policy_name": policy,
             "action_plan": actions,
             "final_success": final_success,
+            "summary": summary,
             "history": history,
         }
 
@@ -754,6 +839,13 @@ def main():
             json.dump(out, f, indent=2, ensure_ascii=False)
 
         print(f"[OK] saved {path}")
+        print(
+            f"     success={final_success}, "
+            f"steps={summary['num_steps']}, "
+            f"exploits={summary['num_exploit_attempts']}, "
+            f"msf={summary['num_metasploit_attempts']}, "
+            f"skipped={summary['num_skipped_actions']}"
+        )
 
 
 if __name__ == "__main__":
