@@ -1,0 +1,29 @@
+================================================================================
+FAILED RUNS BY POLICY
+================================================================================
+  51 | fail
+   2 | noisy
+
+================================================================================
+FAILED RUN CAUSES
+================================================================================
+  42 | no_exploit_attempted
+  11 | only_failed_exploit_attempts
+
+================================================================================
+FAILED EXPLOIT ACTIONS
+================================================================================
+  11 | exploit_unrealircd
+
+================================================================================
+TOP FAILED PATHS
+================================================================================
+  10 | scan_service -> scan_basic -> stop
+   9 | scan_service -> stop
+   9 | scan_basic -> scan_service -> stop
+   9 | stop
+   5 | scan_basic -> stop
+   4 | scan_basic -> exploit_unrealircd -> stop
+   3 | scan_basic -> scan_service -> exploit_unrealircd -> stop
+   2 | exploit_unrealircd -> stop
+   2 | scan_service -> exploit_unrealircd -> stop
