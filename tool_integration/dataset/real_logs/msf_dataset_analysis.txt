@@ -1,0 +1,89 @@
+================================================================================
+BASIC
+================================================================================
+total runs: 650
+success: 597
+fail: 53
+success ratio: 0.918
+
+================================================================================
+LENGTH
+================================================================================
+all: 4.09
+success: 4.24
+fail: 2.42
+
+================================================================================
+POLICY
+================================================================================
+ 163 | fail
+ 163 | noisy
+ 162 | good
+ 162 | recover
+
+================================================================================
+ACTION (requested)
+================================================================================
+ 650 | stop
+ 568 | scan_basic
+ 536 | scan_service
+ 460 | auto_exploit
+ 185 | random_exploit
+  77 | exploit_unrealircd
+  66 | exploit_samba
+  61 | exploit_vsftpd
+  57 | exploit_distccd
+
+================================================================================
+ACTION (executed)
+================================================================================
+ 650 | stop
+ 568 | scan_basic
+ 536 | scan_service
+ 466 | exploit_bindshell
+ 118 | exploit_unrealircd
+ 117 | exploit_samba
+ 111 | exploit_vsftpd
+  94 | exploit_distccd
+
+================================================================================
+TRANSITIONS
+================================================================================
+ 421 | exploit_bindshell -> stop
+ 265 | scan_basic -> scan_service
+ 265 | scan_service -> exploit_bindshell
+  67 | scan_service -> scan_basic
+  55 | scan_basic -> stop
+  51 | scan_service -> exploit_samba
+  50 | scan_basic -> exploit_unrealircd
+  50 | exploit_samba -> exploit_bindshell
+  50 | scan_service -> exploit_unrealircd
+  46 | exploit_unrealircd -> exploit_bindshell
+  46 | scan_basic -> exploit_vsftpd
+  45 | scan_service -> exploit_vsftpd
+  43 | scan_basic -> exploit_samba
+  42 | exploit_bindshell -> scan_basic
+  41 | exploit_vsftpd -> stop
+  41 | scan_basic -> exploit_distccd
+  40 | scan_service -> exploit_distccd
+  38 | scan_basic -> exploit_bindshell
+  38 | exploit_samba -> stop
+  37 | exploit_distccd -> stop
+
+================================================================================
+PATH DIVERSITY
+================================================================================
+Unique paths: 57
+Unique success paths: 52
+Unique fail paths: 9
+Top success path ratio: 0.0854
+Top fail path ratio: 0.1887
+
+================================================================================
+EXPLOIT SUCCESS RATE ⭐
+================================================================================
+exploit_bindshell    | 466/466 = 1.0
+exploit_unrealircd   | 83/118 = 0.703
+exploit_samba        | 117/117 = 1.0
+exploit_vsftpd       | 111/111 = 1.0
+exploit_distccd      | 94/94 = 1.0
