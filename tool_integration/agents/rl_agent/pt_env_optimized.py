@@ -246,15 +246,51 @@ class RealPTEnv:
         duration = time.time() - start
         return result, duration
 
+    KEY_PORTS = [
+        21,
+        22,
+        23,
+        25,
+        53,
+        80,
+        111,
+        139,
+        445,
+        512,
+        513,
+        514,
+        1099,
+        1524,
+        2049,
+        2121,
+        3306,
+        3632,
+        5432,
+        5900,
+        6000,
+        6667,
+        8009,
+        8180,
+    ]
+
+    EXPLOIT_RELEVANT_PORTS = {21, 139, 445, 1524, 3632, 6667, 8180}
+
+    def _ports_to_csv(self, ports):
+        return ",".join(str(p) for p in sorted(set(int(p) for p in ports)))
+
     def _run_nmap_basic(self):
         """
-        Stage 1 scan.
+        Stage 1: exploit-aware lightweight port scan.
 
-        Baseline usually uses nmap -F.
-        This optimized version still keeps a lightweight scan, but explicitly
-        adds -Pn and -T4 to reduce host discovery delay in lab environments.
+        Do not use nmap -F here. Fast scan may miss exploit-critical ports
+        such as 1524, which then makes exploit_bindshell look invalid.
+
+        This scans a bounded, lab/exploit-relevant port set. It is still much
+        smaller than a full-port scan, but preserves the ports needed by the
+        action space.
         """
-        cache_key = ("scan_basic", self.target_ip)
+        port_list = self._ports_to_csv(self.KEY_PORTS)
+        cache_key = ("scan_basic", self.target_ip, port_list)
 
         if cache_key in self.scan_cache:
             cached = deepcopy(self.scan_cache[cache_key])
@@ -263,10 +299,8 @@ class RealPTEnv:
             cached["duration"] = 0.0
             return cached
 
-        result, duration = self._run_timed_command(
-            ["nmap", "-Pn", "-T4", "-F", self.target_ip],
-            timeout=60,
-        )
+        cmd = ["nmap", "-Pn", "-T4", "-p", port_list, self.target_ip]
+        result, duration = self._run_timed_command(cmd, timeout=60)
 
         info = {
             "stdout": result.stdout,
@@ -275,6 +309,8 @@ class RealPTEnv:
             "duration": duration,
             "executed": True,
             "from_cache": False,
+            "port_list": port_list,
+            "cmd": cmd,
         }
 
         self.scan_cache[cache_key] = deepcopy(info)
@@ -282,22 +318,19 @@ class RealPTEnv:
 
     def _run_nmap_service(self):
         """
-        Stage 2 scan.
+        Stage 2: exploit-aware service scan.
 
-        Instead of always running an unrestricted service scan, scan only the
-        ports discovered by the basic scan when available.
-
-        If no prior open ports are known, fall back to the baseline-style
-        service scan.
+        Scan discovered ports plus exploit-relevant ports. This keeps the scan
+        bounded while avoiding false negatives from an overly narrow staged scan.
         """
-        if self.last_open_ports:
-            port_list = ",".join(str(p) for p in sorted(set(self.last_open_ports)))
-            cache_key = ("scan_service", self.target_ip, port_list)
-            cmd = ["nmap", "-Pn", "-T4", "-sV", "-sC", "-p", port_list, self.target_ip]
-        else:
-            port_list = "default"
-            cache_key = ("scan_service", self.target_ip, port_list)
-            cmd = ["nmap", "-Pn", "-T4", "-sV", "-sC", self.target_ip]
+        ports = set(self.last_open_ports)
+        ports.update(self.EXPLOIT_RELEVANT_PORTS)
+
+        if not ports:
+            ports = set(self.KEY_PORTS)
+
+        port_list = self._ports_to_csv(ports)
+        cache_key = ("scan_service", self.target_ip, port_list)
 
         if cache_key in self.scan_cache:
             cached = deepcopy(self.scan_cache[cache_key])
@@ -306,6 +339,7 @@ class RealPTEnv:
             cached["duration"] = 0.0
             return cached
 
+        cmd = ["nmap", "-Pn", "-T4", "-sV", "-sC", "-p", port_list, self.target_ip]
         result, duration = self._run_timed_command(cmd, timeout=120)
 
         info = {
@@ -370,6 +404,8 @@ class RealPTEnv:
         self.state["has_postgresql"] = 5432 in ports
         self.state["has_bindshell_1524"] = 1524 in ports
         self.state["has_unrealircd"] = 6667 in ports
+        self.state["has_distccd"] = 3632 in ports
+        self.state["has_samba"] = 139 in ports or 445 in ports
 
         return ports
 
@@ -387,26 +423,28 @@ class RealPTEnv:
         services = {v["service"].lower() for v in service_map.values()}
         versions = " ".join(v["version"].lower() for v in service_map.values())
 
-        self.state["has_ftp"] = "ftp" in services
+        self.state["has_ftp"] = "ftp" in services or 21 in ports or 2121 in ports
         self.state["has_ssh"] = "ssh" in services
         self.state["has_telnet"] = "telnet" in services
-        self.state["has_http"] = "http" in services
-        self.state["has_mysql"] = "mysql" in services
-        self.state["has_postgresql"] = "postgresql" in services
+        self.state["has_http"] = "http" in services or 80 in ports or 8180 in ports
+        self.state["has_mysql"] = "mysql" in services or 3306 in ports
+        self.state["has_postgresql"] = "postgresql" in services or 5432 in ports
 
         self.state["has_bindshell_1524"] = 1524 in ports
 
-        self.state["has_samba"] = any(
+        self.state["has_samba"] = (139 in ports or 445 in ports) or any(
             "samba" in v["version"].lower()
             or "smbd" in v["version"].lower()
             or v["service"].lower() in {"netbios-ssn", "microsoft-ds"}
             for v in service_map.values()
         )
 
-        self.state["has_tomcat"] = "tomcat" in versions
+        self.state["has_tomcat"] = "tomcat" in versions or 8180 in ports
         self.state["has_vsftpd_234"] = "vsftpd 2.3.4" in versions
         self.state["has_unrealircd"] = "unrealircd" in versions or 6667 in ports
-        self.state["has_distccd"] = "distccd" in versions or "distccd" in services
+        self.state["has_distccd"] = (
+            "distccd" in versions or "distccd" in services or 3632 in ports
+        )
 
         return ports, service_map
 
@@ -662,7 +700,7 @@ class RealPTEnv:
                     "optimizations": [
                         "metrics_logging",
                         "repeated_scan_caching",
-                        "staged_service_scanning",
+                        "exploit_aware_staged_scanning",
                         "tool_level_precondition_filtering",
                     ],
                     "state_keys": self.STATE_KEYS,
@@ -780,6 +818,8 @@ class RealPTEnv:
                         {
                             "open_ports": ports,
                             "scan_type": "basic",
+                            "port_list": scan_info.get("port_list"),
+                            "cmd": scan_info.get("cmd"),
                             "stderr": scan_info.get("stderr", ""),
                             "returncode": scan_info.get("returncode", 0),
                         },
