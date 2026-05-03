@@ -1,0 +1,622 @@
+{
+  "avg_reward": 7.6166666666666645,
+  "goal_rate": 1.0,
+  "success_rate": 1.0,
+  "avg_execution_time": 12.839977693557739,
+  "std_execution_time": 0.020677090219122313,
+  "avg_tool_calls": 3.2333333333333334,
+  "std_tool_calls": 0.6260623155792925,
+  "avg_invalid_action_rate": 0.0,
+  "std_invalid_action_rate": 0.0,
+  "avg_failed_action_rate": 0.05,
+  "std_failed_action_rate": 0.12105854952787559,
+  "avg_tool_time": 4.062644988298417,
+  "std_tool_time": 0.5158044280340809,
+  "actions": {
+    "scan_basic": 30,
+    "scan_service": 30,
+    "exploit_bindshell": 37
+  },
+  "episodes": [
+    {
+      "success": 1,
+      "execution_time": 12.8222074508667,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.272052367528279,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.836304903030396,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.277246157328288,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.814218521118164,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.2691114743550616,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.797212839126587,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.263297478357951,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.819231033325195,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.270209312438965,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.820824146270752,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.270900011062622,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.801542282104492,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.263532718022664,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.847316980361938,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.279167890548706,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.841232776641846,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.278958400090535,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.874074935913086,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.2870988845825195,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.883366584777832,
+      "total_steps": 6,
+      "tool_calls": 6,
+      "invalid_actions": 0,
+      "failed_actions": 3,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.5,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 2.144629796346029,
+      "total_reward": 4.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 4
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.835440397262573,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.276718854904175,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.851062059402466,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.280796527862549,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.854392051696777,
+      "total_steps": 4,
+      "tool_calls": 4,
+      "invalid_actions": 0,
+      "failed_actions": 1,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.25,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 3.211312472820282,
+      "total_reward": 6.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 2
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.845764875411987,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.279856046040853,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.853427648544312,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.27936585744222,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.855913877487183,
+      "total_steps": 4,
+      "tool_calls": 4,
+      "invalid_actions": 0,
+      "failed_actions": 1,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.25,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 3.2115731239318848,
+      "total_reward": 6.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 2
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.8302481174469,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.27148715655009,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.82744288444519,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.269709746042888,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.872788190841675,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.287219206492106,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.841323137283325,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.275898536046346,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.874914407730103,
+      "total_steps": 4,
+      "tool_calls": 4,
+      "invalid_actions": 0,
+      "failed_actions": 1,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.25,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 3.215237557888031,
+      "total_reward": 6.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 2
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.834642171859741,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.275174140930176,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.850405216217041,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.279768705368042,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.845903635025024,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.2796675364176435,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.832025051116943,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.275406916936238,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.829758644104004,
+      "total_steps": 4,
+      "tool_calls": 4,
+      "invalid_actions": 0,
+      "failed_actions": 1,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.25,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 3.2055936455726624,
+      "total_reward": 6.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 2
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.823803901672363,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.271893421808879,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.851916551589966,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.281326452891032,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    },
+    {
+      "success": 1,
+      "execution_time": 12.830625534057617,
+      "total_steps": 3,
+      "tool_calls": 3,
+      "invalid_actions": 0,
+      "failed_actions": 0,
+      "cached_actions": 0,
+      "skipped_actions": 0,
+      "invalid_action_rate": 0.0,
+      "failed_action_rate": 0.0,
+      "cache_hit_rate": 0.0,
+      "avg_tool_time": 4.2751392523447675,
+      "total_reward": 7.85,
+      "actions": {
+        "scan_basic": 1,
+        "scan_service": 1,
+        "exploit_bindshell": 1
+      }
+    }
+  ]
+}
