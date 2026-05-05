@@ -1,4 +1,18 @@
-from tool_integration.agents.rl_agent import train_iq_online_real_optimized_v2 as base
+"""
+Optimized v2.5 training/evaluation entry point.
+
+Place this file at:
+  tool_integration/agents/rl_agent/train_iq_online_real_optimized_v25.py
+
+It reuses the optimized v1 training script and switches:
+1. environment -> pt_env_optimized_v25.RealPTEnv
+2. action mask -> fast-path bindshell after basic scan
+
+This keeps the agent/training code identical to v1/v2 except for the execution
+environment and valid-action mask.
+"""
+
+import tool_integration.agents.rl_agent.train_iq_online_real_optimized as base_train
 
 
 def make_env(args):
@@ -15,29 +29,32 @@ def get_valid_action_names(state):
     v2.5 action mask.
 
     Difference from v2:
-    - v2 usually forces scan_basic -> scan_service -> exploit.
-    - v2.5 allows a fast path:
-        scan_basic -> exploit_bindshell
-      if basic scan already found port 1524.
+    - v2 usually forces:
+        scan_basic -> scan_service -> exploit
 
-    This keeps the tool workflow realistic because bindshell only needs
-    sufficient port evidence, not full service fingerprinting.
+    - v2.5 allows:
+        scan_basic -> exploit_bindshell
+
+      if basic scan has already found port 1524.
+
+    This is still realistic because bindshell only requires sufficient port
+    evidence, not full service fingerprinting.
     """
     if not state.get("basic_scanned", False):
         return ["scan_basic"]
 
     actions = []
 
-    # Fast path: if basic scan found 1524, exploit_bindshell is valid without
-    # requiring service_scan.
+    # Fast path: if 1524 is visible after basic scan, allow bindshell directly.
     if state.get("has_bindshell_1524", False) and not state.get("has_shell", False):
         actions.append("exploit_bindshell")
 
-    # scan_service remains available to support other Metasploit modules.
+    # If service scan has not been done, keep it available for other exploits.
     if not state.get("service_scanned", False):
         actions.append("scan_service")
         return actions
 
+    # After service scan, allow the full exploit set.
     if not state.get("has_shell", False):
         actions.extend(
             [
@@ -48,25 +65,25 @@ def get_valid_action_names(state):
             ]
         )
 
-        # Keep bindshell available after service scan too.
         if "exploit_bindshell" not in actions:
             actions.append("exploit_bindshell")
 
     actions.append("stop")
 
-    # Preserve order and remove duplicates.
+    # De-duplicate while preserving order.
     deduped = []
-    for a in actions:
-        if a not in deduped:
-            deduped.append(a)
+    for action in actions:
+        if action not in deduped:
+            deduped.append(action)
 
     return deduped
 
 
-# Monkey-patch the v2 training module so all existing training/eval logic is reused.
-base.make_env = make_env
-base.get_valid_action_names = get_valid_action_names
+# Monkey-patch the environment factory and action mask used by the original
+# optimized script.
+base_train.make_env = make_env
+base_train.get_valid_action_names = get_valid_action_names
 
 
 if __name__ == "__main__":
-    base.main()
+    base_train.main()
