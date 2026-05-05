@@ -1,0 +1,485 @@
+{
+  "summaries": [
+    {
+      "label": "baseline",
+      "episodes": 380,
+      "success_rate": 0.7842105263157895,
+      "avg_execution_time": 24.196822462583842,
+      "std_execution_time": 2.3666280395520265,
+      "avg_tool_calls": 3.1447368421052633,
+      "std_tool_calls": 0.8170987249675301,
+      "avg_invalid_action_rate": 0.04910714285714284,
+      "std_invalid_action_rate": 0.10438993895241715,
+      "avg_failed_action_rate": 0.13426691729323315,
+      "std_failed_action_rate": 0.17200473966722707,
+      "avg_cache_hit_rate": 0.0,
+      "std_cache_hit_rate": 0.0,
+      "avg_total_steps": 3.5973684210526318,
+      "std_total_steps": 0.9628965871382899,
+      "avg_reward": 5.065789473684174,
+      "std_reward": 3.61352095273825
+    },
+    {
+      "label": "optimized_v1",
+      "episodes": 630,
+      "success_rate": 0.8507936507936508,
+      "avg_execution_time": 22.79836990795438,
+      "std_execution_time": 2.0232397921840013,
+      "avg_tool_calls": 3.3142857142857145,
+      "std_tool_calls": 0.8530981866185218,
+      "avg_invalid_action_rate": 0.0,
+      "std_invalid_action_rate": 0.0,
+      "avg_failed_action_rate": 0.14198601662887383,
+      "std_failed_action_rate": 0.18680804702296833,
+      "avg_cache_hit_rate": 0.0,
+      "std_cache_hit_rate": 0.0,
+      "avg_total_steps": 3.461904761904762,
+      "std_total_steps": 0.7980358582036763,
+      "avg_reward": 5.896825396825337,
+      "std_reward": 3.178792166153992
+    },
+    {
+      "label": "optimized_v2",
+      "episodes": 630,
+      "success_rate": 0.8539682539682539,
+      "avg_execution_time": 13.750377932048979,
+      "std_execution_time": 1.6012340231967759,
+      "avg_tool_calls": 3.365079365079365,
+      "std_tool_calls": 0.9127534350079616,
+      "avg_invalid_action_rate": 0.0,
+      "std_invalid_action_rate": 0.0,
+      "avg_failed_action_rate": 0.14823885109599394,
+      "std_failed_action_rate": 0.1907885835378177,
+      "avg_cache_hit_rate": 0.0,
+      "std_cache_hit_rate": 0.0,
+      "avg_total_steps": 3.507936507936508,
+      "std_total_steps": 0.8602328200588414,
+      "avg_reward": 5.838888888888828,
+      "std_reward": 3.19564046794274
+    },
+    {
+      "label": "optimized_v25",
+      "episodes": 377,
+      "success_rate": 0.8647214854111406,
+      "avg_execution_time": 9.62752968499768,
+      "std_execution_time": 5.597681234524494,
+      "avg_tool_calls": 3.389920424403183,
+      "std_tool_calls": 1.193601845671876,
+      "avg_invalid_action_rate": 0.0,
+      "std_invalid_action_rate": 0.0,
+      "avg_failed_action_rate": 0.2003726158898573,
+      "std_failed_action_rate": 0.19478704378891937,
+      "avg_cache_hit_rate": 0.0,
+      "std_cache_hit_rate": 0.0,
+      "avg_total_steps": 3.519893899204244,
+      "std_total_steps": 1.1985150339420119,
+      "avg_reward": 5.725596816976104,
+      "std_reward": 3.2076933328892556
+    },
+    {
+      "label": "optimized_v3",
+      "episodes": 598,
+      "success_rate": 0.862876254180602,
+      "avg_execution_time": 1.8710561918973125,
+      "std_execution_time": 1.4601122467424545,
+      "avg_tool_calls": 3.3779264214046822,
+      "std_tool_calls": 0.919351447137786,
+      "avg_invalid_action_rate": 0.0,
+      "std_invalid_action_rate": 0.0,
+      "avg_failed_action_rate": 0.14641662685140952,
+      "std_failed_action_rate": 0.18933036263014738,
+      "avg_cache_hit_rate": 0.0,
+      "std_cache_hit_rate": 0.0,
+      "avg_total_steps": 3.511705685618729,
+      "std_total_steps": 0.8657043299740356,
+      "avg_reward": 5.896822742474857,
+      "std_reward": 3.118993782685906
+    }
+  ],
+  "comparisons": [
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "success_rate",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": 0.0665831244778613,
+      "percent_change": 8.4904655374454
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_execution_time",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": -1.3984525546294613,
+      "percent_change": -5.779488429904066
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_tool_calls",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": 0.16954887218045123,
+      "percent_change": 5.391512253436943
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_invalid_action_rate",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": -0.04910714285714284,
+      "percent_change": -100.0
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_failed_action_rate",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": 0.007719099335640689,
+      "percent_change": 5.749070203781107
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_cache_hit_rate",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_total_steps",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": -0.13546365914786973,
+      "percent_change": -3.7656320758003283
+    },
+    {
+      "comparison": "optimized_v1 - baseline",
+      "metric": "avg_reward",
+      "from": "baseline",
+      "to": "optimized_v1",
+      "absolute_change": 0.8310359231411626,
+      "percent_change": 16.404864976293197
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "success_rate",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": 0.06975772765246446,
+      "percent_change": 8.89528070736124
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_execution_time",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": -10.446444530534864,
+      "percent_change": -43.17279488531383
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_tool_calls",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": 0.22034252297410184,
+      "percent_change": 7.006707843527924
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_invalid_action_rate",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": -0.04910714285714284,
+      "percent_change": -100.0
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_failed_action_rate",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": 0.013971933802760794,
+      "percent_change": 10.406088174532744
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_cache_hit_rate",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_total_steps",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": -0.08943191311612386,
+      "percent_change": -2.486037087353845
+    },
+    {
+      "comparison": "optimized_v2 - baseline",
+      "metric": "avg_reward",
+      "from": "baseline",
+      "to": "optimized_v2",
+      "absolute_change": 0.773099415204654,
+      "percent_change": 15.26118326118289
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "success_rate",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": 0.08051095909535111,
+      "percent_change": 10.266498139675646
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_execution_time",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": -14.569292777586162,
+      "percent_change": -60.211595138638664
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_tool_calls",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": 0.2451835822979196,
+      "percent_change": 7.796632742527986
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_invalid_action_rate",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": -0.04910714285714284,
+      "percent_change": -100.0
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_failed_action_rate",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": 0.06610569859662416,
+      "percent_change": 49.23453962397317
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_cache_hit_rate",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_total_steps",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": -0.07747452184838766,
+      "percent_change": -2.153644352771566
+    },
+    {
+      "comparison": "optimized_v25 - baseline",
+      "metric": "avg_reward",
+      "from": "baseline",
+      "to": "optimized_v25",
+      "absolute_change": 0.6598073432919298,
+      "percent_change": 13.024768335113512
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "success_rate",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": 0.010753231442886646,
+      "percent_change": 1.2592073994458342
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_execution_time",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": -4.122848247051298,
+      "percent_change": -29.983526761412744
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_tool_calls",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": 0.02484105932381775,
+      "percent_change": 0.7382012912266595
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_invalid_action_rate",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_failed_action_rate",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": 0.05213376479386336,
+      "percent_change": 35.16875934238284
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_cache_hit_rate",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_total_steps",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": 0.011957391267736206,
+      "percent_change": 0.34086680989474255
+    },
+    {
+      "comparison": "optimized_v25 - optimized_v2",
+      "metric": "avg_reward",
+      "from": "optimized_v2",
+      "to": "optimized_v25",
+      "absolute_change": -0.11329207191272417,
+      "percent_change": -1.9403018976489592
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "success_rate",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": 0.07866572786481252,
+      "percent_change": 10.031200197526429
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_execution_time",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": -22.32576627068653,
+      "percent_change": -92.26734752139222
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_tool_calls",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": 0.23318957929941897,
+      "percent_change": 7.41523348399826
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_invalid_action_rate",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": -0.04910714285714284,
+      "percent_change": -100.0
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_failed_action_rate",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": 0.012149709558176375,
+      "percent_change": 9.048922700475751
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_cache_hit_rate",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_total_steps",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": -0.08566273543390279,
+      "percent_change": -2.381261116670304
+    },
+    {
+      "comparison": "optimized_v3 - baseline",
+      "metric": "avg_reward",
+      "from": "baseline",
+      "to": "optimized_v3",
+      "absolute_change": 0.8310332687906827,
+      "percent_change": 16.404812578725284
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "success_rate",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": -0.001845231230538591,
+      "percent_change": -0.21339023739664073
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_execution_time",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": -7.756473493100368,
+      "percent_change": -80.56556299366255
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_tool_calls",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": -0.011994002998500619,
+      "percent_change": -0.3538137034768962
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_invalid_action_rate",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_failed_action_rate",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": -0.05395598903844778,
+      "percent_change": -26.927825840286886
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_cache_hit_rate",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": 0.0,
+      "percent_change": null
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_total_steps",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": -0.008188213585515136,
+      "percent_change": -0.23262671603159055
+    },
+    {
+      "comparison": "optimized_v3 - optimized_v25",
+      "metric": "avg_reward",
+      "from": "optimized_v25",
+      "to": "optimized_v3",
+      "absolute_change": 0.17122592549875293,
+      "percent_change": 2.990534104516
+    }
+  ]
+}

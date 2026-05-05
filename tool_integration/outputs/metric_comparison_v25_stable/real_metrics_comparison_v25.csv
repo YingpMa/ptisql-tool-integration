@@ -1,0 +1,67 @@
+section,metric,baseline,optimized_v1,optimized_v2,optimized_v25,optimized_v3
+summary,episodes,380,630,630,377,598
+summary,success_rate,0.7842105263157895,0.8507936507936508,0.8539682539682539,0.8647214854111406,0.862876254180602
+summary,avg_execution_time,24.196822462583842,22.79836990795438,13.750377932048979,9.62752968499768,1.8710561918973125
+summary,std_execution_time,2.3666280395520265,2.0232397921840013,1.6012340231967759,5.597681234524494,1.4601122467424545
+summary,avg_tool_calls,3.1447368421052633,3.3142857142857145,3.365079365079365,3.389920424403183,3.3779264214046822
+summary,std_tool_calls,0.8170987249675301,0.8530981866185218,0.9127534350079616,1.193601845671876,0.919351447137786
+summary,avg_invalid_action_rate,0.04910714285714284,0.0,0.0,0.0,0.0
+summary,std_invalid_action_rate,0.10438993895241715,0.0,0.0,0.0,0.0
+summary,avg_failed_action_rate,0.13426691729323315,0.14198601662887383,0.14823885109599394,0.2003726158898573,0.14641662685140952
+summary,std_failed_action_rate,0.17200473966722707,0.18680804702296833,0.1907885835378177,0.19478704378891937,0.18933036263014738
+summary,avg_cache_hit_rate,0.0,0.0,0.0,0.0,0.0
+summary,std_cache_hit_rate,0.0,0.0,0.0,0.0,0.0
+summary,avg_total_steps,3.5973684210526318,3.461904761904762,3.507936507936508,3.519893899204244,3.511705685618729
+summary,std_total_steps,0.9628965871382899,0.7980358582036763,0.8602328200588414,1.1985150339420119,0.8657043299740356
+summary,avg_reward,5.065789473684174,5.896825396825337,5.838888888888828,5.725596816976104,5.896822742474857
+summary,std_reward,3.61352095273825,3.178792166153992,3.19564046794274,3.2076933328892556,3.118993782685906
+
+section,comparison,metric,from,to,absolute_change,percent_change
+comparison,optimized_v1 - baseline,success_rate,baseline,optimized_v1,0.0665831244778613,8.4904655374454
+comparison,optimized_v1 - baseline,avg_execution_time,baseline,optimized_v1,-1.3984525546294613,-5.779488429904066
+comparison,optimized_v1 - baseline,avg_tool_calls,baseline,optimized_v1,0.16954887218045123,5.391512253436943
+comparison,optimized_v1 - baseline,avg_invalid_action_rate,baseline,optimized_v1,-0.04910714285714284,-100.0
+comparison,optimized_v1 - baseline,avg_failed_action_rate,baseline,optimized_v1,0.007719099335640689,5.749070203781107
+comparison,optimized_v1 - baseline,avg_cache_hit_rate,baseline,optimized_v1,0.0,
+comparison,optimized_v1 - baseline,avg_total_steps,baseline,optimized_v1,-0.13546365914786973,-3.7656320758003283
+comparison,optimized_v1 - baseline,avg_reward,baseline,optimized_v1,0.8310359231411626,16.404864976293197
+comparison,optimized_v2 - baseline,success_rate,baseline,optimized_v2,0.06975772765246446,8.89528070736124
+comparison,optimized_v2 - baseline,avg_execution_time,baseline,optimized_v2,-10.446444530534864,-43.17279488531383
+comparison,optimized_v2 - baseline,avg_tool_calls,baseline,optimized_v2,0.22034252297410184,7.006707843527924
+comparison,optimized_v2 - baseline,avg_invalid_action_rate,baseline,optimized_v2,-0.04910714285714284,-100.0
+comparison,optimized_v2 - baseline,avg_failed_action_rate,baseline,optimized_v2,0.013971933802760794,10.406088174532744
+comparison,optimized_v2 - baseline,avg_cache_hit_rate,baseline,optimized_v2,0.0,
+comparison,optimized_v2 - baseline,avg_total_steps,baseline,optimized_v2,-0.08943191311612386,-2.486037087353845
+comparison,optimized_v2 - baseline,avg_reward,baseline,optimized_v2,0.773099415204654,15.26118326118289
+comparison,optimized_v25 - baseline,success_rate,baseline,optimized_v25,0.08051095909535111,10.266498139675646
+comparison,optimized_v25 - baseline,avg_execution_time,baseline,optimized_v25,-14.569292777586162,-60.211595138638664
+comparison,optimized_v25 - baseline,avg_tool_calls,baseline,optimized_v25,0.2451835822979196,7.796632742527986
+comparison,optimized_v25 - baseline,avg_invalid_action_rate,baseline,optimized_v25,-0.04910714285714284,-100.0
+comparison,optimized_v25 - baseline,avg_failed_action_rate,baseline,optimized_v25,0.06610569859662416,49.23453962397317
+comparison,optimized_v25 - baseline,avg_cache_hit_rate,baseline,optimized_v25,0.0,
+comparison,optimized_v25 - baseline,avg_total_steps,baseline,optimized_v25,-0.07747452184838766,-2.153644352771566
+comparison,optimized_v25 - baseline,avg_reward,baseline,optimized_v25,0.6598073432919298,13.024768335113512
+comparison,optimized_v25 - optimized_v2,success_rate,optimized_v2,optimized_v25,0.010753231442886646,1.2592073994458342
+comparison,optimized_v25 - optimized_v2,avg_execution_time,optimized_v2,optimized_v25,-4.122848247051298,-29.983526761412744
+comparison,optimized_v25 - optimized_v2,avg_tool_calls,optimized_v2,optimized_v25,0.02484105932381775,0.7382012912266595
+comparison,optimized_v25 - optimized_v2,avg_invalid_action_rate,optimized_v2,optimized_v25,0.0,
+comparison,optimized_v25 - optimized_v2,avg_failed_action_rate,optimized_v2,optimized_v25,0.05213376479386336,35.16875934238284
+comparison,optimized_v25 - optimized_v2,avg_cache_hit_rate,optimized_v2,optimized_v25,0.0,
+comparison,optimized_v25 - optimized_v2,avg_total_steps,optimized_v2,optimized_v25,0.011957391267736206,0.34086680989474255
+comparison,optimized_v25 - optimized_v2,avg_reward,optimized_v2,optimized_v25,-0.11329207191272417,-1.9403018976489592
+comparison,optimized_v3 - baseline,success_rate,baseline,optimized_v3,0.07866572786481252,10.031200197526429
+comparison,optimized_v3 - baseline,avg_execution_time,baseline,optimized_v3,-22.32576627068653,-92.26734752139222
+comparison,optimized_v3 - baseline,avg_tool_calls,baseline,optimized_v3,0.23318957929941897,7.41523348399826
+comparison,optimized_v3 - baseline,avg_invalid_action_rate,baseline,optimized_v3,-0.04910714285714284,-100.0
+comparison,optimized_v3 - baseline,avg_failed_action_rate,baseline,optimized_v3,0.012149709558176375,9.048922700475751
+comparison,optimized_v3 - baseline,avg_cache_hit_rate,baseline,optimized_v3,0.0,
+comparison,optimized_v3 - baseline,avg_total_steps,baseline,optimized_v3,-0.08566273543390279,-2.381261116670304
+comparison,optimized_v3 - baseline,avg_reward,baseline,optimized_v3,0.8310332687906827,16.404812578725284
+comparison,optimized_v3 - optimized_v25,success_rate,optimized_v25,optimized_v3,-0.001845231230538591,-0.21339023739664073
+comparison,optimized_v3 - optimized_v25,avg_execution_time,optimized_v25,optimized_v3,-7.756473493100368,-80.56556299366255
+comparison,optimized_v3 - optimized_v25,avg_tool_calls,optimized_v25,optimized_v3,-0.011994002998500619,-0.3538137034768962
+comparison,optimized_v3 - optimized_v25,avg_invalid_action_rate,optimized_v25,optimized_v3,0.0,
+comparison,optimized_v3 - optimized_v25,avg_failed_action_rate,optimized_v25,optimized_v3,-0.05395598903844778,-26.927825840286886
+comparison,optimized_v3 - optimized_v25,avg_cache_hit_rate,optimized_v25,optimized_v3,0.0,
+comparison,optimized_v3 - optimized_v25,avg_total_steps,optimized_v25,optimized_v3,-0.008188213585515136,-0.23262671603159055
+comparison,optimized_v3 - optimized_v25,avg_reward,optimized_v25,optimized_v3,0.17122592549875293,2.990534104516
