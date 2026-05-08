@@ -1,5 +1,4 @@
 import json
-import os
 import glob
 import shutil
 from collections import Counter
@@ -8,14 +7,14 @@ from pathlib import Path
 SRC_DIR = "tool_integration/dataset/real_logs/msf_rl_env_runs"
 OUT_DIR = "tool_integration/dataset/real_logs/msf_rl_env_runs_no_bindshell_success"
 
+BIND_ACTION = "exploit_bindshell"
+
 MSF_EXPLOITS = {
     "exploit_vsftpd",
     "exploit_samba",
     "exploit_unrealircd",
     "exploit_distccd",
 }
-
-BIND_ACTION = "exploit_bindshell"
 
 
 def load_json(path):
@@ -32,74 +31,146 @@ def get_history(data):
     return hist if isinstance(hist, list) else []
 
 
-def get_action(step):
+def get_requested_action(step):
     info = step.get("info", {}) or {}
 
     return (
-        step.get("action")
-        or step.get("executed_action_name")
-        or info.get("executed_action_name")
+        step.get("action_requested")
+        or step.get("requested_action")
+        or step.get("requested_action_name")
+        or step.get("requested_pair_action_name")
+        or info.get("action_requested")
+        or info.get("requested_action")
+        or info.get("requested_action_name")
         or info.get("requested_pair_action_name")
+        or "unknown"
+    )
+
+
+def get_executed_action(step):
+    info = step.get("info", {}) or {}
+
+    return (
+        step.get("action_executed")
+        or step.get("executed_action")
+        or step.get("executed_action_name")
+        or step.get("action")
+        or info.get("action_executed")
+        or info.get("executed_action")
+        or info.get("executed_action_name")
         or info.get("action")
         or "unknown"
     )
 
 
-def get_backend(step):
+def get_backend_or_tool(step):
     info = step.get("info", {}) or {}
-    return info.get("backend") or step.get("backend") or ""
+
+    value = (
+        info.get("backend")
+        or info.get("tool")
+        or step.get("backend")
+        or step.get("tool")
+        or ""
+    )
+
+    return str(value).lower()
 
 
-def is_success(data, history):
-    metrics = data.get("metrics", {}) or {}
+def is_success(data):
+    summary = data.get("summary", {}) or {}
 
-    if int(metrics.get("success", 0)) == 1:
+    if data.get("final_success") is True or data.get("final_success") == 1:
         return True
 
     if data.get("success") is True or data.get("success") == 1:
         return True
 
-    if data.get("goal_reached") is True or data.get("goal_reached") == 1:
+    if summary.get("final_success") is True or summary.get("final_success") == 1:
         return True
 
-    for step in history:
-        info = step.get("info", {}) or {}
+    if summary.get("final_has_shell") is True or summary.get("final_has_shell") == 1:
+        return True
 
-        if info.get("success") is True or info.get("success") == 1:
-            return True
-
-        if info.get("real_success") is True or info.get("real_success") == 1:
-            return True
-
-        if info.get("status") == "success" and get_action(step).startswith("exploit_"):
-            return True
+    if int(summary.get("num_successful_exploits", 0) or 0) > 0:
+        return True
 
     return False
 
 
-def should_keep(data):
+def classify_file(data):
     history = get_history(data)
+    summary = data.get("summary", {}) or {}
+
     if not history:
-        return False, "empty_history"
+        return False, "empty_history", [], [], []
 
-    actions = [get_action(step) for step in history]
-    action_set = set(actions)
+    requested_actions = summary.get("requested_actions")
+    executed_actions = summary.get("executed_actions")
 
-    success = is_success(data, history)
+    if not isinstance(requested_actions, list):
+        requested_actions = [get_requested_action(step) for step in history]
+
+    if not isinstance(executed_actions, list):
+        executed_actions = [get_executed_action(step) for step in history]
+
+    tools = [get_backend_or_tool(step) for step in history]
+
+    full_text = json.dumps(data).lower()
+
+    success = is_success(data)
+
+    used_bindshell = (
+        summary.get("used_bindshell") is True
+        or BIND_ACTION in executed_actions
+        or BIND_ACTION in requested_actions
+        or "exploit_bindshell" in full_text
+        or '"tool": "nc"' in full_text
+    )
+
+    used_metasploit = (
+        summary.get("used_metasploit") is True
+        or int(summary.get("num_metasploit_attempts", 0) or 0) > 0
+        or "metasploit" in full_text
+        or "msfrpc" in full_text
+        or any(t in {"metasploit", "msf"} for t in tools)
+    )
+
+    has_msf_exploit_action = bool(set(executed_actions).intersection(MSF_EXPLOITS))
+    has_scan_service = (
+        "scan_service" in executed_actions or "scan_service" in requested_actions
+    )
 
     if not success:
-        return False, "not_success"
+        return False, "not_success", requested_actions, executed_actions, tools
 
-    if BIND_ACTION in action_set:
-        return False, "contains_bindshell"
+    if used_bindshell:
+        return (
+            False,
+            "contains_bindshell_or_nc",
+            requested_actions,
+            executed_actions,
+            tools,
+        )
 
-    if not action_set.intersection(MSF_EXPLOITS):
-        return False, "no_msf_exploit_action"
+    if not has_scan_service:
+        return False, "no_service_scan", requested_actions, executed_actions, tools
 
-    if "scan_service" not in action_set:
-        return False, "no_service_scan"
+    if not has_msf_exploit_action:
+        return (
+            False,
+            "no_msf_exploit_action",
+            requested_actions,
+            executed_actions,
+            tools,
+        )
 
-    return True, "keep"
+    # 如果你的日志里 used_metasploit 记录准确，可以强制打开下面三行。
+    # 但有些旧日志可能只记录 action，不记录 backend，所以先不强制。
+    # if not used_metasploit:
+    #     return False, "no_metasploit_backend", requested_actions, executed_actions, tools
+
+    return True, "keep", requested_actions, executed_actions, tools
 
 
 def main():
@@ -117,11 +188,14 @@ def main():
 
     total = 0
     kept = 0
+
     reason_counter = Counter()
-    action_counter_all = Counter()
-    action_counter_kept = Counter()
-    backend_counter_kept = Counter()
-    path_counter_kept = Counter()
+    requested_counter_all = Counter()
+    executed_counter_all = Counter()
+    requested_counter_kept = Counter()
+    executed_counter_kept = Counter()
+    tool_counter_kept = Counter()
+    kept_path_counter = Counter()
 
     kept_files = []
 
@@ -130,34 +204,33 @@ def main():
         if data is None:
             continue
 
-        history = get_history(data)
-        if not history:
-            reason_counter["empty_history"] += 1
-            continue
+        keep, reason, requested_actions, executed_actions, tools = classify_file(data)
 
         total += 1
-
-        actions = [get_action(step) for step in history]
-        for a in actions:
-            action_counter_all[a] += 1
-
-        keep, reason = should_keep(data)
         reason_counter[reason] += 1
+
+        for a in requested_actions:
+            requested_counter_all[a] += 1
+
+        for a in executed_actions:
+            executed_counter_all[a] += 1
 
         if not keep:
             continue
 
         kept += 1
 
-        for a in actions:
-            action_counter_kept[a] += 1
+        for a in requested_actions:
+            requested_counter_kept[a] += 1
 
-        for step in history:
-            backend = get_backend(step)
-            if backend:
-                backend_counter_kept[backend] += 1
+        for a in executed_actions:
+            executed_counter_kept[a] += 1
 
-        path_counter_kept[tuple(actions)] += 1
+        for t in tools:
+            if t:
+                tool_counter_kept[t] += 1
+
+        kept_path_counter[tuple(executed_actions)] += 1
 
         src_path = Path(path)
         dst_path = out / src_path.name
@@ -172,9 +245,10 @@ def main():
                 "output_dir": OUT_DIR,
                 "filter": {
                     "success_only": True,
-                    "exclude_action": BIND_ACTION,
-                    "require_any_action": sorted(MSF_EXPLOITS),
+                    "exclude_bindshell": True,
+                    "exclude_nc": True,
                     "require_scan_service": True,
+                    "require_any_executed_msf_exploit": sorted(MSF_EXPLOITS),
                 },
                 "total_input": total,
                 "kept": kept,
@@ -191,7 +265,7 @@ def main():
     print("=" * 80)
     print("source:", SRC_DIR)
     print("output:", OUT_DIR)
-    print("total usable input:", total)
+    print("total input:", total)
     print("kept:", kept)
     print("kept ratio:", round(kept / max(1, total), 4))
 
@@ -200,24 +274,34 @@ def main():
     for k, v in reason_counter.most_common():
         print(f"{v:5d} | {k}")
 
-    print("\nALL ACTIONS")
+    print("\nALL REQUESTED ACTIONS")
     print("-" * 80)
-    for k, v in action_counter_all.most_common():
+    for k, v in requested_counter_all.most_common():
         print(f"{v:5d} | {k}")
 
-    print("\nKEPT ACTIONS")
+    print("\nALL EXECUTED ACTIONS")
     print("-" * 80)
-    for k, v in action_counter_kept.most_common():
+    for k, v in executed_counter_all.most_common():
         print(f"{v:5d} | {k}")
 
-    print("\nKEPT BACKENDS")
+    print("\nKEPT REQUESTED ACTIONS")
     print("-" * 80)
-    for k, v in backend_counter_kept.most_common():
+    for k, v in requested_counter_kept.most_common():
         print(f"{v:5d} | {k}")
 
-    print("\nTOP KEPT PATHS")
+    print("\nKEPT EXECUTED ACTIONS")
     print("-" * 80)
-    for path_tuple, v in path_counter_kept.most_common(20):
+    for k, v in executed_counter_kept.most_common():
+        print(f"{v:5d} | {k}")
+
+    print("\nKEPT TOOLS / BACKENDS")
+    print("-" * 80)
+    for k, v in tool_counter_kept.most_common():
+        print(f"{v:5d} | {k}")
+
+    print("\nTOP KEPT EXECUTED PATHS")
+    print("-" * 80)
+    for path_tuple, v in kept_path_counter.most_common(20):
         print(f"{v:5d} | {' -> '.join(path_tuple)}")
 
     print("\nMANIFEST")
@@ -225,14 +309,12 @@ def main():
     print(manifest_path)
 
     if kept >= 100:
-        print(
-            "\nOK: enough filtered MSF-only successful trajectories for a first training attempt."
-        )
+        print("\nOK: enough filtered MSF-only/no-bindshell trajectories for training.")
     elif kept >= 30:
-        print("\nMAYBE: usable but small. Try training, but may need more data.")
+        print("\nMAYBE: usable but small. Try training, but more data may help.")
     else:
         print(
-            "\nWEAK: probably too few. Consider collecting more MSF-only trajectories."
+            "\nWEAK: too few. You probably need to collect more MSF-only trajectories."
         )
 
 
